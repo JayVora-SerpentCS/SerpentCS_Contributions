@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from xml.dom import minidom
+import openerp
 from openerp.osv import fields,osv
 from openerp import pooler
 import string
@@ -101,6 +102,8 @@ class base_module_record(osv.Model):
             self.depends[res[0]['module']]=True
         fields = model_pool.fields_get(cr, uid)
         for key,val in data.items():
+            if key in model_pool._columns.keys() and isinstance(model_pool._columns[key], openerp.osv.fields.function) and not model_pool._columns[key].store:
+                continue
             if not (val or (fields[key]['type']=='boolean')):
                 continue
             if (fields[key]['type'] in ('integer','float') or
