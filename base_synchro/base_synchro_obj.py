@@ -70,15 +70,16 @@ class base_synchro_obj(osv.Model):
         return self._get_ids(cr, uid, object, dt, domain, context=context)
 
     def _get_ids(self, cr, uid, object, dt, domain=[], context=None):
+        POOL = self.pool.get(object)
         result = []
         if dt:
             domain2 = domain + [('write_date', '>=', dt)]
             domain3 = domain + [('create_date', '>=', dt)]
         else:
             domain2 = domain3 = domain
-        ids = self.pool.get(object).search(cr, uid, domain2, context=context)
-        ids += self.pool.get(object).search(cr, uid, domain3, context=context)
-        for r in self.pool.get(object).perm_read(cr, uid, ids, context=context, details=False):
+        ids = POOL.search(cr, uid, domain2, context=context)
+        ids += POOL.search(cr, uid, domain3, context=context)
+        for r in POOL.read(cr, uid, ids, ['create_date','write_date'], context=context):
             result.append((r['write_date'] or r['create_date'], r['id'], context.get('action', 'd')))
         return result
 

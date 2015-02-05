@@ -66,6 +66,7 @@ class base_synchro(osv.TransientModel):
     report_total = 0
     report_create = 0
     report_write = 0
+
     def input(self, cr, uid, ids, value, context=None):
 #        for key,valu in  zip(value.keys(),value.values()) :
 #            if type(valu) is unicode:
@@ -247,7 +248,7 @@ class base_synchro(osv.TransientModel):
         end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
         if syn_obj.user_id:
             request = pooler.get_pool(cr.dbname).get('res.request')
-            print "request>>",request
+            print "request>>", request
             if not self.report:
                 self.report.append('No exception.')
             summary = '''Here is the synchronization report:
