@@ -2,13 +2,12 @@ import werkzeug
 from openerp import http
 from openerp.http import request
 import openerp.addons.website_sale.controllers.main
-from openerp import http, SUPERUSER_ID
-import werkzeug
+from openerp import SUPERUSER_ID
 from openerp.tools.translate import _
 from openerp.addons.website.models.website import slug
-from gi.overrides.keysyms import currency
 PPG = 20
 PPR = 4
+
 
 class table_compute(object):
 
