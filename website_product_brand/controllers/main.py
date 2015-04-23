@@ -107,7 +107,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
     @http.route(['/shop',
                  '/shop/page/<int:page>',
                  '/shop/category/<model("product.public.category"):category>',
-                 '/shop/category/<model("product.public.category"):category>/page/<int:page>',
+                 '/shop/category/<model("product.public.category"):category>\
+                 /page/<int:page>',
                  '/shop/brands'],
                 type='http',
                 auth='public',
@@ -256,9 +257,10 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
                        'compute_currency': compute_currency,
                        'keep': keep,
                        'style_in_product': lambda style,
-                       product: style.id in [s.id for s in product.website_style_ids],
-                       'attrib_encode': lambda attribs: werkzeug.url_encode([('attrib',
-                                                                              i) for i in attribs])})
+                       product: style.id in
+                       [s.id for s in product.website_style_ids],
+                       'attrib_encode': lambda attribs: werkzeug.url_encode([
+                           ('attrib', i) for i in attribs])})
         return request.website.render('website_sale.products', values)
 
     # Method to get the brands.
@@ -277,7 +279,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         if post.get('search'):
             domain += [('name', 'ilike', post.get('search'))]
         brand_ids = brand_obj.search(cr, SUPERUSER_ID, domain)
-        for brand_rec in brand_obj.browse(cr, SUPERUSER_ID, brand_ids, context=context):
+        for brand_rec in brand_obj.browse(cr, SUPERUSER_ID, brand_ids,
+                                          context=context):
             brand_values.append(brand_rec)
 
         keep = QueryURL('/page/product_brands', brand_id=[])
