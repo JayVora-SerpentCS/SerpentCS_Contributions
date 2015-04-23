@@ -6,3 +6,4 @@ Maintaining the changelog of the module for each commit.
 	* Added the module.
 1.1 : Oscar Alcala - Vauxoo
 	* fixed Pep8 and Pylint on code.
+	
