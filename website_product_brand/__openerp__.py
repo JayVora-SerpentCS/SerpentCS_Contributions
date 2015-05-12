@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
+#    (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,14 +24,15 @@
     'name': 'Product Brand Filtering in Website',
     'category': 'Website',
     'author': 'Serpent Consulting Services Pvt Ltd',
-    'website':'http://www.serpentcs.com',
+    'website': 'http://www.serpentcs.com',
     'summary': '',
     'version': '1.0',
     'description': """
 Allows to use product brands as filtering for products in website.\n
-This Module depends on product_brand module -https://github.com/OCA/product-attribute/tree/8.0/product_brand
+This Module depends on product_brand module
+-https://github.com/OCA/product-attribute/tree/8.0/product_brand
         """,
-    'depends': ['product_brand','website_sale'],
+    'depends': ['product_brand', 'website_sale'],
     'data': [
         "security/ir.model.access.csv",
         "views/product_brand.xml",
