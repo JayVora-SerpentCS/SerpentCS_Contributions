@@ -1,10 +1,9 @@
 ===================================================================
 Maintaining the changelog of the module for each commit.
 ===================================================================
-
+1.2 : Serpent Consulting Services Pvt Ltd.
+	* Added the brand filter to combine with Category filter.
 1.1 : Oscar Alcala - Vauxoo
 	* fixed Pep8 and Pylint on code.
-1.0 : Vimesh Chaudhari - Serpent Consulting Services Pvt Ltd.
+1.0 : Serpent Consulting Services Pvt Ltd.
 	* Added the module.
-
-	

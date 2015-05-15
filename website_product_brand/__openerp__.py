@@ -26,7 +26,7 @@
     'author': 'Serpent Consulting Services Pvt Ltd',
     'website': 'http://www.serpentcs.com',
     'summary': '',
-    'version': '1.0',
+    'version': '1.2',
     'description': """
 Allows to use product brands as filtering for products in website.\n
 This Module depends on product_brand module
