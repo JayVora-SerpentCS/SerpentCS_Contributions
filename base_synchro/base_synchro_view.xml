@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-	<menuitem id="synch_config" name="Synchronization" parent="base.menu_config" sequence="30"/>
+    <menuitem id="synch_config" name="Synchronization" parent="base.menu_config" sequence="30"/>
         <record id="view_transfer_line_tree" model="ir.ui.view">
             <field name="name">base.synchro.obj.line.tree</field>
             <field name="model">base.synchro.obj.line</field>
@@ -19,7 +19,7 @@
             <field name="name">base.synchro.obj.line.form</field>
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
-                <form string="Transfered Ids Details" version="7.0">
+                <form string="Transfered Ids Details">
                 <sheet>
                     <group col="4">
                         <field name="name" select="1"/>
@@ -78,7 +78,7 @@
             <field name="name">base.synchro.obj.form</field>
             <field name="model">base.synchro.obj</field>
             <field name="arch" type="xml">
-                <form string="Transfer Details" version="7.0">
+                <form string="Transfer Details">
                     <sheet>
                         <group col="4" colspan="4">
                             <field name="name" select="1"/>
@@ -173,7 +173,7 @@
             <field name="name">base.synchro.server.form</field>
             <field name="model">base.synchro.server</field>
             <field name="arch" type="xml">
-                <form string="Synchronized server" version="7.0">
+                <form string="Synchronized server">
                     <sheet>
                             <group colspan="4" col="4">
                                 <field name="name"/>
