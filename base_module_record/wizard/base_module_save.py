@@ -25,23 +25,25 @@ import base64
 
 from openerp import tools
 from openerp.tools.translate import _
-from openerp.osv import orm, fields, osv
+from openerp import models, fields, api, _
 
-
-def _create_yaml(self, cr, uid, data, context=None):
-    mod = self.pool.get('ir.module.record')
+@api.model
+def _create_yaml(self, data):
+    mod = self.env['ir.module.record']
     try:
-        res_xml = mod.generate_yaml(cr, uid)
+        res_xml = mod.generate_yaml()
     except Exception, e:
         raise osv.except_osv(_('Error'),_(str(e)))
     return {
     'yaml_file': base64.encodestring(res_xml),
 }
-    
-def _create_module(self, cr, uid, ids, context=None):
-    mod = self.pool.get('ir.module.record')
-    res_xml = mod.generate_xml(cr, uid)
-    data = self.read(cr, uid, ids, [], context=context)[0]
+
+@api.model
+def _create_module(self,cr, uid, ids, context=None):
+    mod = self.env['ir.module.record']
+    res_xml = mod.generate_xml()
+    ids = self.search([])
+    data = ids.read([])[0]
     s = StringIO.StringIO()
     zip = zipfile.ZipFile(s, 'w')
     dname = data['directory_name']
@@ -51,7 +53,10 @@ def _create_module(self, cr, uid, ids, context=None):
         data['demo_name'] = '"%(directory_name)s_data.xml"' % data
     else:
         data['update_name'] = '"%(directory_name)s_data.xml"' % data
-    data['depends'] = ','.join(map(lambda x: '"'+x+'"', mod.depends.keys()))
+    cr, uid, context = self.env.args
+    context = dict(context)
+    depends = context.get('depends')
+    data['depends'] = ','.join(map(lambda x: '"'+x+'"', depends.keys()))
     _terp = """{
         "name" : "%(name)s",
         "version" : "%(version)s",
@@ -83,16 +88,20 @@ def _create_module(self, cr, uid, ids, context=None):
         'module_filename': data['directory_name']+'-'+data['version']+'.zip'
     }
 
-class base_module_save(orm.TransientModel):
+class base_module_save(models.TransientModel):
     _name = 'base.module.save'
     _description = "Base Module Save"
 
-    def default_get(self, cr, uid, fields, context=None):
-        mod = self.pool.get('ir.module.record')
+    @api.model
+    def default_get(self, fields):
+        mod = self.env['ir.module.record']
         result = {}
-        info = "Details of "+str(len(mod.recording_data))+" Operation(s):\n\n"
-        res = super(base_module_save, self).default_get(cr, uid, fields, context=context)
-        for line in mod.recording_data:
+        cr, uid, context = self.env.args
+        context = dict(context)
+        recording_data = context.get('recording_data')
+        info = "Details of "+str(len(recording_data))+" Operation(s):\n\n"
+        res = super(base_module_save, self).default_get(fields)
+        for line in recording_data:
             result.setdefault(line[0],{})
             result[line[0]].setdefault(line[1][3], {})
             result[line[0]][line[1][3]].setdefault(line[1][3], 0)
@@ -110,22 +119,24 @@ class base_module_save(orm.TransientModel):
             res.update({'info_status': info_status})
         return res
     
-    _columns = {
-        'info_text': fields.text('Information', readonly=True),
-        'info_status': fields.selection([('no', 'Not Recording'),('record', 'Recording')], 'Status', readonly=True),
-        'info_yaml': fields.boolean('YAML'),
-    }
+    info_text = fields.Text('Information', readonly=True)
+    info_status = fields.Selection([('no', 'Not Recording'),('record', 'Recording')], 'Status', readonly=True)
+    info_yaml = fields.Boolean('YAML')
 
-    def record_save(self, cr, uid, ids, context=None):
-        data = self.read(cr, uid, ids, [], context=context)[0]
-        mod = self.pool.get('ir.module.record')
-        mod_obj = self.pool.get('ir.model.data')
-        if len(mod.recording_data):
+    @api.multi
+    def record_save(self):
+        data = self.read(self._cr, self.user_id.id, ids, [])[0]
+        mod = self.env['ir.module.record']
+        mod_obj = self.env['ir.model.data']
+        cr, uid, context = self.env.args
+        context = dict(context)
+        recording_data = context.get('recording_data')
+        if len(recording_data):
             if data['info_yaml']:
-                mod = self.pool.get('ir.module.record')
-                res=_create_yaml(self, cr, uid, data, context)
-                model_data_ids = mod_obj.search(cr, uid,[('model', '=', 'ir.ui.view'), ('name', '=', 'yml_save_form_view')], context=context)
-                resource_id = mod_obj.read(cr, uid, model_data_ids, fields=['res_id'], context=context)[0]['res_id']
+                mod = self.env['ir.module.record']
+                res=_create_yaml(self, data)
+                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'yml_save_form_view')])
+                resource_id = mod_obj.read(self._cr, self.user_id.id, model_data_ids, fields=['res_id'])[0]['res_id']
                 return {
                     'name': _('Message'),
                     'context':  {
@@ -139,8 +150,8 @@ class base_module_save(orm.TransientModel):
                     'target': 'new',
                 }
             else:
-                model_data_ids = mod_obj.search(cr, uid,[('model', '=', 'ir.ui.view'), ('name', '=', 'info_start_form_view')], context=context)
-                resource_id = mod_obj.read(cr, uid, model_data_ids, fields=['res_id'], context=context)[0]['res_id']
+                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'info_start_form_view')])
+                resource_id = mod_obj.read(self._cr, self.user_id.id, model_data_ids, fields=['res_id'])[0]['res_id']
                 return {
                     'name': _('Message'),
                     'context': context,
@@ -151,8 +162,8 @@ class base_module_save(orm.TransientModel):
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
-        model_data_ids = mod_obj.search(cr, uid,[('model', '=', 'ir.ui.view'), ('name', '=', 'module_recording_message_view')], context=context)
-        resource_id = mod_obj.read(cr, uid, model_data_ids, fields=['res_id'], context=context)[0]['res_id']
+        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_recording_message_view')])
+        resource_id = mod_obj.read(model_data_ids, fields=['res_id'])[0]['res_id']
         
         return {
             'name': _('Message'),
@@ -164,7 +175,5 @@ class base_module_save(orm.TransientModel):
             'type': 'ir.actions.act_window',
             'target': 'new',
         }      
-        
-base_module_save()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

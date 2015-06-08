@@ -6,7 +6,7 @@
             <field name="name">base_module_record_data</field>
             <field name="model">base.module.data</field>
             <field name="arch" type="xml">
-                <form string="Data Recording" version="7.0">
+                <form string="Data Recording">
                  <sheet>
                     <group>
                     <field name="check_date"/>
@@ -55,7 +55,7 @@
             <field name="name">module.create.xml.form</field>
             <field name="model">base.module.record.data</field>
             <field name="arch" type="xml">
-                <form string="Data Recording" version="7.0">
+                <form string="Data Recording">
                  <sheet>
                    <group>
                     <separator string="Result, paste this to your module's xml" colspan="4"/>

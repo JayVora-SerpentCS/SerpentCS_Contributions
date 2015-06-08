@@ -21,10 +21,12 @@
 from xml.dom import minidom
 import openerp
 from openerp.osv import fields,osv
-from openerp import pooler
 import string
 from openerp import tools
 from openerp import models, fields, api, _
+from openerp.tools import frozendict
+from openerp.tools import misc
+
 
 class xElement(minidom.Element):
     """dom.Element with compact print
@@ -47,19 +49,18 @@ import yaml
 from openerp.tools import yaml_tag # This import is not unused! Do not remove!
 # Please do not override yaml_tag here: modify it in server bin/tools/yaml_tag.py
 
-class base_module_record(osv.Model):
+class base_module_record(models.Model):
     _name = "ir.module.record"
-    _columns = {
 
-    }
     def __init__(self, *args, **kwargs):
         self.recording = 0
-        self.recording_data = []
-        self.depends = {}
+#        self.recording_data = []
+#        self.depends = {}
         super(base_module_record, self).__init__(*args, **kwargs)
 
     # To Be Improved
-    def _create_id(self, cr, uid, model, data):
+    @api.model
+    def _create_id(self, model, data):
         i = 0
         while True:
             try:
@@ -73,34 +74,50 @@ class base_module_record(osv.Model):
             i+=1
         return val
 
-    def _get_id(self, cr, uid, model, id):
+    @api.model
+    def _get_id(self, model, id):
         if type(id)==type(()):
             id=id[0]
         if (model,id) in self.blank_dict:
             res_id = self.blank_dict[(model,id)]
             return res_id, False
-        dt = self.pool.get('ir.model.data')
-        dtids = dt.search(cr, uid, [('model','=',model), ('res_id','=',id)])
-        if not dtids:
+        dt = self.env['ir.model.data']
+        obj = dt.search([('model','=',model), ('res_id','=',id)])
+        if not obj:
             return False, None
-        obj = dt.browse(cr, uid, dtids[0])
-        self.depends[obj.module] = True
+        obj = obj[0]
+#        obj = dt.browse(dtids[0])
+        cr, uid, context = self.env.args
+        context = dict(context)
+#        context.update({'depends': {}})
+#        self.depends[obj.module] = True
+        self.env.args = cr, uid, misc.frozendict(context)
+        depends = context.get('depends')
+        depends[obj.module] = True
         return obj.module+'.'+obj.name, obj.noupdate
-    
-    def _create_record(self, cr, uid, doc, model, data, record_id, noupdate=False):
-        data_pool = self.pool.get('ir.model.data')
-        model_pool = self.pool.get(model)
-        
+
+    @api.model
+    def _create_record(self, doc, model, data, record_id, noupdate=False):
+        data_pool = self.env['ir.model.data']
+        model_pool = self.env[model]
+        cr, uid, context = self.env.args
+        context = dict(context)
         record = doc.createElement('record')
         record.setAttribute("id", record_id)
         record.setAttribute("model", model)
         record_list = [record]
         
-        lids  = data_pool.search(cr, uid, [('model','=',model)])
-        res = data_pool.read(cr, uid, lids[:1], ['module'])
+        lids  = data_pool.search([('model','=',model)])
+        lids = lids[:1]
+        res = lids.read(['module'])
+        cr, uid, context = self.env.args
+        context = dict(context)
+        context.update({'depends': {}})
+        depends = context.get('depends')
+        self.env.args = cr, uid, misc.frozendict(context)
         if res:
-            self.depends[res[0]['module']]=True
-        fields = model_pool.fields_get(cr, uid)
+            depends[res[0]['module']]=True
+        fields = model_pool.fields_get()
         for key,val in data.items():
             if key in model_pool._columns.keys() and isinstance(model_pool._columns[key], openerp.osv.fields.function) and not model_pool._columns[key].store:
                 continue
@@ -123,14 +140,14 @@ class base_module_record(osv.Model):
                 if type(val) in (type(''),type(u'')):
                     id = val
                 else:
-                    id,update = self._get_id(cr, uid, fields[key]['relation'], val)
+                    id,update = self._get_id(fields[key]['relation'], val)
                     noupdate = noupdate or update
                 if not id:
-                    relation_pool = self.pool.get(fields[key]['relation'])
-                    
+                    relation_pool = self.env[fields[key]['relation']]
                     field.setAttribute("model", fields[key]['relation'])
                     fld_nm = relation_pool._rec_name
-                    name = relation_pool.read(cr, uid, val,[fld_nm])[fld_nm] or False
+                    val = relation_pool.browse(val)
+                    name = val.read([fld_nm])[0][fld_nm] or False
                     field.setAttribute("search", str([(str(fld_nm) ,'=', name)]))
                 else:
                     field.setAttribute("ref", id)
@@ -143,16 +160,16 @@ class base_module_record(osv.Model):
                         else:
                             model_pool._inherit_fields[key][2]._fields_id
                         if valitem[0] == 0:
-                            newid = self._create_id(cr, uid, fields[key]['relation'], valitem[2])
+                            newid = self._create_id(fields[key]['relation'], valitem[2])
                             valitem[1]=newid
                         else:
-                            newid,update = self._get_id(cr, uid, fields[key]['relation'], valitem[1])
+                            newid,update = self._get_id(fields[key]['relation'], valitem[1])
                             if not newid:
-                                newid = self._create_id(cr, uid, fields[key]['relation'], valitem[2])
+                                newid = self._create_id(fields[key]['relation'], valitem[2])
                                 valitem[1]=newid
                         self.blank_dict[(fields[key]['relation'], valitem[1])] = newid
                         
-                        childrecord, update = self._create_record(cr, uid, doc, fields[key]['relation'],valitem[2], newid)
+                        childrecord, update = self._create_record(doc, fields[key]['relation'],valitem[2], newid)
                         noupdate = noupdate or update
                         record_list += childrecord
                     else:
@@ -162,7 +179,7 @@ class base_module_record(osv.Model):
                 for valitem in (val or []):
                     if valitem[0]==6:
                         for id2 in valitem[2]:
-                            id,update = self._get_id(cr, uid, fields[key]['relation'], id2)
+                            id,update = self._get_id(fields[key]['relation'], id2)
                             self.blank_dict[(fields[key]['relation'],id2)] = id
                             noupdate = noupdate or update
                             res.append(id)
@@ -178,21 +195,30 @@ class base_module_record(osv.Model):
 
         return record_list, noupdate
 
-    def _create_yaml_record(self, cr, uid, model, data, record_id):
+    @api.model
+    def _create_yaml_record(self, model, data, record_id):
         record={'model': model, 'id': str(record_id)}
         
-        model_pool = self.pool.get(model)
-        data_pool = self.pool.get('ir.model.data')
-        lids  = data_pool.search(cr, uid, [('model','=',model)])
+        model_pool = self.env[model]
+        data_pool = self.env['ir.model.data']
+        lids  = data_pool.search([('model','=',model)])
         
-        res = data_pool.read(cr, uid, lids[:1], ['module'])
+        res = data_pool.read(lids[:1], ['module'])
         attrs={}
+        cr, uid, context = self.env.args
+        context = dict(context)
+        context.update({'depends': {}})
+        depends = context.get('depends')
+        self.env.args = cr, uid, misc.frozendict(context)
         if res:
-            self.depends[res[0]['module']]=True
-        fields = model_pool.fields_get(cr, uid)
+#            if depends is None:
+#                depends = {}
+            depends[res[0]['module']]=True
+#            self.depends[res[0]['module']]=True
+        fields = model_pool.fields_get()
         defaults={}
         try:
-            defaults[model] = model_pool.default_get(cr, uid, data)
+            defaults[model] = model_pool.default_get(data)
         except:
             defaults[model]={}
         for key,val in data.items():  
@@ -212,7 +238,7 @@ class base_module_record(osv.Model):
                 if type(val) in (type(''), type(u'')):
                     id = val
                 else:
-                    id, update = self._get_id(cr, uid, fields[key]['relation'], val)
+                    id, update = self._get_id(fields[key]['relation'], val)
                 attrs[key] = str(id)
             elif fields[key]['type'] in ('one2many',):
                 items=[[]]
@@ -224,7 +250,7 @@ class base_module_record(osv.Model):
                             fname = model_pool._inherit_fields[key][2]._fields_id
                         del valitem[2][fname] #delete parent_field from child's fields list
                         
-                        childrecord = self._create_yaml_record(cr, uid, fields[key]['relation'],valitem[2], None)
+                        childrecord = self._create_yaml_record(fields[key]['relation'],valitem[2], None)
                         items[0].append(childrecord['attrs'])
                 attrs[key] = items
             elif fields[key]['type'] in ('many2many',):
@@ -234,7 +260,7 @@ class base_module_record(osv.Model):
                 for valitem in (val or []):
                     if valitem[0]==6:
                         for id2 in valitem[2]:
-                            id,update = self._get_id(cr, uid, fields[key]['relation'], id2)
+                            id,update = self._get_id(fields[key]['relation'], id2)
                             self.blank_dict[(fields[key]['relation'],id2)] = id
                             res.append(str(id))
                         m2m=[res]
@@ -249,17 +275,18 @@ class base_module_record(osv.Model):
         record['attrs'] = attrs
         return record
 
-    def get_copy_data(self, cr, uid, model, id, result):
+    @api.model
+    def get_copy_data(self, model, id, result):
         res = []
-        obj=self.pool.get(model)
-        data=obj.read(cr, uid,[id])
+        obj = self.env[model]
+        data = self.pool[model].read(self._cr, self.env.user.id, [id], [])
         if type(data)==type([]):
             del data[0]['id']
             data=data[0]
         else:
             del data['id']
 
-        mod_fields = obj.fields_get(cr, uid)
+        mod_fields = obj.fields_get()
 #        for f in filter(lambda a: isinstance(obj._columns[a], fields.function)\
 #                    and (not obj._columns[a].store),obj._columns):
 #            del data[f]
@@ -287,7 +314,7 @@ class base_module_record(osv.Model):
                     res1=[]
                     for rel_id in data[key]:
                         res=[0,0]
-                        res.append(self.get_copy_data(cr, uid,rel,rel_id,{}))
+                        res.append(self.get_copy_data(rel,rel_id,{}))
                         res1.append(res)
                         
                     result[key]=res1
@@ -303,7 +330,8 @@ class base_module_record(osv.Model):
             del result[v]
         return result
 
-    def _create_function(self, cr, uid, doc, model, name, record_id):
+    @api.model
+    def _create_function(self, doc, model, name, record_id):
         record = doc.createElement('function')
         record.setAttribute("name", name)
         record.setAttribute("model", model)
@@ -316,84 +344,93 @@ class base_module_record(osv.Model):
         record.appendChild(value)
         return record_list, False
 
-    def _generate_object_xml(self, cr, uid, rec, recv, doc, result=None):
+    @api.model
+    def _generate_object_xml(self, rec, recv, doc, result=None):
         record_list = []
         noupdate = False
+        cr, uid, context = self.env.args
+        context = dict(context)
+        recording_data = context.get('recording_data')
         if rec[3]=='write':
             for id in rec[4]:
-                id,update = self._get_id(cr, uid, rec[2], id)
+                id,update = self._get_id(rec[2], id)
                 noupdate = noupdate or update
                 if not id:
                     continue
-                record,update = self._create_record(cr, uid, doc, rec[2], rec[5], id)
+                record,update = self._create_record(doc, rec[2], rec[5], id)
                 noupdate = noupdate or update
                 record_list += record
                 
         elif rec[4] in ('menu_create',):
             for id in rec[5]:
-                id,update = self._get_id(cr, uid, rec[3], id)
+                id,update = self._get_id(rec[3], id)
                 noupdate = noupdate or update
                 if not id:
                     continue
-                record,update = self._create_function(cr, uid, doc, rec[3], rec[4], id)
+                record,update = self._create_function(doc, rec[3], rec[4], id)
                 noupdate = noupdate or update
                 record_list += record
 
         elif rec[3]=='create':
-            id = self._create_id(cr, uid, rec[2],rec[4])
-            record,noupdate = self._create_record(cr, uid, doc, rec[2], rec[4], id)
+            id = self._create_id(rec[2],rec[4])
+            record,noupdate = self._create_record(doc, rec[2], rec[4], id)
             self.blank_dict[(rec[2], result)] = id
             record_list += record
 
         elif rec[3]=='copy':
-            data=self.get_copy_data(cr,uid,rec[2],rec[4],rec[5])
+            data=self.get_copy_data(rec[2],rec[4],rec[5])
             copy_rec=(rec[0],rec[1],rec[2],rec[3],rec[4],data,rec[5])
             rec=copy_rec
-            rec_data=[(self.recording_data[0][0],rec,self.recording_data[0][2],self.recording_data[0][3])]
-            self.recording_data=rec_data
-            id = self._create_id(cr, uid, rec[2],rec[5])
-            record,noupdate = self._create_record(cr, uid, doc, rec[2], rec[5], id)
+            rec_data=[(recording_data[0][0],rec,recording_data[0][2],recording_data[0][3])]
+            recording_data=rec_data
+            id = self._create_id(rec[2],rec[5])
+            record,noupdate = self._create_record(doc, rec[2], rec[5], id)
             self.blank_dict[(rec[2], result)] = id
             record_list += record
 
         return record_list,noupdate
 
-    def _generate_object_yaml(self, cr, uid, rec, result=None):
+    @api.model
+    def _generate_object_yaml(self, rec, result=None):
+        cr, uid, context = self.env.args
+        context = dict(context)
+        recording_data = context.get('recording_data')
         if self.mode=="create":
-            yml_id = self._create_id(cr, uid, rec[2],rec[4])
+            yml_id = self._create_id(rec[2],rec[4])
             self.blank_dict[(rec[2], result)] = yml_id
-            record = self._create_yaml_record(cr, uid, rec[2], rec[4], yml_id)
+            record = self._create_yaml_record(rec[2], rec[4], yml_id)
             return record
         if self.mode=="workflow":
-            id,update = self._get_id(cr, uid, rec[2], rec[4])
+            id,update = self._get_id(rec[2], rec[4])
             data = {}
             data['model'] = rec[2]
             data['action'] = rec[3]
             data['ref'] = id
             return data
         if self.mode=="write":
-            id,update = self._get_id(cr, uid, rec[2],rec[4][0])
-            record = self._create_yaml_record(cr, uid, rec[2], rec[5], id)
+            id,update = self._get_id(rec[2],rec[4][0])
+            record = self._create_yaml_record(rec[2], rec[5], id)
             return record
-        data=self.get_copy_data(cr,uid,rec[2],rec[4],rec[5])
+        data=self.get_copy_data(rec[2],rec[4],rec[5])
         copy_rec=(rec[0],rec[1],rec[2],rec[3],rec[4],data,rec[5])
         rec=copy_rec
-        rec_data=[(self.recording_data[0][0],rec,self.recording_data[0][2],self.recording_data[0][3])]
-        self.recording_data=rec_data
-        id = self._create_id(cr, uid, rec[2],rec[5])
-        record = self._create_yaml_record(cr, uid, str(rec[2]), rec[5], id)
+        rec_data=[(recording_data[0][0],rec,recording_data[0][2],recording_data[0][3])]
+        recording_data=rec_data
+        id = self._create_id(rec[2],rec[5])
+        record = self._create_yaml_record(str(rec[2]), rec[5], id)
         self.blank_dict[(rec[2], result)] = id
         return record
 
-    def _generate_function_yaml(self, cr, uid, args):
+    @api.model
+    def _generate_function_yaml(self, args):
         db, uid, model, action, ids, context = args
         temp_context = context.copy()
         active_id = temp_context['active_id']
         active_model = temp_context['active_model']
-        active_id, update = self._get_id(cr, uid, active_model, active_id)
+        active_id, update = self._get_id(active_model, active_id)
         if not active_id:
             active_id = 1
-        rec_id, noupdate = self._get_id(cr, uid, model, ids[0])
+        rec_id, noupdate = self._get_id(model, ids[0])
         temp_context['active_id'] = "ref('%s')"%unicode(active_id)
         temp_context['active_ids'][0] = "ref('%s')"%str(active_id)
         function={}
@@ -410,21 +447,28 @@ class base_module_record(osv.Model):
         attrs=str(attrs)+'})'
         function['attrs'] = attrs
         return function
-            
+
+    @api.model
     def _generate_assert_xml(self, rec, doc):
         pass
 
-    def generate_xml(self, cr, uid):
+    @api.model
+    def generate_xml(self):
         # Create the minidom document
-        if len(self.recording_data):
+        cr, uid, context = self.env.args
+        context = dict(context)
+        recording_data = context.get('recording_data')
+#        context = dict(self._context)
+#        self.env.args = misc.frozendict(context)
+        if len(recording_data):
             #upadate code here to pass blank dict into self replace with self.id = {} to self.blank_dict = {} 
             self.blank_dict = {}
             doc = minidom.Document()
             terp = doc.createElement("openerp")
             doc.appendChild(terp)
-            for rec in self.recording_data:
+            for rec in recording_data:
                 if rec[0]=='workflow':
-                    rec_id,noupdate = self._get_id(cr, uid, rec[1][2], rec[1][4])
+                    rec_id,noupdate = self._get_id(rec[1][2], rec[1][4])
                     if not rec_id:
                         continue
                     data = doc.createElement("data")
@@ -437,7 +481,7 @@ class base_module_record(osv.Model):
                         data.setAttribute("noupdate", "1")
                     wkf.setAttribute("ref", rec_id)
                 if rec[0]=='query':
-                    res_list,noupdate = self._generate_object_xml(cr, uid, rec[1], rec[2], doc, rec[3])
+                    res_list,noupdate = self._generate_object_xml(rec[1], rec[2], doc, rec[3])
                     data = doc.createElement("data")
                     if noupdate:
                         data.setAttribute("noupdate", "1")
@@ -449,12 +493,16 @@ class base_module_record(osv.Model):
                         pass
             return doc.toprettyxml(indent="\t").encode('utf-8')
 
-    def generate_yaml(self, cr, uid):
+    @api.model
+    def generate_yaml(self):
         self.blank_dict = {}
-        if len(self.recording_data):
+        cr, uid, context = self.env.args
+        context = dict(context)
+        recording_data = context.get('recording_data')
+        if len(recording_data):
             yaml_file='''\n'''
     
-            for rec in self.recording_data:
+            for rec in recording_data:
                 if rec[1][3] == 'create':
                     self.mode="create"
                 elif rec[1][3] == 'write':
@@ -468,12 +516,12 @@ class base_module_record(osv.Model):
                 else:
                     continue
                 if self.mode == "workflow":
-                    record = self._generate_object_yaml(cr, uid, rec[1],rec[0])
+                    record = self._generate_object_yaml(rec[1],rec[0])
                     yaml_file += "!comment Performing a workflow action %s on module %s"%(record['action'], record['model']) + '''\n'''
                     object = yaml.load(unicode('''\n !workflow %s \n'''%record,'iso-8859-1'))
                     yaml_file += str(object) + '''\n\n'''
                 elif self.mode == 'osv_memory_action':
-                    osv_action = self._generate_function_yaml(cr, uid, rec[1])
+                    osv_action = self._generate_function_yaml(rec[1])
                     yaml_file += "!comment Performing an osv_memory action %s on module %s"%(osv_action['action'], osv_action['model']) + '''\n'''
                     osv_action = yaml.load(unicode('''\n !python %s \n'''%osv_action,'iso-8859-1'))
                     yaml_file += str(osv_action) + '''\n'''
@@ -482,7 +530,7 @@ class base_module_record(osv.Model):
                     attrs = attrs.replace("'", '')
                     yaml_file += attrs + '''\n\n'''
                 else:
-                    record = self._generate_object_yaml(cr, uid, rec[1], rec[3])
+                    record = self._generate_object_yaml(rec[1], rec[3])
                     if self.mode == "create" or self.mode == "copy":
                         yaml_file += "!comment Creating a %s record"%(record['model']) + '''\n'''
                     else:
@@ -507,6 +555,5 @@ class base_module_record(osv.Model):
             yaml_result += line + '''\n'''
         return yaml_result
 
-base_module_record()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
