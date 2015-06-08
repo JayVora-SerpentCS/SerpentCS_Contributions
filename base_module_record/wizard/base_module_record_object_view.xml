@@ -6,7 +6,7 @@
             <field name="name">base_module_record_objects</field>
             <field name="model">base.module.record</field>
             <field name="arch" type="xml">
-                <form string="Objects Recording" version="7.0">
+                <form string="Objects Recording">
                  <sheet>
                     <group>
                     <field name="check_date"/>
@@ -61,7 +61,7 @@
             <field name="name">module.create.form</field>
             <field name="model">base.module.record.objects</field>
             <field name="arch" type="xml">
-                <form string="Module Recording" version="7.0">
+                <form string="Module Recording">
                  <sheet>
                     <group>
                     <separator string="Module successfully created !" colspan="4"/>
@@ -94,7 +94,7 @@
             <field name="name">info.start.form.view</field>
             <field name="model">base.module.record.objects</field>
             <field name="arch" type="xml">
-                <form string="Module Recording" version="7.0">
+                <form string="Module Recording">
                  <sheet>
                  <group>
                     <separator string="Module Information" colspan="4"/>
@@ -122,7 +122,7 @@
             <field name="name">module_recording_message</field>
             <field name="model">base.module.record.objects</field>
             <field name="arch" type="xml">
-                <form string="Module Recording" version="7.0">
+                <form string="Module Recording">
                  <sheet>
                     <label string="Thanks For using Module Recorder" colspan="4" align="0.0"/>
                     <separator string="" colspan="4"/>
@@ -138,7 +138,7 @@
             <field name="name">yml.save.form</field>
             <field name="model">base.module.record.objects</field>
             <field name="arch" type="xml">
-                <form string="Module Recording" version="7.0">
+                <form string="Module Recording">
                   <sheet>
                     <separator string="YAML file successfully created !" colspan="4"/>
                     <newline/>
