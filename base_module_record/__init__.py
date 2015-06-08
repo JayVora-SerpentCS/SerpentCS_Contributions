@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from . import base_module_record
-from . import wizard
+import base_module_record
+import wizard
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

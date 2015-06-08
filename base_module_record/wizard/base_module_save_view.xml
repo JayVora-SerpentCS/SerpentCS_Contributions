@@ -6,7 +6,7 @@
             <field name="name">base_module_save</field>
             <field name="model">base.module.save</field>
             <field name="arch" type="xml">
-                <form string="Module Recording" version="7.0">
+                <form string="Module Recording">
                  <sheet>
                     <separator string="Recording Information" colspan="4"/>
                     <field name="info_status"/>
