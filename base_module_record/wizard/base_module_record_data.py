@@ -34,11 +34,9 @@ class base_module_data(models.TransientModel):
 
     @api.model
     def _get_default_objects(self):
-        names = ('ir.ui.view', 
-#                 'ir.ui.menu', 'ir.model', 'ir.model.fields', 'ir.model.access',
-#            'res.partner', 'res.partner.category', 'workflow',
-#            'workflow.activity', 'workflow.transition', 'ir.actions.server', 'ir.server.object.lines'
-            )
+        names = ('ir.ui.view', 'ir.ui.menu', 'ir.model', 'ir.model.fields', 'ir.model.access',
+            'res.partner', 'res.partner.category', 'workflow',
+            'workflow.activity', 'workflow.transition', 'ir.actions.server', 'ir.server.object.lines')
         return self.env['ir.model'].search([('model', 'in', names)])
 
     check_date = fields.Datetime('Record from Date', required=True, default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
