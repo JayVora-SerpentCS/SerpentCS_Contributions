@@ -54,4 +54,5 @@ Select datetime criteria of recording and objects to be recorded and Record modu
     'auto_install':False,
     'images': ['images/base_module_record1.jpeg','images/base_module_record2.jpeg','images/base_module_record3.jpeg',]
 }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
