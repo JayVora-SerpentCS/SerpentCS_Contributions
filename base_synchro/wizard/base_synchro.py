@@ -20,17 +20,12 @@
 #
 ##############################################################################
 
-from datetime import date
 import time
-from openerp import pooler
 import xmlrpclib
-import re
-from openerp import tools
 import threading
-import unicodedata
-from openerp import models, fields, api, _
-from openerp.tools.misc import frozendict
-
+from openerp import pooler
+from openerp.tools import frozendict
+from openerp import models, fields, api
 
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
@@ -42,14 +37,16 @@ class RPCProxyOne(object):
         self.rpc = xmlrpclib.ServerProxy(local_url)
         self.ressource = ressource
     def __getattr__(self, name):
-        pool1 = RPCProxy(self.server)
-        sync_obj = pool1.get('base.synchro.obj')
+        RPCProxy(self.server)
+#        pool1 = RPCProxy(self.server)
+#        sync_obj = pool1.get('base.synchro.obj')
 #        return self.rpc.execute(self.server.server_db, self.uid, sync_obj, name, (), {})
         return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.server_db, self.uid, self.server.password, self.ressource, name, *args)
 
 class RPCProxy(object):
     def __init__(self, server):
         self.server = server
+
     def get(self, ressource):
         return RPCProxyOne(self.server, ressource)
 
@@ -60,7 +57,7 @@ class base_synchro(models.TransientModel):
     server_url = fields.Many2one('base.synchro.server', "Server URL", required=True)
     user_id = fields.Many2one('res.users', "Send Result To",default=lambda self: self.env.user)
 
-    start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
+#    start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
     report = []
     report_total = 0
     report_create = 0
@@ -85,7 +82,7 @@ class base_synchro(models.TransientModel):
         ids = []
         pool1 = RPCProxy(server)
         pool2 = pool
-        context = dict(self._context)
+#        context = dict(self._context)
         # try:
         if object.action in ('d', 'b'):
             ids = pool1.get('base.synchro.obj').get_ids(self._cr, self.user_id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'d'})
@@ -126,7 +123,6 @@ class base_synchro(models.TransientModel):
             for field in object.avoid_ids:
                 if field.name in value:
                     del value[field.name]
-
             if id2:
                 # try:
                 pool_dest.get(object.model_id.model).write(self._cr, self.user_id.id, [id2], value)
@@ -135,9 +131,10 @@ class base_synchro(models.TransientModel):
                 self.report_total += 1
                 self.report_write += 1
             else:
-                value_encode = self.input(ids, value)
-                idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value_encode)
-                synid = self.env['base.synchro.obj.line'].create({
+#                value_encode = self.input(ids, value)
+#                idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value_encode)
+                idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value)
+                self.env['base.synchro.obj.line'].create({
                     'obj_id': object.id,
                     'local_id': (action == 'u') and id or idnew,
                     'remote_id': (action == 'd') and id or idnew
@@ -160,31 +157,31 @@ class base_synchro(models.TransientModel):
         return result
 
     @api.model
-    def relation_transform(self, pool_src, pool_dest, object, id, action):
-        if not id:
+    def relation_transform(self, pool_src, pool_dest, obj_model, res_id, action):
+        if not res_id:
             return False
-        pool = pooler.get_pool(self.env.cr.dbname)
+#        pool = pooler.get_pool(self.env.cr.dbname)
         self._cr.execute('''select o.id from base_synchro_obj o left join ir_model m on (o.model_id =m.id) where
                 m.model=%s and
-                o.active''', (object,))
+                o.active''', (obj_model,))
         obj = self._cr.fetchone()
         result = False
         if obj:
             #
             # If the object is synchronised and found, set it
             #
-            result = self.get_id(obj[0], id, action)
+            result = self.get_id(obj[0], res_id, action)
         else:
             #
             # If not synchronized, try to find it with name_get/name_search
             #
-            names = pool_src.get(object).name_get(self._cr, self.user_id.id, [id])[0][1]
-            res = pool_dest.get(object).name_search(self._cr, self.user_id.id, names, [], 'like')
+            names = pool_src.get(obj_model).name_get(self._cr, self.user_id.id, [res_id])[0][1]
+            res = pool_dest.get(obj_model).name_search(self._cr, self.user_id.id, names, [], 'like')
             if res:
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                print self.report.append('WARNING: Record "%s" on relation %s not found, set to null.' % (names, object))
+                print self.report.append('WARNING: Record "%s" on relation %s not found, set to null.' % (names, obj_model))
         return result
 
     #
@@ -195,20 +192,19 @@ class base_synchro(models.TransientModel):
     #
 
     @api.model
-    def data_transform(self, pool_src, pool_dest, object, data, action=None):
+    def data_transform(self, pool_src, pool_dest, obj, data, action=None):
         if action is None:
             action = {}
 #        self.meta.setdefault(pool_src, {})
-#        if not object in self.meta[pool_src]:
-        fields = pool_src.get(object).fields_get(self._cr, self.user_id.id)
-#        fields = self.meta[pool_src][object]
+#        if not obj in self.meta[pool_src]:
+        fields = pool_src.get(obj).fields_get(self._cr, self.user_id.id)
+#        fields = self.meta[pool_src][obj]
         for f in fields:
             if f not in data:
                 continue
             ftype = fields[f]['type']
             if ftype in ('function', 'one2many', 'one2one'):
                 del data[f]
-            
             elif ftype == 'many2one':
                 if (isinstance(data[f], list)) and data[f]:
                     fdata = data[f][0]
@@ -218,7 +214,6 @@ class base_synchro(models.TransientModel):
                 data[f] = df
                 if not data[f]:
                     del data[f]
-            
             elif ftype == 'many2many':
                 res = map(lambda x: self.relation_transform(pool_src, pool_dest, fields[f]['relation'], x, action), data[f])
                 data[f] = [(6, 0, [x for x in res if x])]
@@ -234,20 +229,20 @@ class base_synchro(models.TransientModel):
     def upload_download(self):
         start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
         syn_obj = self.browse(self.ids)[0]
-        pool = pooler.get_pool(self.env.cr.dbname)
+#        pool = pooler.get_pool(self.env.cr.dbname)
         server = self.env['base.synchro.server'].browse(syn_obj.server_url.id)
-        for object in server.obj_ids:
+        for obj_rec in server.obj_ids:
             dt = time.strftime('%Y-%m-%d %H:%M:%S')
-            self.synchronize(server, object)
-            if object.action == 'b':
+            self.synchronize(server, obj_rec)
+            if obj_rec.action == 'b':
                 time.sleep(1)
                 dt = time.strftime('%Y-%m-%d %H:%M:%S')
             self.env['base.synchro.obj'].write({'synchronize_date': dt})
         end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
-        return {}
+#        return {}
         if syn_obj.user_id:
-#            request = pooler.get_pool(self.env.cr.dbname).get('res.request')
-#            print "request>>", request
+            cr, uid, context = self.env.args
+            request = pooler.get_pool(cr.dbname).get('res.request')
             if not self.report:
                 self.report.append('No exception.')
             summary = '''Here is the synchronization report:
@@ -263,13 +258,14 @@ Exceptions:
             ''' % (start_date, end_date, self.report_total, self.report_write, self.report_create)
             summary += '\n'.join(self.report)
             if request:
-                request.create({
+                request.create(cr, uid, {
                     'name' : "Synchronization report",
-                    'act_from' : uid,
+                    'act_from' : self.user_id.id,
+                    'date': time.strftime('%Y-%m-%d, %H:%M:%S'),
                     'act_to' : syn_obj.user_id.id,
                     'body': summary,
-                })
-            return True
+                }, context=context)
+            return {}
 
     @api.multi
     def upload_download_multi_thread(self):
