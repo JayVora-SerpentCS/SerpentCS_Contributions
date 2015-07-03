@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_res_request_form" model="ir.ui.view">
+            <field name="name">res.request.form</field>
+            <field name="model">res.request</field>
+            <field name="arch" type="xml">
+                <form string="Res Request">
+                    <sheet>
+                        <group col="4">
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="act_from"/>
+                            <field name="act_to"/>
+                        </group>
+                        <separator string="Message"/>
+                        <field name="body"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_res_request_tree" model="ir.ui.view">
+            <field name="name">res.request.tree</field>
+            <field name="model">res.request</field>
+            <field name="arch" type="xml">
+                <tree string="Res Request">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="act_from"/>
+                    <field name="act_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_res_request_search" model="ir.ui.view">
+            <field name="name">res.request.search</field>
+            <field name="model">res.request</field>
+            <field name="arch" type="xml">
+                <search string="Res Request">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="act_from"/>
+                    <field name="act_to"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Date" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Action From" domain="[]" context="{'group_by':'act_from'}"/>
+                        <filter string="Action To" domain="[]" context="{'group_by':'act_to'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_res_request" model="ir.actions.act_window">
+            <field name="name">Request Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_res_request_search"/>
+        </record>
+
+        <menuitem id="menu_res_request" action="action_res_request" parent="base_synchro.next_id_63"/>
+
+    </data>
+</openerp>

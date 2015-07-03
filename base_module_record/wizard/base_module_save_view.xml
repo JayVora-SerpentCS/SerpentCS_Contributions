@@ -6,24 +6,22 @@
             <field name="name">base_module_save</field>
             <field name="model">base.module.save</field>
             <field name="arch" type="xml">
-                <form string="Module Recording" version="7.0">
-                 <sheet>
-                    <separator string="Recording Information" colspan="4"/>
+                <form string="Module Recording">
+                    <separator string="Recording Information"/>
                     <field name="info_status"/>
-                    <field name="info_text" colspan="4" nolabel="1"/>
-                    <field name="info_yaml" colspan="4"/>
-                    <separator colspan="4"/>
-                    <group colspan="4" col="2">
-                        <button icon="gtk-cancel" string="Cancel" special="cancel"/>
-                        <button name="record_save" icon="gtk-ok" string="Continue" type="object"/>
-                    </group>
-                  </sheet>
+                    <field name="info_text" nolabel="1"/>
+                    <field name="info_yaml"/>
+                    <footer>
+                        <button name="record_save" string="Continue" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
                 </form>
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="action_base_module_save">
-            <field name="name">Publish as module</field>
+        <record id="action_base_module_save" model="ir.actions.act_window">
+            <field name="name">Publish as Module</field>
             <field name="res_model">base.module.save</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
@@ -36,7 +34,7 @@
             name="Publish as Module"
             action="action_base_module_save"
             id="menu_wizard_base_module_save"/>
-    
+
         <act_window
             id="act_base_module_save"
             name="Publish as Module"
@@ -45,7 +43,7 @@
             view_mode="form"
             target="new"
             multi="True"
-            key2="client_action_multi"/> 
-    
+            key2="client_action_multi"/>
+
     </data>
-</openerp>            
+</openerp>

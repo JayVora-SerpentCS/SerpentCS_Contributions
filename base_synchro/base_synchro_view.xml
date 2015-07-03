@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-	<menuitem id="synch_config" name="Synchronization" parent="base.menu_config" sequence="30"/>
+
+        <menuitem id="synch_config" name="Synchronization" parent="base.menu_config" sequence="30"/>
         <record id="view_transfer_line_tree" model="ir.ui.view">
             <field name="name">base.synchro.obj.line.tree</field>
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
-                <tree string="Transfered Ids Details">
+                <tree string="Transfered IDs Details">
                     <field name="name" select="1"/>
                     <field name="obj_id" select="1"/>
                     <field name="local_id" select="2"/>
@@ -19,7 +20,7 @@
             <field name="name">base.synchro.obj.line.form</field>
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
-                <form string="Transfered Ids Details" version="7.0">
+                <form string="Transfered IDs Details">
                 <sheet>
                     <group col="4">
                         <field name="name" select="1"/>
@@ -37,15 +38,11 @@
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
                 <search string="Transfered Ids Details">
-                    <group>
-                      <field name="name"/>
-                      <field name="obj_id"/>
-                    </group>
-                    <newline/>
+                    <field name="name"/>
+                    <field name="obj_id"/>
                     <group expand="0" string="Group By">
-                      <filter string="Object" icon="terp-stock_align_left_24" domain="[]" context="{'group_by':'obj_id'}"/>
-                      <separator orientation="vertical"/>
-                      <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'name'}"/>
+                        <filter string="Object" domain="[]" context="{'group_by':'obj_id'}"/>
+                        <filter string="Date" domain="[]" context="{'group_by':'name'}"/>
                     </group>
                 </search>
             </field>
@@ -62,13 +59,13 @@
             <field name="search_view_id" ref="ir_filters_transfer_line_form"/>
         </record>
 
-
         <record id="action_base_synchro_obj_line_tree" model="ir.actions.act_window">
             <field name="name">Synchronized instances</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">base.synchro.obj.line</field>
             <field name="view_type">form</field>
         </record>
+
         <menuitem id="next_id_63" name="History"  groups="base.group_no_one" parent="base_synchro.next_id_62"/>
         <menuitem action="action_base_synchro_obj_line_tree" id="menu_action_base_synchro_obj_line_tree" parent="base_synchro.next_id_63"/>
 
@@ -78,9 +75,9 @@
             <field name="name">base.synchro.obj.form</field>
             <field name="model">base.synchro.obj</field>
             <field name="arch" type="xml">
-                <form string="Transfer Details" version="7.0">
+                <form string="Transfer Details">
                     <sheet>
-                        <group col="4" colspan="4">
+                        <group col="4">
                             <field name="name" select="1"/>
                             <field name="active" select="2"/>
                             <field name="server_id" select="2"/>
@@ -89,13 +86,13 @@
                             <field name="sequence"/>
                             <field colspan="4" name="domain"/>
                             <field name="synchronize_date"/>
-                            <newline/>
-                            <field name="avoid_ids" colspan="4" nolabel="1">
+                        </group>
+                        <separator string="Fields Not Sync."/>
+                        <field name="avoid_ids">
                             <tree string="Fields" editable="bottom">
                                 <field name="name"/>
                             </tree>
-                            </field>
-                        </group>
+                        </field>
                     </sheet>
                 </form>
             </field>
@@ -105,7 +102,7 @@
             <field name="name">base.synchro.obj.tree</field>
             <field name="model">base.synchro.obj</field>
             <field name="arch" type="xml">
-                <tree string="Synchronized objects">
+                <tree string="Synchronized Objects">
                     <field name="sequence"/>
                     <field name="name"/>
                     <field name="model_id"/>
@@ -121,15 +118,11 @@
             <field name="model">base.synchro.obj</field>
             <field name="arch" type="xml">
                 <search string="Synchronized objects">
-                    <group >
-                      <field name="model_id"/>
-                      <field name="synchronize_date"/>
-                    </group>
-                    <newline/>
+                    <field name="model_id"/>
+                    <field name="synchronize_date"/>
                     <group expand="0" string="Group By">
-                      <filter string="Object to synchronize" icon="terp-stock_align_left_24" domain="[]" context="{'group_by':'model_id'}"/>
-                      <separator orientation="vertical"/>
-                      <filter string="Latest synchronization" icon="terp-go-month" domain="[]" context="{'group_by':'synchronize_date'}"/>
+                      <filter string="Object to synchronize" domain="[]" context="{'group_by':'model_id'}"/>
+                      <filter string="Latest synchronization" domain="[]" context="{'group_by':'synchronize_date'}"/>
                     </group>
                 </search>
             </field>
@@ -173,17 +166,17 @@
             <field name="name">base.synchro.server.form</field>
             <field name="model">base.synchro.server</field>
             <field name="arch" type="xml">
-                <form string="Synchronized server" version="7.0">
+                <form string="Synchronized server">
                     <sheet>
-                            <group colspan="4" col="4">
-                                <field name="name"/>
-                                <field name="login"/>
-                                <field name="password" password="True"/>
-                                <field name="server_url"/>
-                                <field name="server_port"/>
-                                <field name="server_db"/>
-                            </group>
-                     </sheet>
+                        <group colspan="4" col="4">
+                            <field name="name"/>
+                            <field name="login"/>
+                            <field name="password" password="True"/>
+                            <field name="server_url"/>
+                            <field name="server_port"/>
+                            <field name="server_db"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -196,7 +189,6 @@
         </record>
 
         <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id" parent="base_synchro.synch_config"/>
-
 <!--view_base_synchro_server end -->
 
     </data>

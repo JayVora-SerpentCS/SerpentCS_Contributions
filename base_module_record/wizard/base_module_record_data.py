@@ -1,13 +1,13 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -19,84 +19,87 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields, osv
-from openerp import tools
-from openerp.tools.translate import _
-
 import time
+from openerp.tools import frozendict, ustr
+from openerp.tools.translate import _
+from openerp import models, fields, api
 
-class base_module_data(orm.TransientModel):
-    _name = 'base.module.data'
+class base_module_data(models.TransientModel):
+    _name = "base.module.data"
     _description = "Base Module Data"
 
-    _columns = {
-        'check_date': fields.datetime('Record from Date', required=True),
-        'objects': fields.many2many('ir.model', 'base_module_record_model_rel', 'objects', 'model_id', 'Objects'),
-        'filter_cond': fields.selection([('created', 'Created'), ('modified', 'Modified'), ('created_modified', 'Created & Modified')], 'Records only', required=True),
-        'info_yaml': fields.boolean('YAML'),
-    }
+    @api.model
+    def _get_default_objects(self):
+        names = ('ir.ui.view', 'ir.ui.menu', 'ir.model', 'ir.model.fields',
+                 'ir.model.access', 'res.partner', 'res.partner.category',
+                 'workflow', 'workflow.activity', 'workflow.transition',
+                 'ir.actions.server', 'ir.server.object.lines')
+        return self.env['ir.model'].search([('model', 'in', names)])
 
-    def _get_default_objects(self, cr, uid, context=None):
-        names = ('ir.ui.view', 'ir.ui.menu', 'ir.model', 'ir.model.fields', 'ir.model.access',
-            'res.partner', 'res.partner.category', 'workflow',
-            'workflow.activity', 'workflow.transition', 'ir.actions.server', 'ir.server.object.lines')
-        return self.pool.get('ir.model').search(cr, uid, [('model', 'in', names)])
+    check_date = fields.Datetime('Record from Date', required=True, default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
+    objects = fields.Many2many('ir.model', 'base_module_record_model_rel', 'objects', 'model_id', 'Objects', default=_get_default_objects)
+    filter_cond = fields.Selection([('created', 'Created'), ('modified', 'Modified'), ('created_modified', 'Created & Modified')], 'Records only', required=True, default='created')
+    info_yaml = fields.Boolean('YAML')
 
-    _defaults = {
-        'check_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'objects': _get_default_objects,
-        'filter_cond': 'created',
-    }
-    
-    def _create_xml(self, cr, uid, data, context=None):
-        mod = self.pool.get('ir.module.record')
-        res_xml = mod.generate_xml(cr, uid)
-        return {'res_text': res_xml }
-    
-    def _create_yaml(self, cr, uid, data, context=None):
-        mod = self.pool.get('ir.module.record')
-        res_xml = mod.generate_yaml(cr, uid)
-        return { 'res_text': res_xml }    
-    
-    def record_objects(self, cr, uid, ids, context=None):
-        data = self.read(cr, uid, ids, [], context=context)[0]
+    @api.model
+    def _create_xml(self, data):
+        mod = self.env['ir.module.record']
+        res_xml = mod.generate_xml()
+        return {'res_text': res_xml}
+
+    @api.model
+    def _create_yaml(self, data):
+        mod = self.env['ir.module.record']
+        res_xml = mod.generate_yaml()
+        return { 'res_text': res_xml}
+
+    @api.multi
+    def record_objects(self):
+        data = self.read([])[0]
         check_date = data['check_date']
-        filter = data['filter_cond']
-        user = (self.pool.get('res.users').browse(cr, uid, uid)).login
-        mod = self.pool.get('ir.module.record')
-        mod_obj = self.pool.get('ir.model')
-        mod.recording_data = []
+        filter_cond = data['filter_cond']
+#        user = (self.env['res.users'].browse(self.env.user.id)).login
+#        mod = self.env['ir.module.record']
+        mod_obj = self.env['ir.model']
+#        mod.recording_data = []
+        cr, uid, context = self.env.args
+        context = dict(context)
+        context.update({'recording_data': []})
+        recording_data = context.get('recording_data')
+        self.env.args = cr, uid, frozendict(context)
         for id in data['objects']:
-            obj_name=(mod_obj.browse(cr, uid, id)).model
-            obj_pool=self.pool.get(obj_name)
-            if filter =='created':
-                search_condition =[('create_date','>',check_date)]
-            elif filter =='modified':
-                search_condition =[('write_date','>',check_date)]
-            elif filter =='created_modified':
-                search_condition =['|',('create_date','>',check_date),('write_date','>',check_date)]
+            obj_name = (mod_obj.browse(id)).model
+            obj_pool = self.env[obj_name]
+            if filter_cond == 'created':
+                search_condition = [('create_date', '>', check_date)]
+            elif filter_cond == 'modified':
+                search_condition = [('write_date', '>', check_date)]
+            elif filter_cond == 'created_modified':
+                search_condition = ['|', ('create_date', '>', check_date), ('write_date', '>', check_date)]
             if '_log_access' in dir(obj_pool):
-                  if not (obj_pool._log_access):
-                      search_condition=[]
-                  if '_auto' in dir(obj_pool):
-                      if not obj_pool._auto:
-                          continue
-            search_ids=obj_pool.search(cr,uid,search_condition)
+                if not (obj_pool._log_access):
+                    search_condition = []
+                if '_auto' in dir(obj_pool):
+                    if not obj_pool._auto:
+                        continue
+            search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
-                 args=(cr.dbname,uid,obj_name,'copy', s_id,{}, context)
-                 mod.recording_data.append(('query', args, {}, s_id))
-         
-        mod_obj = self.pool.get('ir.model.data')
-        if len(mod.recording_data):
+                dbname = self.env.cr.dbname
+                args = (dbname, self.env.user.id, obj_name, 'copy', s_id.id, {})
+                recording_data.append(('query', args, {}, s_id.id))
+        mod_obj = self.env['ir.model.data']
+        if len(recording_data):
             if data['info_yaml']:
-                res=self._create_yaml(cr, uid, data, context)
+                res = self._create_yaml(data)
             else:
-                res=self._create_xml(cr, uid, data, context)
-            model_data_ids = mod_obj.search(cr, uid, [('model', '=', 'ir.ui.view'), ('name', '=', 'module_create_xml_view')], context=context)
-            resource_id = mod_obj.read(cr, uid, model_data_ids, fields=['res_id'], context=context)[0]['res_id']
+                res = self._create_xml(data)
+            model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_create_xml_view')])
+            resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+#            model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_create_xml_view')])
+#            resource_id = mod_obj.read(model_data_ids, fields=['res_id'])[0]['res_id']
             return {
                 'name': _('Data Recording'),
-                'context': {'default_res_text': tools.ustr(res['res_text'])},
+                'context': {'default_res_text': ustr(res['res_text'])},
                 'view_type': 'form',
                 'view_mode': 'form',
                 'res_model': 'base.module.record.data',
@@ -104,12 +107,13 @@ class base_module_data(orm.TransientModel):
                 'type': 'ir.actions.act_window',
                 'target': 'new',
             }
-
-        model_data_ids = mod_obj.search(cr, uid,[('model', '=', 'ir.ui.view'), ('name', '=', 'module_recording_message_view')], context=context)
-        resource_id = mod_obj.read(cr, uid, model_data_ids, fields=['res_id'], context=context)[0]['res_id']
+        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_recording_message_view')])
+#        mod_ids = mod_obj.browse(model_data_ids)
+#        mod_ids = [mod_id.id for mod_id in model_data_ids]
+        resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
-            'context': context,
+            'context': {},
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'base.module.record.objects',
@@ -118,16 +122,10 @@ class base_module_data(orm.TransientModel):
             'target': 'new',
         }
 
-base_module_data()
-
-class base_module_record_data(orm.TransientModel):
-    _name = 'base.module.record.data'
+class base_module_record_data(models.TransientModel):
+    _name = "base.module.record.data"
     _description = "Base Module Record Data"
-                
-    _columns = {
-        'res_text': fields.text('Result'),
-    }    
-    
-base_module_record_data()
+
+    res_text = fields.Text('Result')
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
