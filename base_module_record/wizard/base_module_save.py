@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
+#    (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,14 +20,14 @@
 #
 ##############################################################################
 
+import base64
 import zipfile
 import StringIO
-import base64
-
 from openerp.tools import ustr
-from openerp.exceptions import except_orm
 from openerp.tools.translate import _
 from openerp import models, fields, api
+from openerp.exceptions import except_orm
+
 
 @api.model
 def _create_yaml(self, data):
@@ -36,8 +37,9 @@ def _create_yaml(self, data):
     except Exception, e:
         raise except_orm(_('Error'), _(str(e)))
     return {
-    'yaml_file': base64.encodestring(res_xml),
-}
+        'yaml_file': base64.encodestring(res_xml),
+    }
+
 
 @api.model
 def _create_module(self, cr, uid, ids, context=None):
@@ -83,10 +85,12 @@ def _create_module(self, cr, uid, ids, context=None):
             datastr = ''
         zip_file.writestr(info, datastr)
     zip_file.close()
+    module_filename = data['directory_name'] + '-' + data['version'] + '.zip'
     return {
         'module_file': base64.encodestring(s.getvalue()),
-        'module_filename': data['directory_name'] + '-' + data['version'] + '.zip'
+        'module_filename': module_filename,
     }
+
 
 class base_module_save(models.TransientModel):
     _name = 'base.module.save'
@@ -120,23 +124,27 @@ class base_module_save(models.TransientModel):
         return res
 
     info_text = fields.Text('Information', readonly=True)
-    info_status = fields.Selection([('no', 'Not Recording'),('record', 'Recording')], 'Status', readonly=True)
+    info_status = fields.Selection([('no', 'Not Recording'),
+                                    ('record', 'Recording')],
+                                   'Status', readonly=True)
     info_yaml = fields.Boolean('YAML')
 
     @api.multi
     def record_save(self):
-        data = self.read(self._cr, self.user_id.id, ids, [])[0]
-#        mod = self.env['ir.module.record']
+        data = self.read([])[0]
         mod_obj = self.env['ir.model.data']
         cr, uid, context = self.env.args
         context = dict(context)
         recording_data = context.get('recording_data')
         if len(recording_data):
             if data['info_yaml']:
-#                mod = self.env['ir.module.record']
                 res = _create_yaml(self, data)
-                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'yml_save_form_view')])
-                resource_id = mod_obj.read(self._cr, self.user_id.id, model_data_ids, fields=['res_id'])[0]['res_id']
+                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
+                                                 ('name', '=',
+                                                  'yml_save_form_view')])
+                resource_id = mod_obj.read(self._cr, self.user_id.id,
+                                           model_data_ids,
+                                           fields=['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
                     'context': {
@@ -150,8 +158,12 @@ class base_module_save(models.TransientModel):
                     'target': 'new',
                 }
             else:
-                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'info_start_form_view')])
-                resource_id = mod_obj.read(self._cr, self.user_id.id, model_data_ids, fields=['res_id'])[0]['res_id']
+                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
+                                                 ('name', '=',
+                                                  'info_start_form_view')])
+                resource_id = mod_obj.read(self._cr, self.user_id.id,
+                                           model_data_ids,
+                                           fields=['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
                     'context': context,
@@ -162,8 +174,11 @@ class base_module_save(models.TransientModel):
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
-        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_recording_message_view')])
-        resource_id = mod_obj.read(model_data_ids, fields=['res_id'])[0]['res_id']
+        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
+                                         ('name', '=',
+                                          'module_recording_message_view')])
+        resource_id = mod_obj.read(model_data_ids,
+                                   fields=['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
             'context': context,
