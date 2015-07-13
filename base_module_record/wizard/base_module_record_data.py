@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
-#    (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services
+#     Pvt.Ltd. (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -25,7 +25,7 @@ from openerp.tools.translate import _
 from openerp.tools import frozendict, ustr
 from openerp import models, fields, api
 
-
+    
 class base_module_data(models.TransientModel):
     _name = "base.module.data"
     _description = "Base Module Data"
@@ -36,12 +36,15 @@ class base_module_data(models.TransientModel):
                  'ir.model.access', 'res.partner', 'res.partner.category',
                  'workflow', 'workflow.activity', 'workflow.transition',
                  'ir.actions.server', 'ir.server.object.lines')
-        return self.env['ir.model'].search([('model', 'in', names)])
-
-    check_date = fields.Datetime('Record from Date', required=True,
+        return self.env['ir.model'].search
+        ([('model', 'in', names)])
+    
+    check_date = fields.Datetime('Record from Date',
+                                  required=True,
                                  default=lambda *a:
                                  time.strftime('%Y-%m-%d %H:%M:%S'))
-    objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
+    objects = fields.Many2many('ir.model',
+                               'base_module_record_model_rel',
                                'objects', 'model_id', 'Objects',
                                default=_get_default_objects)
     filter_cond = fields.Selection([('created', 'Created'),
@@ -76,7 +79,8 @@ class base_module_data(models.TransientModel):
         cr, uid, context = self.env.args
         context = dict(context)
         context.update({'recording_data': []})
-        recording_data = context.get('recording_data')
+        recording_data = context.get
+        ('recording_data')
         self.env.args = cr, uid, frozendict(context)
         for id in data['objects']:
             obj_name = (mod_obj.browse(id)).model
@@ -94,7 +98,8 @@ class base_module_data(models.TransientModel):
                 if '_auto' in dir(obj_pool):
                     if not obj_pool._auto:
                         continue
-            search_ids = obj_pool.search(search_condition)
+            search_ids = obj_pool.search
+            (search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
                 args = (dbname, self.env.user.id, obj_name,
@@ -109,7 +114,8 @@ class base_module_data(models.TransientModel):
             model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
                                              ('name', '=',
                                               'module_create_xml_view')])
-            resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+            resource_id = model_data_ids.read
+            (['res_id'])[0]['res_id']
             return {
                 'name': _('Data Recording'),
                 'context': {'default_res_text': ustr(res['res_text'])},
@@ -140,6 +146,8 @@ class base_module_record_data(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
 
+
     res_text = fields.Text('Result')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
