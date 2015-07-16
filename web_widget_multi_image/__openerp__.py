@@ -22,9 +22,9 @@
 ##############################################################################
 
 {
-    "name" : "Web Widget Multi Image V8",
-    "version" : "1.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
+    "name": "Web Widget Multi Image V8",
+    "version": "1.0",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": 'Image',
     'complexity': "easy",
     'depends': ['product'],

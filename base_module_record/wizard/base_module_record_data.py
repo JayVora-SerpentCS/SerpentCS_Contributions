@@ -40,7 +40,7 @@ class base_module_data(models.TransientModel):
 
     check_date = fields.Datetime('Record from Date', required=True,
                                  default=lambda *a:
-                                 time.strftime('%Y-%m-%d %H:%M:%S'))
+                                time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
                                'objects', 'model_id', 'Objects',
                                default=_get_default_objects)

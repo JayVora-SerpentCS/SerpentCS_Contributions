@@ -26,11 +26,9 @@ from openerp.addons.web.controllers.main import Binary
 from openerp.http import serialize_exception
 import simplejson
 import time
-import openerp
 import os
 import StringIO
 import functools
-import base64
 
 
 def serialize_exception(f):
@@ -46,8 +44,10 @@ def serialize_exception(f):
                 'message': "Odoo Server Error",
                 'data': se
             }
-            return werkzeug.exceptions.InternalServerError(simplejson.dumps(error))
+            return werkzeug.exceptions.InternalServerError
+        (simplejson.dumps(error))
     return wrap
+
 
 class Binary_multi(Binary):
 
@@ -58,18 +58,20 @@ class Binary_multi(Binary):
         :param str path: path of image stored in server.
         """
         if path:
-            addons_path = http.addons_manifest['web']['addons_path'] 
+            addons_path = http.addons_manifest['web']['addons_path']
             file_path = addons_path + path
             try:
                 if os.path.isfile(file_path):
                     os.unlink(file_path)
-            except Exception, e:
+            except Exception:
                 return
         return
+    
     @http.route('/web/binary/upload_image_multi', type='http', auth="user")
     @serialize_exception
     def upload_image_multi(self, callback, ufile):
-        # TODO: might be useful to have a configuration flag for max-length file uploads
+        # TODO: might be useful to have a configuration flag for
+        # max-length file uploads
         out = """<script language="javascript" type="text/javascript">
                     var win = window.top.window;
                     win.jQuery(win).trigger(%s, %s);
