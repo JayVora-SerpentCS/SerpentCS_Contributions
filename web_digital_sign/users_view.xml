@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
 <openerp>
 	<data>
-		<record id="inherited_res_users_form123" model="ir.ui.view">
-            <field name="name">inherited.res.users.form123</field>
+		<record id="inherited_res_users_form" model="ir.ui.view">
+            <field name="name">inherited.res.users.form</field>
             <field name="model">res.users</field>
             <field name="inherit_id" ref="mail.view_users_form_mail"/>
             <field name="arch" type="xml">
 				<field name="signature" position="replace">
-				<label for="signature_image" class="oe_edit_only"/>
-				<h2><field name="signature_image" widget="signature"/></h2>
+					<label for="signature_image" class="oe_edit_only"/>
+					<h2><field name="signature_image" widget="signature"/></h2>
             	</field>
      		</field>
         </record>
