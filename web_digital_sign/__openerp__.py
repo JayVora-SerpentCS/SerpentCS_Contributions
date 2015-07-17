@@ -26,7 +26,7 @@
     "author" : "Serpent Consulting Services Pvt. Ltd.",
     "category": '',
     'complexity': "easy",
-    'depends': ['web'],
+    'depends': ['web' , 'mail'],
     "description": """
         This module provides the functionality to store digital signature image for a record.
         The example can be seen into the User's form view where we have added a test field under signature.
