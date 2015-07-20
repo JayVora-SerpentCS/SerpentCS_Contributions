@@ -4,8 +4,8 @@ from openerp.http import request
 import openerp.addons.website_sale.controllers.main
 from openerp import SUPERUSER_ID
 from openerp.addons.website.models.website import slug
-from openerp.addons.website_sale.controllers.main\
-import table_compute, QueryURL
+from openerp.addons.website_sale.controllers.main import \
+table_compute, QueryURL
 PPG = 20
 PPR = 4
 
@@ -68,20 +68,24 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
             domain += [('product_brand_id', 'in', brand_ids)]
             url = '/shop'
             product_count = product_obj.search_count(cr,
-                                                    uid, domain, context=context)
+                                                     uid, domain,
+                                                     context=context)
         if search:
             post['search'] = search
         if category:
             category = pool['product.public.category'].browse(cr,
-                                                              uid, int(category),
+                                                              uid,
+                                                              int(category),
                                                               context=context)
             url = '/shop/category/%s' % slug(category)
             pager = request.website.pager(url=url, total=product_count,
-                                          page=page, step=PPG, scope=7, url_args=post)
+                                          page=page, step=PPG, scope=7,
+                                          url_args=post)
             product_ids = product_obj.search(cr, uid, domain, limit=PPG,
-                                              offset=pager['offset'],
-                                              order='website_published desc, website_sequence desc',
-                                               context=context)
+                                             offset=pager['offset'],
+                                             order='website_published desc'
+                                             'website_sequence desc',
+                                             context=context)
         products = product_obj.browse(cr, uid, product_ids, context=context)
         style_obj = pool['product.style']
         style_ids = style_obj.search(cr, uid, [], context=context)
@@ -94,19 +98,21 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         if category:
             selected_id = int(category)
             child_prod_ids = category_obj.search(cr, uid,
-                                                 [('parent_id', '=', selected_id)], context=context)
+                                                 [('parent_id', '=', selected_id)],
+                                                 context=context)
             children_ids = category_obj.browse(cr, uid, child_prod_ids)
             values.update({'child_list': children_ids})
         attributes_obj = request.registry['product.attribute']
         attributes_ids = attributes_obj.search(cr, uid, [], context=context)
         attributes = attributes_obj.browse(cr, uid, attributes_ids,
-                                            context=context)
+                                           context=context)
         from_currency = pool.get('product.price.type')._get_field_currency
         (cr, uid, 'list_price', context)
         to_currency = pricelist.currency_id
-        compute_currency = lambda price: pool['res.currency']._compute(cr, uid,
-                                                                       from_currency, to_currency,
-                                                                       price, context=context)
+        compute_currency = lambda price: pool['res.currency']._compute(cr,
+                                                                       uid, from_currency,
+                                                                       to_currency, price,
+                                                                       context=context)
         values.update({'search': search,
                        'category': category,
                        'attrib_values': attrib_values,

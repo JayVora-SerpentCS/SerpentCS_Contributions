@@ -29,7 +29,7 @@ import os
 import StringIO
 import functools
 import logging
-from openerp.http import request, serialize_exception as _serialize_exception
+from openerp.http import serialize_exception as _serialize_exception
 import werkzeug.utils
 import werkzeug.wrappers
 
