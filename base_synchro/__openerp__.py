@@ -3,7 +3,8 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
-#    Copyright (C) 2013 Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2013 Serpent Consulting Services
+#    Pvt.Ltd. (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -30,10 +31,18 @@ Synchronization with all objects.
 Configure servers and trigger synchronization with its database objects.
 This module will let you synchronize two Odoo Databases!
 """,
+<<<<<<< HEAD
     "author": "OpenERP SA, Serpent Consulting Services Pvt. Ltd.",
     "images": ['images/1_servers_synchro.jpeg', 'images/2_synchronize.jpeg', 'images/3_objects_synchro.jpeg',],
+    "depends": ["base"], 
+    'website': "http://www.serpentcs.com", 
+=======
+    "author": "OpenERP SA,Serpent Consulting Services Pvt. Ltd.",
+    "images": ['images/1_servers_synchro.jpeg',
+               'images/2_synchronize.jpeg', 'images/3_objects_synchro.jpeg', ],
     "depends": ["base"],
     'website': "http://www.serpentcs.com",
+>>>>>>> scs_cont_13_07_15
     "data": [
         "security/ir.model.access.csv",
         "wizard/base_synchro_view.xml",
