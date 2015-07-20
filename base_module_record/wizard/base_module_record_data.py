@@ -25,7 +25,7 @@ from openerp.tools.translate import _
 from openerp.tools import frozendict, ustr
 from openerp import models, fields, api
 
-    
+
 class base_module_data(models.TransientModel):
     _name = "base.module.data"
     _description = "Base Module Data"
@@ -38,11 +38,11 @@ class base_module_data(models.TransientModel):
                  'ir.actions.server', 'ir.server.object.lines')
         return self.env['ir.model'].search
         ([('model', 'in', names)])
-    
+
     check_date = fields.Datetime('Record from Date',
-                                  required=True,
-                                 default=lambda *a:
-                                 time.strftime('%Y-%m-%d %H:%M:%S'))
+                                        required=True,
+                                        default=lambda *a:
+                                        time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model',
                                'base_module_record_model_rel',
                                'objects', 'model_id', 'Objects',
@@ -145,9 +145,7 @@ class base_module_data(models.TransientModel):
 class base_module_record_data(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
-
-
+    
     res_text = fields.Text('Result')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

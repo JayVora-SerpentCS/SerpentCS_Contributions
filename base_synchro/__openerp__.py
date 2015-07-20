@@ -33,7 +33,7 @@ This module will let you synchronize two Odoo Databases!
 """,
     "author": "OpenERP SA,Serpent Consulting Services Pvt. Ltd.",
     "images": ['images/1_servers_synchro.jpeg',
-               'images/2_synchronize.jpeg','images/3_objects_synchro.jpeg',],
+               'images/2_synchronize.jpeg', 'images/3_objects_synchro.jpeg', ],
     "depends": ["base"],
     'website': "http://www.serpentcs.com",
     "data": [
@@ -46,4 +46,3 @@ This module will let you synchronize two Odoo Databases!
     "auto_install": False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

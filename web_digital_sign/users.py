@@ -28,7 +28,6 @@ class Users(models.Model):
     _name = 'res.users'
     _inherit = 'res.users'
 
-    signature_image = fields.Binary(string= 'Signature')
+    signature_image = fields.Binary(string='Signature')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

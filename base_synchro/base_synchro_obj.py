@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
-#    Copyright (C) 2013 Serpent Consulting Services 
+#    Copyright (C) 2013 Serpent Consulting Services
 #    Pvt.Ltd. (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -48,12 +48,13 @@ class base_synchro_obj(models.Model):
 
     name = fields.Char('Name', select=1, required=True)
     domain = fields.Char('Domain', select=1, required=True, default='[]')
-    server_id = fields.Many2one('base.synchro.server', 'Server', 
+    server_id = fields.Many2one('base.synchro.server', 'Server',
                                 ondelete='cascade', select=1, required=True)
     model_id = fields.Many2one('ir.model', string='Object to synchronize',
-                                required=True)
-    action = fields.Selection([('d', 'Download'), ('u', 'Upload'), ('b', 'Both')],
-                              'Synchronisation direction', required=True, default='d')
+                                                             required=True)
+    action = fields.Selection([('d', 'Download'), ('u', 'Upload'),
+                                ('b', 'Both')],'Synchronisation direction', 
+                                                required=True, default='d')
     sequence = fields.Integer('Sequence')
     active = fields.Boolean('Active', default=True)
     synchronize_date = fields.Datetime('Latest Synchronization', readonly=True)
@@ -87,7 +88,7 @@ class base_synchro_obj(models.Model):
         obj_rec += POOL.search(domain3)
         for r in obj_rec.read(['create_date', 'write_date']):
             result.append((r['write_date'] or r['create_date'],
-                            r['id'], action.get('action', 'd')))
+                                r['id'], action.get('action', 'd')))
         return result
 
 
@@ -97,7 +98,8 @@ class base_synchro_obj_avoid(models.Model):
 
     name = fields.Char('Field Name', select=1, required=True)
     obj_id = fields.Many2one('base.synchro.obj',
-                            'Object', required=True, ondelete='cascade')
+                                    'Object', required=True,
+                                     ondelete='cascade')
 
 
 class base_synchro_obj_line(models.Model):

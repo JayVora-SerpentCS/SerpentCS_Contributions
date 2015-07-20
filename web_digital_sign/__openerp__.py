@@ -24,7 +24,7 @@
     "name": "Web Digital Signature",
     "version": "1.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
-    "category":'',
+    "category": '',
     'complexity': "easy",
     'depends': ['web'],
     "description": """
