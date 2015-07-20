@@ -4,7 +4,7 @@ from openerp.http import request
 import openerp.addons.website_sale.controllers.main
 from openerp import SUPERUSER_ID
 from openerp.addons.website.models.website import slug
-from openerp.addons.website_sale.controllers.main import \
+from openerp.addons.website_sale.controllers.main import\
 table_compute, QueryURL
 PPG = 20
 PPR = 4
@@ -98,7 +98,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         if category:
             selected_id = int(category)
             child_prod_ids = category_obj.search(cr, uid,
-                                                 [('parent_id', '=', selected_id)],
+                                                 [('parent_id', '=',
+                                                   selected_id)],
                                                  context=context)
             children_ids = category_obj.browse(cr, uid, child_prod_ids)
             values.update({'child_list': children_ids})
@@ -110,8 +111,10 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         (cr, uid, 'list_price', context)
         to_currency = pricelist.currency_id
         compute_currency = lambda price: pool['res.currency']._compute(cr,
-                                                                       uid, from_currency,
-                                                                       to_currency, price,
+                                                                       uid,
+                                                                       from_currency,
+                                                                       to_currency,
+                                                                       price,
                                                                        context=context)
         values.update({'search': search,
                        'category': category,

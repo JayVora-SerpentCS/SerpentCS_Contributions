@@ -566,12 +566,12 @@ class base_module_record(models.Model):
                     else:
                         yaml_file += "!comment Modifying a %s record"\
                         % (record['model']) + '''\n'''
-                    yml_object = yaml.load(unicode('''\n !record %s \n'''
-                                                   % record, 'iso-8859-1'))
-                    yaml_file += str(yml_object) + '''\n'''
-                    attrs = yaml.dump(yml_object.attrs,
-                                      default_flow_style=False)
-                    yaml_file += attrs + '''\n\n'''
+                        yml_object = yaml.load(unicode('''\n !record %s \n'''
+                                                       % record, 'iso-8859-1'))
+                        yaml_file += str(yml_object) + '''\n'''
+                        attrs = yaml.dump(yml_object.attrs,
+                                          default_flow_style=False)
+                        yaml_file += attrs + '''\n\n'''
         yaml_result = ''''''
         for line in yaml_file.split('\n'):
             line = line.replace("''", "'")
