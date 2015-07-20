@@ -47,9 +47,12 @@ class RPCProxyOne(object):
 #        return self.rpc.execute(self.server.server_db,
 #        self.uid, sync_obj, name, (), {})
         return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.
-                                                                 server.server_db,
-                                                                 self.uid, self.
-                                                                 server.password,
+                                                                 server.
+                                                                 server_db,
+                                                                 self.uid,
+                                                                 self.
+                                                                 server.
+                                                                 password,
                                                                  self.ressource,
                                                                  name, *args)
 
@@ -103,8 +106,10 @@ class base_synchro(models.TransientModel):
             ids = pool1.get('base.synchro.obj').get_ids(self._cr,
                                                         self.
                                                         user_id,
-                                                        object.model_id.model,
-                                                        object.synchronize_date,
+                                                        object.
+                                                        model_id.model,
+                                                        object.
+                                                        synchronize_date,
                                                         eval(object.domain),
                                                         {'action': 'd'})
 
@@ -131,7 +136,7 @@ class base_synchro(models.TransientModel):
                 fields = ['email', 'description', 'log_id']
                 value = pool_src.get(object.model_id.model).read(self._cr,
                                                                  self.user_id.
-                                                                 id,[id],
+                                                                 id, [id],
                                                                  fields)[0]
 #            value = pool_src.get(object.model_id.model).read([id], fields)[0]
             if 'create_date' in value:
@@ -172,7 +177,8 @@ class base_synchro(models.TransientModel):
                 #                                                      self.user_id.id,
                 #                                                      value_encode)
                 idnew = pool_dest.get(object.model_id.model).create(self._cr,
-                                                                    self.user_id.
+                                                                    self.
+                                                                    user_id.
                                                                     id, value)
                 self.env['base.synchro.obj.line'].create({
                     'obj_id': object.id,
@@ -272,7 +278,8 @@ class base_synchro(models.TransientModel):
                 res = map(lambda x: self.relation_transform(pool_src,
                                                             pool_dest,
                                                             fields[f]
-                                                            ['relation'],
+                                                            ['relati'
+                                                            'on'],
                                                             x, action),
                                                             data[f])
                 data[f] = [(6, 0, [x for x in res if x])]

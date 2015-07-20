@@ -4,8 +4,8 @@ from openerp.http import request
 import openerp.addons.website_sale.controllers.main
 from openerp import SUPERUSER_ID
 from openerp.addons.website.models.website import slug
-from openerp.addons.website_sale.controllers.main import\
-table_compute, QueryURL
+from openerp.addons.website_sale.controllers.main\
+import table_compute, QueryURL
 PPG = 20
 PPR = 4
 
@@ -112,10 +112,13 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         to_currency = pricelist.currency_id
         compute_currency = lambda price: pool['res.currency']._compute(cr,
                                                                        uid,
-                                                                       from_currency,
-                                                                       to_currency,
+                                                                       from_/
+                                                                       currency,
+                                                                       to_/
+                                                                       currency,
                                                                        price,
-                                                                       context=context)
+                                                                       context=
+                                                                       context)
         values.update({'search': search,
                        'category': category,
                        'attrib_values': attrib_values,
