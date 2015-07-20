@@ -33,6 +33,8 @@ from openerp.http import request, serialize_exception as _serialize_exception
 import werkzeug.utils
 import werkzeug.wrappers
 
+_logger = logging.getLogger(__name__)
+
 
 def serialize_exception(f):
     @functools.wraps(f)
@@ -70,14 +72,13 @@ class Binary_multi(Binary):
             except Exception:
                 return
         return
-    
+
     @http.route('/web/binary/upload_image_multi', type='http', auth="user")
     @serialize_exception
-
     def upload_image_multi(self, callback, ufile):
         # TODO: might be useful to have a configuration flag for
         # max-length file uploads
-        # TODO: might be useful to have a configuration flag 
+        # TODO: might be useful to have a configuration flag
         # for max-length file uploads
         out = """<script language="javascript" type="text/javascript">
                     var win = window.top.window;

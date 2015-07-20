@@ -46,9 +46,9 @@ class RPCProxyOne(object):
 #        sync_obj = pool1.get('base.synchro.obj')
 #        return self.rpc.execute(self.server.server_db,
 #        self.uid, sync_obj, name, (), {})
-        return lambda cr, uid, *args, **kwargs: self.rpc.execute(
-                self.server.server_db, self.uid, self.server.password,
-                self.ressource, name, *args)
+        return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.server_db,
+                                                                 self.uid, self.server.password,
+                                                                 self.ressource, name, *args)
 
 
 class RPCProxy(object):
@@ -98,13 +98,15 @@ class base_synchro(models.TransientModel):
         # try:
         if object.action in ('d', 'b'):
             ids = pool1.get('base.synchro.obj').get_ids(self._cr,
-                    self.user_id, object.model_id.model, object.synchronize_date,
-                     eval(object.domain), {'action': 'd'})
+                                                        self.user_id, object.model_id.model,
+                                                        object.synchronize_date,
+                                                        eval(object.domain), {'action': 'd'})
 
         if object.action in ('u', 'b'):
             ids += pool2.get('base.synchro.obj').get_ids(self._cr,
-                    self.user_id.id, object.model_id.model,
-                    object.synchronize_date, eval(object.domain), {'action': 'u'})
+                                                         self.user_id.id, object.model_id.model,
+                                                         object.synchronize_date,
+                                                         eval(object.domain), {'action': 'u'})
         ids.sort()
         iii = 0
         for dt, id, action in ids:
@@ -118,23 +120,24 @@ class base_synchro(models.TransientModel):
             fields = False
             if object.model_id.model == 'crm.case.history':
                 fields = ['email', 'description', 'log_id']
-            value = pool_src.get(object.model_id.model).read(self._cr,
-                    self.user_id.id, [id], fields)[0]
+                value = pool_src.get(object.model_id.model).read(self._cr,
+                                                                 self.user_id.id, [id],
+                                                                 fields)[0]
 #            value = pool_src.get(object.model_id.model).read([id], fields)[0]
             if 'create_date' in value:
                 del value['create_date']
             if 'write_date' in value:
                 del value['write_date']
-            for key , val in value.iteritems():
+            for key, val in value.iteritems() :
                 if type(val) == tuple:
                     value.update({key:val[0]})
-            value = self.data_transform(pool_src, pool_dest, 
+            value = self.data_transform(pool_src, pool_dest,
                                         object.model_id.model, value, action)
             id2 = self.get_id(object.id, id, action)
             #
             # Transform value
             #
-            # tid=pool_dest.get(object.model_id.model).name_search(cr, uid, 
+            # tid=pool_dest.get(object.model_id.model).name_search(cr, uid,
             # value['name'],[],'=',)
             if not (iii % 50):
                 pass
@@ -144,19 +147,20 @@ class base_synchro(models.TransientModel):
                     del value[field.name]
             if id2:
                 # try:
-                pool_dest.get(object.model_id.model).write(self._cr, 
-                                                           self.user_id.id, 
+                pool_dest.get(object.model_id.model).write(self._cr,
+                                                           self.user_id.id,
                                                            [id2], value)
                 # except Exception, e:
-                # self.report.append('ERROR: Unable to update record 
+                # self.report.append('ERROR: Unable to update record
                 #                        ['+str(id2)+']:'+str(value.get('name', '?')))
                 self.report_total += 1
                 self.report_write += 1
             else:
                 # value_encode = self.input(ids, value)
-                # idnew = pool_dest.get(object.model_id.model).create(self._cr, 
-                #                                                      self.user_id.id, value_encode)
-                idnew = pool_dest.get(object.model_id.model).create(self._cr, 
+                # idnew = pool_dest.get(object.model_id.model).create(self._cr,
+                #                                                      self.user_id.id,
+                #                                                      value_encode)
+                idnew = pool_dest.get(object.model_id.model).create(self._cr,
                                                                     self.user_id.id, value)
                 self.env['base.synchro.obj.line'].create({
                     'obj_id': object.id,
@@ -174,16 +178,18 @@ class base_synchro(models.TransientModel):
         line_pool = pool.get('base.synchro.obj.line')
         field_src = (action == 'u') and 'local_id' or 'remote_id'
         field_dest = (action == 'd') and 'local_id' or 'remote_id'
-        rid = line_pool.search(self._cr, self.user_id.id, [('obj_id', '=', object_id), 
-                                                           (field_src, '=', id)])
+        rid = line_pool.search(self._cr, self.user_id.id, [('obj_id', '=',
+                                                            object_id),(field_src,
+                                                                        '=', id)])
         result = False
         if rid:
-            result = line_pool.read(self._cr, self.user_id.id, 
+            result = line_pool.read(self._cr, self.user_id.id,
                                     rid, [field_dest])[0][field_dest]
         return result
 
     @api.model
-    def relation_transform(self, pool_src, pool_dest, obj_model, res_id, action):
+    def relation_transform(self, pool_src, pool_dest,
+                           obj_model, res_id, action):
         if not res_id:
             return False
 #        pool = pooler.get_pool(self.env.cr.dbname)
@@ -203,15 +209,18 @@ class base_synchro(models.TransientModel):
             # If not synchronized, try to find it with name_get/name_search
             #
             names = pool_src.get(obj_model).name_get(self._cr,
-                        self.user_id.id, [res_id])[0][1]
+                                                     self.user_id.id,
+                                                     [res_id])[0][1]
             res = pool_dest.get(obj_model).name_search(self._cr,
-                    self.user_id.id, names, [], 'like')
+                                                       self.user_id.id, names,
+                                                       [], 'like')
             if res:
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                print self.report.append('WARNING: Record "%s" on relation %s not'
-                                     'found, set to null.' % (names, obj_model))
+                print self.report.append('WARNING: Record "%s" on relation %s'
+                                         'not found, set to null.' %
+                                         (names, obj_model))
         return result
 
     #
@@ -241,13 +250,14 @@ class base_synchro(models.TransientModel):
                 else:
                     fdata = data[f]
                 df = self.relation_transform(pool_src, pool_dest,
-                     fields[f]['relation'], fdata, action)
+                                             fields[f]['relation'], fdata, action)
                 data[f] = df
                 if not data[f]:
                     del data[f]
             elif ftype == 'many2many':
                 res = map(lambda x: self.relation_transform(pool_src,
-                        pool_dest, fields[f]['relation'], x, action), data[f])
+                                                            pool_dest, fields[f]['relation'],
+                                                            x,action), data[f])
                 data[f] = [(6, 0, [x for x in res if x])]
         del data['id']
         return data
@@ -287,22 +297,23 @@ Records updated: %d
 Records created: %d
 
 Exceptions:
-            ''' % (start_date, end_date, self.report_total, 
+            ''' % (start_date, end_date, self.report_total,
                    self.report_write, self.report_create)
             summary += '\n'.join(self.report)
             if request:
                 request.create(cr, uid, {
-                    'name' : "Synchronization report",
-                    'act_from' : self.user_id.id,
+                    'name': "Synchronization report",
+                    'act_from': self.user_id.id,
                     'date': time.strftime('%Y-%m-%d, %H:%M:%S'),
-                    'act_to' : syn_obj.user_id.id,
+                    'act_to': syn_obj.user_id.id,
                     'body': summary,
                 }, context=context)
             return {}
 
     @api.multi
     def upload_download_multi_thread(self):
-        threaded_synchronization = threading.Thread(target=self.upload_download())
+        threaded_synchronization = threading.Thread(target=self.
+                                                    upload_download())
         threaded_synchronization.run()
         data_obj = self.env['ir.model.data']
         id2 = data_obj._get_id('base_synchro', 'view_base_synchro_finish')

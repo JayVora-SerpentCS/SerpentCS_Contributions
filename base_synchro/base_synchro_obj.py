@@ -54,12 +54,12 @@ class base_synchro_obj(models.Model):
                                required=True)
     action = fields.Selection([('d', 'Download'), ('u', 'Upload'),
                                ('b', 'Both')], 'Synchronisation direction',
-                                required=True, default='d')
+                              required=True, default='d')
     sequence = fields.Integer('Sequence')
     active = fields.Boolean('Active', default=True)
     synchronize_date = fields.Datetime('Latest Synchronization', readonly=True)
     line_id = fields.One2many('base.synchro.obj.line', 'obj_id',
-                            'IDs Affected', ondelete='cascade')
+                              'IDs Affected', ondelete='cascade')
     fields.One2many('base.synchro.obj.avoid', 'obj_id',
                     'IDs Affected', ondelete='cascade')
     avoid_ids = fields.One2many('base.synchro.obj.avoid', 'obj_id',
@@ -100,7 +100,7 @@ class base_synchro_obj_avoid(models.Model):
 
     name = fields.Char('Field Name', select=1, required=True)
     obj_id = fields.Many2one('base.synchro.obj',
-                            'Object', required=True, ondelete='cascade')
+                             'Object', required=True, ondelete='cascade')
 
 
 class base_synchro_obj_line(models.Model):

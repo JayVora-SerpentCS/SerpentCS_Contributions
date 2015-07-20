@@ -40,10 +40,11 @@ class base_module_data(models.TransientModel):
         ([('model', 'in', names)])
 
     check_date = fields.Datetime('Record from Date',
-                                required=True, default=lambda *a:
-                                time.strftime('%Y-%m-%d %H:%M:%S'))
+                                 required=True, default=lambda *a:
+     time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
-                               'objects', 'model_id', 'Objects', default=_get_default_objects)
+                               'objects', 'model_id', 'Objects',
+                                default=_get_default_objects)
     filter_cond = fields.Selection([('created', 'Created'),
                                     ('modified', 'Modified'),
                                     ('created_modified',
@@ -87,7 +88,7 @@ class base_module_data(models.TransientModel):
                 search_condition = [('write_date', '>', check_date)]
             elif filter_cond == 'created_modified':
                 search_condition = ['|', ('create_date', '>', check_date),
-                ('write_date', '>', check_date)]
+                                    ('write_date', '>', check_date)]
             if '_log_access' in dir(obj_pool):
                 if not (obj_pool._log_access):
                     search_condition = []
@@ -98,7 +99,7 @@ class base_module_data(models.TransientModel):
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
                 args = (dbname, self.env.user.id, obj_name,
-                    'copy', s_id.id, {})
+                        'copy', s_id.id, {})
         recording_data.append(('query', args, {}, s_id.id))
         mod_obj = self.env['ir.model.data']
         if len(recording_data):
@@ -107,7 +108,8 @@ class base_module_data(models.TransientModel):
             else:
                 res = self._create_xml(data)
             model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                             ('name', '=', 'module_create_xml_view')])
+                                             ('name', '=',
+                                              'module_create_xml_view')])
             resource_id = model_data_ids.read
             (['res_id'])[0]['res_id']
             return {
@@ -121,7 +123,8 @@ class base_module_data(models.TransientModel):
                 'target': 'new',
             }
         model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                         ('name', '=', 'module_recording_message_view')])
+                                         ('name', '=',
+                                          'module_recording_message_view')])
         resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
@@ -138,7 +141,7 @@ class base_module_data(models.TransientModel):
 class base_module_record_data(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
-    
+
     res_text = fields.Text('Result')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
