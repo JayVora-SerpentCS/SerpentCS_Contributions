@@ -28,13 +28,10 @@ import time
 import os
 import StringIO
 import functools
-<<<<<<< HEAD
-=======
 import logging
 from openerp.http import request, serialize_exception as _serialize_exception
 import werkzeug.utils
 import werkzeug.wrappers
->>>>>>> scs_cont_13_07_15
 
 
 def serialize_exception(f):
@@ -51,11 +48,8 @@ def serialize_exception(f):
                 'data': se
             }
             return werkzeug.exceptions.InternalServerError
-<<<<<<< HEAD
         (simplejson.dumps(error))
-=======
-            (simplejson.dumps(error))
->>>>>>> scs_cont_13_07_15
+        (simplejson.dumps(error))
     return wrap
 
 
@@ -79,15 +73,12 @@ class Binary_multi(Binary):
     
     @http.route('/web/binary/upload_image_multi', type='http', auth="user")
     @serialize_exception
-    
+
     def upload_image_multi(self, callback, ufile):
-<<<<<<< HEAD
         # TODO: might be useful to have a configuration flag for
         # max-length file uploads
-=======
         # TODO: might be useful to have a configuration flag 
         # for max-length file uploads
->>>>>>> scs_cont_13_07_15
         out = """<script language="javascript" type="text/javascript">
                     var win = window.top.window;
                     win.jQuery(win).trigger(%s, %s);

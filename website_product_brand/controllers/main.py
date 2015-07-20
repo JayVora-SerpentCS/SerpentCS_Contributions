@@ -12,10 +12,10 @@ PPR = 4
 class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
 
     @http.route(['/shop', '/shop/page/<int:page>', '/shop/category'
-                    '/<model("product.public.category"):category>',
-                    '/shop/category/<model("product.public.category"):category>\
-                 /page/<int:page>', '/shop/brands'], type='http',
-                 auth='public', website=True)
+                 '/<model("product.public.category"):category>',
+                 '/shop/category/<model("product.public.category"):category>\
+                /page/<int:page>', '/shop/brands'], type='http',
+    auth='public', website=True)
     def shop(self, page=0, category=None, search='', brand=None, **post):
         cr, uid, context, pool = request.cr,
         request.uid, request.context, request.registry
@@ -49,7 +49,7 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
             if attrib:
                 domain += [('attribute_line_ids.value_ids', 'in', ids)]
         keep = QueryURL('/shop', category=category and int(category),
-                         search=search, attrib=attrib_list)
+        search=search, attrib=attrib_list)
         if not context.get('pricelist'):
             pricelist = self.get_pricelist()
             context['pricelist'] = int(pricelist)
@@ -67,19 +67,18 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
             domain += [('product_brand_id', 'in', brand_ids)]
         url = '/shop'
         product_count = product_obj.search_count(
-                                    cr, uid, domain, context=context)
+                        cr, uid, domain, context=context)
         if search:
             post['search'] = search
         if category:
             category = pool['product.public.category'].browse(
-                        cr, uid, int(category), context=context)
+            cr, uid, int(category), context=context)
             url = '/shop/category/%s' % slug(category)
         pager = request.website.pager(url=url, total=product_count,
-                page=page, step=PPG, scope=7, url_args=post)
+        page=page, step=PPG, scope=7, url_args=post)
         product_ids = product_obj.search(cr, uid, domain, limit=PPG,
-                                    offset=pager['offset'],
-                                     order='website_published desc, website_sequence desc'
-                                            , context=context)
+        offset=pager['offset'], order='website_published desc, website_sequence desc'
+                                ,context=context)
         products = product_obj.browse(cr, uid, product_ids, context=context)
         style_obj = pool['product.style']
         style_ids = style_obj.search(cr, uid, [], context=context)
@@ -87,13 +86,12 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         category_obj = pool['product.public.category']
         category_ids = category_obj.search(cr, uid, [], context=context)
         categories = category_obj.browse(cr, uid, category_ids,
-                                                context=context)
+                    context=context)
         categs = filter(lambda x: not x.parent_id, categories)
         if category:
             selected_id = int(category)
             child_prod_ids = category_obj.search(cr, uid,
-                                                [('parent_id','=', selected_id)]
-                                                                , context=context)
+            [('parent_id','=', selected_id)],context=context)
             children_ids = category_obj.browse(cr, uid, child_prod_ids)
             values.update({'child_list': children_ids})
         attributes_obj = request.registry['product.attribute']
@@ -141,10 +139,10 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
                                             brand_values.append(brand_rec)
 
         keep = QueryURL('/page/product_brands', brand_id=[])
-        values = {'brand_rec': brand_values,'keep': keep}
+        values = {'brand_rec': brand_values, 'keep': keep}
         if post.get('search'):
             values.update({'search': post.get('search')})
         return request.website.render('website_product_brand.product_brands'
-                                      , values)
+                                      ,values)
 
 # vim:expandtab:tabstop=4:softtabstop=4:shiftwidth=4:

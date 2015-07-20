@@ -26,7 +26,7 @@
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": '',
     'complexity': "easy",
-    'depends': ['web' , 'mail'],
+    'depends': ['web' ,'mail'],
     "description": """
         This module provides the functionality to store
         digital signature image for a record.

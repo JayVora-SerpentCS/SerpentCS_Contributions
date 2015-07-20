@@ -25,7 +25,7 @@ from openerp import models, fields
 
 
 class Users(models.Model):
-#     _name = 'res.users'
+    #  _name = 'res.users'
     _inherit = 'res.users'
 
     signature_image = fields.Binary(string='Signature')

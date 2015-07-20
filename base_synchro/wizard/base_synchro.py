@@ -31,11 +31,11 @@ from openerp import models, fields, api
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
         self.server = server
-        local_url = 'http://%s:%d/xmlrpc/common' % (server.server_url, 
+        local_url = 'http://%s:%d/xmlrpc/common' % (server.server_url,
                                                     server.server_port)
         rpc = xmlrpclib.ServerProxy(local_url)
         self.uid = rpc.login(server.server_db, server.login, server.password)
-        local_url = 'http://%s:%d/xmlrpc/object' % (server.server_url, 
+        local_url = 'http://%s:%d/xmlrpc/object' % (server.server_url,
                                                     server.server_port)
         self.rpc = xmlrpclib.ServerProxy(local_url)
         self.ressource = ressource
@@ -44,11 +44,11 @@ class RPCProxyOne(object):
         RPCProxy(self.server)
 #        pool1 = RPCProxy(self.server)
 #        sync_obj = pool1.get('base.synchro.obj')
-#        return self.rpc.execute(self.server.server_db, 
+#        return self.rpc.execute(self.server.server_db,
 #        self.uid, sync_obj, name, (), {})
-        return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.server_db, 
-                                                                 self.uid, self.server.password, 
-                                                                 self.ressource, name, *args)
+        return lambda cr, uid, *args, **kwargs: self.rpc.execute(
+                self.server.server_db, self.uid, self.server.password,
+                self.ressource, name, *args)
 
 
 class RPCProxy(object):
@@ -63,9 +63,9 @@ class base_synchro(models.TransientModel):
     """Base Synchronization """
     _name = 'base.synchro'
 
-    server_url = fields.Many2one('base.synchro.server', 
+    server_url = fields.Many2one('base.synchro.server',
                                  "Server URL", required=True)
-    user_id = fields.Many2one('res.users', "Send Result To", 
+    user_id = fields.Many2one('res.users', "Send Result To",
                               default=lambda self: self.env.user)
 
 #    start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
@@ -97,16 +97,14 @@ class base_synchro(models.TransientModel):
 #        context = dict(self._context)
         # try:
         if object.action in ('d', 'b'):
-            ids = pool1.get('base.synchro.obj').get_ids(self._cr, 
-                                                        self.user_id, object.model_id.model, 
-                                                        object.synchronize_date, eval(object.domain), 
-                                                        {'action': 'd'})
+            ids = pool1.get('base.synchro.obj').get_ids(self._cr,
+                    self.user_id, object.model_id.model, object.synchronize_date,
+                     eval(object.domain), {'action': 'd'})
 
         if object.action in ('u', 'b'):
-            ids += pool2.get('base.synchro.obj').get_ids(self._cr, 
-                                                         self.user_id.id, object.model_id.model, 
-                                                         object.synchronize_date, eval(object.domain), 
-                                                         {'action': 'u'})
+            ids += pool2.get('base.synchro.obj').get_ids(self._cr,
+                    self.user_id.id, object.model_id.model,
+                    object.synchronize_date, eval(object.domain), {'action': 'u'})
         ids.sort()
         iii = 0
         for dt, id, action in ids:
@@ -120,9 +118,8 @@ class base_synchro(models.TransientModel):
             fields = False
             if object.model_id.model == 'crm.case.history':
                 fields = ['email', 'description', 'log_id']
-            value = pool_src.get(object.model_id.model).read(self._cr, 
-                                                             self.user_id.id, [id], 
-                                                             fields)[0]
+            value = pool_src.get(object.model_id.model).read(self._cr,
+                    self.user_id.id, [id], fields)[0]
 #            value = pool_src.get(object.model_id.model).read([id], fields)[0]
             if 'create_date' in value:
                 del value['create_date']
@@ -205,16 +202,16 @@ class base_synchro(models.TransientModel):
             #
             # If not synchronized, try to find it with name_get/name_search
             #
-            names = pool_src.get(obj_model).name_get(self._cr, 
-                                                     self.user_id.id, [res_id])[0][1]
-            res = pool_dest.get(obj_model).name_search(self._cr, 
-                                                       self.user_id.id, names, [], 'like')
+            names = pool_src.get(obj_model).name_get(self._cr,
+                        self.user_id.id, [res_id])[0][1]
+            res = pool_dest.get(obj_model).name_search(self._cr,
+                    self.user_id.id, names, [], 'like')
             if res:
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                print self.report.append('WARNING: Record "%s" on relation %s not' 
-                                            'found, set to null.' % (names, obj_model))
+                print self.report.append('WARNING: Record "%s" on relation %s not'
+                                     'found, set to null.' % (names, obj_model))
         return result
 
     #
@@ -243,15 +240,14 @@ class base_synchro(models.TransientModel):
                     fdata = data[f][0]
                 else:
                     fdata = data[f]
-                df = self.relation_transform(pool_src, pool_dest, 
-                                             fields[f]['relation'], fdata, action)
+                df = self.relation_transform(pool_src, pool_dest,
+                     fields[f]['relation'], fdata, action)
                 data[f] = df
                 if not data[f]:
                     del data[f]
             elif ftype == 'many2many':
-                res = map(lambda x: self.relation_transform(pool_src, 
-                                                            pool_dest, fields[f]['relation'], 
-                                                            x, action), data[f])
+                res = map(lambda x: self.relation_transform(pool_src,
+                        pool_dest, fields[f]['relation'], x, action), data[f])
                 data[f] = [(6, 0, [x for x in res if x])]
         del data['id']
         return data

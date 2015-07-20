@@ -39,21 +39,11 @@ class base_module_data(models.TransientModel):
         return self.env['ir.model'].search
         ([('model', 'in', names)])
 
-<<<<<<< HEAD
-    check_date = fields.Datetime('Record from Date', required=True,
-                                 default=lambda *a:
+    check_date = fields.Datetime('Record from Date',
+                                required=True, default=lambda *a:
                                 time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
-=======
-    check_date = fields.Datetime('Record from Date',
-                                        required=True,
-                                        default=lambda *a:
-                                        time.strftime('%Y-%m-%d %H:%M:%S'))
-    objects = fields.Many2many('ir.model',
-                               'base_module_record_model_rel',
->>>>>>> scs_cont_13_07_15
-                               'objects', 'model_id', 'Objects',
-                               default=_get_default_objects)
+                               'objects', 'model_id', 'Objects', default=_get_default_objects)
     filter_cond = fields.Selection([('created', 'Created'),
                                     ('modified', 'Modified'),
                                     ('created_modified',
@@ -79,15 +69,14 @@ class base_module_data(models.TransientModel):
         data = self.read([])[0]
         check_date = data['check_date']
         filter_cond = data['filter_cond']
-#        user = (self.env['res.users'].browse(self.env.user.id)).login
-#        mod = self.env['ir.module.record']
+        # user = (self.env['res.users'].browse(self.env.user.id)).login
+        # mod = self.env['ir.module.record']
         mod_obj = self.env['ir.model']
-#        mod.recording_data = []
+        # mod.recording_data = []
         cr, uid, context = self.env.args
         context = dict(context)
         context.update({'recording_data': []})
-        recording_data = context.get
-        ('recording_data')
+        recording_data = context.get('recording_data')
         self.env.args = cr, uid, frozendict(context)
         for id in data['objects']:
             obj_name = (mod_obj.browse(id)).model
@@ -98,20 +87,19 @@ class base_module_data(models.TransientModel):
                 search_condition = [('write_date', '>', check_date)]
             elif filter_cond == 'created_modified':
                 search_condition = ['|', ('create_date', '>', check_date),
-                                    ('write_date', '>', check_date)]
+                ('write_date', '>', check_date)]
             if '_log_access' in dir(obj_pool):
                 if not (obj_pool._log_access):
                     search_condition = []
                 if '_auto' in dir(obj_pool):
                     if not obj_pool._auto:
                         continue
-            search_ids = obj_pool.search
-            (search_condition)
+            search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
                 args = (dbname, self.env.user.id, obj_name,
-                        'copy', s_id.id, {})
-                recording_data.append(('query', args, {}, s_id.id))
+                    'copy', s_id.id, {})
+        recording_data.append(('query', args, {}, s_id.id))
         mod_obj = self.env['ir.model.data']
         if len(recording_data):
             if data['info_yaml']:
@@ -119,8 +107,7 @@ class base_module_data(models.TransientModel):
             else:
                 res = self._create_xml(data)
             model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                             ('name', '=',
-                                              'module_create_xml_view')])
+                                             ('name', '=', 'module_create_xml_view')])
             resource_id = model_data_ids.read
             (['res_id'])[0]['res_id']
             return {
@@ -134,8 +121,7 @@ class base_module_data(models.TransientModel):
                 'target': 'new',
             }
         model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                         ('name', '=',
-                                          'module_recording_message_view')])
+                                         ('name', '=', 'module_recording_message_view')])
         resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
