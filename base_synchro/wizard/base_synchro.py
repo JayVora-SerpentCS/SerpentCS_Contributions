@@ -53,7 +53,8 @@ class RPCProxyOne(object):
                                                                  self.
                                                                  server.
                                                                  password,
-                                                                 self.ressource,
+                                                                 self.
+                                                                 ressource,
                                                                  name, *args)
 
 
