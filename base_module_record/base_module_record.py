@@ -562,10 +562,10 @@ class base_module_record(models.Model):
                     record = self._generate_object_yaml(rec[1], rec[3])
                     if self.mode == "create" or self.mode == "copy":
                         yaml_file += "!comment Creating a %s record"\
-                        % (record['model']) + '''\n'''
-                    else:
+                            % (record['model']) + '''\n'''
+                    else:  
                         yaml_file += "!comment Modifying a %s record"\
-                        % (record['model']) + '''\n'''
+                            % (record['model']) + '''\n'''
                         yml_object = yaml.load(unicode('''\n !record %s \n'''
                                                        % record, 'iso-8859-1'))
                         yaml_file += str(yml_object) + '''\n'''
