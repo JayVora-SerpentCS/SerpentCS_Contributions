@@ -26,6 +26,7 @@ import xmlrpclib
 import threading
 from openerp import pooler
 from openerp import models, fields, api
+import logging
 
 _logger = logging.getLogger(__name__)
 
@@ -240,9 +241,9 @@ class base_synchro(models.TransientModel):
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                _logger.debug ('WARNING: Record "%s" on relation %s'
-                                         'not found, set to null.' %
-                                         self.report.append,(names, obj_model))
+                _logger.debug('WARNING: Record "%s" on relation %s'
+                              'not found, set to null.' %
+                              self.report.append, (names, obj_model))
         return result
 
     #
