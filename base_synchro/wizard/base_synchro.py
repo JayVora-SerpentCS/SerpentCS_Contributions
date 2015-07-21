@@ -27,6 +27,8 @@ import threading
 from openerp import pooler
 from openerp import models, fields, api
 
+_logger = logging.getLogger(__name__)
+
 
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
@@ -238,9 +240,9 @@ class base_synchro(models.TransientModel):
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                print self.report.append('WARNING: Record "%s" on relation %s'
+                _logger.debug ('WARNING: Record "%s" on relation %s'
                                          'not found, set to null.' %
-                                         (names, obj_model))
+                                         self.report.append,(names, obj_model))
         return result
 
     #
