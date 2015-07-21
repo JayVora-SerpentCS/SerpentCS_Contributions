@@ -164,10 +164,10 @@ class base_module_record(models.Model):
             elif fields[key]['type'] in ('one2many',):
                 for valitem in (val or []):
                     if valitem[0] in (0, 1):
-                        if key in model_pool._columns:
-                            model_pool._columns[key]._fields_id
-                        else:
-                            model_pool._inherit_fields[key][2]._fields_id
+                        # if key in model_pool._columns:
+                            # model_pool._columns[key]._fields_id
+                        # else:
+                            # model_pool._inherit_fields[key][2]._fields_id
                         if valitem[0] == 0:
                             newid = self._create_id(relation, valitem[2])
                             valitem[1] = newid
