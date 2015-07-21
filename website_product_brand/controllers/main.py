@@ -18,8 +18,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
                 /page/<int:page>', '/shop/brands'], type='http',
                 auth='public', website=True)
     def shop(self, page=0, category=None, search='', brand=None, **post):
-        cr, uid, context, pool = request.cr,
-        request.uid, request.context, request.registry
+        cr, uid, context = request.cr, request.uid, request.context
+        pool = request.registry
         values = {}
         domain = request.website.sale_product_domain()
         if search:
@@ -55,8 +55,11 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
             pricelist = self.get_pricelist()
             context['pricelist'] = int(pricelist)
         else:
-            pricelist = pool.get('product.pricelist').browse
-            (cr, uid, context['pricelist'], context)
+            pricelist = pool.get('product.pricelist').browse(cr,
+                                                             uid,
+                                                             context
+                                                             ['pricelist'],
+                                                             context)
         product_obj = pool.get('product.template')
 
         # Brand's product search
