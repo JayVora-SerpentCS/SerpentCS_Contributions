@@ -112,10 +112,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         to_currency = pricelist.currency_id
         compute_currency = lambda price: pool['res.currency']._compute(cr,
                                                                        uid,
-                                                                       from_,
-                                                                       currency,
-                                                                       to_,
-                                                                       currency,
+                                                                       from_currency,
+                                                                       to_currency,
                                                                        price,
                                                                        context=
                                                                        context)

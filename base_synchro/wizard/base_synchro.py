@@ -280,9 +280,9 @@ class base_synchro(models.TransientModel):
                                                             pool_dest,
                                                             fields[f]
                                                             ['relati'
-                                                            'on'],
+                                                             'on'],
                                                             x, action),
-                                                            data[f])
+                          data[f])
                 data[f] = [(6, 0, [x for x in res if x])]
         del data['id']
         return data
