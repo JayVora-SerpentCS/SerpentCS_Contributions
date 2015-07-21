@@ -4,7 +4,7 @@ from openerp.http import request
 import openerp.addons.website_sale.controllers.main
 from openerp import SUPERUSER_ID
 from openerp.addons.website.models.website import slug
-from openerp.addons.website_sale.controllers.main\
+from openerp.addons.website_sale.controllers.main \
 import table_compute, QueryURL
 PPG = 20
 PPR = 4
