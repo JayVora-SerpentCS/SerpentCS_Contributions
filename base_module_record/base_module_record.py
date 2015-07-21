@@ -26,7 +26,8 @@ from openerp import models, api
 from openerp.tools import ustr, frozendict
 from openerp.osv.fields import function as function_field
 # This import is not unused! Do not remove!
-from openerp.tools import yaml_tag
+#from openerp.tools import yaml_tag
+from openerp.tools.yaml_tag import yaml 
 # Please do not override yaml_tag here: modify it in
 # server bin/tools/yaml_tag.py
 
