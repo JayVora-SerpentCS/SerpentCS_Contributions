@@ -107,8 +107,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         attributes_ids = attributes_obj.search(cr, uid, [], context=context)
         attributes = attributes_obj.browse(cr, uid, attributes_ids,
                                            context=context)
-        from_currency = pool.get('product.price.type')._get_field_currency
-        (cr, uid, 'list_price', context)
+        from_currency = pool.get('product.price.type')._get_field_currency(
+            cr, uid, 'list_price', context)
         to_currency = pricelist.currency_id
         compute_currency = lambda price: pool['res.currency']._compute(
             cr, uid, from_currency, to_currency, price, context)

@@ -70,13 +70,13 @@ class base_synchro_obj(models.Model):
     #
 
     @api.model
-    def get_ids(self, obj, dt, domain=[], action=None):
+    def get_ids(self, obj, dt, domain, action=None):
         if action is None:
             action = {}
         return self._get_ids(obj, dt, domain, action=action)
 
     @api.model
-    def _get_ids(self, obj, dt, domain=[], action=None):
+    def _get_ids(self, obj, dt, domain, action=None):
         if action is None:
             action = {}
         POOL = self.env[obj]
