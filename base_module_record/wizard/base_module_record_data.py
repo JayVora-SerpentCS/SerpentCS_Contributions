@@ -36,8 +36,7 @@ class base_module_data(models.TransientModel):
                  'ir.model.access', 'res.partner', 'res.partner.category',
                  'workflow', 'workflow.activity', 'workflow.transition',
                  'ir.actions.server', 'ir.server.object.lines')
-        return self.env['ir.model'].search
-        ([('model', 'in', names)])
+        return self.env['ir.model'].search([('model', 'in', names)])
 
     check_date = fields.Datetime('Record from Date',
                                  required=True, default=lambda *a:
@@ -110,8 +109,7 @@ class base_module_data(models.TransientModel):
             model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
                                              ('name', '=',
                                               'module_create_xml_view')])
-            resource_id = model_data_ids.read
-            (['res_id'])[0]['res_id']
+            resource_id = model_data_ids.read(['res_id'])[0]['res_id']
             return {
                 'name': _('Data Recording'),
                 'context': {'default_res_text': ustr(res['res_text'])},
