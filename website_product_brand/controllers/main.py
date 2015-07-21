@@ -84,12 +84,12 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
             pager = request.website.pager(url=url, total=product_count,
                                           page=page, step=PPG, scope=7,
                                           url_args=post)
-            products = product_obj.browse(cr, uid, product_ids, context=context)
             product_ids = product_obj.search(cr, uid, domain, limit=PPG,
                                              offset=pager['offset'],
                                              order='website_published desc'
                                              'website_sequence desc',
                                              context=context)
+        products = product_obj.browse(cr, uid, product_ids, context=context)
         style_obj = pool['product.style']
         style_ids = style_obj.search(cr, uid, [], context=context)
         styles = style_obj.browse(cr, uid, style_ids, context=context)
