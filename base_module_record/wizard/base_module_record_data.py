@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
-#    (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services
+#     Pvt.Ltd. (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -38,8 +38,8 @@ class base_module_data(models.TransientModel):
                  'ir.actions.server', 'ir.server.object.lines')
         return self.env['ir.model'].search([('model', 'in', names)])
 
-    check_date = fields.Datetime('Record from Date', required=True,
-                                 default=lambda *a:
+    check_date = fields.Datetime('Record from Date',
+                                 required=True, default=lambda *a:
                                  time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
                                'objects', 'model_id', 'Objects',
@@ -69,10 +69,10 @@ class base_module_data(models.TransientModel):
         data = self.read([])[0]
         check_date = data['check_date']
         filter_cond = data['filter_cond']
-#        user = (self.env['res.users'].browse(self.env.user.id)).login
-#        mod = self.env['ir.module.record']
+        # user = (self.env['res.users'].browse(self.env.user.id)).login
+        # mod = self.env['ir.module.record']
         mod_obj = self.env['ir.model']
-#        mod.recording_data = []
+        # mod.recording_data = []
         cr, uid, context = self.env.args
         context = dict(context)
         context.update({'recording_data': []})
@@ -99,7 +99,7 @@ class base_module_data(models.TransientModel):
                 dbname = self.env.cr.dbname
                 args = (dbname, self.env.user.id, obj_name,
                         'copy', s_id.id, {})
-                recording_data.append(('query', args, {}, s_id.id))
+        recording_data.append(('query', args, {}, s_id.id))
         mod_obj = self.env['ir.model.data']
         if len(recording_data):
             if data['info_yaml']:

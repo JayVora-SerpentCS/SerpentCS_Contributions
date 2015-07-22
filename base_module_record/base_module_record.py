@@ -20,15 +20,14 @@
 #
 ##############################################################################
 
-import yaml
 import string
 from xml.dom import minidom
 from openerp import models, api
 from openerp.tools import ustr, frozendict
 from openerp.osv.fields import function as function_field
-
 # This import is not unused! Do not remove!
-from openerp.tools import yaml_tag
+# from openerp.tools import yaml_tag
+from openerp.tools.yaml_tag import yaml
 # Please do not override yaml_tag here: modify it in
 # server bin/tools/yaml_tag.py
 
@@ -60,8 +59,8 @@ class base_module_record(models.Model):
 
     def __init__(self, *args, **kwargs):
         self.recording = 0
-#        self.recording_data = []
-#        self.depends = {}
+        # self.recording_data = []
+        # self.depends = {}
         super(base_module_record, self).__init__(*args, **kwargs)
 
     # To Be Improved
@@ -92,7 +91,7 @@ class base_module_record(models.Model):
         if not obj:
             return False, None
         obj = obj[0]
-#        obj = dt.browse(dtids[0])
+        # obj = dt.browse(dtids[0])
         cr, uid, context = self.env.args
         context = dict(context)
 #        context.update({'depends': {}})
@@ -165,10 +164,10 @@ class base_module_record(models.Model):
             elif fields[key]['type'] in ('one2many',):
                 for valitem in (val or []):
                     if valitem[0] in (0, 1):
-                        if key in model_pool._columns:
-                            model_pool._columns[key]._fields_id
-                        else:
-                            model_pool._inherit_fields[key][2]._fields_id
+                        # if key in model_pool._columns:
+                            # model_pool._columns[key]._fields_id
+                        # else:
+                            # model_pool._inherit_fields[key][2]._fields_id
                         if valitem[0] == 0:
                             newid = self._create_id(relation, valitem[2])
                             valitem[1] = newid
@@ -223,9 +222,9 @@ class base_module_record(models.Model):
         self.env.args = cr, uid, frozendict(context)
         if res:
             depends[res[0]['module']] = True
-#            if depends is None:
-#                depends = {}
-#            self.depends[res[0]['module']]=True
+            # if depends is None:
+            # depends = {}
+            # self.depends[res[0]['module']]=True
         fields = model_pool.fields_get()
         defaults = {}
         try:
@@ -564,16 +563,16 @@ class base_module_record(models.Model):
                     record = self._generate_object_yaml(rec[1], rec[3])
                     if self.mode == "create" or self.mode == "copy":
                         yaml_file += "!comment Creating a %s record"\
-                                    % (record['model']) + '''\n'''
+                            % (record['model']) + '''\n'''
                     else:
                         yaml_file += "!comment Modifying a %s record"\
-                                    % (record['model']) + '''\n'''
-                    yml_object = yaml.load(unicode('''\n !record %s \n'''
-                                           % record, 'iso-8859-1'))
-                    yaml_file += str(yml_object) + '''\n'''
-                    attrs = yaml.dump(yml_object.attrs,
-                                      default_flow_style=False)
-                    yaml_file += attrs + '''\n\n'''
+                            % (record['model']) + '''\n'''
+                        yml_object = yaml.load(unicode('''\n !record %s \n'''
+                                                       % record, 'iso-8859-1'))
+                        yaml_file += str(yml_object) + '''\n'''
+                        attrs = yaml.dump(yml_object.attrs,
+                                          default_flow_style=False)
+                        yaml_file += attrs + '''\n\n'''
         yaml_result = ''''''
         for line in yaml_file.split('\n'):
             line = line.replace("''", "'")
