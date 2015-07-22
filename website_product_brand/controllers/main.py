@@ -61,7 +61,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
                                                              ['pricelist'],
                                                              context)
         product_obj = pool.get('product.template')
-
+        product_ids = []
+        
         # Brand's product search
         if brand:
             values.update({'brand': brand})
