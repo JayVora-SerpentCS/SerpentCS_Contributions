@@ -1,0 +1,11 @@
+<templates id="template" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+        <t t-jquery=".oe_list_buttons" t-operation="append">
+            <td t-if="!widget.no_leaf" class="oe-actions">
+	            <button type="button" class="oe_button oe-list-expand">
+	                <span>Expand</span>
+	            </button>
+            </td>
+        </t>
+    </t>
+</templates>
