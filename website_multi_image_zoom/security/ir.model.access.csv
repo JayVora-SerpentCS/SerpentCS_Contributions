@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_awr_website_multi_image_product_image_public","product.image.public","website_multi_image_zoom.model_product_image","base.group_public",1,0,0,0
+"access_awr_website_multi_image_product_image_portal","product.image.portal","website_multi_image_zoom.model_product_image","base.group_portal",1,0,0,0
