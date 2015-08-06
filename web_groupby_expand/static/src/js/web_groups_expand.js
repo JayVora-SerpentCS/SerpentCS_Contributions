@@ -1,8 +1,7 @@
-openerp.web_group_expand = function (openerp) {
+openerp.web_groupby_expand = function (openerp) {
     var _t = openerp.web._t,
         _lt = openerp.web._lt;
     var QWeb = openerp.web.qweb;
-//    openerp.web.ListView.Groups.include({
 
     openerp.web.ListView.Groups.include({
         init:function (view, options) {
@@ -19,6 +18,8 @@ openerp.web_group_expand = function (openerp) {
                     .filter(function (column) { return column.tag === 'field' })
                     .pluck('name').value(),
                 function (groups) {
+                    self.view.$pager.find('.oe_pager_group').hide();
+                    self.view.$pager.find('.oe_list_pager_state').text(self.view._limit ? self.view._limit : '∞');
                     $el[0].appendChild(
                         self.render_groups(groups));
                     if (post_render) { post_render(); }
@@ -146,7 +147,7 @@ openerp.web_group_expand = function (openerp) {
             });
             return placeholder;
         },
-        
+
         render_auto_groups: function (groups_auto) {
             var self = this;
             if (!groups_auto) {
@@ -177,8 +178,8 @@ openerp.web_group_expand = function (openerp) {
             this._super(options);
             _.defaults(this.options, {
                 expand : false,
-                GroupsType: openerp.web.ListView.Groups,
-                ListType: openerp.web.ListView.List
+//                GroupsType: openerp.web.ListView.Groups,
+//                ListType: openerp.web.ListView.List
             });
         },
         load_list: function(data) {

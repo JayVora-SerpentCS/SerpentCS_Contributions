@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
-#    Copyright (C) 2011-2014 Serpent Consulting Services Pvt. Ltd. (<http://serpentcs.com>).
+#    Copyright (C) 2011-Till Today Serpent Consulting Services PVT. LTD.
+#    (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    "name": "Web Group Expand",
+    "name": "Web GroupBy Expand",
     "version": "1.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
@@ -30,6 +30,9 @@
     "depends": ["web"],
     'demo' : [],
     "js": [ "static/src/js/web_groups_expand.js" ],
+    'data': [
+        'views/templates.xml',
+    ],
     "qweb": [ "static/src/xml/web_groups_expand.xml" ],
     "auto_install": False,
 }
