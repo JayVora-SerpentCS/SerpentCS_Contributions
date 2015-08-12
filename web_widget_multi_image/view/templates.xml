@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web widget multi view assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_widget_multi_image/static/library/lightbox/css/lightbox.css"/>
+                <link rel="stylesheet" href="/web_widget_multi_image/static/src/css/hoverbox.css"/>
+                <script type="text/javascript" src="/web_widget_multi_image/static/library/lightbox/js/jquery.lightbox.js"></script>
+                <script type="text/javascript" src="/web_widget_multi_image/static/src/js/multi_image.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
