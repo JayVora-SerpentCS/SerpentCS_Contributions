@@ -22,7 +22,7 @@
 
 {
     "name": "Web GroupBy Expand",
-    "version": "1.0",
+    "version": "1.1",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
     'category' : 'Web',
