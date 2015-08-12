@@ -1,0 +1,48 @@
+.openerp .secondary_menu.oe_folded .oe_toggle_secondary_menu {
+    position: static;
+    border-left: none;
+    border-bottom: 1px solid #282828;
+    width: 21px;
+    height: 21px;
+    background: #818181;
+}
+.openerp .secondary_menu.oe_folded .oe_toggle_secondary_menu span.oe_menu_fold {
+    display: none;
+}
+.openerp .secondary_menu.oe_unfolded .oe_toggle_secondary_menu span.oe_menu_unfold {
+    display: none;
+}
+
+.oe_toggle_secondary_menu {
+    cursor: pointer;
+    color: gray;
+    text-shadow: 0 1px 0 #333;
+    text-align: center;
+    font-size: 18px;
+    line-height: 18px;
+    float: right;
+}
+.active_menu {
+    position: absolute;
+    z-index: 100;
+    border: 4px solid #585858;
+    border-color: rgba(88, 88, 88, .5);
+    border-radius: 4px;
+    min-width: 200px;
+    background-color: #414141;
+background: #FFFFFF;
+background: -moz-linear-gradient(top, #FFFFFF 0%, #CECECE 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#CECECE));
+color:white;
+border-bottom: darkgray;
+border-color: darkgrey;
+}
+.alwaysHide{
+    display:none !important;
+}
+.alwaysShow{
+    display:display-cell !important;
+}
+.set_width {
+    width:0px !important;
+}
