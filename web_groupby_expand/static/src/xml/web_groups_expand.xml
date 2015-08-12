@@ -1,11 +1,9 @@
 <templates id="template" xml:space="preserve">
-    <t t-extend="ListView.buttons">
-        <t t-jquery=".oe_list_buttons" t-operation="append">
-            <td t-if="!widget.no_leaf" class="oe-actions">
-                <button type="button" class="oe_button oe-list-expand">
-                    <span>Expand</span>
-                </button>
-            </td>
+    <t t-name="ViewManagerAction" t-extend="ViewManager"> 
+        <t t-jquery="ul.oe_view_manager_switch" t-operation="append">
+            <li class="oe-list-expand" style="display:none;" title="Expand">
+                <i class="fa fa-expand" style="line-height: 25px;"></i>
+            </li>
         </t>
     </t>
 </templates>

@@ -113,7 +113,6 @@ openerp.web_groupby_expand = function (openerp) {
                     if (group.length && group.openable) {
                         // Make openable if not terminal group & group_by_no_leaf
                         $group_column.prepend('<span class="ui-icon ui-icon-triangle-1-e" style="float: left;">');
-                        self.view.$buttons.find('.oe-list-expand').removeAttr("disabled")
                     } else {
                         // Kinda-ugly hack: jquery-ui has no "empty" icon, so set
                         // wonky background position to ensure nothing is displayed
@@ -169,7 +168,7 @@ openerp.web_groupby_expand = function (openerp) {
                         vals[1].close();
                     }
                 }
-            })
+            });
         },
     });
     
@@ -184,146 +183,25 @@ openerp.web_groupby_expand = function (openerp) {
         },
         load_list: function(data) {
             var self = this;
-            this.fields_view = data;
-            this.name = "" + this.fields_view.arch.attrs.string;
-
-            if (this.fields_view.arch.attrs.colors) {
-                this.colors = _(this.fields_view.arch.attrs.colors.split(';')).chain()
-                    .compact()
-                    .map(function(color_pair) {
-                        var pair = color_pair.split(':'),
-                            color = pair[0],
-                            expr = pair[1];
-                        return [color, py.parse(py.tokenize(expr)), expr];
-                    }).value();
-            }
-
-            if (this.fields_view.arch.attrs.fonts) {
-                this.fonts = _(this.fields_view.arch.attrs.fonts.split(';')).chain().compact()
-                    .map(function(font_pair) {
-                        var pair = font_pair.split(':'),
-                            font = pair[0],
-                            expr = pair[1];
-                        return [font, py.parse(py.tokenize(expr)), expr];
-                    }).value();
-            }
-
-            this.setup_columns(this.fields_view.fields, this.grouped);
-
-            this.$el.html(QWeb.render(this._template, this));
-            this.$el.addClass(this.fields_view.arch.attrs['class']);
-
-            // Head hook
-            // Selecting records
-            this.$el.find('.oe_list_record_selector').click(function(){
-                self.$el.find('.oe_list_record_selector input').prop('checked',
-                    self.$el.find('.oe_list_record_selector').prop('checked')  || false);
-                var selection = self.groups.get_selection();
-                $(self.groups).trigger(
-                    'selected', [selection.ids, selection.records]);
-            });
-
-            // Add button
             if (!this.$buttons) {
-                this.$buttons = $(QWeb.render("ListView.buttons", {'widget':self}));
-                if (this.options.$buttons) {
-                    this.$buttons.appendTo(this.options.$buttons);
-                } else {
-                    this.$el.find('.oe_list_buttons').replaceWith(this.$buttons);
-                }
-                this.$buttons.find('.oe-list-expand').click(function(){
+                $('.oe-list-expand').click(function(){
                     self.options.expand = true;
                     self.groups.render_auto_groups(false)
                 })
-                this.$buttons.find('.oe_list_add')
-                        .click(this.proxy('do_add_record'))
-                        .prop('disabled', this.grouped);
             }
+            this._super.apply(this, arguments);
             if(self.groups.datagroup.dataset){
-                this.$buttons.find('.oe-list-expand').hide()
+                $('.oe-list-expand').hide();
             }
             if(self.groups.datagroup.group_by == ""){
-                this.$buttons.find('.oe-list-expand').attr("disabled","disabled");
+                $('.oe-list-expand').hide();
+            }else if(self.groups.datagroup.group_by == undefined){
+                $('.oe-list-expand').hide();
+                $(".oe_list_pager").hide();
             }else{
-                this.$buttons.find('.oe-list-expand').removeAttr("disabled");
+                $('.oe-list-expand').show();
             }
-            // Pager
-            if (!this.$pager) {
-                this.$pager = $(QWeb.render("ListView.pager", {'widget':self}));
-                if (this.options.$buttons) {
-                    this.$pager.appendTo(this.options.$pager);
-                } else {
-                    this.$el.find('.oe_list_pager').replaceWith(this.$pager);
-                }
-
-                this.$pager
-                    .on('click', 'a[data-pager-action]', function () {
-                        var $this = $(this);
-                        var max_page = Math.floor(self.dataset.size() / self.limit());
-                        switch ($this.data('pager-action')) {
-                            case 'first':
-                                self.page = 0; break;
-                            case 'last':
-                                self.page = max_page - 1;
-                                break;
-                            case 'next':
-                                self.page += 1; break;
-                            case 'previous':
-                                self.page -= 1; break;
-                        }
-                        if (self.page < 0) {
-                            self.page = max_page;
-                        } else if (self.page > max_page) {
-                            self.page = 0;
-                        }
-                        self.reload_content();
-                    }).find('.oe_list_pager_state')
-                        .click(function (e) {
-                            e.stopPropagation();
-                            var $this = $(this);
-
-                            var $select = $('<select>')
-                                .appendTo($this.empty())
-                                .click(function (e) {e.stopPropagation();})
-                                .append('<option value="80">80</option>' +
-                                        '<option value="200">200</option>' +
-                                        '<option value="500">500</option>' +
-                                        '<option value="2000">2000</option>' +
-                                        '<option value="NaN">' + _t("Unlimited") + '</option>')
-                                .change(function () {
-                                    var val = parseInt($select.val(), 10);
-                                    self._limit = (isNaN(val) ? null : val);
-                                    self.page = 0;
-                                    self.reload_content();
-                                }).blur(function() {
-                                    $(this).trigger('change');
-                                })
-                                .val(self._limit || 'NaN');
-                        });
-            }
-
-            // Sidebar
-            if (!this.sidebar && this.options.$sidebar) {
-                this.sidebar = new openerp.web.Sidebar(this);
-                this.sidebar.appendTo(this.options.$sidebar);
-                this.sidebar.add_items('other', _.compact([
-                    { label: _t("Export"), callback: this.on_sidebar_export },
-                    self.is_action_enabled('delete') && { label: _t('Delete'), callback: this.do_delete_selected }
-                ]));
-                this.sidebar.add_toolbar(this.fields_view.toolbar);
-                this.sidebar.$el.hide();
-            }
-            //Sort
-            if(this.dataset._sort.length){
-                if(this.dataset._sort[0].indexOf('-') == -1){
-                    this.$el.find('th[data-id=' + this.dataset._sort[0] + ']').addClass("sortdown");
-                }else {
-                    this.$el.find('th[data-id=' + this.dataset._sort[0].split('-')[1] + ']').addClass("sortup");
-                }
-            }
-            this.trigger('list_view_loaded', data, this.grouped);
         },
-
         do_search: function (domain, context, group_by) {
             this._super(domain, context, group_by);
             this.options.expand = false;

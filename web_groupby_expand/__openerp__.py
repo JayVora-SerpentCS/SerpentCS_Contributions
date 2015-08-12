@@ -29,7 +29,6 @@
     "description": "Adds Expand button to expand all groups on a list view.",
     "depends": ["web"],
     'demo' : [],
-    "js": [ "static/src/js/web_groups_expand.js" ],
     'data': [
         'views/templates.xml',
     ],
