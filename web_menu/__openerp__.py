@@ -22,7 +22,7 @@
 
 {
     'name': 'Web Menu',
-    'version': '1.1',
+    'version': '1.2',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'description': '',
     'category': 'Web',
