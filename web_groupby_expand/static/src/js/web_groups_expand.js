@@ -160,12 +160,16 @@ openerp.web_groupby_expand = function (openerp) {
                                 .removeClass('ui-icon-triangle-1-e')
                                 .addClass('ui-icon-triangle-1-s');
                         vals[1].open(self.point_insertion(vals[0]));
+                        $("#expand_icon").removeClass('fa-expand');
+                        $("#expand_icon").addClass('fa-compress');
                     } else {
                         vals[0].removeData('open')
                             .find('span.ui-icon')
                                 .removeClass('ui-icon-triangle-1-s')
                                 .addClass('ui-icon-triangle-1-e');
                         vals[1].close();
+                        $("#expand_icon").addClass('fa-expand');
+                        $("#expand_icon").removeClass('fa-compress');
                     }
                 }
             });
@@ -190,6 +194,8 @@ openerp.web_groupby_expand = function (openerp) {
                 })
             }
             this._super.apply(this, arguments);
+            $("#expand_icon").addClass('fa-expand');
+            $("#expand_icon").removeClass('fa-compress');
             if(self.groups.datagroup.dataset){
                 $('.oe-list-expand').hide();
             }
@@ -207,5 +213,14 @@ openerp.web_groupby_expand = function (openerp) {
             this.options.expand = false;
             this.groups.groups_auto = []
         },
+    });
+    
+    openerp.web.ViewManagerAction.include({
+        switch_mode: function (view_type, no_store, options) {
+            this._super.apply(this, arguments);
+            if(view_type != 'list'){
+                $('.oe-list-expand').hide();
+            }
+        }, 
     });
 };
