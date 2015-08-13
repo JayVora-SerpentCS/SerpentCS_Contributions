@@ -135,6 +135,7 @@ openerp.web_menu = function(instance){
         },
         on_toggle_fold: function(e) {
             this.$secondary_menus.toggleClass('oe_folded').toggleClass('oe_unfolded');
+            $(".oe_secondary_submenu").find('.active a').click();
             if ( $(".oe_toggle_secondary_menu .oe_menu_fold").css("display") == 'none') {
                 this.folded = true
                 this.$secondary_menus.find('.oe_secondary_menu.active_menu').show();
@@ -328,7 +329,11 @@ openerp.web_menu = function(instance){
         },
         on_menu_click: function(ev) {
             if($(ev.currentTarget).closest("li").closest("ul").attr("main") && $(ev.currentTarget).attr("main")){
-                this.click_on_main_menu = true
+                if ($(".oe_toggle_secondary_menu .oe_menu_fold").css("display") == 'none') {
+                    this.click_on_main_menu = true
+                }else{
+                    this.click_on_main_menu = false
+                }
             }else{
                 this.click_on_main_menu = false
             }
