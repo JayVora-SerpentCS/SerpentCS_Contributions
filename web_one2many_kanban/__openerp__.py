@@ -25,7 +25,7 @@
     'name': 'Web one2many Kanban',
     'version': '1.0.1',
     'sequence': 6,
-    'author': 'Serpent Consulting Services Pvt. Ltd',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'description' : """
         You need to define o2m field in kanban view definition and use
         for loop to display fields like:
