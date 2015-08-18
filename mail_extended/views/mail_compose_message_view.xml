@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="email_compose_message_wizard_form_inherit">
+            <field name="name">mail.compose.message.form.inherit</field>
+            <field name="model">mail.compose.message</field>
+            <field name="inherit_id" ref="mail.email_compose_message_wizard_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="mail_server_id" position="after">
+                    <field name="fwd_message" invisible="1"/>
+                </field>
+                <xpath expr="//form[@string='Compose Email']/group/div[2]/span[2]" position='replace'>
+                    <span attrs="{'invisible':['|',('composition_mode', '!=', 'comment'),('fwd_message','=',True)]}">Followers of the document and</span>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
