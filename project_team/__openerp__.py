@@ -21,8 +21,8 @@
 
 {
     'name':'Project Team',
-    'author':'SerpentCS',
-    'category': 'Project',
+    'author':'Serpent Consulting Services Pvt. Ltd.',
+    'category': 'Project Management',
     'version':'8.0',
     'sequence': 1,
     'depends':['project','crm'],
