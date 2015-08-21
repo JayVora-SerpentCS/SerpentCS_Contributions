@@ -21,7 +21,7 @@
 
 {
     'name':'Project Team',
-    'author':'Serpent Consulting Services Pvt. Ltd',
+    'author':'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Project Management.',
     'website':'http://www.serpentcs.com',
     'version':'1.0',
