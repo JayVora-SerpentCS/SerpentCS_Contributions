@@ -4,7 +4,7 @@
 
     'summary': """""",
     'description': """
-        This modules restricts a user from confirming a Sale Order/Quotation if it contains products having sale price zero.
+        This module restricts a user from confirming a Sale Order/Quotation if it contains products having sale price zero.
     """,
 
     'author': "Serpent Consulting Services Pvt. Ltd.",
