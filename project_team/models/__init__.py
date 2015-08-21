@@ -19,17 +19,4 @@
 #
 ##############################################################################
 
-{
-    'name':'Project Team',
-    'author':'Serpent Consulting Services Pvt. Ltd',
-    'category': 'Project Management.',
-    'website':'http://www.serpentcs.com',
-    'version':'1.0',
-    'sequence': 1,
-    'depends':['project','crm'],
-    'data':[
-            'view/project_team_view.xml'
-    ],
-    'installable':True,
-    'auto_install':False
-}
+from . import project_team

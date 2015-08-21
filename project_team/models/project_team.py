@@ -19,25 +19,22 @@
 #
 ##############################################################################
 
-from openerp import models, fields,_,api
+from openerp import models, fields, api, _
 
 class crm_case_section(models.Model):
     
     _inherit = 'crm.case.section'
     
-    type = fields.Selection([('sale','Sale'),('project','Project')],string="Type",default="sale")
-    parent_id = fields.Many2one('crm.case.section', string='Parent Team')
-    
+    type_team = fields.Selection([('sale', 'Sale'), ('project', 'Project')], string="Type", default="sale")
+
+
 class project_project(models.Model):
     
     _inherit = 'project.project'
     
-    team_ids = fields.Many2one('crm.case.section',string="Project Team",domain=[('type','=','project')])
+    team_id = fields.Many2one('crm.case.section', string="Project Team", domain=[('type_team', '=', 'project')])
     
-    @api.onchange('team_ids')
-    def get_team_member(self):
-        lst = []
-        for rec in self.team_ids.member_ids:
-            lst.append(rec.id)
-        self.members = [(4,lst)]
+    @api.onchange('team_id')
+    def get_team_members(self):
+        self.members = [(4, [rec.id for rec in self.team_id.member_ids])]
         
