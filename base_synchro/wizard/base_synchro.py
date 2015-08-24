@@ -25,7 +25,10 @@ import xmlrpclib
 import threading
 from openerp import pooler
 from openerp.tools import frozendict
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.osv.fields import related
+from openerp.exceptions import except_orm
+
 
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
@@ -68,10 +71,8 @@ class base_synchro(models.TransientModel):
 #        for key,valu in  zip(value.keys(),value.values()) :
 #            if type(valu) is unicode:
 #                val=tools.ustr(valu)
-#                print "\n\n value",val
 #                c=unicodedata.normalize('NFKD', valu).encode('ascii','ignore')#
 #                a=valu.encode('utf-8')
-#                print "aaaa.=",a
 #                value[key]=val
         return value
 
@@ -86,7 +87,6 @@ class base_synchro(models.TransientModel):
         # try:
         if object.action in ('d', 'b'):
             ids = pool1.get('base.synchro.obj').get_ids(self._cr, self.user_id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'d'})
-
         if object.action in ('u', 'b'):
             ids += pool2.get('base.synchro.obj').get_ids(self._cr, self.user_id.id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'u'})
         ids.sort()
@@ -99,7 +99,7 @@ class base_synchro(models.TransientModel):
             else:
                 pool_src = pool2
                 pool_dest = pool1
-            fields = False
+            fields = []
             if object.model_id.model == 'crm.case.history':
                 fields = ['email', 'description', 'log_id']
             value = pool_src.get(object.model_id.model).read(self._cr, self.user_id.id, [id], fields)[0]
@@ -113,9 +113,7 @@ class base_synchro(models.TransientModel):
                     value.update({key:val[0]})
             value = self.data_transform(pool_src, pool_dest, object.model_id.model, value, action)
             id2 = self.get_id(object.id, id, action)
-            #
             # Transform value
-            #
             # tid=pool_dest.get(object.model_id.model).name_search(cr, uid, value['name'],[],'=',)
             if not (iii % 50):
                 pass
@@ -131,7 +129,7 @@ class base_synchro(models.TransientModel):
                 self.report_total += 1
                 self.report_write += 1
             else:
-#                value_encode = self.input(ids, value)
+#                value = self.input(ids, value)
 #                idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value_encode)
                 idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value)
                 self.env['base.synchro.obj.line'].create({
@@ -167,21 +165,22 @@ class base_synchro(models.TransientModel):
         obj = self._cr.fetchone()
         result = False
         if obj:
-            #
             # If the object is synchronised and found, set it
-            #
             result = self.get_id(obj[0], res_id, action)
         else:
-            #
             # If not synchronized, try to find it with name_get/name_search
-            #
             names = pool_src.get(obj_model).name_get(self._cr, self.user_id.id, [res_id])[0][1]
+            dest_db = pool_dest.db_name
+            if not pool_dest.get(obj_model):
+                raise except_orm(_('Warning!'),
+                        _("%s object does not exist in database %s!") % (obj_model,dest_db))
             res = pool_dest.get(obj_model).name_search(self._cr, self.user_id.id, names, [], 'like')
             if res:
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
                 print self.report.append('WARNING: Record "%s" on relation %s not found, set to null.' % (names, obj_model))
+                result = False
         return result
 
     #
@@ -199,7 +198,12 @@ class base_synchro(models.TransientModel):
 #        if not obj in self.meta[pool_src]:
         fields = pool_src.get(obj).fields_get(self._cr, self.user_id.id)
 #        fields = self.meta[pool_src][obj]
+        columns = pool_dest.get(obj)._columns
         for f in fields:
+            if 'related' in fields.get(f, {}):
+                data.pop(f, False)
+            if columns.get(f) and isinstance(columns.get(f), related):
+                data.pop(f, False)
             if f not in data:
                 continue
             ftype = fields[f]['type']
@@ -248,7 +252,7 @@ class base_synchro(models.TransientModel):
             summary = '''Here is the synchronization report:
 
 Synchronization started: %s
-Synchronization finnished: %s
+Synchronization finished: %s
 
 Synchronized records: %d
 Records updated: %d
