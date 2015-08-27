@@ -87,7 +87,7 @@
     border-radius: 0;
     display: inline-block;
     height: auto;
-    margin: 0 !important;
+    margin: 1 !important;
     width: auto;
 }
 #carousel-custom .carousel-indicators li img {

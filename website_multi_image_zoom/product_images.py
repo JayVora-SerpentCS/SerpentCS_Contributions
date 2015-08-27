@@ -23,6 +23,7 @@
 from openerp import models,fields,api
 
 class product_image(models.Model):
+
     _name = 'product.image'
 
     name = fields.Char(string='Name')
@@ -32,13 +33,17 @@ class product_image(models.Model):
     image_small = fields.Binary(string='Small Image')
     image_url = fields.Char(string='Image Url')
     product_tmpl_id = fields.Many2one('product.template','Product')
+    product_variant_id = fields.Many2one('product.product','Product Variant')
 
 class product_product(models.Model):
+
     _inherit = 'product.product'
 
-    images = fields.One2many(related='product_tmpl_id.images',string='Images')
+    images_variant = fields.One2many('product.image','product_variant_id','Images')
 
 class product_template(models.Model):
+
     _inherit = 'product.template'
 
     images = fields.One2many('product.image','product_tmpl_id','Images')
+    variant_bool = fields.Boolean(string ='Show Varaint Wise Images',help='Check if you like to show variant wise images in website', auto_join=True)
