@@ -1,61 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-name="HiddenInputMultiFile">
-        <div t-attf-class="oe_hidden_input_file #{fileupload_class or ''}" t-att-style="fileupload_style">
-            <form class="oe_form_binary_form" t-att-target="fileupload_id"
-            method="post" enctype="multipart/form-data" t-att-action="fileupload_action || '/web/binary/upload_image_multi'">
-                <input type="hidden" name="session_id" value="" t-if="widget.session.override_session"/>
-                <input type="hidden" name="callback" t-att-value="fileupload_id"/>
-                <t t-raw="0"/>
-                <input type="file" class="oe_form_binary_file" name="ufile" t-if="widget.widget!='image'"/>
-                <input type="file" class="oe_form_binary_file" name="ufile" accept="image/*" t-if="widget.widget=='image'"/>
-            </form>
-            <iframe t-att-id="fileupload_id" t-att-name="fileupload_id" style="display: none"/>
-        </div>
-    </t>
-    <t t-name="FieldBinaryImageMulti">
-        <table class="oe_form_field oe_form_field_binary" cellpadding="0" cellspacing="0" border="0" t-att-style="widget.node.attrs.style">
-            <tr>
-                <td class="oe_form_binary" nowrap="true" style="padding-left: 45px;">
-                    <table cellspacing="0" cellpadding="0" border="0">
-                        <tr>
-                            <td>
-                                <t t-if="!widget.get('effective_readonly')">
-                                    <t t-call="HiddenInputMultiFile">
-                                        <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
-                                        <t t-set="fileupload_style" t-translation="off">width: 200px;</t>
-                                        <button class="oe_button oe_field_button" type="button">
-                                            <img t-att-src='_s + "/web/static/src/img/icons/STOCK_ADD.png"'/>
-                                            <span>ADD</span>
-                                        </button>
-                                    </t>
-                                </t>
-                            </td>
-                            <td style="padding: 0px 150px 15px 132px;">
-                                <button class="oe-image-preview oe_button oe_field_button oe_form_binary" type="button" title="Preview">
-                                    <img t-att-src='_s + "/web/static/src/img/icons/gtk-zoom-fit.png"'/>
-                                    <span>Image Preview</span>
-                                </button>
-                            </td>
-                            <td>
-                                <button class="oe_image_list oe_button oe_field_button oe_form_binary" type="button" title="All Image">
-                                    <img t-att-src='_s + "/web/static/src/img/icons/STOCK_DND_MULTIPLE.png"'/>
-                                    <span>List All Image</span>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td class="oe_form_binary_progress" style="display: none" nowrap="true">
-                    <div class="oe_form_binary_progress" style="display: none">
-                        <img t-att-src='_s + "/web/static/src/img/throbber.gif"' width="16" height="16"/>
-                        <b>Uploading ...</b>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </t>
-    <t t-name="DialogImageList">
+     <t t-name="DialogImageList">
         <table id="DialogImageList">
             <tr t-foreach="image_list" t-as="row">
                 <td t-foreach="row" t-as="column" height="150" width="180px" style="padding: 4px 8px 0px 8px;">
@@ -63,8 +8,8 @@
                         <tr background-color="white" width="180">
                             <td>
                                 <t t-esc="column.name" />
-                                <t t-if="!widget.get('effective_readonly')">
-                                    <img class="oe-remove-image" t-att-id="column.path" t-att-src='_s + "/web_widget_multi_image/static/src/img/remove-icon.png"' title="Delete Image" align="right"/>
+                                <t t-if="readonly">
+                                    <img class="oe-remove-image" t-att-id="column.id" t-att-src='_s + "/web_widget_multi_image/static/src/img/remove-icon.png"' title="Delete Image" align="right"/>
                                 </t>
                             </td>
                         </tr>
@@ -81,64 +26,35 @@
             </tr>
         </table>
     </t>
-    <t t-name="ImageDescription">
-        <div id="imagedescription" class="openerp oe_list oe_view" style="display: block; height:160px;width:100%;overflow: auto">
-            <table class="openerp oe_list_content">
-                <thead>
-                    <tr class="oe_list_header_columns">
-                        <th class="oe_list_header_char" t-if="!widget.get('effective_readonly')" style="width:3%;"></th>
-                        <th class="oe_list_header_char" style="width:12%;">File Name</th>
-                        <th class="oe_list_header_char" style="width:12%;">Title</th>
-                        <th class="oe_list_header_char" style="width:25%;">Description</th>
-                        <th class="oe_list_header_char" style="width:10%;">Size</th>
-                        <th class="oe_list_header_char" style="width:20%;">Date</th>
-                        <th class="oe_list_header_char" style="width:15%;">User</th>
-                        <th class="oe_list_header_char" t-if="!widget.get('effective_readonly')" style="width:3%;"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr t-foreach="image_list" t-as="row">
-                        <td width="1" t-att-id="row.name" class="oe-record-edit-link" t-if="!widget.get('effective_readonly')" style="width:3%;">
-                            <img t-if="!widget.get('effective_readonly')" src="/web/static/src/img/pencil.gif" />
-                        </td>
-                        <td class="oe_image_row" t-att-id="row.name" style="width:12%;">
-                            <t t-esc="row.orignal_name" />
-                        </td>
-                        <td class="oe_image_row" t-att-id="row.name" style="width:12%;">
-                            <t t-esc="row.img_title"/>
-                        </td>
-                        <td class="oe_image_row" t-att-id="row.name" style="width:25%;">
-                            <t t-esc="row.description"/>
-                        </td>
-                        <td class="oe_image_row" t-att-id="row.name" style="width:10%;">
-                            <t t-esc="row.size"/>
-                        </td>
-                        <td class="oe_image_row" t-att-id="row.name" style="width:20%;">
-                            <t t-esc="row.date"/>
-                        </td>
-                        <td class="oe_image_row" t-att-id="row.name" style="width:15%">
-                            <t t-esc="row.user"/>
-                        </td>
-                        <td class='oe_list_record_delete' width="3%" t-att-id="row.name" t-if="!widget.get('effective_readonly')">
-                            <button t-if="!widget.get('effective_readonly')" type="button" name="delete" class="oe_i">d</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+    <t t-name="One2Many.listview" t-extend="ListView">
+        <t t-jquery="thead.ui-widget-header > tr:first">
+            this.removeAttr('t-if');
+        </t>
+        <t t-jquery="td.oe-actions">
+            this.removeAttr('t-if');
+        </t>
+        <t t-jquery=".oe_list_content thead" t-operation="prepend">
+            <t t-if="options.multi_image"> 
+                <tr style="background:white;">
+                    <td style="padding: 0px 150px 15px 132px;">
+                        <button class="oe-image-preview oe_button oe_field_button oe_form_binary" type="button" title="Preview">
+                            <img t-att-src='_s + "/web/static/src/img/icons/gtk-zoom-fit.png"'/>
+                            <span>Image Preview</span>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="oe_image_list oe_button oe_field_button oe_form_binary" type="button" title="All Image">
+                            <img t-att-src='_s + "/web/static/src/img/icons/STOCK_DND_MULTIPLE.png"'/>
+                            <span>List All Image</span>
+                        </button>
+                    </td>
+                </tr>
+            </t>
+        </t>
+        <t t-jquery="td.oe-actions" t-operation="prepend">
+            <h3 class="oe_view_title"><t t-esc="fields_view.arch.attrs.string"/></h3>
+        </t>
     </t>
-    <t t-name="edit_img_details">
-        <div>
-            <h3>Title : 
-                
-                <input t-att-value="widget.name_display" type="textbox" class="name_textbox" id="img_title" style="display: block; height:35px; width:450px;overflow: scroll"/>
-            </h3>
-            <h3>Description : 
-                
-                <textarea type="textarea" class="field_text" id="description" style="display: text; height:160px;width:450px;overflow: scroll">
-                    <t t-esc="widget.description_display" />
-                </textarea>
-            </h3>
-        </div>
-    </t>
+
 </templates>
