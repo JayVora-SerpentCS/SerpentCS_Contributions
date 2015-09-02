@@ -21,7 +21,18 @@
 #
 ##############################################################################
 
-from . import wizard
-from . import models
+from openerp import models, fields
+
+
+class res_request(models.Model):
+    _name = 'res.request'
+    _order = 'date desc'
+    _description = 'Request'
+
+    name = fields.Char('Subject', required=True)
+    date = fields.Datetime('Date')
+    act_from = fields.Many2one('res.users', 'From')
+    act_to = fields.Many2one('res.users', 'To')
+    body = fields.Text('Request')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
