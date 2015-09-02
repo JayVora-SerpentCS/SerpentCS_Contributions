@@ -2,35 +2,39 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2011-Till Today Serpent Consulting Services PVT. LTD.
-#    (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
+#                                     (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
+#    GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
-############################################################################
+##############################################################################
 
 {
-    'name': 'Product Multi-Image Zoom',
-    'version': '1.0',
-    'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'description': '',
+    'name': 'Website Product Multi-Image Zoom',
     'category': 'Website',
-    'depends': ['website_sale'],
+    'author': "Serpent Consulting Services Pvt. Ltd.,"
+              "Odoo Community Association (OCA)",
+    'website': 'http://www.serpentcs.com',
+    'version': '8.0.1.0.0',
+    'depends': [
+        'website_sale'
+    ],
     'data': [
         "security/ir.model.access.csv",
-        'views/product_images.xml',
-        'views/templates.xml',
+        "views/product_images.xml",
+        "views/templates.xml",
     ],
-    'application': True,
+    'installable': True,
+    'auto_install': False,
 }

@@ -145,7 +145,7 @@ function openerp_web_widget_multi_image(instance){
                             }
                         });
                     } else {
-                        this.do_warn("Image", "Image not available !");
+                        self.do_warn("Image", "Image not available !");
                         return false;
                     }
                     self.$el.find('.oe-image-preview').lightbox({

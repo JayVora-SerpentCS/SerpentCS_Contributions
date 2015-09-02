@@ -12,7 +12,7 @@
                             <field name="variant_bool" string="Display All Varaint Images"/>
                         </group>
                         <!-- <field name="images" context="{'default_name': name}"> -->
-                        <field name="images" mode="kanban" context="{'default_name': name}">
+                        <field name="images" mode="tree" context="{'default_name': name}">
                             <kanban>
                                 <field name="name"/>
                                 <field name="description"/>
