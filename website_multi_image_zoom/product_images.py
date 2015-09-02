@@ -35,6 +35,14 @@ class product_image(models.Model):
     product_tmpl_id = fields.Many2one('product.template','Product')
     product_variant_id = fields.Many2one('product.product','Product Variant')
 
+    def create(self, cr, uid, vals, context=None):
+        products_imgs = super(product_image, self).create(cr, uid, vals, context=context)
+        product_img_data = self.browse(cr, uid, products_imgs, context=context)
+        for pro_rec in product_img_data:
+            if not pro_rec.product_tmpl_id and pro_rec.product_variant_id:
+                self.write(cr, uid, pro_rec.id, {'product_tmpl_id': pro_rec.product_variant_id.product_tmpl_id.id}, context=context)
+        return products_imgs
+
 class product_product(models.Model):
 
     _inherit = 'product.product'
