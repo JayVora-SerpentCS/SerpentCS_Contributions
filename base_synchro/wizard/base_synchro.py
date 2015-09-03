@@ -211,7 +211,8 @@ class base_synchro(models.TransientModel):
             names = pool_src.get(obj_model).name_get(self._cr,
                                                      self.user_id.id,
                                                      [res_id])[0][1]
-            dest_db = pool_dest.__dict__['server'].server_db
+            dest = pool_dest.__dict__.get('server', '')
+            dest_db = dest and dest.server_db or ''
             if not pool_dest.get(obj_model):
                 war = obj_model, dest_db
                 raise except_orm(_('Warning!'),
