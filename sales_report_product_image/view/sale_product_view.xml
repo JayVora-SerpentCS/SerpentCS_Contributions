@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="view_order_image_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.image</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Order Lines']/field[@name='order_line']/form[@string='Sales Order Lines']/group/group/field[@name='product_id']" position="before">
+                    <field name="image_small" widget="image"/>
+                </xpath> 
+
+                <xpath expr="//page[@string='Order Lines']/field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='product_id']" position="before">
+                    <field name="image_small" widget="image"/>
+                </xpath>
+                <field name="client_order_ref" position="after">
+                    <field name="print_image"/>
+                    <field name="image_sizes"/>
+                </field>
+
+            </field>
+         </record>
+    </data>
+</openerp>
