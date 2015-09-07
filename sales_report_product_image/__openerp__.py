@@ -22,7 +22,7 @@
 {
     'name':'Product image for sale reports',
     'author':'Serpent Consulting Services Pvt. Ltd.',
-    'category': 'Product images for sale order and quotation.',
+    'category': 'Sales Management',
     'website':'http://www.serpentcs.com',
     'version':'1.0',
     'sequence': 1,
