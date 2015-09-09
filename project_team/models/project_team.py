@@ -36,5 +36,5 @@ class project_project(models.Model):
     
     @api.onchange('team_id')
     def get_team_members(self):
-        self.members = [(4, [rec.id for rec in self.team_id.member_ids])]
+        self.members = [rec.id for rec in self.team_id.member_ids]
         
