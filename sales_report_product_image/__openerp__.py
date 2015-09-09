@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
+#                            (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,18 +21,19 @@
 ##############################################################################
 
 {
-    'name':'Product image for sale reports',
-    'author':'Serpent Consulting Services Pvt. Ltd.',
+    'name': 'Product image for sale reports',
+    'author': 'Serpent Consulting Services Pvt. Ltd.,\
+             Odoo Community Association (OCA)',
     'category': 'Sales Management',
-    'website':'http://www.serpentcs.com',
-    'version':'1.0',
+    'website': 'http://www.serpentcs.com',
+    'version': '8.0.1.0.0',
     'sequence': 1,
-    'depends':['sale'],
+    'depends': ['sale', 'web_tree_image'],
     'qweb': [],
     'data': [
-        'view/sale_product_view.xml',
-        'view/report_saleorder.xml',
+        'views/sale_product_view.xml',
+        'views/report_saleorder.xml',
     ],
-    'installable':True,
-    'auto_install':False
+    'installable': True,
+    'auto_install': False
 }
