@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd.
+#                            (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,19 +22,22 @@
 
 from openerp import models, fields
 
+
 class sale_order(models.Model):
     _inherit = 'sale.order'
 
-    print_image = fields.Boolean('Print Image', help="If ticked, you can see the product image in report of sale order/quotation")
-    image_sizes = fields.Selection([
-                                    ('image', 'Big sized Image'),
+    print_image = fields.Boolean('Print Image', help="""If ticked, you can see
+                    the product image in report of sale order/quotation""")
+    image_sizes = fields.Selection([('image', 'Big sized Image'),
                                     ('image_medium', 'Medium Sized Image'),
-                                    ('image_small', 'Small Sized Image')], 'Image Sizes', 
-                                   default="image_small", help="Image size to be displayed in report")
+                                    ('image_small', 'Small Sized Image')],
+                                   'Image Sizes',
+                                   default="image_small",
+                                   help="Image size to be displayed in report")
+
 
 class sale_order_line(models.Model):
     _inherit = 'sale.order.line'
-    
-    image_small = fields.Binary('Product Image',related='product_id.image_small')
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    image_small = fields.Binary('Product Image',
+                                related='product_id.image_small')
