@@ -1,22 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from osv import fields, osv
-from tools.translate import _
+from openerp import models,fields, osv, _
 
-class label_print(osv.osv):
+class label_print(models.Model):
     _name = "label.print"
 
-    _columns = {
-        'name' : fields.char("Name", size=64, required=True, select=1),
-        'model_id' : fields.many2one('ir.model', 'Model', required=True, select=1),
-        'field_ids' : fields.one2many("label.print.field", 'report_id', 'Fields'),
-        'ref_ir_act_report':fields.many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
-                                            help="Sidebar action to make this template available on records "
-                                                 "of the related document model"),
-        'ref_ir_value':fields.many2one('ir.values', 'Sidebar button', readonly=True,
-                                       help="Sidebar button to open the sidebar action"),
-        'model_list': fields.char('Model List', size=256)
-    }
+    name = fields.Char("Name", size=64, required=True, select=1)
+    model_id = fields.Many2one('ir.model', 'Model', required=True, select=1)
+    field_ids = fields.One2many("label.print.field", 'report_id', 'Fields')
+    ref_ir_act_report = fields.Many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
+                                        help="Sidebar action to make this template available on records "
+                                        "of the related document model")
+    ref_ir_value = fields.Many2one('ir.values', 'Sidebar button', readonly=True,
+                                   help="Sidebar button to open the sidebar action")
+    model_list = fields.Char('Model List', size=256)
+
     def onchange_model(self, cr, uid, ids, model_id):
         model_list = ""
         if model_id:
@@ -76,28 +74,21 @@ class label_print(osv.osv):
 
 label_print()
 
-class label_print_field(osv.osv):
+class label_print_field(models.Model):
     _name = "label.print.field"
     _rec_name = "sequence"
     _order = "sequence"
-    _columns = {
-        'sequence' : fields.integer("Sequence", required=True),
-        'field_id' : fields.many2one('ir.model.fields', 'Fields', required=False),
-        'report_id': fields.many2one('label.print', 'Report'),
-        'type': fields.selection([('normal','Normal'), ('barcode', 'Barcode'), ('image', 'Image')], 'Type', required=True),
-        'python_expression': fields.boolean('Python Expression'),
-        'python_field': fields.char('Fields', size=32),
-        'fontsize' : fields.float("Font Size"),
-        'position' : fields.selection([('left','Left'),('right','Right'),('top','Top'),('bottom','Bottom')],'Position'),
-        'nolabel' : fields.boolean('No Label'),
-        'newline' : fields.boolean('New Line')
-    }
+    sequence = fields.Integer("Sequence", required=True)
+    field_id = fields.Many2one('ir.model.fields', 'Fields', required=False)
+    report_id = fields.Many2one('label.print', 'Report')
+    type_ = fields.Selection([('normal','Normal'), ('barcode', 'Barcode'), ('image', 'Image')], 'Type', required=True, default='normal')
+    python_expression = fields.Boolean('Python Expression')
+    python_field = fields.Char('Fields', size=32)
+    fontsize = fields.Float("Font Size", default=8.0)
+    position = fields.Selection([('left','Left'),('right','Right'),('top','Top'),('bottom','Bottom')],'Position')
+    nolabel = fields.Boolean('No Label')
+    newline = fields.Boolean('New Line', default=True)
 
-    _defaults = {
-        'type': 'normal',
-        'fontsize' : 8.0,
-        'newline' : True
-    }
 
 label_print_field()
 

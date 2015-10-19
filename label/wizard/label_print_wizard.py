@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from osv import osv
-from osv import fields
+from openerp import models, fields
 import math
 
-class label_print_wizard(osv.osv_memory):
+class label_print_wizard(models.TransientModel):
 
     _name = 'label.print.wizard'
 
@@ -22,26 +21,16 @@ class label_print_wizard(osv.osv_memory):
                     result['is_barcode'] = True
         return result
 
-    _columns = {
-        'name' : fields.many2one('label.config','Label Size', required=True),
-        'number_of_copy': fields.integer('Number Of Copy', required=True),
-        'image_width': fields.float('Width'),
-        'image_height': fields.float('Height'),
-        'barcode_width': fields.float('Width'),
-        'barcode_height': fields.float('Height'),
-        'is_barcode': fields.boolean('Is Barcode?'),
-        'is_image': fields.boolean('Is Image?'),
-        'brand_id' : fields.many2one('label.brand', 'Brand Name', required=True)
-    }
-
-    _defaults = {
-        'number_of_copy': 1,
-        'image_width': 50,
-        'image_height': 50,
-        'barcode_width': 50,
-        'barcode_height': 50,
-    }
-    
+    name = fields.Many2one('label.config','Label Size', required=True)
+    number_of_copy = fields.Integer('Number Of Copy', required=True, default=1)
+    image_width = fields.Float('Width', default=50)
+    image_height = fields.Float('Height', default=50)
+    barcode_width = fields.Float('Width', default=50)
+    barcode_height = fields.Float('Height', default=50)
+    is_barcode = fields.Boolean('Is Barcode?')
+    is_image = fields.Boolean('Is Image?')
+    brand_id = fields.Many2one('label.brand', 'Brand Name', required=True)
+        
     def print_report(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -84,4 +73,3 @@ class label_print_wizard(osv.osv_memory):
         }
 
 label_print_wizard()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

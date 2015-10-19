@@ -20,11 +20,11 @@
 #
 ##############################################################################
 
-from report import report_sxw
+from openerp.report import report_sxw
 import barcode
 from barcode.writer import ImageWriter
 import base64
-from osv.orm import browse_record
+from openerp.osv.orm import browse_record
 #import utils
 import cairosvg
 import cairo
@@ -51,52 +51,6 @@ class report_dynamic_label(report_sxw.rml_parse):
         name = open(temp_path_png, "r+")
         barcode_data = base64.b64encode(name.read())
         return barcode_data
-#         barcode_data = ""
-#         try:
-#             EAN = barcode.get_barcode_class('code39')
-#             ean = EAN(barcode_string, writer=ImageWriter())
-#             ean.default_writer_options['font_size'] = 1
-#             ean.default_writer_options['text_distance'] = False
-#             ean.default_writer_options['quiet_zone'] = 2.0
-#             fullname = ean.save('code39_barcode')
-#             name = open(fullname, "r+")
-#             barcode_data = base64.b64encode(name.read())
-#         except Exception, e:
-#             return False
-#         return barcode_data
-
-#         try:
-#             from reportlab.graphics.barcode import code128
-#             from reportlab.graphics.barcode import code39
-#             from reportlab.graphics.barcode import code93
-#             from reportlab.graphics.barcode import common
-#             from reportlab.graphics.barcode import fourstate
-#             from reportlab.graphics.barcode import usps
-#             from reportlab.graphics.barcode import createBarcodeDrawing
-#         except ImportError:
-#             _logger.warning("Cannot use barcode renderers:", exc_info=True)
-#             return None
-# #         args = utils.attr_get(node, [], {'ratio':'float','xdim':'unit','height':'unit','checksum':'int','quiet':'int','width':'unit','stop':'bool','bearers':'int','barWidth':'float','barHeight':'float'})
-#         codes = {
-#             'codabar': lambda x: common.Codabar(x, **args),
-#             'code11': lambda x: common.Code11(x, **args),
-#             'code128': lambda x: code128.Code128(str(x), **args),
-#             'standard39': lambda x: code39.Standard39(str(x), **args),
-#             'standard93': lambda x: code93.Standard93(str(x), **args),
-#             'i2of5': lambda x: common.I2of5(x, **args),
-#             'extended39': lambda x: code39.Extended39(str(x), **args),
-#             'extended93': lambda x: code93.Extended93(str(x), **args),
-#             'msi': lambda x: common.MSI(x, **args),
-#             'fim': lambda x: usps.FIM(x, **args),
-#             'postnet': lambda x: usps.POSTNET(x, **args),
-#             'ean13': lambda x: createBarcodeDrawing('EAN13', value=str(x), **args),
-#             'qrcode': lambda x: createBarcodeDrawing('QR', value=x, **args),
-#         }
-#         code = 'standard39'
-# #         if node.get('code'):
-# #             code = node.get('code').lower()
-#         print "dgdsfgsdfgsdfg",codes[code](barcode_string)
-#         return codes[code](barcode_string)
 
     def _get_record(self, rows, columns, ids, model, number_of_copy):
         active_model_obj = self.pool.get(model)
