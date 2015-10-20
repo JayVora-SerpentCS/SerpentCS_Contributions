@@ -44,7 +44,7 @@
                         help="Display a button in the sidebar of related documents to open a composition wizard"/>
                 <field name="ref_ir_act_report" attrs="{'invisible':[('ref_ir_act_report','=',False)]}"/>
                 <field name="ref_ir_value" attrs="{'invisible':[('ref_ir_act_report','=',False)]}"/>
-                <button name="unlink_action" string="Remove sidebar button" type="object" icon="gtk-delete"
+                <button name="unlink" string="Remove sidebar button" type="object" icon="gtk-delete"
                         attrs="{'invisible':[('ref_ir_act_report','=',False)]}" colspan="2" />
               </group>
             </page>
