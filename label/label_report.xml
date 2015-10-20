@@ -7,7 +7,7 @@
             <field name="name">Label</field>
             <field name="model">label.config</field>
             <field name="report_name">dynamic.label</field>
-            <field name="report_type">pdf</field>
+            <field name="report_type">webkit</field>
             <field name="header" eval="False"/>
             <field name="webkit_header" ref="ir_header_webkit_label_simple"/>
         </record>

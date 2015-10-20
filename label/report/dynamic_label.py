@@ -22,14 +22,13 @@
 
 from openerp.report import report_sxw
 import barcode
-from barcode.writer import ImageWriter
 import base64
 from openerp.osv.orm import browse_record
 #import utils
-import cairosvg
 import cairo
 import rsvg
 import tempfile
+
 
 class report_dynamic_label(report_sxw.rml_parse):
 
@@ -38,16 +37,16 @@ class report_dynamic_label(report_sxw.rml_parse):
         temp_path_png = tempfile.gettempdir()+"/temp_barcode.png"
         code39 = barcode.get_barcode_class('code39')
         c39 = code39(str(barcode_string))
-        fullname = c39.save(temp_path_svg)
+        c39.save(temp_path_svg)
         file = open(temp_path_svg+".svg")
-        
-        img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 200,75)
+
+        img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 200, 75)
         ctx = cairo.Context(img)
         svg_data = file.read()
         handler = rsvg.Handle(None, str(svg_data))
         handler.render_cairo(ctx)
         img.write_to_png(temp_path_png)
-        
+
         name = open(temp_path_png, "r+")
         barcode_data = base64.b64encode(name.read())
         return barcode_data
@@ -55,15 +54,17 @@ class report_dynamic_label(report_sxw.rml_parse):
     def _get_record(self, rows, columns, ids, model, number_of_copy):
         active_model_obj = self.pool.get(model)
         label_print_obj = self.pool.get('label.print')
-        label_print_data = label_print_obj.browse(self.cr, self.uid, self.context.get('label_print'))
+        label_print_data = label_print_obj.browse(
+            self.cr, self.uid, self.context.get('label_print'))
+
         result = []
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
             for i in range(0, number_of_copy):
-                vals=[]
+                vals = []
                 bot = False
-                bot_dict={}
+                bot_dict = {}
                 for field in label_print_data.field_ids:
-                    pos=''
+                    pos = ''
                     if field.python_expression and field.python_field:
                         string = field.python_field.split('.')[-1]
                         value = eval(field.python_field, {'obj': datas})
@@ -74,25 +75,34 @@ class report_dynamic_label(report_sxw.rml_parse):
                         continue
                     if isinstance(value, browse_record):
                         model_obj = self.pool.get(value._name)
-                        value = eval("obj." + model_obj._rec_name, {'obj': value})
+                        value = eval("obj." + model_obj._rec_name,
+                                     {'obj': value})
                     if not value:
                         value = ''
                     if field.nolabel:
-                        string='';
-                    else :
-                        string+=' :- '
+                        string = ''
+                    else:
+                        string += ' :- '
                     if field.type_ == 'image' or field.type_ == 'barcode':
-                        string = '';
+                        string = ''
                         if field.position != 'bottom':
-                            pos ='float:'+field.position+';'
+                            pos = 'float:'+field.position+';'
                             bot = False
-                        else :
-                            bot =True
-                            bot_dict = {'string': string, 'value':  value, 'type_': field.type_, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
+                        else:
+                            bot = True
+                            bot_dict = {'string': string, 'value':  value,
+                                        'type_': field.type_,
+                                        'newline': field.newline,
+                                        'style': "font-size:" +
+                                        str(field.fontsize)+"px;"+pos}
                     else:
                         bot = False
                     if not bot:
-                        vals_dict = {'string': string, 'value':  value, 'type_': field.type_, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
+                        vals_dict = {'string': string, 'value':  value,
+                                     'type_': field.type_,
+                                     'newline': field.newline,
+                                     'style': "font-size:" +
+                                     str(field.fontsize)+"px;"+pos}
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
@@ -105,13 +115,15 @@ class report_dynamic_label(report_sxw.rml_parse):
         return new_list
 
     def __init__(self, cr, uid, name, context):
-        super(report_dynamic_label,self).__init__(cr, uid, name, context=context)
-        self.context=context
+        super(report_dynamic_label, self).__init__(cr, uid, name,
+                                                   context=context)
+        self.context = context
         self.rec_no = 0
         self.localcontext.update({
-            'get_record' : self._get_record,
+            'get_record': self._get_record,
             'generate_barcode': self.generate_barcode
         })
 
-report_sxw.report_sxw('report.dynamic.label','label.config','addons/label/report/dynamic_label.mako',parser=report_dynamic_label, header=False)
-
+report_sxw.report_sxw('report.dynamic.label', 'label.config',
+                      'addons/label/report/dynamic_label.mako',
+                      parser=report_dynamic_label, header=False)

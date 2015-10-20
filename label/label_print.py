@@ -64,11 +64,10 @@ class label_print(models.Model):
                 }, context)
         return True
 
-    @api.one
+    @api.multi
     def unlink(self):
         self.ref_ir_act_report.unlink()
         self.ref_ir_value.unlink()
-        
 
 label_print()
 

@@ -22,92 +22,92 @@
 
 import pooler
 from report.interface import report_rml
-from report import report_sxw
-from tools import to_xml
 import tools
+
 
 class label_form(report_rml):
     def create(self, cr, uid, ids, datas, context):
-        rml="""<document filename="Label Print.pdf">
-            <template pageSize="(210mm, 297mm)"  title="Label Print" author="Serpent Consulting Services (contact@serpentcs.com)" >
-            <pageTemplate id="first">
-              <frame id="first" x1="0" y1="0" width="210mm" height="297mm"/>
-            </pageTemplate>
-            </template>
-            <stylesheet>
-            <blockTableStyle id="Standard_Outline">
-                  <blockAlignment value="LEFT"/>
-                  <blockValign value="TOP"/>
-            </blockTableStyle>
-            <blockTableStyle id="Table1">
-                <blockAlignment value="LEFT"/>
-                <blockValign value="TOP"/>
-                    
-            """
-            
+        rml = """<document filename="Label Print.pdf">
+            <template pageSize="(210mm, 297mm)"  title="Label Print"
+        author="Serpent Consulting Services (contact@serpentcs.com)" >
+        <pageTemplate id="first">
+        <frame id="first" x1="0" y1="0" width="210mm" height="297mm"/>
+        </pageTemplate>
+        </template>
+        <stylesheet>
+        <blockTableStyle id="Standard_Outline">
+        <blockAlignment value="LEFT"/>
+        <blockValign value="TOP"/>
+        </blockTableStyle>
+        <blockTableStyle id="Table1">
+        <blockAlignment value="LEFT"/>
+        <blockValign value="TOP"/>
+        """
+
         height = datas.get('height')-1
         width = datas.get('width')
         cols = int(210/width)
         fontsize = datas.get('font_size')
         for i in range(cols):
-            rml+='<lineStyle kind="LINEBEFORE" colorName="#000000" start="'+str(i)+',0" stop="'+str(i)+',-1"/>'
-            rml+='<lineStyle kind="LINEAFTER" colorName="#000000" start="'+str(i)+',0" stop="'+str(i)+',-1"/>'
-            rml+='<lineStyle kind="LINEABOVE" colorName="#000000" start="'+str(i)+',0" stop="'+str(i)+',0"/>'
-            rml+='<lineStyle kind="LINEBELOW" colorName="#000000" start="'+str(i)+',-1" stop="'+str(i)+',-1"/>'
-        rml+="""</blockTableStyle>
+            rml += '<lineStyle kind="LINEBEFORE" colorName="#000000" start="' + \
+                   str(i)+',0" stop="'+str(i)+',-1"/>'
+            rml += '<lineStyle kind="LINEAFTER" colorName="#000000" start="' + \
+                   str(i)+',0" stop="'+str(i)+',-1"/>'
+            rml += '<lineStyle kind="LINEABOVE" colorName="#000000" start="' + \
+                   str(i)+',0" stop="'+str(i)+',0"/>'
+            rml += '<lineStyle kind="LINEBELOW" colorName="#000000" start="' + \
+                   str(i)+',-1" stop="'+str(i)+',-1"/>'
+        rml += """</blockTableStyle>
                     <initialize>
                         <paraStyle name="needed" alignment="justify"/>
                     </initialize>"""
-        rml+='<paraStyle name="P1" fontName="Helvetica" fontSize="'+str(fontsize)+'"/><images/>'
-        rml+='</stylesheet><story>'
-        tbl=''
-        
-        
-        tbl+='<blockTable colWidths="'
-        tbl+=str(width)+'mm'
+        rml + ='<paraStyle name="P1" fontName="Helvetica" fontSize="' + \
+            str(fontsize)+'"/><images/>'
+        rml += '</stylesheet><story>'
+        tbl = ''
+
+
+        tbl += '<blockTable colWidths="'
+        tbl += str(width)+'mm'
         for i in range(cols-1):
-            tbl+=','+str(width)+'mm'
-        tbl+='" rowHeights="'+str(height)+'mm" style="Table1" >'
+            tbl += ','+str(width)+'mm'
+        tbl += '" rowHeights="'+str(height)+'mm" style="Table1" >'
         rec_cnt = len(context.get('active_ids'))
-        row=0
-        row=rec_cnt/cols
-        if(rec_cnt%cols!=0):
-            row+=1
+        row = 0
+        row = rec_cnt/cols
+        if(rec_cnt % cols != 0):
+            row += 1
         rec_id = 0
-        model=context.get('active_model')
+        model = context.get('active_model')
         f_names = datas.get('field_cols')
         f_cnt = len(f_names)
         for j in range(row):
-            rml+=tbl+'<tr>'
+            rml += tbl+'<tr>'
             for k in range(cols):
-                rml+='<td>'
-                if(rec_id<rec_cnt):
+                rml += '<td>'
+                if(rec_id < rec_cnt):
                     obj = pooler.get_pool(cr.dbname).get(model)
                     rec = obj.read(cr, uid, context.get('active_ids')[rec_id])
                     obj = pooler.get_pool(cr.dbname).get('ir.model.fields')
                     for l in range(f_cnt):
-                        rml+='<para style="P1">'
+                        rml += '<para style="P1">'
                         f_info = obj.browse(cr, uid, f_names[l])
-                        rml+=f_info.field_description+' : '
+                        rml += f_info.field_description+' : '
                         temp = rec.get(f_info.name)
                         if f_info.ttype == 'many2one':
                             if temp is not False:
-                                rml+=tools.ustr(temp[1])
+                                rml += tools.ustr(temp[1])
                         else:
-                            rml+=tools.ustr(temp)
-                        rml+='</para>'
-                rec_id+=1
-                rml+='</td>'
-            rml+='</tr></blockTable>'
-        rml +='</story></document>'
-        
-        
+                            rml += tools.ustr(temp)
+                        rml += '</para>'
+                rec_id += 1
+                rml += '</td>'
+            rml += '</tr></blockTable>'
+        rml += '</story></document>'
+
         report_type = datas.get('report_type', 'pdf')
         create_doc = self.generators[report_type]
         pdf = create_doc(rml, title=self.title)
         return (pdf, report_type)
 
-label_form('report.label.print', 'label.print','','')
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+label_form('report.label.print', 'label.print', '', '')
