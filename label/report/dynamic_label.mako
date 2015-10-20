@@ -41,11 +41,11 @@
                                     <br/>
                                 %endif
                                 <div style="${val.get('style')}" />
-                                    %if val.get('type') == 'normal':
+                                    %if val.get('type_') == 'normal':
                                         ${val.get('string')}${val.get('value')}
-                                    %elif val.get('type') == 'image':
+                                    %elif val.get('type_') == 'image':
                                         ${val.get('string')}${helper.embed_image('png', val.get('value'), datas.get('image_width', 50),datas.get('image_height', 50))|n}
-                                    %elif val.get('type') == 'barcode':
+                                    %elif val.get('type_') == 'barcode':
                                         ${val.get('string')}${helper.embed_image('png', generate_barcode(val.get('value'),datas.get('barcode_width', 50),datas.get('barcode_height', 50)), datas.get('barcode_width', 50), datas.get('barcode_height', 50))|n}
                                     %endif
                                 </div>

@@ -89,7 +89,5 @@ class label_print_field(models.Model):
     nolabel = fields.Boolean('No Label')
     newline = fields.Boolean('New Line', default=True)
 
-
 label_print_field()
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

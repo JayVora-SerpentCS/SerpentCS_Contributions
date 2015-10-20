@@ -57,7 +57,6 @@ class report_dynamic_label(report_sxw.rml_parse):
         label_print_obj = self.pool.get('label.print')
         label_print_data = label_print_obj.browse(self.cr, self.uid, self.context.get('label_print'))
         result = []
-        
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
             for i in range(0, number_of_copy):
                 vals=[]
@@ -82,18 +81,18 @@ class report_dynamic_label(report_sxw.rml_parse):
                         string='';
                     else :
                         string+=' :- '
-                    if field.type == 'image' or field.type == 'barcode':
+                    if field.type_ == 'image' or field.type_ == 'barcode':
                         string = '';
                         if field.position != 'bottom':
                             pos ='float:'+field.position+';'
                             bot = False
                         else :
                             bot =True
-                            bot_dict = {'string': string, 'value':  value, 'type': field.type, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
+                            bot_dict = {'string': string, 'value':  value, 'type_': field.type_, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
                     else:
                         bot = False
                     if not bot:
-                        vals_dict = {'string': string, 'value':  value, 'type': field.type, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
+                        vals_dict = {'string': string, 'value':  value, 'type_': field.type_, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)

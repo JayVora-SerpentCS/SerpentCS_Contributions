@@ -15,9 +15,9 @@ class label_print_wizard(models.TransientModel):
             label_print_obj = self.pool.get('label.print')
             label_print_data = label_print_obj.browse(cr, uid, context.get('label_print'), context)
             for field in label_print_data.field_ids:
-                if field.type == 'image':
+                if field.type_ == 'image':
                     result['is_image'] = True
-                if field.type == 'barcode':
+                if field.type_ == 'barcode':
                     result['is_barcode'] = True
         return result
 

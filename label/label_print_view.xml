@@ -5,7 +5,7 @@
     <record model="ir.ui.view" id="view_label_print_form">
       <field name="name">label.print.form</field>
       <field name="model">label.print</field>
-      <field name="type_">form</field>
+      <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Label">
           <field name="name"/>
