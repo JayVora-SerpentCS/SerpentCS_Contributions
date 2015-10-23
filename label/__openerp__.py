@@ -26,6 +26,7 @@
     "category" : "Tools",
     "website" : "http://www.serpentcs.com",
     "description": """
+    The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
     """,
     'depends': ['report_webkit'],
     'data': [
