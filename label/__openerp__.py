@@ -26,6 +26,16 @@
     "category" : "Tools",
     "website" : "http://www.serpentcs.com",
     "description": """
+    This is the module for generic label printing with multiple 
+    size configuration with barcode, image and description.
+    The video of 7 compatible module is here: 
+    https://www.youtube.com/watch?v=Fps5FWfcLwo
+
+    Packages to pre-install:
+     
+      * Barcode : https://pypi.python.org/pypi/pyBarcode
+      * RSVG : sudo apt-get install python-rsvg
+      * Cairo : https://pypi.python.org/pypi/CairoSVG
     """,
     'author': 'SerpentCS',
     'depends': ['report_webkit'],
