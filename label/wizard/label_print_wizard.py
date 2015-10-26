@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 
-from openerp import fields,models,api,_
+from openerp import fields, models, api, _
 from openerp.tools import misc
 import math
+
 
 class label_print_wizard(models.TransientModel):
 
     _name = 'label.print.wizard'
 
     @api.model
-    def default_get(self,fields):
+    def default_get(self, fields):
         if self._context is None:
             self._context = {}
         result = super(label_print_wizard, self).default_get(fields)
         if self._context.get('label_print'):
             label_print_obj = self.env['label.print']
-            label_print_data = label_print_obj.browse(self._context.get('label_print'))
+            label_print_data = label_print_obj.browse(
+                self._context.get('label_print'))
             for field in label_print_data.field_ids:
                 if field.type == 'image':
                     result['is_image'] = True
@@ -23,59 +25,63 @@ class label_print_wizard(models.TransientModel):
                     result['is_barcode'] = True
         return result
 
-    name = fields.Many2one('label.config','Label Size', required=True)
-    number_of_copy = fields.Integer('Number Of Copy', required=True,default=1)
-    image_width = fields.Float('Width',default=50)
-    image_height = fields.Float('Height',default=50)
-    barcode_width = fields.Float('Width',default=50)
-    barcode_height = fields.Float('Height',default=50)
-    is_barcode = fields.Boolean('Is Barcode?')
-    is_image = fields.Boolean('Is Image?')
-    brand_id = fields.Many2one('label.brand', 'Brand Name', required=True)
-    
+    name = fields.Many2one('label.config', _('Label Size'), required=True)
+    number_of_copy = fields.Integer(_('Number Of Copy'), required=True,
+                                    default=1)
+    image_width = fields.Float(_('Width'), default=50)
+    image_height = fields.Float(_('Height'), default=50)
+    barcode_width = fields.Float(_('Width'), default=50)
+    barcode_height = fields.Float(_('Height'), default=50)
+    is_barcode = fields.Boolean(_('Is Barcode?'))
+    is_image = fields.Boolean(_('Is Image?'))
+    brand_id = fields.Many2one('label.brand', _('Brand Name'), required=True)
+
     @api.multi
     def print_report(self):
         if self._context is None:
             self._context = {}
-        if not self._context.get('label_print') or not self._context.get('active_ids'):
+        if (not self._context.get('label_print') or
+                not self._context.get('active_ids')):
             return False
         total_record = len(self._context.get('active_ids', []))
         datas = {}
         for data in self.browse(self.ids):
             column = float(210) / float(data.name.width or 1)
-            total_row = math.ceil(float(total_record)/ (column or 1))
+            total_row = math.ceil(float(total_record) / (column or 1))
             no_row_per_page = int(297 / data.name.height)
             height = 297 / (no_row_per_page or 1)
             datas = {
                 'rows': int(total_row),
                 'columns': int(column),
-                'model' : self._context.get('active_model'),
-                'height' : str(height * 3.693602694) + "mm",
+                'model': self._context.get('active_model'),
+                'height': str(height * 3.693602694) + "mm",
                 'no_row_per_page': no_row_per_page,
-                'width' : str(float(data.name.width)  * 3.693602694) + "mm",
+                'width': str(float(data.name.width) * 3.693602694) + "mm",
                 'image_width': str(data.image_width),
-                'image_height':str(data.image_height),
-                'barcode_width':data.barcode_width,
-                'barcode_height':data.barcode_height,
-                'font_size' : 10,
+                'image_height': str(data.image_height),
+                'barcode_width': data.barcode_width,
+                'barcode_height': data.barcode_height,
+                'font_size': 10,
                 'number_of_copy': data.number_of_copy,
-                'top_margin' : str(data.name.top_margin) + "mm",
-                'bottom_margin' :str(data.name.bottom_margin) + "mm",
-                'left_margin' : str(data.name.left_margin) + "mm",
-                'right_margin' : str(data.name.right_margin) + "mm",
-                'cell_spacing' : str(data.name.cell_spacing)+ "px",
+                'top_margin': str(data.name.top_margin) + "mm",
+                'bottom_margin': str(data.name.bottom_margin) + "mm",
+                'left_margin': str(data.name.left_margin) + "mm",
+                'right_margin': str(data.name.right_margin) + "mm",
+                'cell_spacing': str(data.name.cell_spacing) + "px",
                 'ids': self._context.get('active_ids', [])
             }
-        cr,uid,context=self.env.args
+        cr, uid, context = self.env.args
         context = dict(context)
-        context.update({"label_print_id":self._context.get('label_print'), 'datas': datas})
-        self.env.args = cr,uid,misc.frozendict(context)    
-        
+        context.update({"label_print_id":self._context.get('label_print'),
+                        'datas': datas})
+        self.env.args = cr, uid, misc.frozendict(context)
+
         data = {
             'ids': self.ids,
-            'model':'label.config',
-            'form':datas
+            'model': 'label.config',
+            'form': datas
         }
-        return self.env['report'].get_action(self,'label.report_label', data=data)
+        return self.env['report'].get_action(self, 'label.report_label',
+                                             data=data)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
