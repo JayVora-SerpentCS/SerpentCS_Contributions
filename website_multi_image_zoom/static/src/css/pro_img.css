@@ -1,0 +1,105 @@
+/*=====================================================
+=            Product Image Set                        =
+=====================================================*/
+
+/* Window desktop device */
+@media only screen and (max-width : 1280px) {
+.img_set{
+	margin-left: auto !important;
+	margin-right: auto !important;
+	display: block !important;
+	max-height: 360px !important;
+	max-width: 100% !important;
+	}
+}
+
+/* Window phone device */
+@media only screen and (max-width : 979px) {			  
+.img_set{
+	margin-left: auto !important;
+	margin-right: auto !important;
+	display: block !important;
+	max-height: 300px !important;
+	max-width: 100% !important;
+	}
+}
+
+/* I- phone device */
+@media only screen and (max-width : 767px) {			  
+.img_set{
+	margin-left: auto !important;
+	margin-right: auto !important;
+	display: block !important;
+	max-height: 360px !important;
+	max-width: 100% !important;
+	}
+}
+
+/* Small Smart phone device */
+@media only screen and (max-width : 480px) { 			  
+.img_set{
+	margin-left: auto !important;
+	margin-right: auto !important;
+	display: block !important;
+	max-height: 300px !important;
+	max-width: 100% !important;
+	}
+}
+
+/* Small Smart phone device */
+@media only screen and (max-width : 320px) {			  
+.img_set{
+	margin-left: auto !important;
+	margin-right: 25% !important;
+	display: block !important;
+	max-height: 180px !important;
+	max-width: 100% !important;
+	}
+}
+
+/*=====================================================
+=            Carousel Indicators                      =
+=====================================================*/
+.image_thumb {
+    height: 80px !important;
+    width: auto;
+    /* padding: 5px; */
+    /* margin-right: 5px; */
+}
+
+.image_bigsize{
+    padding: 2%;
+    background-color: #eee;
+    vertical-align: middle;
+}
+
+#carousel-custom .carousel-indicators {
+    margin: 10px 0 0;
+    overflow: auto;
+    position: static;
+    text-align: left;
+    white-space: nowrap;
+    width: auto;
+}
+#carousel-custom .carousel-indicators li {
+    background-color: transparent;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    display: inline-block;
+    height: auto;
+    margin: 1 !important;
+    width: auto;
+}
+#carousel-custom .carousel-indicators li img {
+    display: block;
+    opacity: 0.5;
+}
+#carousel-custom .carousel-indicators li.active img {
+    opacity: 1;
+}
+#carousel-custom .carousel-indicators li:hover img {
+    opacity: 0.75;
+}
+#carousel-custom .carousel-outer {
+    position: relative;
+}
