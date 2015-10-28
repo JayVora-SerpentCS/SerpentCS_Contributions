@@ -70,6 +70,12 @@ class label_print(models.Model):
         return True
 
     @api.multi
+    def unlink(self):
+        self.unlink_action()
+        super(models.Model, self).unlink()
+
+
+    @api.multi
     def unlink_action(self):
         ir_values_obj = self.env['ir.values']        
         act_window_obj = self.env['ir.actions.act_window']
@@ -95,16 +101,16 @@ class label_print_field(models.Model):
     field_id = fields.Many2one('ir.model.fields', 'Fields', required=False)
     report_id = fields.Many2one('label.print', 'Report')
     type = fields.Selection([('normal', 'Normal'), ('barcode', 'Barcode'),
-                             ('image', 'Image')], 'Type', required=True, 
+                             ('image', 'Image')], 'Type', required=True,
                             default='normal')
     python_expression = fields.Boolean('Python Expression')
     python_field = fields.Char('Fields', size=32)
-    fontsize = fields.Float("Font Size", default=8.0)
     position = fields.Selection([('left', 'Left'), ('right', 'Right'),
                                  ('top', 'Top'), ('bottom', 'Bottom')],
                                 'Position')
-    nolabel = fields.Boolean('No Label')
-    newline = fields.Boolean('New Line', deafult=True)
+    nolabel = fields.Boolean('No Label', default=True)
+    newline = fields.Boolean('New Line', default=True)
+    fontsize = fields.Float("Font Size", default=8.0)
 
 
 class ir_model_fields(models.Model):

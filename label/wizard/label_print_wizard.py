@@ -2,7 +2,6 @@
 
 from openerp import fields, models, api, _
 from openerp.tools import misc
-import math
 
 
 class label_print_wizard(models.TransientModel):
@@ -26,8 +25,9 @@ class label_print_wizard(models.TransientModel):
         return result
 
     name = fields.Many2one('label.config', _('Label Size'), required=True)
-    number_of_copy = fields.Integer(_('Number Of Copy'), required=True,
-                                    default=1)
+    number_of_labels = fields.Integer(_('Number of Labels (per item)'),
+                                      required=True,
+                                      default=1)
     image_width = fields.Float(_('Width'), default=50)
     image_height = fields.Float(_('Height'), default=50)
     barcode_width = fields.Float(_('Width'), default=50)
@@ -35,6 +35,7 @@ class label_print_wizard(models.TransientModel):
     is_barcode = fields.Boolean(_('Is Barcode?'))
     is_image = fields.Boolean(_('Is Image?'))
     brand_id = fields.Many2one('label.brand', _('Brand Name'), required=True)
+    font_size = fields.Integer(_("Font Size"), default=10, required=True)
 
     @api.multi
     def print_report(self):
@@ -43,36 +44,39 @@ class label_print_wizard(models.TransientModel):
         if (not self._context.get('label_print') or
                 not self._context.get('active_ids')):
             return False
-        total_record = len(self._context.get('active_ids', []))
         datas = {}
-        for data in self.browse(self.ids):
+        for data in self:
             column = float(210) / float(data.name.width or 1)
-            total_row = math.ceil(float(total_record) / (column or 1))
-            no_row_per_page = int(297 / data.name.height)
+            no_row_per_page = int(297 / data.name.height or 1)
             height = 297 / (no_row_per_page or 1)
             datas = {
-                'rows': int(total_row),
+                'rows': int(no_row_per_page),
                 'columns': int(column),
                 'model': self._context.get('active_model'),
                 'height': str(height * 3.693602694) + "mm",
-                'no_row_per_page': no_row_per_page,
                 'width': str(float(data.name.width) * 3.693602694) + "mm",
                 'image_width': str(data.image_width),
                 'image_height': str(data.image_height),
                 'barcode_width': data.barcode_width,
                 'barcode_height': data.barcode_height,
-                'font_size': 10,
-                'number_of_copy': data.number_of_copy,
+                'font_size': data.font_size,
+                'number_of_labels': data.number_of_labels,
                 'top_margin': str(data.name.top_margin) + "mm",
                 'bottom_margin': str(data.name.bottom_margin) + "mm",
                 'left_margin': str(data.name.left_margin) + "mm",
                 'right_margin': str(data.name.right_margin) + "mm",
                 'cell_spacing': str(data.name.cell_spacing) + "px",
-                'ids': self._context.get('active_ids', [])
+                'ids': self._context.get('active_ids', []),
+                # need correction!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                'padding_top': str(data.name.top_margin) + "mm",
+                'padding_bottom': str(data.name.bottom_margin) + "mm",
+                'padding_left': str(data.name.left_margin) + "mm",
+                'padding_right': str(data.name.right_margin) + "mm",
             }
+
         cr, uid, context = self.env.args
         context = dict(context)
-        context.update({"label_print_id":self._context.get('label_print'),
+        context.update({"label_print_id": self._context.get('label_print'),
                         'datas': datas})
         self.env.args = cr, uid, misc.frozendict(context)
 
@@ -81,7 +85,9 @@ class label_print_wizard(models.TransientModel):
             'model': 'label.config',
             'form': datas
         }
-        return self.env['report'].get_action(self, 'label.report_label',
-                                             data=data)
+        report_obj = self.env['report'].with_context(datas)
+        return report_obj.get_action(self, 'label.report_label',
+                                     data=data)
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
