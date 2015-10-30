@@ -11,6 +11,14 @@
             <field name="name"/>
             <field name="model_id"/>
             <field name="model_list" invisible="1"/>
+	    <group>
+	      <field name="padding_top"/>
+	      <field name="padding_left"/>
+	    </group>
+	    <group>
+	      <field name="padding_bottom"/>
+	      <field name="padding_right"/>
+	    </group>
           </group>
           <notebook colspan="4">
 	    <page string="Fields">
@@ -35,8 +43,7 @@
 		  </form>
                   <tree string="Fields">
                     <field name="sequence"/>
-                    <field name="field_id" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"/>   
-		    
+                    <field name="field_id" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"/> 
                     <field name="python_field"/>
                     <field name="type"/>
                   </tree>

@@ -44,7 +44,3 @@ class label_config(models.Model):
     right_margin = fields.Float(_("Right Margin (in mm)"), default=0.0)
     cell_spacing = fields.Float(_("Cell Spacing"), default=1.0)
     label_main_id = fields.Many2one('label.brand', _('Label'))
-    padding_top = fields.Float(_("Padding Top (in mm)"), default=0.0)
-    padding_bottom = fields.Float(_("Padding Bottom  (in mm)"), default=0.0)
-    padding_left = fields.Float(_("Padding Left (in mm)"), default=0.0)
-    padding_right = fields.Float(_("Padding Right (in mm)"), default=0.0)

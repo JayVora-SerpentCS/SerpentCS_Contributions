@@ -18,10 +18,14 @@ class label_print(models.Model):
         'ir.values', 'Sidebar button', readonly=True,
         help="Sidebar button to open the sidebar action")
     model_list = fields.Char('Model List', size=256)
+    padding_top = fields.Float("Padding Top (in mm)", default=1.0)
+    padding_bottom = fields.Float("Padding Bottom  (in mm)", default=1.0)
+    padding_left = fields.Float("Padding Left (in mm)", default=1.0)
+    padding_right = fields.Float("Padding Right (in mm)", default=1.0)
 
     @api.onchange('model_id')
     def onchange_model(self):
-        model_list = [] 
+        model_list = []
         if self.model_id:
             model_obj = self.env['ir.model']
             current_model = self.model_id.model

@@ -14,7 +14,7 @@
             <field name="margin_right">0</field>
             <field name="header_line" eval="False" />
             <field name="header_spacing">0</field>
-            <field name="dpi">90</field>
+            <field name="dpi">300</field>
         </record>
     </data>
 </openerp>

@@ -1,44 +1,21 @@
 <openerp>
   <data>
     <template id="report_label">
-      <style type="text/css">
-	
-	table.fixed {
-	border: 1px solid black;
-	boder-collapse: collapse;
-	table-layout: fixed;
-	}
-
-	td {
-	border: 1px solid black;
-	boder-collapse: collapse;
-	}
-
-	table td > div {
-	overflow: hidden;
-	height: 89px;
-	}
-
-      </style>
-      
       <t t-call="report.html_container">
 	<t t-foreach="docs" t-as="o">
 	  <div class="page">
-	    <table style="position: absolute; left: 0; top: 39px; width: 100%;" border="1">
+	    <table t-attf-style="border: 0.1px solid black; border-collapse: collapse; table-layout: fixed; position: absolute; top: {{top_margin}}mm; left: {{left_margin}}mm; width: 100%;" border="1">
 	      <t t-foreach="get_data(rows, columns, ids, model, number_of_labels)" t-as="row">
-		<t t-foreach="row" t-as="col">
-		  <col t-att-width="str(width)+'mm'"/>
-		</t>
-		<tr>
+		<tr t-attf-style="height: {{height-cell_spacing}}mm;">
 		  <t t-foreach="row" t-as="col">
-		    <td t-attf-style="padding-left: {{padding_left}}; padding-top: {{padding_top}}; padding-right: {{padding_right}}; padding-bottom: {{padding_bottom}};">
-		      <div>
+		    <td t-attf-style="padding-left: {{padding_left}}; padding-top: {{padding_top}}; padding-right: {{padding_right}}; padding-bottom: {{padding_bottom}}; border: 0.1px solid black;">
+		      <div style="overflow: hidden;">
 			<t t-foreach="col" t-as="val">
 			  <t t-if="val['newline']">
 			    <br/>
 			  </t>
 			  <span style="val['style']">
-
+			    
 			    <t t-if="(val['type'] == 'normal')">
 			      <t t-esc="val['string']"/>
 			      <t t-esc="val['value']"/>

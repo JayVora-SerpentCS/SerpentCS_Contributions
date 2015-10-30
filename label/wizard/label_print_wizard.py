@@ -24,7 +24,7 @@ class label_print_wizard(models.TransientModel):
                     result['is_barcode'] = True
         return result
 
-    name = fields.Many2one('label.config', _('Label Size'), required=True)
+    name = fields.Many2one('label.config', _('Label Type'), required=True)
     number_of_labels = fields.Integer(_('Number of Labels (per item)'),
                                       required=True,
                                       default=33)
@@ -48,14 +48,19 @@ class label_print_wizard(models.TransientModel):
         no_row_per_page = int((297-self.name.left_margin -
                                self.name.right_margin) /
                               (self.name.height or 1))
+
+        label_print_obj = self.env['label.print']
+        label_print_data = label_print_obj.browse(
+            self._context.get('label_print'))
+
         datas = {
             'rows': int(no_row_per_page),
             'columns': int(column),
             'model': self._context.get('active_model'),
-            'height': str(self.name.height) + 'mm',
-            'width': str(self.name.width) + 'mm',
-            'image_width': str(self.image_width),
-            'image_height': str(self.image_height),
+            'height': self.name.height,
+            'width': self.name.width,
+            'image_width': self.image_width,
+            'image_height': self.image_height,
             'barcode_width': self.barcode_width,
             'barcode_height': self.barcode_height,
             'number_of_labels': self.number_of_labels,
@@ -63,12 +68,12 @@ class label_print_wizard(models.TransientModel):
             'bottom_margin': self.name.bottom_margin,
             'left_margin': self.name.left_margin,
             'right_margin': self.name.right_margin,
-            'cell_spacing': str(self.name.cell_spacing) + "px",
+            'cell_spacing': self.name.cell_spacing,
             'ids': self.env.context['active_ids'],
-            'padding_top': str(self.name.padding_top) + "mm",
-            'padding_bottom': str(self.name.padding_bottom) + "mm",
-            'padding_left': str(self.name.padding_left) + "mm",
-            'padding_right': str(self.name.padding_right) + "mm",
+            'padding_top': label_print_data.padding_top,
+            'padding_bottom': label_print_data.padding_bottom,
+            'padding_left': label_print_data.padding_left,
+            'padding_right': label_print_data.padding_right,
         }
 
         cr, uid, context = self.env.args
