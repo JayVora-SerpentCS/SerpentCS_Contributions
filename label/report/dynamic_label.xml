@@ -1,36 +1,61 @@
 <openerp>
   <data>
     <template id="report_label">
+      <style type="text/css">
+	
+	table.fixed {
+	border: 1px solid black;
+	boder-collapse: collapse;
+	table-layout: fixed;
+	}
+
+	td {
+	border: 1px solid black;
+	boder-collapse: collapse;
+	}
+
+	table td > div {
+	overflow: hidden;
+	height: 89px;
+	}
+
+      </style>
+      
       <t t-call="report.html_container">
 	<t t-foreach="docs" t-as="o">
-	  <div class="page" style="margin-top:o.env.context['top_margin'];margin-left:o.env.context['left_margin'];margin-right:o.env.context['right_margin'];margin-bottom:o.env.context['bottom_margin'];">
-	    <table t-att-style="'border-spacing:'+o.env.context['cell_spacing']+';border-collapse: separate'">
-	      <t t-foreach="get_data(o.env.context['rows'], o.env.context['columns'], o.env.context['ids'], o.env.context['model'], o.env.context['number_of_labels'])" t-as="row">
-		<tr t-att-height="o.env.context['height']">
+	  <div class="page">
+	    <table style="position: absolute; left: 0; top: 39px; width: 100%;" border="1">
+	      <t t-foreach="get_data(rows, columns, ids, model, number_of_labels)" t-as="row">
+		<t t-foreach="row" t-as="col">
+		  <col t-att-width="str(width)+'mm'"/>
+		</t>
+		<tr>
 		  <t t-foreach="row" t-as="col">
-		    <td t-att-width="o.env.context['width']" t-att-style="'padding-left:'+o.env.context['padding_left']+';padding-right:'+o.env.context['padding_right']+';padding-top:'+o.env.context['padding_top']+';padding-bottom:'+o.env.context['padding_bottom']+';border:1px solid black;'">
-		      <t t-foreach="col" t-as="val">
-			<t t-if="val['newline']">
-			  <br/>
-			</t>
-			
-			<span style="val['style']">
-			  <t t-if="(val.get('type') == 'normal')">
-			    <t t-esc="val['string']"/>
-			    <t t-esc="val['value']"/>
+		    <td t-attf-style="padding-left: {{padding_left}}; padding-top: {{padding_top}}; padding-right: {{padding_right}}; padding-bottom: {{padding_bottom}};">
+		      <div>
+			<t t-foreach="col" t-as="val">
+			  <t t-if="val['newline']">
+			    <br/>
 			  </t>
-			  
-			    <t t-if="(val.get('type') == 'image')">
-			      <t t-esc="val.get('string')"/>
-			      <img t-att-src="'data:image/png;base64,%s' % (val.get('value'))" t-att-style="'height:'+o.env.context['image_height']+';width:'+o.env.context['image_width']" />
+			  <span style="val['style']">
+
+			    <t t-if="(val['type'] == 'normal')">
+			      <t t-esc="val['string']"/>
+			      <t t-esc="val['value']"/>
 			    </t>
 			    
-			    <t t-if="(val.get('type') == 'barcode')">
-			      <t t-esc="val.get('string')"/>
-			      <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13',val.get('value') , o.env.context['barcode_width'], o.env.context['barcode_height'])"></img>
+			    <t t-if="(val['type'] == 'image')">
+			      <t t-esc="val['string']"/>
+			      <img t-att-src="'data:image/png;base64,%s' % (val['value'])" t-attf-style="height: {{ image_height }};width: {{ image_width }}" />
 			    </t>
-			</span>
-		      </t>
+			    
+			    <t t-if="(val['type'] == 'barcode')">
+			      <t t-esc="val['string']"/>
+			      <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', val['value'], barcode_width, barcode_height)"/>
+			    </t>
+			  </span>
+			</t>
+		      </div>
 		    </td>
 		  </t>
 		</tr>

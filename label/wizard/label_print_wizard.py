@@ -27,7 +27,7 @@ class label_print_wizard(models.TransientModel):
     name = fields.Many2one('label.config', _('Label Size'), required=True)
     number_of_labels = fields.Integer(_('Number of Labels (per item)'),
                                       required=True,
-                                      default=1)
+                                      default=33)
     image_width = fields.Float(_('Width'), default=50)
     image_height = fields.Float(_('Height'), default=50)
     barcode_width = fields.Float(_('Width'), default=50)
@@ -35,7 +35,6 @@ class label_print_wizard(models.TransientModel):
     is_barcode = fields.Boolean(_('Is Barcode?'))
     is_image = fields.Boolean(_('Is Image?'))
     brand_id = fields.Many2one('label.brand', _('Brand Name'), required=True)
-    font_size = fields.Integer(_("Font Size"), default=10, required=True)
 
     @api.multi
     def print_report(self):
@@ -45,38 +44,36 @@ class label_print_wizard(models.TransientModel):
                 not self._context.get('active_ids')):
             return False
         datas = {}
-        for data in self:
-            column = float(210) / float(data.name.width or 1)
-            no_row_per_page = int(297 / data.name.height or 1)
-            height = 297 / (no_row_per_page or 1)
-            datas = {
-                'rows': int(no_row_per_page),
-                'columns': int(column),
-                'model': self._context.get('active_model'),
-                'height': str(height * 3.693602694) + "mm",
-                'width': str(float(data.name.width) * 3.693602694) + "mm",
-                'image_width': str(data.image_width),
-                'image_height': str(data.image_height),
-                'barcode_width': data.barcode_width,
-                'barcode_height': data.barcode_height,
-                'font_size': data.font_size,
-                'number_of_labels': data.number_of_labels,
-                'top_margin': str(data.name.top_margin) + "mm",
-                'bottom_margin': str(data.name.bottom_margin) + "mm",
-                'left_margin': str(data.name.left_margin) + "mm",
-                'right_margin': str(data.name.right_margin) + "mm",
-                'cell_spacing': str(data.name.cell_spacing) + "px",
-                'ids': self._context.get('active_ids', []),
-                # need correction!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                'padding_top': str(data.name.top_margin) + "mm",
-                'padding_bottom': str(data.name.bottom_margin) + "mm",
-                'padding_left': str(data.name.left_margin) + "mm",
-                'padding_right': str(data.name.right_margin) + "mm",
-            }
+        column = (float(210) / float(self.name.width or 1))
+        no_row_per_page = int((297-self.name.left_margin -
+                               self.name.right_margin) /
+                              (self.name.height or 1))
+        datas = {
+            'rows': int(no_row_per_page),
+            'columns': int(column),
+            'model': self._context.get('active_model'),
+            'height': str(self.name.height) + 'mm',
+            'width': str(self.name.width) + 'mm',
+            'image_width': str(self.image_width),
+            'image_height': str(self.image_height),
+            'barcode_width': self.barcode_width,
+            'barcode_height': self.barcode_height,
+            'number_of_labels': self.number_of_labels,
+            'top_margin': self.name.top_margin,
+            'bottom_margin': self.name.bottom_margin,
+            'left_margin': self.name.left_margin,
+            'right_margin': self.name.right_margin,
+            'cell_spacing': str(self.name.cell_spacing) + "px",
+            'ids': self.env.context['active_ids'],
+            'padding_top': str(self.name.padding_top) + "mm",
+            'padding_bottom': str(self.name.padding_bottom) + "mm",
+            'padding_left': str(self.name.padding_left) + "mm",
+            'padding_right': str(self.name.padding_right) + "mm",
+        }
 
         cr, uid, context = self.env.args
         context = dict(context)
-        context.update({"label_print_id": self._context.get('label_print'),
+        context.update({"label_print_id": self.env.context['label_print'],
                         'datas': datas})
         self.env.args = cr, uid, misc.frozendict(context)
 

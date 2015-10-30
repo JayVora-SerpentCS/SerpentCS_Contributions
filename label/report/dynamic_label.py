@@ -49,16 +49,16 @@ class report_dynamic_label(report_sxw.rml_parse):
         label_print_obj = self.pool.get('label.print')
         label_print_data = label_print_obj.browse(
             self.cr, self.uid, self.context.get('label_print'))
+
         tot = nber_labels * len(ids)
         tot_rows = int(ceil(float(ceil(tot) / columns)))
-        print row, columns, ids, model, nber_labels
         # return value
         result = [[None for i in range(columns)] for j in range(tot_rows-1)]
-        result.append([None for i in range(tot_rows*columns-tot)])
-        print result
+        result.append([None for i in range(nber_labels-(tot_rows-1)*columns)])
         # current indices
         cur_row = 0
         cur_col = 0
+        # loop over all the items
         for id_model in ids:
             datas = active_model_obj.browse(self.cr, self.uid, id_model)
             # value to add
@@ -107,6 +107,9 @@ class report_dynamic_label(report_sxw.rml_parse):
                 else:
                     bot = False
                 if not bot:
+                    if field.position is False:
+                        pos = ""
+
                     vals_dict = {'string': string,
                                  'value':  value,
                                  'type': field.type,
@@ -122,7 +125,6 @@ class report_dynamic_label(report_sxw.rml_parse):
                 if cur_col >= columns:
                     cur_col = 0
                     cur_row += 1
-        print result
         return result
 
     def __init__(self, cr, uid, name, context):

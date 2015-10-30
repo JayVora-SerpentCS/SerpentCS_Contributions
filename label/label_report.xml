@@ -9,7 +9,7 @@
 	    report_type="qweb-pdf"/>
     
     <record id="dynamic_label" model="ir.actions.report.xml">
-      <field name="paperformat_id" ref="label.paperformat_euro"/>
+      <field name="paperformat_id" ref="label.paperformat_label"/>
     </record>
 	  
   </data>
