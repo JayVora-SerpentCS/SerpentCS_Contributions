@@ -1,10 +1,14 @@
 <openerp>
   <data>
     <template id="report_label">
+    <style type="text/css">
+      table {
+      }
+    </style>
       <t t-call="report.html_container">
 	<t t-foreach="docs" t-as="o">
 	  <div class="page">
-	    <table t-attf-style="border: 0.1px solid black; border-collapse: collapse; table-layout: fixed; position: absolute; top: {{top_margin}}mm; left: {{left_margin}}mm; width: 100%;" border="1">
+	    <table t-attf-style="border: 0.1px solid black; border-collapse: collapse; table-layout: fixed; position: absolute; top: {{top_margin}}mm; left: {{left_margin}}mm; width: 100%;cellpadding:0;" border="1">
 	      <t t-foreach="get_data(rows, columns, ids, model, number_of_labels)" t-as="row">
 		<tr t-attf-style="height: {{height-cell_spacing}}mm;">
 		  <t t-foreach="row" t-as="col">

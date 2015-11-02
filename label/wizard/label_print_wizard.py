@@ -27,7 +27,7 @@ class label_print_wizard(models.TransientModel):
     name = fields.Many2one('label.config', _('Label Type'), required=True)
     number_of_labels = fields.Integer(_('Number of Labels (per item)'),
                                       required=True,
-                                      default=33)
+                                      default=0)
     image_width = fields.Float(_('Width'), default=50)
     image_height = fields.Float(_('Height'), default=50)
     barcode_width = fields.Float(_('Width'), default=50)
