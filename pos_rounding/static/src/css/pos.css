@@ -1,0 +1,87 @@
+.ui-widget-overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+}
+.ui-dialog .ui-dialog-titlebar {
+   font-size: 18px;
+   padding: 7px 15px;
+   border-bottom: 1px solid #cacaca;
+   -moz-border-radius: 2px 2px 0 0;
+   -webkit-border-radius: 2px 2px 0 0;
+   border-radius: 2px 2px 0 0;
+}
+.ui-dialog .ui-dialog-buttonpane {
+   border-top: 1px solid #ddd;
+   height : 45px;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+    margin: 6px 4px 0 0;
+    float: right;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+   padding: 0;
+   float:right;
+   text-indent:1px;
+}
+.ui-icon-closethick {
+   background-position: -96px -128px;
+}
+.ui-dialog-titlebar-close:before {
+   content: "×";
+   font-size: 18px;
+   font-weight: bold;
+   line-height: 16px;
+   color: black;
+   text-shadow: 0 1px 0 white;
+   padding: 0;
+   cursor: pointer;
+   background: transparent;
+   border: 0;
+}
+.ui-dialog .ui-dialog-titlebar-close .ui-icon-closethick {
+   display: none;
+}
+.ui-dialog .client-detail {
+    line-height: 45px;    
+}
+.ui-dialog .client-detail input {
+    height: 30px;
+    width: 225px;
+    font-size: 18px;
+}
+.ui-dialog .client-details-box {
+    position: relative;
+    font-size: 18px;
+    height:auto !important;
+}
+.ui-dialog .client-details-box .client-detail > .label {
+    font-weight: bold;
+    display: inline-block;
+    width: 64px;
+    text-align: right;
+    margin-right: 23px;
+    float:left;
+}
+
+.ui-dialog .client-details-box .client-detail > .detail {
+    padding: 4px;
+    border-radius: 3px;
+    border: solid 1px #cecbcb;
+    margin-bottom: 4px;
+    background: white;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    color: #555555;
+    width: 340px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.pos .round_payment-due-total {
+    text-align: center;
+    font-weight: bold;
+    font-size: 48px;
+    margin: 27px;
+    text-shadow: 0px 2px rgb(202, 202, 202);
+}
