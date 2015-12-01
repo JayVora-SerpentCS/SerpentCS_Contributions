@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_one2many_kanban_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_one2many_kanban/static/src/less/web_one2many_kanban.less"/>
+                <script type="text/javascript" src="/web_one2many_kanban/static/src/js/web_one2many_kanban.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

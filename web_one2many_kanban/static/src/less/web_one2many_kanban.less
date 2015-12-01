@@ -1,0 +1,199 @@
+.o_kanban_view.o_kanban_ungrouped .o_kanban_record {
+-ms-flex: 0 1 340px !important;
+-moz-flex: 0 1 340px !important;
+-webkit-box-flex: 1 !important;
+-webkit-flex: 0 10 340px !important;
+flex: 0 1 340px !important;
+}
+// LAYOUT
+.o_kanban_view {
+    .o-flex-display();
+    .o-align-content(stretch);
+
+    overflow-x: visible;
+    @media (max-width: @screen-xs-max) {
+        overflow-x: auto;
+        padding: 0px;
+    }
+
+    .o_kanban_record {
+        .clearfix();
+        &:after, &:before {
+            width: 0;
+            height: 0;
+        }
+
+        position: relative;
+        min-width: 150px;
+        margin: 4px;
+
+        .o_kanban_image {
+            float: left;
+            width: @o-kanban-image-width;
+
+            + div {
+                padding-left: @o-kanban-image-width + @o-kanban-inside-hgutter;
+                @media (max-width: @screen-xs-max) {
+                    padding-left:  @o-kanban-image-width + @o-kanban-inside-hgutter-mobile;
+                }
+            }
+        }
+
+        .oe_kanban_details {
+            width: 100%;
+            > ul {
+                margin-bottom: 0;
+            }
+        }
+
+        .o_dropdown_kanban {
+            float: right;
+            @media (max-width: @screen-xs-max) {
+                visibility: visible;
+            }
+
+            // Open the dropdown a the left side of the dropdown toggle
+            > .dropdown-menu {
+                left: auto;
+                right: 0;
+                padding: 3px;
+            }
+        }
+
+        .o_kanban_footer {
+            .o-flex-display();
+            .o-justify-content(space-between);
+            .o-align-items(center);
+            > * {
+                .o-flex(0, 0, auto);
+            }
+        }
+
+        .oe_kanban_footer_left {
+            float: left;
+        }
+
+        .oe_kanban_bottom_right {
+            float: right;
+        }
+
+        .oe_kanban_bottom_left {
+            float: left;
+        }
+
+        .o_kanban_tags {
+            margin: 0 0 @o-kanban-inside-vgutter -@o-kanban-inside-hgutter;
+            @media (max-width: @screen-xs-max) {
+                margin-left:  -@o-kanban-inside-hgutter-mobile;
+            }
+            max-height: 9px;
+            .o_tag {
+                width: 40px;
+                height: 9px;
+                display: inline-block;
+                vertical-align: top;
+                opacity: 0.7;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+        .o_form_field_many2manytags {
+            display: block;
+        }
+        .oe_kanban_text_red {
+            color: #A61300;
+            font-weight: bold;
+        }
+    }
+
+    .o_kanban_quick_create {
+        margin: 0 @o-kanban-record-margin @o-kanban-record-margin @o-kanban-record-margin;
+        padding: 3px;
+        input {
+            width: 100%;
+            margin: 4px 0;
+        }
+    }
+
+    .o_kanban_group {
+        .o-flex(0, 0, auto);
+        padding: 0 @o-kanban-group-padding;
+        &:not(.o_column_folded) {
+            width: @o-kanban-default-record-width + 2*@o-kanban-group-padding + 2*@o-kanban-record-margin;
+        }
+
+        .o_kanban_header + .o_kanban_record {
+            margin-top: 0;  // no margin top from the first card after kanban_header
+        }
+    }
+
+    &.o_kanban_ungrouped {
+        .o-flex-flow(row, wrap);
+        .o-justify-content(flex-start);
+
+        padding: @o-kanban-record-margin @odoo-horizontal-padding - @o-kanban-record-margin;
+        @media (max-width: @screen-xs-max) {
+            padding: 0;
+        }
+
+        .o_kanban_record {
+            .o-flex(1, 1, @o-kanban-default-record-width);
+            @media (max-width: @screen-xs-max) {
+                margin: 0 0 1px 0;
+                .o-flex(1, 0, 100%);
+                box-shadow: none;
+            }
+
+            &.o_kanban_ghost {
+                height: 0;
+                min-height: 0!important; // to prevent view writers to override this height
+                visibility: hidden;
+                margin-top: 0;
+                margin-bottom: 0;
+                padding: 0;
+            }
+        }
+    }
+
+    &.o_kanban_grouped {
+        min-height: 100%;
+        padding: 0 @odoo-horizontal-padding - @o-kanban-group-padding - @o-kanban-record-margin;
+        .o_kanban_record {
+            width: @o-kanban-default-record-width !important;
+        }
+        &.o_kanban_small_column .o_kanban_group {
+            &:not(.o_column_folded) {
+                width: @o-kanban-small-record-width + 2*@o-kanban-group-padding + 2*@o-kanban-record-margin;
+                .o_kanban_record {
+                    width: @o-kanban-small-record-width;
+                }
+            }
+        }
+    }
+
+    &.o_kanban_mobile {
+        .o_kanban_record {
+            width: 400px;
+        }
+        span {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            display: block;
+        }
+    }
+
+    .o_column_quick_create {
+        .o-flex(0, 0, auto);
+        margin: 0;
+        padding: 8px;
+        position: relative;
+
+        .o_kanban_quick_create {
+            display: none;
+            width: 180px;
+        }
+    }
+}
