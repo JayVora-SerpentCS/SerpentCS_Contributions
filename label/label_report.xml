@@ -2,14 +2,14 @@
 
 <openerp>
 	<data>
-         <record id="dynamic_label" model="ir.actions.report.xml">
-            <field name="paperformat_id" ref="label.paperformat_euro"/>
-        </record>
-
 		<report id="dynamic_label" 
 				string="QWEB Demo" 
 				model="label.config" 
 				name="label.report_label" 
 				report_type="qweb-pdf"/>
+		
+        <record id="dynamic_label" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="label.paperformat_euro"/>
+        </record>
 	</data>
 </openerp>
