@@ -23,5 +23,5 @@ Credits
 Contributors
 ------------
 
-* Jay Vora <jay.vora@serpentcs.com>
+* Serpent Consulting Services Pvt. Ltd. (www.serpentcs.com)
 
