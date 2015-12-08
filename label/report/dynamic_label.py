@@ -112,7 +112,7 @@ class report_dynamic_label(report_sxw.rml_parse):
                     counter = counter + 1
                 if counter > number_of_copy:
                     counter = 1
-        if counter < number_of_copy:
+                if counter < number_of_copy:
                     remain_copy = number_of_copy - counter
                     for xx in range(0,remain_copy):
                         remain_data.append( newlist_data)
