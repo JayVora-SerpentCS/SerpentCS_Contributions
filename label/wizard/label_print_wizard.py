@@ -48,7 +48,7 @@ class label_print_wizard(models.TransientModel):
             height = 297 / (no_row_per_page or 1)
             datas = {
                 'rows': int(total_row),
-                'columns': int(column),
+                'columns': int(column) == 0 and 1 or int(column),
                 'model' : self._context.get('active_model'),
                 'height' : str(height * 3.693602694) + "mm",
                 'no_row_per_page': no_row_per_page,
