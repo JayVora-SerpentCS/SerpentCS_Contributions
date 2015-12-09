@@ -310,6 +310,42 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             });
         },
 
+        render: function () {
+            // cleanup
+            this.$el.css({display:'-webkit-flex'});
+            this.$el.css({display:'flex'});
+            this.$el.removeClass('o_kanban_ungrouped o_kanban_grouped');
+            _.invoke(this.widgets, 'destroy');
+            this.$el.empty();
+            this.widgets = [];
+            if (this.column_quick_create) {
+                this.column_quick_create.destroy();
+                this.column_quick_create = undefined;
+            }
+
+            this.record_options = {
+                editable: this.is_action_enabled('edit'),
+                deletable: this.is_action_enabled('delete'),
+                fields: this.fields_view.fields,
+                qweb: this.qweb,
+                model: this.model,
+                read_only_mode: this.options.read_only_mode,
+            };
+
+            // actual rendering
+            var fragment = document.createDocumentFragment();
+            if (this.data.grouped) {
+                this.$el.addClass('o_kanban_grouped');
+                this.render_grouped(fragment);
+            } else if (this.data.is_empty) {
+                this.render_no_content(fragment);
+            } else {
+                this.$el.addClass('o_kanban_ungrouped');
+                this.render_ungrouped(fragment,this.$el);
+            }
+            this.$el.append(fragment);
+        },
+
         render_ungrouped: function (fragment,el) {
             var self = this;
             var options = _.clone(this.record_options);
