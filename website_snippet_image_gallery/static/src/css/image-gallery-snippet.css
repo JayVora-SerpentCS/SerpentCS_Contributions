@@ -1,0 +1,35 @@
+.custom-gallery img {
+  filter: gray;
+  -webkit-filter: grayscale(1);
+    /*-webkit-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 6px 2px rgba(0,0,0,0.75);*/
+    margin-bottom:20px;
+}
+
+.custom-gallery img:hover {
+  filter: none; /* IE6-9 */
+  -webkit-filter: grayscale(0);
+}
+
+/*Media query for set image height */
+
+/* Custom, iPhone Retina */ 
+    @media (max-width: 748px) {
+        .custom-gallery img{
+        	height:100px ! important;
+        }
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media (max-width : 480px) {
+		.custom-gallery img{
+        	height:100px ! important;
+        }
+    }
+    /* Small Devices, Tablets */
+    @media (max-width : 768px) {
+		.custom-gallery img{
+        	height:100px ! important;
+        }
+    }
