@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+
+        <!-- adds domain in parent_id of Case Sections Form View -->
         <record id="crm_case_section_salesteams_view_form_inherit" model="ir.ui.view">
             <field name="name">crm.case.section.form</field>
             <field name="model">crm.case.section</field>
@@ -69,7 +71,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <!-- Case Sections action View -->
         <record id="crm_case_section_act_tree_new" model="ir.actions.act_window">
             <field name="name">Projects Team</field>
@@ -91,7 +93,7 @@
             <field name="view_id" ref="crm_case_section_view_form_new"/>
             <field name="act_window_id" ref="crm_case_section_act_tree_new"/>
         </record>
-        
+
         <menuitem  action="crm_case_section_act_tree_new"
             id="project_team_menu"
             parent="base.menu_definitions"  sequence="4"/>
@@ -111,5 +113,6 @@
                 </field>
             </field>
         </record>
+
     </data>
 </openerp>

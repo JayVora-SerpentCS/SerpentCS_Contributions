@@ -3,6 +3,7 @@
 -->
 <openerp>
     <data>
+        <!-- inherited the assets_backend for adding ref for js and css file -->
         <template id="assets_backend" name="mail_extended assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/mail_extended/static/src/css/mail_extended.css"/>

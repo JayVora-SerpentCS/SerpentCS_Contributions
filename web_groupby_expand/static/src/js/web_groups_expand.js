@@ -4,10 +4,12 @@ openerp.web_groupby_expand = function (openerp) {
     var QWeb = openerp.web.qweb;
 
     openerp.web.ListView.Groups.include({
+
         init:function (view, options) {
             this._super(view, options);
             this.groups_auto = [];
         },
+
         render: function (post_render) {
             var self = this;
             var $el = $('<tbody>');
@@ -175,16 +177,16 @@ openerp.web_groupby_expand = function (openerp) {
             });
         },
     });
-    
+
     openerp.web.ListView.include({
+
         set_default_options: function (options) {
             this._super(options);
             _.defaults(this.options, {
                 expand : false,
-//                GroupsType: openerp.web.ListView.Groups,
-//                ListType: openerp.web.ListView.List
             });
         },
+
         load_list: function(data) {
             var self = this;
             if (!this.$buttons) {
@@ -208,13 +210,15 @@ openerp.web_groupby_expand = function (openerp) {
                 $('.oe-list-expand').show();
             }
         },
+
         do_search: function (domain, context, group_by) {
             this._super(domain, context, group_by);
             this.options.expand = false;
             this.groups.groups_auto = []
         },
+
     });
-    
+
     openerp.web.ViewManagerAction.include({
         switch_mode: function (view_type, no_store, options) {
             this._super.apply(this, arguments);
@@ -223,4 +227,5 @@ openerp.web_groupby_expand = function (openerp) {
             }
         }, 
     });
+
 };

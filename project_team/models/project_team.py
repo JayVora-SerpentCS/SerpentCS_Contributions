@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2011-Today Serpent Consulting Services Pvt. Ltd.
+#    (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,20 +22,23 @@
 
 from openerp import models, fields, api, _
 
+
 class crm_case_section(models.Model):
-    
+
     _inherit = 'crm.case.section'
-    
-    type_team = fields.Selection([('sale', 'Sale'), ('project', 'Project')], string="Type", default="sale")
+
+    type_team = fields.Selection([('sale', 'Sale'),
+                                  ('project', 'Project')],
+                                 string="Type", default="sale")
 
 
 class project_project(models.Model):
-    
+
     _inherit = 'project.project'
-    
-    team_id = fields.Many2one('crm.case.section', string="Project Team", domain=[('type_team', '=', 'project')])
-    
+
+    team_id = fields.Many2one('crm.case.section',string="Project Team",
+                              domain=[('type_team', '=', 'project')])
+
     @api.onchange('team_id')
     def get_team_members(self):
         self.members = [rec.id for rec in self.team_id.member_ids]
-        

@@ -2,6 +2,7 @@
 <openerp>
     <data>
 
+        <!-- inherited product template form view -->
         <record id="product_product_template_only_form_view" model="ir.ui.view">
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_only_form_view"/>
@@ -76,6 +77,7 @@
             </field>
         </record>
 
+        <!-- inherited product_product form view -->
         <record id="product_product_product_only_form_view" model="ir.ui.view">
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>

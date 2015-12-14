@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_label_print_form" model="ir.ui.view">
+            <field name="name">label.print.form</field>
+            <field name="model">label.print</field>
+            <field name="arch" type="xml">
+                <form string="Label">
+                    <group>
+                        <field name="name"/>
+                        <field name="model_id"/>
+                        <field name="model_list" invisible="1"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Fields">
+                            <group colspan="4" col="4">
+                                <field name="field_ids" colspan="4" nolabel="1">
+                                    <form string="Fields">
+                                        <group colspan="4" col="6">
+                                            <field name="sequence"/>
+                                            <field name="type"/>
+                                            <field name="fontsize"/>
+                                            <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
+                                            <field name="newline"/>
+                                            <field name="nolabel"/>
+                                            <group colspan="4" col="6">
+                                                <field name="python_expression"/>
+                                                <field name="field_id" attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"  context="{'model_list':parent.model_list}"/>
+                                                <field name="python_field" attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"/>
+                                            </group>
+                                            <newline/>
+                                            <label string="Python experession field must be start with obj. e.g:- obj.M2O_field.field_name" colspan="4"/>
+                                        </group>
+                                    </form>
+                                    <tree string="Fields">
+                                        <field name="sequence"/>
+                                        <field name="field_id" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"/>
+                                        <field name="python_field"/>
+                                        <field name="type"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Advance">
+                            <group colspan="2" col="2">
+                                <button name="create_action" string="Add sidebar button" type="object" icon="gtk-execute"
+                                    colspan="2" attrs="{'invisible':[('ref_ir_act_report','!=',False)]}"
+                                    help="Display a button in the sidebar of related documents to open a composition wizard"/>
+                                <field name="ref_ir_act_report" attrs="{'invisible':[('ref_ir_act_report','=',False)]}"/>
+                                <field name="ref_ir_value" attrs="{'invisible':[('ref_ir_act_report','=',False)]}"/>
+                                <button name="unlink_action" string="Remove sidebar button" type="object" icon="gtk-delete"
+                                    attrs="{'invisible':[('ref_ir_act_report','=',False)]}" colspan="2" />
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_label_print_tree">
+            <field name="name">label.print.tree</field>
+            <field name="model">label.print</field>
+            <field name="arch" type="xml">
+                <tree string="Report">
+                    <field name="name"/>
+                    <field name="model_id"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_label_print_form">
+            <field name="name">Label Print</field>
+            <field name="res_model">label.print</field>
+            <field name="context">{'default_field_id':1}</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_label_print_view"
+            action="action_label_print_form"
+            parent="base.menu_config"/>
+    </data>
+</openerp>

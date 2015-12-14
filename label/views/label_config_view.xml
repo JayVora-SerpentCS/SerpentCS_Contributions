@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_label_brand_tree" model="ir.ui.view">
+            <field name="name">label.brand.tree</field>
+            <field name="model">label.brand</field>
+            <field name="arch" type="xml">
+                <tree string="Label Configuration">
+                    <field name="brand_name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_label_brand_form" model="ir.ui.view">
+            <field name="name">label.brand.form</field>
+            <field name="model">label.brand</field>
+            <field name="arch" type="xml">
+                <form string="Label Configuration">
+                    <group colspan="4" col="4">
+                        <field name="brand_name"/>
+                        <newline/>
+                        <separator colspan="4" string="Label Config"/>
+                        <field name="label_config_ids" nolabel="1" colspan="4"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_label_config_form" model="ir.ui.view">
+            <field name="name">label.config.form</field>
+            <field name="model">label.config</field>
+            <field name="arch" type="xml">
+                <form string="Label Configuration">
+                    <group colspan="4" col="4">
+                        <field name="label_main_id"/>
+                        <field name="name"/>
+                        <newline/>
+                        <field name="height"/>
+                        <field name="width"/>
+                        <field name="top_margin"/>
+                        <field name="bottom_margin"/>
+                        <field name="left_margin"/>
+                        <field name="right_margin"/>
+                        <field name="cell_spacing"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_label_config_tree" model="ir.ui.view">
+            <field name="name">label.config.tree</field>
+            <field name="model">label.config</field>
+            <field name="arch" type="xml">
+                <tree string="Report">
+                    <field name="name"/>
+                    <field name="height"/>
+                    <field name="width"/>
+                    <field name="top_margin"/>
+                    <field name="bottom_margin"/>
+                    <field name="left_margin"/>
+                    <field name="right_margin"/>
+                    <field name="cell_spacing"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_label_config_form" model="ir.actions.act_window">
+            <field name="name">Label Configuration</field>
+            <field name="res_model">label.brand</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_label_config_view"
+            action="action_label_config_form"
+            parent="base.menu_config"/>
+    </data>
+</openerp>

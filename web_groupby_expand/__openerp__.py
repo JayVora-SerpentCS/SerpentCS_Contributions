@@ -28,12 +28,9 @@
     'category' : 'Web',
     "description": "Adds Expand button to expand all groups on a list view.",
     "depends": ["web"],
-    'demo' : [],
     'data': [
         'views/templates.xml',
     ],
     "qweb": [ "static/src/xml/web_groups_expand.xml" ],
     "auto_install": False,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

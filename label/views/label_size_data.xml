@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="ir_header_webkit_label_simple" model="ir.header_webkit">
+            <field eval="&quot;&quot;&quot;Portrait&quot;&quot;&quot;" name="orientation"/>
+            <field eval="&quot;&quot;&quot;A4&quot;&quot;&quot;" name="format"/>
+            <field eval="-20" name="margin_top"/>
+            <field eval="-20" name="margin_left"/>
+            <field eval="-20" name="margin_bottom"/>
+            <field eval="-20" name="margin_right"/>
+            <field name="css" ><![CDATA[
+body {
+font-family:helvetica;
+font-size:12;
+}
+
+.dest_address {
+margin-left:60%;
+font-size:12;
+}
+.header {
+margin-left:0;
+text-align:left;
+width:300px;
+font-size:12;
+}
+
+.title {
+font-size:16;
+font-weight: bold;
+}
+
+.basic_table{
+text-align:center;
+border:1px solid lightGrey;
+border-collapse: collapse;
+}
+.basic_table td {
+border:1px solid lightGrey;
+font-size:12;
+}
+
+.list_table {
+border-color:black;
+text-align:center;
+border-collapse: collapse;
+}
+
+.list_table td {
+border-color:gray;
+border-top:1px solid gray;
+text-align:left;
+font-size:12;
+padding-right:3px
+padding-left:3px
+padding-top:3px
+padding-bottom:3px
+}
+
+.list_table th {
+border-bottom:2px solid black;
+text-align:left;
+font-size:12;
+font-weight:bold;
+padding-right:3px
+padding-left:3px
+}
+
+.list_tabe thead {
+    display:table-header-group;
+}
+
+.total {
+width:100%;
+}
+
+.lib {
+width:10.3%;
+}
+
+.tot {
+text-align:right;
+width:15%;
+}
+
+.lefttot {
+width:74%;
+}
+
+.tax {
+width:50%;
+}]]> </field>
+            <field eval="&quot;&quot;&quot;Label Sample&quot;&quot;&quot;" name="name"/>
+        </record>
+
+        <record id="b1" model="label.brand">
+            <field name="brand_name">Others</field>
+        </record>
+
+        <record id="s1" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 1 ( 210 x 297 ) mm</field>
+            <field name="height">287.0</field>
+            <field name="width">210.0</field>
+        </record>
+
+        <record id="s2" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 2 ( 210 x 148 ) mm</field>
+            <field name="height">148.0</field>
+            <field name="width">210.0</field>
+        </record>
+
+        <record id="s3" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 4 ( 148 x 105 ) mm</field>
+            <field name="height">148.0</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s4" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 4 ( 210 x 70 ) mm</field>
+            <field name="height">70.0</field>
+            <field name="width">210.0</field>
+        </record>
+
+        <record id="s5" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 5 ( 210 x 59.3 ) mm</field>
+            <field name="height">59.3</field>
+            <field name="width">210.0</field>
+        </record>
+
+        <record id="s6" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 6 ( 105 x 99 ) mm</field>
+            <field name="height">99.0</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s7" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 8 ( 105 x 74.1 ) mm</field>
+            <field name="height">74.1</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s8" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 8A ( 105 x 70 ) mm</field>
+            <field name="height">70.0</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s9" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 12 ( 105 x 48 ) mm</field>
+            <field name="height">48.0</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s10" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 14 ( 105 x 34 ) mm</field>
+            <field name="height">34.0</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s11" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 16 ( 105 x 37.5 ) mm</field>
+            <field name="height">37.5</field>
+            <field name="width">105.0</field>
+        </record>
+
+        <record id="s12" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 21 ( 70 x 42.5 ) mm</field>
+            <field name="height">42.5</field>
+            <field name="width">70.0</field>
+        </record>
+
+        <record id="s13" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 24 ( 70 x 37.1 ) mm</field>
+            <field name="height">37.1</field>
+            <field name="width">70.0</field>
+        </record>
+
+        <record id="s14" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 30 ( 70 x 29.7 ) mm</field>
+            <field name="height">29.7</field>
+            <field name="width">70.0</field>
+        </record>
+
+        <record id="s15" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 36 ( 70 x 24.75 ) mm</field>
+            <field name="height">24.75</field>
+            <field name="width">70.0</field>
+        </record>
+
+        <record id="s16" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 40 ( 52.5 x 29.7 ) mm</field>
+            <field name="height">29.7</field>
+            <field name="width">52.5</field>
+        </record>
+
+        <record id="s17" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 48 ( 52.5 x 24.75 ) mm</field>
+            <field name="height">24.75</field>
+            <field name="width">52.5</field>
+        </record>
+
+        <record id="s18" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 56 ( 52.5 x 21.2 ) mm</field>
+            <field name="height">21.2</field>
+            <field name="width">52.5</field>
+        </record>
+
+        <record id="s19" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 60 ( 52.5 x 19.8 ) mm</field>
+            <field name="height">19.8</field>
+            <field name="width">52.5</field>
+        </record>
+
+        <record id="s20" model="label.config">
+            <field name="label_main_id" ref="b1"/>
+            <field name="name">A4 - 65 ( 42 x 22.8 ) mm</field>
+            <field name="height">22.8</field>
+            <field name="width">42.0</field>
+        </record>
+
+    </data>
+</openerp>

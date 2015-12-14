@@ -1,4 +1,24 @@
 # -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2011-Today Serpent Consulting Services Pvt. Ltd.
+#    (<http://www.serpentcs.com>)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>
+#
+##############################################################################
 
 from openerp import fields,models,api,_
 from openerp.tools import misc
@@ -32,7 +52,7 @@ class label_print_wizard(models.TransientModel):
     is_barcode = fields.Boolean('Is Barcode?')
     is_image = fields.Boolean('Is Image?')
     brand_id = fields.Many2one('label.brand', 'Brand Name', required=True)
-    
+
     @api.multi
     def print_report(self):
         if self._context is None:
@@ -68,14 +88,14 @@ class label_print_wizard(models.TransientModel):
             }
         cr,uid,context=self.env.args
         context = dict(context)
-        context.update({"label_print_id":self._context.get('label_print'), 'datas': datas})
-        self.env.args = cr,uid,misc.frozendict(context)    
-        
+        context.update({'label_print_id':self._context.get('label_print'),
+                        'datas': datas})
+        self.env.args = cr,uid,misc.frozendict(context)
+
         data = {
             'ids': self.ids,
             'model':'label.config',
             'form':datas
         }
-        return self.env['report'].get_action(self,'label.report_label', data=data)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        return self.env['report'].get_action(self,'label.report_label',
+                                             data=data)
