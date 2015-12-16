@@ -22,10 +22,10 @@
 
 {
     'name': 'Project Dates on Kanban',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.0.1',
     'author' : 'Serpent Consulting Services Pvt. Ltd.',
     'website' : 'http://www.serpentcs.com',
-    'summary': """Displays last updated date and recent updated
+    'summary': """Find your Idle projects - Displays last updated date and recent updated
                 date for the Project.""",
     'depends': ['project'],
     'category': 'Project Management',
