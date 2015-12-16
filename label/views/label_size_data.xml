@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data noupdate="1">
-
+        
         <record id="ir_header_webkit_label_simple" model="ir.header_webkit">
-            <field eval="&quot;&quot;&quot;Portrait&quot;&quot;&quot;" name="orientation"/>
-            <field eval="&quot;&quot;&quot;A4&quot;&quot;&quot;" name="format"/>
-            <field eval="-20" name="margin_top"/>
-            <field eval="-20" name="margin_left"/>
-            <field eval="-20" name="margin_bottom"/>
-            <field eval="-20" name="margin_right"/>
-            <field name="css" ><![CDATA[
+            <field name="orientation" eval="&quot;&quot;&quot;Portrait&quot;&quot;&quot;" />
+            <field name="format" eval="&quot;&quot;&quot;A4&quot;&quot;&quot;" />
+            <field name="margin_top" eval="-20" />
+            <field name="margin_left" eval="-20" />
+            <field name="margin_bottom" eval="-20" />
+            <field name="margin_right" eval="-20" />
+            <field name="css" >
+                <![CDATA[
 body {
 font-family:helvetica;
 font-size:12;
@@ -92,10 +93,11 @@ width:74%;
 }
 .tax {
 width:50%;
-}]]> </field>
+}]]>
+            </field>
             <field eval="&quot;&quot;&quot;Label Sample&quot;&quot;&quot;" name="name"/>
         </record>
-
+        
         <record id="b1" model="label.brand">
             <field name="brand_name">Others</field>
         </record>
@@ -148,7 +150,6 @@ width:50%;
             <field name="height">74.1</field>
             <field name="width">105.0</field>
         </record>
-        
         <record id="s8" model="label.config">
             <field name="label_main_id" ref="b1"/>
             <field name="name">A4 - 8A ( 105 x 70 ) mm</field>
@@ -232,13 +233,13 @@ width:50%;
             <field name="height">19.8</field>
             <field name="width">52.5</field>
         </record>
-
+        
         <record id="s20" model="label.config">
             <field name="label_main_id" ref="b1"/>
             <field name="name">A4 - 65 ( 42 x 22.8 ) mm</field>
             <field name="height">22.8</field>
             <field name="width">42.0</field>
         </record>
-
+        
     </data>
 </openerp>

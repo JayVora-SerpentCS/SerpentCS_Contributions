@@ -1,40 +1,29 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012 Serpent Consulting Services (<http://www.serpentcs.com>)
-#    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>
-#
-##############################################################################
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+# 1:  imports of openerp
 from openerp.osv import osv
 from openerp.report import report_sxw
+from openerp.osv.orm import browse_record
+
+# 2: imports of python lib
 import barcode
 from barcode.writer import ImageWriter
 import base64
-from openerp.osv.orm import browse_record
+
+# 3: local imports
 import utils
 import cairosvg
 import tempfile
 
+
 class report_dynamic_label(report_sxw.rml_parse):
-            
+    
     def get_data(self,row,columns,ids,model,number_of_copy):
         active_model_obj = self.pool.get(model)
         label_print_obj = self.pool.get('label.print')
-        label_print_data = label_print_obj.browse(self.cr, self.uid, self.context.get('label_print'))
+        label_print_data = label_print_obj.browse(self.cr, self.uid,
+                                                  self.context.get('label_print'))
         result = []
         value_vals = []
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
@@ -58,8 +47,7 @@ class report_dynamic_label(report_sxw.rml_parse):
                     if isinstance(value, browse_record):
                         model_obj = self.pool.get(value._name)
                         value = eval("obj." + model_obj._rec_name, {'obj': value})
-
-                         
+                        
                     if not value:
                         value = ''
                         
@@ -67,7 +55,7 @@ class report_dynamic_label(report_sxw.rml_parse):
                         string='';
                     else :
                         string+=' :- '
-                    
+                        
                     if field.type == 'image' or field.type == 'barcode':
                         string = '';
                         if field.position != 'bottom':
@@ -75,20 +63,25 @@ class report_dynamic_label(report_sxw.rml_parse):
                             bot = False
                         else :
                             bot =True
-                            bot_dict = {'string': string, 'value':  value, 'type': field.type, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
+                            bot_dict = {'string': string, 'value':  value,
+                                        'type': field.type,
+                                        'newline': field.newline,
+                                        'style': "font-size:"+str(field.fontsize)+"px;"+pos}
                     else:
                         bot = False
                     if not bot:
-                        vals_dict = {'string': string, 'value':  value, 'type': field.type, 'newline': field.newline, 'style': "font-size:"+str(field.fontsize)+"px;"+pos}
+                        vals_dict = {'string': string, 'value':  value,
+                                     'type': field.type,
+                                     'newline': field.newline,
+                                     'style': "font-size:"+str(field.fontsize)+"px;"+pos}
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals[0]['value'] not in value_vals:    
+                if vals[0]['value'] not in value_vals:
                     value_vals.append(vals[0]['value'])
                 result.append(vals)
                 temp = vals
-
-        
+                
         newlist_len = 0        
         new_list = []
         result1 = []
@@ -99,12 +92,12 @@ class report_dynamic_label(report_sxw.rml_parse):
                 new_list.append(val)
             for value_list in val:
                 for value_print in value_list:
-                    list_newdata.append(value_print['value'])    
-        
+                    list_newdata.append(value_print['value'])
+                    
         for data in new_list:
             for list_data in data:
                 newlist_len =newlist_len + 1
-        
+                
         remain_data = []
         counter = 0
         for newlist_data in list_newdata:
@@ -112,7 +105,7 @@ class report_dynamic_label(report_sxw.rml_parse):
                     counter = counter + 1
                 if counter > number_of_copy:
                     counter = 1
-        if counter < number_of_copy:
+                if counter < number_of_copy:
                     remain_copy = number_of_copy - counter
                     for xx in range(0,remain_copy):
                         remain_data.append( newlist_data)
@@ -155,5 +148,3 @@ class report_employee(osv.AbstractModel):
     _inherit = 'report.abstract_report'
     _template = 'label.report_label'
     _wrapped_report_class = report_dynamic_label
-
-#report_sxw.report_sxw('report.dynamic.label','label.config','addons/label/report/dynamic_label.mako',parser=report_dynamic_label, header=False)
