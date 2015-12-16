@@ -1,36 +1,39 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
+        
+        <!-- This wizard view use for label formating like height,width,number of copy etc... -->
         <record id="view_label_print_wizard" model="ir.ui.view">
             <field name="name">label_print_wizard_name</field>
             <field name="model">label.print.wizard</field>
             <field name="arch" type="xml">
                 <form string="Print Label">
-                    <group>            
-	                    <field name="brand_id" colspan="4"/>
-	                    <field name="name" colspan="4" domain="[('label_main_id', '=', brand_id)]"/>
-	                    <field name="number_of_copy" colspan="4"/>
-	                    <field name="is_image" invisible="1"/>
+                    <group>
+                        <field name="brand_id" colspan="4"/>
+                        <field name="name" colspan="4" domain="[('label_main_id', '=', brand_id)]"/>
+                        <field name="number_of_copy" colspan="4"/>
+                        <field name="is_image" invisible="1"/>
                     </group>
-					<group colspan="4" attrs="{'invisible': [('is_image','=', False)]}">
-                        <separator colspan="4" string="Image height and width."/>
-                        <field name="image_height"/>
-                        <field name="image_width"/>
-                    </group>
-                    <field name="is_barcode" invisible="1"/>
-                    <group colspan="4" attrs="{'invisible': [('is_barcode', '=', False)]}">
-                        <separator colspan="4" string="Barcode height and width."/>
-                        <field name="barcode_height"/>
-                        <field name="barcode_width"/>
+                    <group colspan="4" col="4">
+                        <group attrs="{'invisible': [('is_image','=', False)]}" string="Image height and width.">
+                            <field name="image_height"/>
+                            <field name="image_width"/>
+                        </group>
+                        <field name="is_barcode" invisible="1"/>
+                        <group attrs="{'invisible': [('is_barcode', '=', False)]}" string="Barcode height and width.">
+                            <field name="barcode_height"/>
+                            <field name="barcode_width"/>
+                        </group>
                     </group>
                     <separator colspan="4"/>
-                    <group colspan="4">
-                        <label string="" colspan="2"/>
-                        <button special="cancel" string="Cancel" icon="gtk-cancel"/>
-                        <button name="print_report" string="Print" type="object" icon="gtk-print"/>
-                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
                 </form>
             </field>
         </record>
+        
     </data>
 </openerp>
