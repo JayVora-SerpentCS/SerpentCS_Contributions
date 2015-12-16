@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+# 1: imports of python lib
+import math
+
+# 2:  imports of openerp
 from openerp import fields,models,api,_
 from openerp.tools import misc
-import math
+
+
+
 
 class label_print_wizard(models.TransientModel):
 
@@ -15,7 +22,8 @@ class label_print_wizard(models.TransientModel):
         result = super(label_print_wizard, self).default_get(fields)
         if self._context.get('label_print'):
             label_print_obj = self.env['label.print']
-            label_print_data = label_print_obj.browse(self._context.get('label_print'))
+            label_print_data = label_print_obj.browse(self._context.get
+                                                      ('label_print'))
             for field in label_print_data.field_ids:
                 if field.type == 'image':
                     result['is_image'] = True
@@ -48,7 +56,7 @@ class label_print_wizard(models.TransientModel):
             height = 297 / (no_row_per_page or 1)
             datas = {
                 'rows': int(total_row),
-                'columns': int(column),
+                'columns': int(column) == 0 and 1 or int(column),
                 'model' : self._context.get('active_model'),
                 'height' : str(height * 3.693602694) + "mm",
                 'no_row_per_page': no_row_per_page,
@@ -68,7 +76,8 @@ class label_print_wizard(models.TransientModel):
             }
         cr,uid,context=self.env.args
         context = dict(context)
-        context.update({"label_print_id":self._context.get('label_print'), 'datas': datas})
+        context.update({"label_print_id":self._context.get('label_print'),
+                        'datas': datas})
         self.env.args = cr,uid,misc.frozendict(context)    
         
         data = {
@@ -77,5 +86,3 @@ class label_print_wizard(models.TransientModel):
             'form':datas
         }
         return self.env['report'].get_action(self,'label.report_label', data=data)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
