@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="sales_team.sales_team_config_action" model="ir.actions.act_window">
+            <field name="name">Sales Teams</field>
+            <field name="res_model">crm.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type_team','=','sale')]</field>
+            <field name="context">{'default_type_team':'sale'}</field>
+            <field name="view_id" ref="sales_team.crm_team_salesteams_search"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click here to define a new sales team.
+                </p>
+                <p>
+                    Use sales team to organize your different salespersons or
+                    departments into separate teams. Each team will work in
+                    its own list of opportunities.
+                </p>
+            </field>
+        </record>
+
+        <!-- CRM Team Form View -->
+        <record id="crm_team_view_form_new" model="ir.ui.view">
+            <field name="name">crm.team.form.new</field>
+            <field name="model">crm.team</field>
+            <field name="arch" type="xml">
+                <form string="Project Team">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Project team"/>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                            <div name="options_active"></div>
+                        </div>
+                        <group>
+                            <group name="left">
+                                <field name="user_id" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'base.group_sale_salesman_all_leads']}"/>
+                                <field name="type_team" invisible="1"/>
+                                <field name="code"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="members" string="Team Members">
+                                <field name="member_ids" widget="many2many_kanban">
+                                    <kanban quick_create="false" create="true" delete="true">
+                                        <field name="name"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click" style="position: relative">
+                                                    <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                                    <div class="oe_module_vignette">
+                                                        <img t-att-src="kanban_image('res.users', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                        <div class="oe_module_desc">
+                                                            <field name="name"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="More Info" name="more_info" groups="base.group_no_one">
+                                <group>
+                                    <field name="active"/>
+                                </group>
+                                <group string="Company" groups="base.group_multi_company">
+                                    <field name="company_id" options="{'no_create': True}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- CRM Team Tree View -->
+        <record id="crm_team_view_tree_new" model="ir.ui.view">
+            <field name="name">crm.team.tree.new</field>
+            <field name="model">crm.team</field>
+            <field name="arch" type="xml">
+                <tree string="Project Team">
+                    <field name="name" string="Project Team"/>
+                    <field name="code"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- CRM Team action View -->
+        <record id="crm_team_act_tree_new" model="ir.actions.act_window">
+            <field name="name">Projects Team</field>
+            <field name="res_model">crm.team</field>
+            <field name="domain">[('type_team','=','project')]</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_type_team':'project'}</field>
+            <field name="view_id" ref="crm_team_view_tree_new"/>
+        </record>
+
+        <record id="crm_team_act_tree_new_sub" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="crm_team_view_tree_new"/>
+            <field name="act_window_id" ref="crm_team_act_tree_new"/>
+        </record>
+
+        <record id="crm_team_act_tree_new_sub1" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_team_view_form_new"/>
+            <field name="act_window_id" ref="crm_team_act_tree_new"/>
+        </record>
+
+        <menuitem id="project_team_menu" action="crm_team_act_tree_new" parent="project.menu_project_config"/>
+        <record id="sales_team.crm_team_salesteams_act" model="ir.actions.act_window">
+            <field name="domain">[('type_team','=','sale')]</field>
+        </record>
+
+        <record id="project_project_inherit_form_view" model="ir.ui.view">
+            <field name="name">project.project.inherit.form.view</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project" />
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <newline/>
+                    <field name="team_id" context="{'form_view_ref': 'project_team.crm_team_view_form_new', 'default_type_team':'project'}" /></field>
+                <group name="misc" position="after">
+                    <newline/>
+                    <group string="Team" colspan="8">
+                        <field colspan="4" name="members" widget="many2many_kanban" context="{'form_view_ref': 'project_team.crm_team_view_form_new', 'default_type_team':'project'}">
+                            <kanban quick_create="false" create="true" delete="true">
+                                <field name="name"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div style="position: relative">
+                                            <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                            <div class="oe_module_vignette">
+                                                <img t-att-src="kanban_image('res.users', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                <div class="oe_module_desc">
+                                                    <field name="name"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                        </field>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</openerp>
