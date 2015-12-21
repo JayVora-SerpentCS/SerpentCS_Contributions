@@ -1,29 +1,12 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import string
 from xml.dom import minidom
 from openerp import models, api
 from openerp.tools import ustr, frozendict
 from openerp.osv.fields import function as function_field
+
 
 class xElement(minidom.Element):
     """dom.Element with compact print
@@ -47,14 +30,13 @@ import yaml
 from openerp.tools import yaml_tag # This import is not unused! Do not remove!
 # Please do not override yaml_tag here: modify it in server bin/tools/yaml_tag.py
 
+
 class base_module_record(models.Model):
     _name = "ir.module.record"
     _description = "Module Record"
 
     def __init__(self, *args, **kwargs):
         self.recording = 0
-#        self.recording_data = []
-#        self.depends = {}
         super(base_module_record, self).__init__(*args, **kwargs)
 
     # To Be Improved
@@ -63,10 +45,10 @@ class base_module_record(models.Model):
         id_indx = 0
         while True:
             try:
-                name = filter(lambda x: x in string.letters, (data.get('name','') or '').lower())
+                name = filter(lambda x: x in string.letters,
+                              (data.get('name','') or '').lower())
             except:
                 name=''
-#            name=data.get('name','') or ''.lower()
             val = model.replace('.','_') + '_' + name + str(id_indx)
             if val not in self.blank_dict.values():
                 break
@@ -85,11 +67,8 @@ class base_module_record(models.Model):
         if not obj:
             return False, None
         obj = obj[0]
-#        obj = dt.browse(dtids[0])
         cr, uid, context = self.env.args
         context = dict(context)
-#        context.update({'depends': {}})
-#        self.depends[obj.module] = True
         self.env.args = cr, uid, frozendict(context)
         depends = context.get('depends')
         depends[obj.module] = True
@@ -99,8 +78,6 @@ class base_module_record(models.Model):
     def _create_record(self, doc, model, data, record_id, noupdate=False):
         data_pool = self.env['ir.model.data']
         model_pool = self.env[model]
-#        cr, uid, context = self.env.args
-#        context = dict(context)
         record = doc.createElement('record')
         record.setAttribute("id", record_id)
         record.setAttribute("model", model)
@@ -117,7 +94,8 @@ class base_module_record(models.Model):
             depends[res[0]['module']] = True
         fields = model_pool.fields_get()
         for key, val in data.items():
-            if key in model_pool._columns.keys() and isinstance(model_pool._columns[key], function_field) and not model_pool._columns[key].store:
+            if key in model_pool._columns.keys() and isinstance(model_pool._columns[key],
+                                                                function_field) and not model_pool._columns[key].store:
                 continue
             if not (val or (fields[key]['type'] == 'boolean')):
                 continue
@@ -166,7 +144,8 @@ class base_module_record(models.Model):
                                 newid = self._create_id(fields[key]['relation'], valitem[2])
                                 valitem[1] = newid
                         self.blank_dict[(fields[key]['relation'], valitem[1])] = newid
-                        childrecord, update = self._create_record(doc, fields[key]['relation'], valitem[2], newid)
+                        childrecord, update = self._create_record(doc, fields[key]['relation'],
+                                                                  valitem[2], newid)
                         noupdate = noupdate or update
                         record_list += childrecord
                     else:
@@ -182,7 +161,8 @@ class base_module_record(models.Model):
                             res.append(id)
                         field = doc.createElement('field')
                         field.setAttribute("name", key)
-                        field.setAttribute("eval", "[(6,0,[" + ','.join(map(lambda x: "ref('%s')" % (x,), res)) + '])]')
+                        field.setAttribute("eval", "[(6,0,[" + ','.join(map(lambda x: "ref('%s')" % (x,),
+                                                                            res)) + '])]')
                         record.appendChild(field)
             else:
                 field = doc_createXElement(doc, 'field')
@@ -206,9 +186,6 @@ class base_module_record(models.Model):
         self.env.args = cr, uid, frozendict(context)
         if res:
             depends[res[0]['module']] = True
-#            if depends is None:
-#                depends = {}
-#            self.depends[res[0]['module']]=True
         fields = model_pool.fields_get()
         defaults = {}
         try:
@@ -243,7 +220,8 @@ class base_module_record(models.Model):
                         else:
                             fname = model_pool._inherit_fields[key][2]._fields_id
                         del valitem[2][fname] #delete parent_field from child's fields list
-                        childrecord = self._create_yaml_record(fields[key]['relation'], valitem[2], None)
+                        childrecord = self._create_yaml_record(fields[key]['relation'],
+                                                               valitem[2], None)
                         items[0].append(childrecord['attrs'])
                 attrs[key] = items
             elif fields[key]['type'] in ('many2many',):
@@ -263,7 +241,6 @@ class base_module_record(models.Model):
                 try:
                     attrs[key] = str(val)
                 except:
-#                    attrs[key]=tools.ustr(val)
                     attrs[key] = ustr(val)
                 attrs[key] = attrs[key].replace('"', '\'')
         record['attrs'] = attrs
@@ -280,9 +257,6 @@ class base_module_record(models.Model):
         else:
             del data['id']
         mod_fields = obj.fields_get()
-#        for f in filter(lambda a: isinstance(obj._columns[a], fields.function)\
-#                    and (not obj._columns[a].store),obj._columns):
-#            del data[f]
         for key in data.keys():
             if result.has_key(key):
                 continue
@@ -295,16 +269,13 @@ class base_module_record(models.Model):
                     result[key] = data[key][0]
 
             elif mod_fields[key]['type'] in ('one2many',):
-#                continue # due to this start stop recording will not record one2many field
                 rel = mod_fields[key]['relation']
-                if rel == 'mail.message':
-                    continue
-                if rel == 'res.users':
-                    continue
                 if len(data[key]):
                     res1 = []
                     for rel_id in data[key]:
                         res = [0,0]
+                        if rel == model:
+                            continue
                         res.append(self.get_copy_data(rel, rel_id, {}))
                         res1.append(res)
                     result[key] = res1
@@ -369,7 +340,8 @@ class base_module_record(models.Model):
             data = self.get_copy_data(rec[2], rec[4], rec[5])
             copy_rec = (rec[0], rec[1], rec[2], rec[3], rec[4], data, rec[5])
             rec = copy_rec
-            rec_data = [(recording_data[0][0], rec, recording_data[0][2], recording_data[0][3])]
+            rec_data = [(recording_data[0][0], rec, recording_data[0][2],
+                         recording_data[0][3])]
             recording_data = rec_data
             id = self._create_id(rec[2], rec[5])
             record,noupdate = self._create_record(doc, rec[2], rec[5], id)
@@ -401,7 +373,8 @@ class base_module_record(models.Model):
         data = self.get_copy_data(rec[2], rec[4], rec[5])
         copy_rec = (rec[0], rec[1], rec[2], rec[3], rec[4], data, rec[5])
         rec = copy_rec
-        rec_data = [(recording_data[0][0], rec, recording_data[0][2], recording_data[0][3])]
+        rec_data = [(recording_data[0][0], rec, recording_data[0][2],
+                     recording_data[0][3])]
         recording_data = rec_data
         id = self._create_id(rec[2], rec[5])
         record = self._create_yaml_record(str(rec[2]), rec[5], id)
@@ -441,12 +414,10 @@ class base_module_record(models.Model):
 
     @api.model
     def generate_xml(self):
-        # Create the minidom document
         cr, uid, context = self.env.args
         context = dict(context)
         recording_data = context.get('recording_data')
         if len(recording_data):
-            #upadate code here to pass blank dict into self replace with self.id = {} to self.blank_dict = {} 
             self.blank_dict = {}
             doc = minidom.Document()
             terp = doc.createElement("openerp")
@@ -466,7 +437,8 @@ class base_module_record(models.Model):
                         data.setAttribute("noupdate", "1")
                     wkf.setAttribute("ref", rec_id)
                 if rec[0] == 'query':
-                    res_list, noupdate = self._generate_object_xml(rec[1], rec[2], doc, rec[3])
+                    res_list, noupdate = self._generate_object_xml(rec[1], rec[2],
+                                                                   doc, rec[3])
                     data = doc.createElement("data")
                     if noupdate:
                         data.setAttribute("noupdate", "1")
@@ -501,13 +473,19 @@ class base_module_record(models.Model):
                     continue
                 if self.mode == "workflow":
                     record = self._generate_object_yaml(rec[1], rec[0])
-                    yaml_file += "!comment Performing a workflow action %s on module %s"%(record['action'], record['model']) + '''\n'''
-                    yml_object = yaml.load(unicode('''\n !workflow %s \n'''%record,'iso-8859-1'))
+                    yaml_file += """!comment Performing a workflow action
+                     %s on module %s"""%(record['action'],
+                                         record['model']) + '''\n'''
+                    yml_object = yaml.load(unicode('''\n !workflow %s \n'''%record,
+                                                   'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n\n'''
                 elif self.mode == 'osv_memory_action':
                     osv_action = self._generate_function_yaml(rec[1])
-                    yaml_file += "!comment Performing an osv_memory action %s on module %s"%(osv_action['action'], osv_action['model']) + '''\n'''
-                    osv_action = yaml.load(unicode('''\n !python %s \n'''%osv_action, 'iso-8859-1'))
+                    yaml_file += """!comment Performing an osv_memory action 
+                    %s on module %s"""%(osv_action['action'],
+                                        osv_action['model']) + '''\n'''
+                    osv_action = yaml.load(unicode('''\n !python %s \n'''%osv_action,
+                                                   'iso-8859-1'))
                     yaml_file += str(osv_action) + '''\n'''
                     attrs = yaml.dump(osv_action.attrs, default_flow_style=False)
                     attrs = attrs.replace("''", '"')
@@ -516,7 +494,8 @@ class base_module_record(models.Model):
                 else:
                     record = self._generate_object_yaml(rec[1], rec[3])
                     if self.mode == "create" or self.mode == "copy":
-                        yaml_file += "!comment Creating a %s record"%(record['model']) + '''\n'''
+                        yaml_file += """!comment Creating a %s 
+                        record"""%(record['model']) + '''\n'''
                     else:
                         yaml_file += "!comment Modifying a %s record"%(record['model']) + '''\n'''
                     yml_object = yaml.load(unicode('''\n !record %s \n'''%record, 'iso-8859-1'))
@@ -537,5 +516,3 @@ class base_module_record(models.Model):
                 line = "    " + line
             yaml_result += line + '''\n'''
         return yaml_result
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
