@@ -69,7 +69,7 @@
         <menuitem id="next_id_63" name="History"  groups="base.group_no_one" parent="base_synchro.next_id_62"/>
         <menuitem action="action_base_synchro_obj_line_tree" id="menu_action_base_synchro_obj_line_tree" parent="base_synchro.next_id_63"/>
 
-<!--view_base_synchro_obj starts-->
+        <!--view_base_synchro_obj starts-->
 
         <record id="view_transfer_form" model="ir.ui.view">
             <field name="name">base.synchro.obj.form</field>
@@ -147,7 +147,7 @@
 
         <menuitem action="action_transfer_tree" id="transfer_menu_id" parent="base_synchro.next_id_63"/>
 
-<!--view_base_synchro_server starts -->
+        <!--view_base_synchro_server starts -->
 
         <record id="view_base_synchro_server_tree" model="ir.ui.view">
             <field name="name">base.synchro.server.tree</field>
@@ -189,7 +189,8 @@
         </record>
 
         <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id" parent="base_synchro.synch_config"/>
-<!--view_base_synchro_server end -->
+        
+        <!--view_base_synchro_server end -->
 
     </data>
 </openerp>
