@@ -31,9 +31,9 @@ To use this module, you need to:
     we have added a configuration to display all images for a product or one can display product variant images in website.
 
     To display all images:
-        - You need to uncheck dislay variant images checkbox and add all the images you need to display for a product.
+        - You need to uncheck display variant images checkbox and add all the images you need to display for a product.
     To display Variant wise images:
-        - You need to check the Display Variant Images checkbox and when adding images you need to select the product variant for a perticular image.
+        - You need to check the Display Variant Images checkbox and when adding images you need to select the product variant for a particular image.
 
 
 Based on this configuration, you will see the product images in website.
