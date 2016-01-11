@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2011-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2011-Today Serpent Consulting Services Pvt. Ltd. 
+#    (<http://www.serpentcs.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -27,6 +28,19 @@
     'category': 'web',
     'version': '1.0',
     'depends': ['board'],
+     "description": """
+Disable the click on the List views of Dashbaord.
+=================================
+
+Usually the Dashboard contains various views combined,
+which are the list, calendar and Graph views; clicking on which leads you
+to the Form view of a record.
+
+As a manager this might look annoying to you as your clear purpose is just to
+view and analyse the business documents.
+
+This module gives you the disability from that clickable behaviour. 
+""",
 
     # Templates and Snippets
     'data': [
