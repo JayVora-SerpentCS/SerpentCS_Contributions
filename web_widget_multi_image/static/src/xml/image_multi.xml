@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+     <t t-name="DialogImageList">
+        <table id="DialogImageList">
+            <tr t-foreach="image_list" t-as="row">
+                <td t-foreach="row" t-as="column" height="150" width="180px" style="padding: 4px 8px 0px 8px;">
+                    <table class="hoverbox">
+                        <tr background-color="white" width="180">
+                            <td>
+                                <t t-esc="column.name" />
+                                <t t-if="!readonly">
+                                    <img class="oe-remove-image" t-att-id="column.id" t-att-src='_s + "/web_widget_multi_image/static/src/img/remove-icon.png"' title="Delete Image" align="right"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a style="cursor: default;" href='#' id="image_preview">
+                                    <img class="list_image" t-att-src="column.path"/>
+                                    <img t-att-src="column.path" class="preview list_image" />
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </t>
+
+    <t t-name="One2Many.listview" t-extend="ListView">
+        <t t-jquery="thead > tr:first">
+            this.removeAttr('t-if');
+        </t>
+        <t t-jquery=".oe_list_content thead" t-operation="prepend">
+            <t t-if="options.multi_image"> 
+                <tr style="background:white;">
+                    <td style="padding: 0px 150px 15px 132px;">
+                        <button class="fa fa-search oe-image-preview btn btn-sm oe_form_binary btn-primary" type="button" title="Preview">
+                            <span>Image Preview</span>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="fa fa-list oe_image_list btn btn-sm oe_form_binary btn-primary" type="button" title="All Image">
+                            <span>List All Image</span>
+                        </button>
+                    </td>
+                </tr>
+            </t>
+        </t>
+    </t>
+</templates>
