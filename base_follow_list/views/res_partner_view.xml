@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="following_action" model="ir.actions.act_window">
+            <field name="name">Partner Following List</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mail.followers</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="context">{'search_default_partner_id': [active_id], 'default_partner_id': active_id}</field>
+            <field name="search_view_id" ref="base_follow_list.view_following_filter"/>
+            <field name="view_id" ref="base_follow_list.view_followers_tree_partner"/>
+            <field name="domain" eval="False"/>
+        </record>
+
+        <record id="res_partner_view_buttons" model="ir.ui.view">
+            <field name="name">res.partner.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button class="oe_inline oe_stat_button" icon='fa-users' name="%(following_action)d" type="action">
+                        <field name="following_counts" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

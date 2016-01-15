@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_following_filter" model="ir.ui.view">
+            <field name="name">mail.followers.search.select</field>
+            <field name="model">mail.followers</field>
+            <field name="arch" type="xml">
+                <search string="Search Followers">
+                    <field name="partner_id"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Model" context="{'group_by':'res_model'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <record id="mail.action_view_followers" model="ir.actions.act_window">
+            <field name="name">Followers</field>
+            <field name="res_model">mail.followers</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_following_filter"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_followers_tree_partner">
+            <field name="name">mail.followers.tree.partner</field>
+            <field name="model">mail.followers</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <tree string="Followers">
+                    <field name="res_model"/>
+                    <field name="related_document_name"/>
+                    <field name="partner_id"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>
