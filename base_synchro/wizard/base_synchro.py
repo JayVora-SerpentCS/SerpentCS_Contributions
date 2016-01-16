@@ -26,6 +26,8 @@ import threading
 from openerp import pooler
 from openerp.tools import frozendict
 from openerp import models, fields, api
+from openerp.osv import osv
+from openerp.tools.translate import _
 
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
@@ -37,7 +39,7 @@ class RPCProxyOne(object):
         self.rpc = xmlrpclib.ServerProxy(local_url)
         self.ressource = ressource
     def __getattr__(self, name):
-        RPCProxy(self.server)
+#        RPCProxy(self.server)
 #        pool1 = RPCProxy(self.server)
 #        sync_obj = pool1.get('base.synchro.obj')
 #        return self.rpc.execute(self.server.server_db, self.uid, sync_obj, name, (), {})
@@ -85,6 +87,12 @@ class base_synchro(models.TransientModel):
 #        context = dict(self._context)
         # try:
         if object.action in ('d', 'b'):
+            module = pool1.get("ir.module.module")
+            module_id  = module.search(self._cr, self.user_id.id, [("name","ilike","base_synchro"), ('state','=','installed')])
+            if not module_id:
+                raise osv.except_osv(_('Warning'),
+                             _('If your Synchronisation direction is download or both please install \
+                             "Multi-DB Synchronization" module in targeted server'))
             ids = pool1.get('base.synchro.obj').get_ids(self._cr, self.user_id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'d'})
 
         if object.action in ('u', 'b'):
