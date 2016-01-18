@@ -11,8 +11,14 @@ class CrmTeamInherit(models.Model):
     type_team = fields.Selection([('sale', 'Sale'), ('project', 'Project')],
                                  string="Type", default="sale")
 
+    team_members = fields.Many2many('res.users', 'project_team_user_rel',
+                                    'team_id','uid', 'Project Members',
+                                    help="""Project's members are users who
+                                     can have an access to the tasks related
+                                     to this project.""")
 
-class project_project(models.Model):
+
+class ProjectProject(models.Model):
 
     _inherit = 'project.project'
 
@@ -27,4 +33,4 @@ class project_project(models.Model):
 
     @api.onchange('team_id')
     def get_team_members(self):
-        self.members = [rec.id for rec in self.team_id.member_ids]
+        self.members = [(6,0,[rec.id for rec in self.team_id.team_members])]

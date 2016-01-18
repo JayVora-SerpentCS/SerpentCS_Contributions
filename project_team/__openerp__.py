@@ -7,7 +7,7 @@
     'summary':'Adds Project Team Members.',
     'category': 'Project Management.',
     'website':'http://www.serpentcs.com',
-    'version':'9.0.1.0.0',
+    'version':'9.0.1.0.2',
     'sequence': 1,
     'depends':['project','crm'],
     'data':[

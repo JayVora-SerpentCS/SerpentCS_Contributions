@@ -3,28 +3,13 @@
     <data>
 
         <record id="sales_team.sales_team_config_action" model="ir.actions.act_window">
-            <field name="name">Sales Teams</field>
-            <field name="res_model">crm.team</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
             <field name="domain">[('type_team','=','sale')]</field>
             <field name="context">{'default_type_team':'sale'}</field>
-            <field name="view_id" ref="sales_team.crm_team_salesteams_search"/>
-            <field name="help" type="html">
-                <p class="oe_view_nocontent_create">
-                    Click here to define a new sales team.
-                </p>
-                <p>
-                    Use sales team to organize your different salespersons or
-                    departments into separate teams. Each team will work in
-                    its own list of opportunities.
-                </p>
-            </field>
         </record>
 
-        <!-- CRM Team Form View -->
-        <record id="crm_team_view_form_new" model="ir.ui.view">
-            <field name="name">crm.team.form.new</field>
+        <!-- Project Team Form View -->
+        <record id="project_team_form_view" model="ir.ui.view">
+            <field name="name">crm.team.form</field>
             <field name="model">crm.team</field>
             <field name="arch" type="xml">
                 <form string="Project Team">
@@ -45,7 +30,7 @@
                         </group>
                         <notebook>
                             <page name="members" string="Team Members">
-                                <field name="member_ids" widget="many2many_kanban">
+                                <field name="team_members" widget="many2many_kanban">
                                     <kanban quick_create="false" create="true" delete="true">
                                         <field name="name"/>
                                         <templates>
@@ -82,9 +67,9 @@
             </field>
         </record>
 
-        <!-- CRM Team Tree View -->
-        <record id="crm_team_view_tree_new" model="ir.ui.view">
-            <field name="name">crm.team.tree.new</field>
+        <!-- Project Team Tree View -->
+        <record id="project_team_tree_view" model="ir.ui.view">
+            <field name="name">crm.team.tree</field>
             <field name="model">crm.team</field>
             <field name="arch" type="xml">
                 <tree string="Project Team">
@@ -96,28 +81,29 @@
         </record>
 
         <!-- CRM Team action View -->
-        <record id="crm_team_act_tree_new" model="ir.actions.act_window">
+        <record id="project_team_action_tree" model="ir.actions.act_window">
             <field name="name">Projects Team</field>
             <field name="res_model">crm.team</field>
             <field name="domain">[('type_team','=','project')]</field>
             <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
             <field name="context">{'default_type_team':'project'}</field>
-            <field name="view_id" ref="crm_team_view_tree_new"/>
+            <field name="view_id" ref="project_team_tree_view"/>
         </record>
 
-        <record id="crm_team_act_tree_new_sub" model="ir.actions.act_window.view">
+        <record id="project_team_action_tree_view" model="ir.actions.act_window.view">
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="crm_team_view_tree_new"/>
-            <field name="act_window_id" ref="crm_team_act_tree_new"/>
+            <field name="view_id" ref="project_team_tree_view"/>
+            <field name="act_window_id" ref="project_team_action_tree"/>
         </record>
 
-        <record id="crm_team_act_tree_new_sub1" model="ir.actions.act_window.view">
+        <record id="project_team_action_form_view" model="ir.actions.act_window.view">
             <field name="view_mode">form</field>
-            <field name="view_id" ref="crm_team_view_form_new"/>
-            <field name="act_window_id" ref="crm_team_act_tree_new"/>
+            <field name="view_id" ref="project_team_form_view"/>
+            <field name="act_window_id" ref="project_team_action_tree"/>
         </record>
 
-        <menuitem id="project_team_menu" action="crm_team_act_tree_new" parent="project.menu_project_config"/>
+        <menuitem id="project_team_menu" action="project_team_action_tree" parent="project.menu_project_config"/>
         <record id="sales_team.crm_team_salesteams_act" model="ir.actions.act_window">
             <field name="domain">[('type_team','=','sale')]</field>
         </record>
@@ -129,29 +115,34 @@
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
                     <newline/>
-                    <field name="team_id" context="{'form_view_ref': 'project_team.crm_team_view_form_new', 'default_type_team':'project'}" /></field>
+                    <field name="team_id" context="{'form_view_ref': 'project_team.project_team_form_view', 'default_type_team':'project'}" />
+                </field>
+                <xpath expr="//group[@name='misc']/group" position="attributes">
+                    <attribute name="colspan">4</attribute>
+                    <attribute name="col">4</attribute>
+                </xpath>
                 <group name="misc" position="after">
-                    <newline/>
-                    <group string="Team" colspan="8">
-                        <field colspan="4" name="members" widget="many2many_kanban" context="{'form_view_ref': 'project_team.crm_team_view_form_new', 'default_type_team':'project'}">
-                            <kanban quick_create="false" create="true" delete="true">
-                                <field name="name"/>
-                                <templates>
-                                    <t t-name="kanban-box">
-                                        <div style="position: relative">
-                                            <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
-                                            <div class="oe_module_vignette">
-                                                <img t-att-src="kanban_image('res.users', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
-                                                <div class="oe_module_desc">
-                                                    <field name="name"/>
-                                                </div>
+                <newline/>
+                <group string="Team" colspan="8">
+                    <field colspan="4" name="members" widget="many2many_kanban" nolabel="1" context="{'form_view_ref': 'project_team.project_team_form_view', 'default_type_team':'project'}">
+                        <kanban quick_create="false" create="true" delete="true">
+                            <field name="name"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div style="position: relative">
+                                        <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                        <div class="oe_module_vignette">
+                                            <img t-att-src="kanban_image('res.users', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                            <div class="oe_module_desc">
+                                                <field name="name"/>
                                             </div>
                                         </div>
-                                    </t>
-                                </templates>
-                            </kanban>
-                        </field>
-                    </group>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                </group>
                 </group>
             </field>
         </record>
