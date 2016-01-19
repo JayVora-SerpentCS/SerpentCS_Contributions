@@ -91,8 +91,8 @@ class base_synchro(models.TransientModel):
             module_id  = module.search(self._cr, self.user_id.id, [("name","ilike","base_synchro"), ('state','=','installed')])
             if not module_id:
                 raise osv.except_osv(_('Warning'),
-                             _('If your Synchronisation direction is download or both please install \
-                             "Multi-DB Synchronization" module in targeted server'))
+                             _('If your Synchronisation direction is download or both, please install \
+                             "Multi-DB Synchronization" module in targeted server!'))
             ids = pool1.get('base.synchro.obj').get_ids(self._cr, self.user_id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'d'})
 
         if object.action in ('u', 'b'):
