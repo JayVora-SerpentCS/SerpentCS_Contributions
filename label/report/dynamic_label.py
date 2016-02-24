@@ -20,15 +20,36 @@
 #
 ##############################################################################
 
+import base64
+import logging
+import tempfile
+
 from openerp.osv import osv
 from openerp.report import report_sxw
-import barcode
-from barcode.writer import ImageWriter
-import base64
 from openerp.osv.orm import browse_record
-import utils
-import cairosvg
-import tempfile
+
+_logger = logging.getLogger(__name__)
+try:
+    import barcode
+    from barcode.writer import ImageWriter
+    assert barcode
+except (ImportError, AssertionError):
+    _logger.info('barcode module not available. Please install "pybarcode"\
+                      python package.')
+
+try:
+    import utils
+    assert utils
+except (ImportError, AssertionError):
+    _logger.info('utils module not available. Please install "utils"\
+                      python package.')
+
+try:
+    import cairosvg
+    assert cairosvg
+except (ImportError, AssertionError):
+    _logger.info('cairosvg module not available. Please install "cairosvg"\
+                      python package.')
 
 
 class report_dynamic_label(report_sxw.rml_parse):
