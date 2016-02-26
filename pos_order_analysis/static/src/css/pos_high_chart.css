@@ -1,0 +1,30 @@
+.oe_input_icon{
+    cursor: pointer;
+    margin: 0px 0px 0px -21px;
+}
+#search_button{
+    margin-left: 1%;
+}
+.from_date{
+     margin-left: 1%;
+}
+.to_date{
+     margin-left: 1%;
+}
+.search_order_container{
+    margin-top: 1%;
+    text-align:center;
+}
+.oe_datepicker_master{
+    background-color: #D2D2FF !important;
+}
+.product_search{
+    text-align:center;
+}
+.empty_record{
+    text-align:center;
+    font-size:60px !important;
+    color : slategray !important;
+    height : 300px !important;
+    margin-top:20% !important;
+}
