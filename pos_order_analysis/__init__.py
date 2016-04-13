@@ -3,8 +3,8 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
-#    Copyright (C) 2011-2016 Serpent Consulting Services Pvt. Ltd.
-#    (<http://www.serpentcs.com>).
+#    Copyright (C) 2011-today Serpent Consulting Services Pvt. Ltd. 
+#                                               (<http://www.serpentcs.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,24 +20,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Web Digital Signature",
-    "version": "1.1",
-    "author": "Serpent Consulting Services Pvt. Ltd.",
-    "category": 'web',
-    'complexity': "easy",
-    'depends': ['web'],
-    "description": """
-        This module provides the functionality to store digital signature image for a record.
-        The example can be seen into the User's form view where we have added a test field under signature.
-    """,
-    'data': [
-        'views/web_digital_sign_view.xml',
-        'views/res_users_view.xml',
-    ],
-    'website': 'http://www.serpentcs.com',
-    'qweb': ['static/src/xml/digital_sign.xml'],
-    'installable': True,
-    'auto_install': False,
-}
+import controllers

@@ -1,0 +1,9 @@
+<openerp>
+    <data>
+        <record id="pos_high_chart_action" model="ir.actions.client">
+            <field name="name">Pos Orders Chart</field>
+            <field name="tag">pos_chart.action</field>
+        </record>
+        <menuitem id="menu_pos_high_chart" parent="point_of_sale.menu_point_of_sale" action="pos_high_chart_action" sequence="2" /> 
+    </data>
+</openerp>

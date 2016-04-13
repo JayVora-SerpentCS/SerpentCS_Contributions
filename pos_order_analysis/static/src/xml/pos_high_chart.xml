@@ -1,0 +1,14 @@
+<template>
+    <t t-name="PosChartWidget">
+        <br/>
+        <div class="product_search"><b class="product_name">Product : </b><select id="pos_chart_product" style="width: 64%;" multiple="multiple"></select></div>
+        <div class="search_order_container">
+             <b class="customer_name">Customer : </b><select id="pos_chart_customer" style="width: 20%;" ></select>
+             <b class="from_date">From : </b><span class="oe_form_field oe_datepicker_root oe_form_field_datetime datetimepicker_from_date"/> 
+             <b class="to_date">To : </b> <span class="oe_form_field oe_datepicker_root oe_form_field_datetime datetimepicker_to_date"/>
+             <button class="oe_highlight" id="search_button">Search</button>
+        </div>
+        <hr></hr>
+        <div id="pos_graph_container" ></div>
+    </t>
+</template>
