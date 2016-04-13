@@ -23,17 +23,17 @@
 {
     'name': 'Hide Price and Discount in Quotation Report',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'summary': 'Hide price/discount in Sale Order Report',
-    'description': '''This module is to hide price/discount in 
-	Sale Order Report.
-	It would give you 2 additional fields on Sale Order/Quotation:
-	1. Show Price
-	2. Show Discount
-	Based on the choices on the fields, the relevan fields would be shown
-	on the report.''',
     'category': 'Sales Management',
     'website': 'http://www.serpentcs.com',
     'version': '8.0.1.0.1',
+    'summary': 'Hide price/discount in Sale Order Report',
+    'description': '''This module is to hide price/discount in Sale Order
+Report.
+It would give you 2 additional fields on Sales Order / Quotation:
+1. Show Price
+2. Show Discount
+Based on the choices on the fields, the relevant fields would be shown on
+the report.''',
     'depends': ['sale'],
     'data': [
         'views/sale_view.xml',

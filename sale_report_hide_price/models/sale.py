@@ -20,14 +20,15 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import fields, models
 
 
 class sale_order(models.Model):
-
     _inherit = 'sale.order'
 
-    show_price = fields.Boolean('Show Price', help="""If ticked, you can see
-                    the price & discount in report of sale order/quotation""")
-    show_discount = fields.Boolean('Show Discount', help="""If ticked, you can 
-		    see the discount in report of sale order/quotation""")
+    show_price = fields.Boolean('Show Price', help="If checked, you can see"
+                                " the price & discount in report of Sales"
+                                " Order / Quotation.")
+    show_discount = fields.Boolean('Show Discount', help="If checked, you"
+                                    " can see the discount in report of"
+                                    " Sales Order / quotation.")

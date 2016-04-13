@@ -7,12 +7,12 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//sheet/group/group[2]/field[@name='pricelist_id']" position="after">
+                <field name="pricelist_id" position="after">
                     <field name="show_price"/>
                     <field name="show_discount"/>
-                </xpath> 
-
+                </field>
             </field>
          </record>
+
     </data>
 </openerp>
