@@ -23,14 +23,14 @@
 {
     'name': 'Product Brand Filtering in Website',
     'category': 'Website',
-    'author': 'Serpent Consulting Services Pvt Ltd',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'summary': '',
     'version': '1.2',
     'description': """
 Allows to use product brands as filtering for products in website.\n
 This Module depends on product_brand module
--https://github.com/OCA/product-attribute/tree/8.0/product_brand
+-https://github.com/OCA/product-attribute/tree/9.0/product_brand
         """,
     'depends': ['product_brand', 'website_sale'],
     'data': [
