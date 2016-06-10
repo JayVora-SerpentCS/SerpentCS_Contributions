@@ -39,7 +39,7 @@ class report_dynamic_label(report_sxw.rml_parse):
         label_print_data = label_print_obj.browse(self.cr, self.uid, self.context.get('label_print'))
         result = []
         value_vals = []
-        for datas in active_model_obj.browse(self.cr, self.uid, ids):
+        for datas in active_model_obj.browse(self.cr, self.uid, ids, context=self.context):
             for i in range(0, number_of_copy):
                 vals=[]
                 bot = False
