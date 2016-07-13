@@ -5,7 +5,7 @@
     <data>
         <template id="assets_backend" name="web_groupby_expand assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/web_groupby_expand/static/src/js/web_groupby_expand.js"></script>
+                <script type="text/javascript" src="/web_groupby_expand/static/src/js/web_groups_expand.js"></script>
             </xpath>
         </template>
     </data>

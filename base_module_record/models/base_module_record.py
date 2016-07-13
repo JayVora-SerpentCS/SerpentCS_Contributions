@@ -167,7 +167,7 @@ class base_module_record(models.Model):
             else:
                 field = doc_createXElement(doc, 'field')
                 field.setAttribute("name", key)
-                field.appendChild(doc.createTextNode(val))
+                field.appendChild(doc.createTextNode(ustr(val)))
                 record.appendChild(field)
         return record_list, noupdate
 
