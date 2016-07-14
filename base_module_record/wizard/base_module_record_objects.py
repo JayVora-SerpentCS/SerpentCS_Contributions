@@ -134,11 +134,23 @@ class base_module_record_objects(models.TransientModel):
         module_rec = self.env['base.module.record.objects'].create({
                      'module_filename': ustr(res['module_filename']),
                      'module_file': ustr(res['module_file'])})
+        
+        res_id = self.create({
+                      'module_filename':ustr(res['module_filename']),
+                      'module_file' : ustr(res['module_file']),
+                      'name': ustr(res['name']),
+                      'directory_name':ustr(res['directory_name']),
+                      'version':ustr(res['version']),
+                      'author' : ustr(res['author']),
+                      'website':ustr(res['website']),
+                      'category':ustr(res['category']),
+                      'description':ustr(res['description']),
+                      })
         return {
             'name': _('Module Recording'),
-            'res_id' : module_rec.id,
             'view_type': 'form',
             'view_mode': 'form',
+            'res_id': res_id.id,
             'res_model': 'base.module.record.objects',
             'views': [(resource_id, 'form')],
             'type': 'ir.actions.act_window',
