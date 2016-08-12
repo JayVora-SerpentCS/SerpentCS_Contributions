@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_sale_document_inherits" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//table[@class='table table-condensed']/thead/tr/th[4]" position="replace">
+                <t t-if="doc.show_discount">
+                    <th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">Disc.(%)</th>
+                </t>
+            </xpath>
+            <xpath expr="//table[@class='table table-condensed']/thead/tr/th[3]" position="replace">
+                <t t-if="doc.show_price">
+                    <th class="text-right">Unit Price</th>
+                </t>
+            </xpath>
+             <xpath expr="//table[@class='table table-condensed']/thead/tr/th[last()]" position="replace">
+                <t t-if="doc.show_price">
+                    <th class="text-right">Price</th>
+                </t>
+            </xpath>
+
+            <!-- Discount fields hides from sale quotation report if show and hide price from Quotation -->
+
+             <xpath expr="//table[@class='table table-condensed']/tbody/t/tr/td[4]" position="replace">
+                <t t-if="doc.show_discount">
+                   <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
+                        <span t-field="l.discount"/>
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//table[@class='table table-condensed']/tbody/t/tr/td[3]" position="replace">
+                <t t-if="doc.show_price">
+                    <td class="text-right">
+                        <span t-field="l.price_unit"/>
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//table[@class='table table-condensed']/tbody/t/tr/td[last()]" position="replace">
+                <t t-if="doc.show_price">
+                   <td class="text-right">
+                        <span t-field="l.price_subtotal"
+                        t-field-options='{"widget": "monetary", "display_currency": "doc.pricelist_id.currency_id"}'/>
+                    </td>
+                </t>
+            </xpath>
+        </template>
+
+        <!--<template id="report_sale_document_inherits" inherit_id="sale.report_saleorder_document">-->
+
+            <!--<xpath expr="//table[@class='table table-condensed']" position="replace">-->
+                <!--<table class="table table-condensed">-->
+                    <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th>Description</th>-->
+                            <!--<th class="text-right">Quantity</th>-->
+                            <!--<t t-if="doc.show_price">-->
+                                <!--<th class="text-right">Unit Price</th>-->
+                            <!--</t>-->
+                            <!--<t t-if="doc.show_discount">-->
+                                <!--<th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">Disc.(%)</th>-->
+                            <!--</t>-->
+                            <!--<th class="text-right">Taxes</th>-->
+                            <!--<t t-if="doc.show_price">-->
+                                <!--<th class="text-right">Price</th>-->
+                            <!--</t>-->
+                        <!--</tr>-->
+                   <!--</thead>-->
+                   <!--<tbody class="sale_tbody">-->
+                        <!--<t t-foreach="doc.order_line" t-as="l">-->
+                            <!--<tr t-if="l.product_uom_qty">-->
+                                <!--<td>-->
+                                   <!--<span t-field="l.name"/>-->
+                                <!--</td>-->
+                                <!--<td class="text-right">-->
+                                    <!--<span t-field="l.product_uom_qty"/>-->
+                                    <!--<span groups="product.group_uom" t-field="l.product_uom"/>-->
+                                <!--</td>-->
+                                <!--<t t-if="doc.show_price">-->
+                                    <!--<td class="text-right">-->
+                                        <!--<span t-field="l.price_unit"/>-->
+                                    <!--</td>-->
+                                <!--</t>-->
+                                <!--<t t-if="doc.show_discount">-->
+                                    <!--<td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">-->
+                                        <!--<span t-field="l.discount"/>-->
+                                    <!--</td>-->
+                                <!--</t>-->
+                                <!--<td class="text-right">-->
+                                    <!--<span t-esc="', '.join(map(lambda x: (x.description or x.name), l.tax_id))"/>-->
+                                <!--</td>-->
+                                <!--<t t-if="doc.show_price">-->
+                                    <!--<td class="text-right">-->
+                                        <!--<span t-field="l.price_subtotal"-->
+                                            <!--t-field-options='{"widget": "monetary", "display_currency": "doc.pricelist_id.currency_id"}'/>-->
+                                    <!--</td>-->
+                                <!--</t>-->
+                            <!--</tr>-->
+                        <!--</t>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</xpath>-->
+        <!--</template>-->
+
+    </data>
+</odoo>
