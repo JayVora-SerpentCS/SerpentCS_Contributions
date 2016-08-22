@@ -1,0 +1,24 @@
+-
+  In order to test the choice of a multi picking when confirming a sale order
+  I create a new sale order line group.
+-
+  !record {model: sale.order.line.group, id: sale_order_line_grp1_test}:
+    name: SO group1 tests
+  !record {model: sale.order.line.group, id: sale_order_line_grp2_test}:
+    name: SO group2 tests
+-
+  Given I create a sale order and gave the picking group reference for both sale order line
+-
+  !record {model: sale.order, id: sale_order_multi_picing_01}:
+    partner_id: base.res_partner_2
+    order_line:
+      - product_id: product.product_product_7
+        product_uom_qty: 8
+        picking_group_id: ref('sale_order_line_grp1_test')
+      - product_id: product.product_product_8
+        product_uom_qty: 6
+        picking_group_id: ref('sale_order_line_grp2_test')
+-
+  When I confirm the sale order two picking will be created
+-
+    self.action_confirm(cr, uid, [ref('sale_order_multi_picing_01')], context=context)
