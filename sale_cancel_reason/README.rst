@@ -38,8 +38,6 @@ For further information, please visit:
 Known issues / Roadmap
 ======================
 
-* ...
-
 
 Bug Tracker
 ===========
