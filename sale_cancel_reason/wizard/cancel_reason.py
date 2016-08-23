@@ -37,7 +37,7 @@ class SaleOrderCancel(models.TransientModel):
         string='Reason',
         required=True)
 
-    @api.one
+    @api.multi
     def confirm_cancel(self):
         act_close = {'type': 'ir.actions.act_window_close'}
         sale_ids = self._context.get('active_ids')
