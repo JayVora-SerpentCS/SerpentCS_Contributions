@@ -24,7 +24,7 @@
     'name': 'Sale Cancel Reason',
     'version': '9.0.1.0.0',
     'author': 'Camptocamp, Odoo Community Association (OCA), '
-            'Serpent Consulting Services Pvt. Ltd.',
+              'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sale',
     'license': 'AGPL-3',
     'complexity': 'normal',
