@@ -23,28 +23,21 @@
 {
     'name': 'Sale Cancel Reason',
     'version': '9.0.1.0.0',
-    'author': 'Camptocamp, Odoo Community Association (OCA),'
-            ', Serpent Consulting Services Pvt. Ltd.',
+    'author': 'Camptocamp, Odoo Community Association (OCA), '
+            'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sale',
     'license': 'AGPL-3',
     'complexity': 'normal',
+    'images': [],
     'website': "http://www.camptocamp.com",
-    'description': """
-Sale Cancel Reason
-==================
-
-When a sale order is cancelled, a reason must be given,
-it is chosen from a configured list.
-
-""",
     'depends': ['sale'],
     'data': ['wizard/cancel_reason_view.xml',
              'views/sale_view.xml',
              'security/ir.model.access.csv',
              'data/sale_order_cancel_reason.xml',
              ],
-     'test': ['test/sale_order_cancel.yml'],
-     'installable': True,
-     'application': True,
-     'auto_install': False,
- }
+    'test': ['tests/sale_order_cancel.yml'],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}
