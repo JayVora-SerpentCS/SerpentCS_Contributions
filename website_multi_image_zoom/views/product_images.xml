@@ -1,145 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
+<odoo>
 
-<openerp>
-    <data>
-
-        <!-- Inherited Form View Of Product Template -->
-
-        <record id="product_product_template_only_form_view" model="ir.ui.view">
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_only_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[1]" position="after">
-                    <page string="Product Images">
-                        <group col="4">
-                            <field name="variant_bool" string="Display All Varaint Images"/>
-                        </group>
-                        <field name="images" mode="tree" context="{'default_name': name}">
-                            <kanban>
-                                <field name="name"/>
-                                <field name="description"/>
-                                <field name="image_alt"/>
-                                <field name="image"/>
-                                <templates>
-                                    <t t-name="kanban-box">
-                                        <div style="position: relative">
-                                            <div class="oe_module_vignette">
-                                                <a type="open">
-                                                    <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})" class="oe_avatar oe_kanban_avatar_smallbox"/>
-                                                </a>
-                                                <div class="oe_module_desc">
-                                                    <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
-                                                        <table class="oe_kanban_table">
-                                                            <tr>
-                                                                <td class="oe_kanban_title1" align="left" valign="middle">
-                                                                    <h4>
-                                                                        <a type="open">
-                                                                            <field name="name"/>
-                                                                        </a>
-                                                                    </h4>
-                                                                    <i>
-                                                                        <div t-if="record.description.raw_value">
-                                                                            <field name="description"/>
-                                                                        </div>
-                                                                    </i>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+    <record id="product_product_template_only_form_view" model="ir.ui.view">
+        <field name="name">product.template.image</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[1]" position="after">
+                <page string="Product Images">
+                    <group col="4">
+                        <field name="variant_bool" string="Display All Varaint Images"/>
+                    </group>
+                    <field name="images" mode="tree" context="{'default_name': name}">
+                        <kanban>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="image_alt"/>
+                            <field name="image"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div style="position: relative">
+                                        <div class="oe_module_vignette">
+                                            <a type="open">
+                                                <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                            </a>
+                                            <div class="oe_module_desc">
+                                                <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
+                                                    <table class="oe_kanban_table">
+                                                        <tr>
+                                                            <td class="oe_kanban_title1" align="left" valign="middle">
+                                                                <h4>
+                                                                    <a type="open">
+                                                                        <field name="name"/>
+                                                                    </a>
+                                                                </h4>
+                                                                <i>
+                                                                    <div t-if="record.description.raw_value">
+                                                                        <field name="description"/>
+                                                                    </div>
+                                                                </i>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
-                                    </t>
-                                </templates>
-                            </kanban>
-                            <form string="Varaint Image">
-                                <sheet>
-                                    <group>
-                                        <field name="name"/>
-                                        <field name="image"/>
-                                        <field name="image_url"/>
-                                        <field name="image_alt"/>
-                                        <field name="product_variant_id" domain="[('product_tmpl_id','=', parent.id)]"/>
-                                        <field name="description"/>
-                                    </group>
-                                </sheet>
-                            </form>
-                            <tree editable="bottom">
-                                <field name="name"/>
-                                <field name="description"/>
-                                <field name="image_alt"/>
-                                <field name="image"/>
-                                <field name="image_url"/>
-                                <field name="product_variant_id" domain="[('product_tmpl_id','=', parent.id)]"/>
-                            </tree>
-                        </field>
-                    </page>
-                </xpath>
-            </field>
-        </record>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form string="Varaint Image">
+                            <sheet>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="image"/>
+                                    <field name="image_url"/>
+                                    <field name="image_alt"/>
+                                    <field name="product_variant_id" domain="[('product_tmpl_id','=', parent.id)]"/>
+                                    <field name="description"/>
+                                </group>
+                            </sheet>
+                        </form>
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="image_alt"/>
+                            <field name="image"/>
+                            <field name="image_url"/>
+                            <field name="product_variant_id" domain="[('product_tmpl_id','=', parent.id)]"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
 
-        <!-- Inherited Form View Of Product Product -->
-
-        <record id="product_product_product_only_form_view" model="ir.ui.view">
-            <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_normal_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[1]" position="after">
-                    <page string="Product Images">
-                        <field name="images_variant" mode="kanban" context="{'default_name': name}">
-                            <kanban>
-                                <field name="name"/>
-                                <field name="description"/>
-                                <field name="image_alt"/>
-                                <field name="image"/>
-                                <templates>
-                                    <t t-name="kanban-box">
-                                        <div style="position: relative">
-                                            <div class="oe_module_vignette">
-                                                <a type="open">
-                                                    <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})" class="oe_avatar oe_kanban_avatar_smallbox"/>
-                                                </a>
-                                                <div class="oe_module_desc">
-                                                    <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
-                                                        <table class="oe_kanban_table">
-                                                            <tr>
-                                                                <td class="oe_kanban_title1" align="left" valign="middle">
-                                                                    <h4>
-                                                                        <a type="open">
-                                                                            <field name="name"/>
-                                                                        </a>
-                                                                    </h4>
-                                                                    <i>
-                                                                        <div t-if="record.description.raw_value">
-                                                                            <field name="description"/>
-                                                                        </div>
-                                                                    </i>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
+    <record id="product_product_product_only_form_view" model="ir.ui.view">
+        <field name="name">product.product.image</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[1]" position="after">
+                <page string="Product Images">
+                    <field name="images_variant" mode="kanban" context="{'default_name': name}">
+                        <kanban>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="image_alt"/>
+                            <field name="image"/>
+                            <templates>
+                                <t t-name="kanban-box">
+                                    <div style="position: relative">
+                                        <div class="oe_module_vignette">
+                                            <a type="open">
+                                                <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                            </a>
+                                            <div class="oe_module_desc">
+                                                <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
+                                                    <table class="oe_kanban_table">
+                                                        <tr>
+                                                            <td class="oe_kanban_title1" align="left" valign="middle">
+                                                                <h4>
+                                                                    <a type="open">
+                                                                        <field name="name"/>
+                                                                    </a>
+                                                                </h4>
+                                                                <i>
+                                                                    <div t-if="record.description.raw_value">
+                                                                        <field name="description"/>
+                                                                    </div>
+                                                                </i>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
-                                    </t>
-                                </templates>
-                            </kanban>
-                            <form string="Varaint Image">
-                                <sheet>
-                                    <group>
-                                        <field name="name"/>
-                                        <field name="image"/>
-                                        <field name="image_url"/>
-                                        <field name="image_alt"/>
-                                        <field name="description"/>
-                                    </group>
-                                </sheet>
-                            </form>
-                        </field>
-                    </page>
-                </xpath>
-            </field>
-        </record>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                        <form string="Varaint Image">
+                            <sheet>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="image"/>
+                                    <field name="image_url"/>
+                                    <field name="image_alt"/>
+                                    <field name="description"/>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
 
-    </data>
-</openerp>
+</odoo>

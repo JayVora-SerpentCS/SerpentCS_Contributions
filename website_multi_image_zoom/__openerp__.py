@@ -29,7 +29,8 @@
     'website': 'http://www.serpentcs.com',
     'version': '9.0.1.0.1',
     'depends': [
-        'website_sale', 'stock'
+        'website_sale',
+        'stock',
     ],
     'data': [
         'security/ir.model.access.csv',

@@ -1,7 +1,6 @@
 odoo.define('website_multi_image_zoom.product_variant', function (require) {
 
 var ajax = require('web.ajax');
-
 $(document).ready(function() {
     $('.oe_website_sale').each(function() {
         var oe_website_sale = this;
@@ -12,7 +11,7 @@ $(document).ready(function() {
         }
 
         $(oe_website_sale).on('change', 'input.js_variant_change, select.js_variant_change, ul[data-attribute_value_ids]', function(ev) {
-        	var $ul = $(ev.target).closest('ul.js_add_cart_variants');
+            var $ul = $(ev.target).closest('ul.js_add_cart_variants');
             var $parent = $ul.closest('.js_product');
             var product_id = $parent.find('input.product_id').first().val();
             var $img = $(this).closest('tr.js_product, .oe_website_sale').find('span[data-oe-model^="product."][data-oe-type="image"] img:first, img.product_detail_img');

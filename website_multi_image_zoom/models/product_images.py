@@ -20,11 +20,12 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import fields, models
 
 
-class product_image(models.Model):
+class ProductImage(models.Model):
     _name = 'product.image'
+    _description = 'Product Image'
 
     name = fields.Char(string='Name')
     description = fields.Text(string='Description')
@@ -32,22 +33,23 @@ class product_image(models.Model):
     image = fields.Binary(string='Image')
     image_small = fields.Binary(string='Small Image')
     image_url = fields.Char(string='Image URL')
-    product_tmpl_id = fields.Many2one('product.template', 'Product')
-    product_variant_id = fields.Many2one('product.product', 'Product Variant')
+    product_tmpl_id = fields.Many2one('product.template', 'Product',
+                                      copy=False)
+    product_variant_id = fields.Many2one('product.product', 'Product Variant',
+                                         copy=False)
 
 
-class product_product(models.Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     images_variant = fields.One2many('product.image', 'product_variant_id',
                                      'Images')
 
 
-class product_template(models.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     images = fields.One2many('product.image', 'product_tmpl_id', 'Images')
     variant_bool = fields.Boolean(string='Show Variant Wise Images',
-                                  help='Check if you like to show\
-                                        variant wise images in WebSite',
-                                  auto_join=True)
+                                  help='Check if you like to show variant wise'
+                                       ' images in WebSite', auto_join=True)
