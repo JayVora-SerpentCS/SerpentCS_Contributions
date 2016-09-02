@@ -21,19 +21,18 @@
 ##############################################################################
 
 {
-    'name': 'Product image for sale reports',
+    'name': 'Product Image for Sale Reports',
     'author': 'Serpent Consulting Services Pvt. Ltd.,\
              Odoo Community Association (OCA)',
     'category': 'Sales Management',
+    'summary': 'Product Image for Sale Reports',
     'website': 'http://www.serpentcs.com',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'sequence': 1,
     'depends': ['sale', 'web_tree_image'],
-    'qweb': [],
     'data': [
         'views/sale_product_view.xml',
         'views/report_saleorder.xml',
     ],
     'installable': True,
-    'auto_install': False
 }

@@ -20,10 +20,10 @@
 #
 ##############################################################################
 
-from openerp import models, fields
+from openerp import fields, models
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     print_image = fields.Boolean('Print Image', help="""If ticked, you can see
@@ -36,7 +36,7 @@ class sale_order(models.Model):
                                    help="Image size to be displayed in report")
 
 
-class sale_order_line(models.Model):
+class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     image_small = fields.Binary('Product Image',
