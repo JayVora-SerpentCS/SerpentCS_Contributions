@@ -3,9 +3,9 @@
 
 import string
 from xml.dom import minidom
-from openerp import models, api
-from openerp.tools import ustr, frozendict
-from openerp.osv.fields import function as function_field
+from odoo import api, fields, models
+from odoo.tools.translate import _
+from odoo.tools.misc import ustr
 
 
 class xElement(minidom.Element):
@@ -94,8 +94,8 @@ class base_module_record(models.Model):
             depends[res[0]['module']] = True
         fields = model_pool.fields_get()
         for key, val in data.items():
-            if key in model_pool._columns.keys() and isinstance(model_pool._columns[key],
-                                                                function_field) and not model_pool._columns[key].store:
+            #functional fields check
+            if key in model_pool._columns.keys() and not model_pool._columns[key].store:
                 continue
             if not (val or (fields[key]['type'] == 'boolean')):
                 continue
