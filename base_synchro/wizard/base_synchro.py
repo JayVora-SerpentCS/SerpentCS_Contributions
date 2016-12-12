@@ -23,11 +23,14 @@
 import time
 import xmlrpclib
 import threading
+import logging
 from openerp import pooler
 from openerp.tools import frozendict
 from openerp import models, fields, api
 from openerp.osv import osv
 from openerp.tools.translate import _
+
+_logger = logging.getLogger(__name__)
 
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
@@ -96,9 +99,11 @@ class base_synchro(models.TransientModel):
             ids = pool1.get('base.synchro.obj').get_ids(self._cr, self.user_id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'d'})
 
         if object.action in ('u', 'b'):
+            _logger.debug("Getting ids to synchronize [%s] (%s)", object.synchronize_date, object.domain)
             ids += pool2.get('base.synchro.obj').get_ids(self._cr, self.user_id.id, object.model_id.model, object.synchronize_date, eval(object.domain), {'action':'u'})
         ids.sort()
         iii = 0
+
         for dt, id, action in ids:
             iii += 1
             if action == 'd':
@@ -121,18 +126,17 @@ class base_synchro(models.TransientModel):
                     value.update({key:val[0]})
             value = self.data_transform(pool_src, pool_dest, object.model_id.model, value, action)
             id2 = self.get_id(object.id, id, action)
-            #
-            # Transform value
-            #
-            # tid=pool_dest.get(object.model_id.model).name_search(cr, uid, value['name'],[],'=',)
+
             if not (iii % 50):
                 pass
+
             # Filter fields to not sync
             for field in object.avoid_ids:
                 if field.name in value:
                     del value[field.name]
             if id2:
                 # try:
+                _logger.debug("Updating model %s [%d]", object.model_id.name, id2)
                 pool_dest.get(object.model_id.model).write(self._cr, self.user_id.id, [id2], value)
                 # except Exception, e:
                 # self.report.append('ERROR: Unable to update record ['+str(id2)+']:'+str(value.get('name', '?')))
@@ -141,6 +145,7 @@ class base_synchro(models.TransientModel):
             else:
 #                value_encode = self.input(ids, value)
 #                idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value_encode)
+                _logger.debug("Creating model %s", object.model_id.name)
                 idnew = pool_dest.get(object.model_id.model).create(self._cr, self.user_id.id, value)
                 self.env['base.synchro.obj.line'].create({
                     'obj_id': object.id,
@@ -169,6 +174,7 @@ class base_synchro(models.TransientModel):
         if not res_id:
             return False
 #        pool = pooler.get_pool(self.env.cr.dbname)
+        _logger.debug("Relation transform")
         self._cr.execute('''select o.id from base_synchro_obj o left join ir_model m on (o.model_id =m.id) where
                 m.model=%s and
                 o.active''', (obj_model,))
@@ -179,17 +185,23 @@ class base_synchro(models.TransientModel):
             # If the object is synchronised and found, set it
             #
             result = self.get_id(obj[0], res_id, action)
+            _logger.debug("Relation object already synchronized. Getting id...%s", result)
         else:
             #
             # If not synchronized, try to find it with name_get/name_search
             #
+            _logger.debug("Relation object not synchronized. Searching by name_get and name_search")
             names = pool_src.get(obj_model).name_get(self._cr, self.user_id.id, [res_id])[0][1]
+            _logger.debug("name_get in src: %s", names)
             res = pool_dest.get(obj_model).name_search(self._cr, self.user_id.id, names, [], 'like')
+            _logger.debug("name_search in dest: %s", res)
             if res:
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                print self.report.append('WARNING: Record "%s" on relation %s not found, set to null.' % (names, obj_model))
+                _logger.warning("Record '%s' on relation %s not found, set to null.", names, obj_model)
+                _logger.warning("You should consider synchronize this model '%s'", obj_model)
+                self.report.append('WARNING: Record "%s" on relation %s not found, set to null.' % (names, obj_model))
         return result
 
     #
@@ -207,13 +219,16 @@ class base_synchro(models.TransientModel):
 #        if not obj in self.meta[pool_src]:
         fields = pool_src.get(obj).fields_get(self._cr, self.user_id.id)
 #        fields = self.meta[pool_src][obj]
+        _logger.debug("Transforming data")
         for f in fields:
             if f not in data:
                 continue
             ftype = fields[f]['type']
             if ftype in ('function', 'one2many', 'one2one'):
+                _logger.debug("Field %s of type %s, discarded.", f, ftype)
                 del data[f]
             elif ftype == 'many2one':
+                _logger.debug("Field %s is many2one", f)
                 if (isinstance(data[f], list)) and data[f]:
                     fdata = data[f][0]
                 else:
@@ -240,6 +255,7 @@ class base_synchro(models.TransientModel):
 #        pool = pooler.get_pool(self.env.cr.dbname)
         server = self.env['base.synchro.server'].browse(syn_obj.server_url.id)
         for obj_rec in server.obj_ids:
+            _logger.debug("Start synchro of %s", obj_rec.name)
             dt = time.strftime('%Y-%m-%d %H:%M:%S')
             self.synchronize(server, obj_rec)
             if obj_rec.action == 'b':
