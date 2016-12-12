@@ -116,10 +116,26 @@ class base_synchro(models.TransientModel):
                 del value['create_date']
             if 'write_date' in value:
                 del value['write_date']
+
+            # Use val[0] on many2one because it comes like (id, 'name')
             for key , val in value.iteritems():
                 if type(val) == tuple:
                     value.update({key:val[0]})
             value = self.data_transform(pool_src, pool_dest, object.model_id.model, value, action)
+
+            # Search if record exists by name in dst
+            id_remote = self.get_existing_dst(pool_src, pool_dest, object, id, action)
+
+            # If it exists, create synchro.obj.line record with local and remote ids
+            if id_remote:
+                # TODO: It is not tested for download or both, only for upload
+                self.env['base.synchro.obj.line'].create({
+                    'obj_id': object.id,
+                    'local_id': id,
+                    'remote_id': id_remote,
+                })
+
+            # Search id on synchronized objects
             id2 = self.get_id(object.id, id, action)
             #
             # Transform value
@@ -163,6 +179,52 @@ class base_synchro(models.TransientModel):
         if rid:
             result = line_pool.read(self._cr, self.user_id.id, rid, [field_dest])[0][field_dest]
         return result
+
+    @api.model
+    def get_existing_dst(self, pool_src, pool_dest, object_to_sync, res_id, action):
+
+        obj_model = object_to_sync.model_id.model
+        fields_of_equality = object_to_sync.fields_of_equality.mapped(lambda x: x.name)
+
+        _logger.debug("Searching existing object in dest. %s [%d]", obj_model, res_id)
+
+        # If fields_of_equality are not set, we search by name_search
+        if not fields_of_equality:
+            # Get local name
+            _logger.debug("Searching by name_search")
+            names = pool_src.get(obj_model).name_get(self._cr,
+                            self.user_id.id, [res_id])[0][1]
+
+            # Search remote by name_search
+            res = pool_dest.get(obj_model).name_search(self._cr, self.user_id.id, names, [], 'like')
+            if not res:
+                return False
+            else:
+                res = res[0]
+
+        else:
+            # Read fields of equality
+            _logger.debug("Searching by fields of equality [%s]", fields_of_equality)
+            fvalues = pool_src.get(obj_model).read(self._cr, self.user_id.id,
+                            res_id, fields_of_equality)
+
+            # We assemble domain to search for equality
+            domain = []
+            for f, v in fvalues.iteritems():
+                if f == 'id':
+                    continue
+
+                domain.append((f, '=', v))
+
+            # Search in desitny
+            res = pool_dest.get(obj_model).search(self._cr, self.user_id.id, domain)
+
+        if res:
+            _logger.debug("Object found in dest with id: %d", res[0])
+            return res[0]
+        else:
+            _logger.debug("Object not found in dest")
+            return False
 
     @api.model
     def relation_transform(self, pool_src, pool_dest, obj_model, res_id, action):
@@ -218,6 +280,7 @@ class base_synchro(models.TransientModel):
                     fdata = data[f][0]
                 else:
                     fdata = data[f]
+                # Search relation
                 df = self.relation_transform(pool_src, pool_dest, fields[f]['relation'], fdata, action)
                 data[f] = df
                 if not data[f]:

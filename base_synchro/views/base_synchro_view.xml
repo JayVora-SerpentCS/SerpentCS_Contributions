@@ -87,6 +87,7 @@
                             <field name="action"/>
                             <field name="sequence"/>
                             <field colspan="4" name="domain"/>
+                            <field name="fields_of_equality" widget="many2many_tags" domain="[('model_id', '=', model_id)]"/>
                             <field name="synchronize_date"/>
                         </group>
                         <separator string="Fields Not Sync."/>
