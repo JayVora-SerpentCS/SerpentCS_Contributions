@@ -250,6 +250,7 @@ class base_synchro(models.TransientModel):
 
     @api.multi
     def upload_download(self):
+        self.report = []
         start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
         syn_obj = self.browse(self.ids)[0]
 #        pool = pooler.get_pool(self.env.cr.dbname)
@@ -261,9 +262,11 @@ class base_synchro(models.TransientModel):
             if obj_rec.action == 'b':
                 time.sleep(1)
                 dt = time.strftime('%Y-%m-%d %H:%M:%S')
-            self.env['base.synchro.obj'].write({'synchronize_date': dt})
+            obj_rec.write({'synchronize_date': dt})
         end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
 #        return {}
+
+        # Creating res.request for summary results
         if syn_obj.user_id:
             cr, uid, context = self.env.args
             request = pooler.get_pool(cr.dbname).get('res.request')
