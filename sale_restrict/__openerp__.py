@@ -13,5 +13,5 @@
     'website': "http://www.serpentcs.com",
     'depends': ['sale'],
     'installable': True,
-    'auto_install':False,
+    'auto_install': False,
 }
