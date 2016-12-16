@@ -2,27 +2,30 @@
 <odoo>
 
     <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
-         <xpath expr="//table[@class='table table-condensed']/thead/tr/th[1]" position="before">
-             <t t-if="doc.print_image and doc.image_sizes in ('image', 'image_medium', 'image_small') ">
-                 <th>
+        <xpath expr="//table[@class='table table-condensed']/thead/tr/th[1]" position="before">
+            <t t-if="doc.print_image and doc.image_sizes in ('image', 'image_medium', 'image_small') ">
+                <th>
                     Product Image
                 </th>
-             </t>
+            </t>
         </xpath>
         <xpath expr="//table/tbody[@class='sale_tbody']/t/tr/td[1]" position="before">
             <t t-if="doc.image_sizes == 'image' and doc.print_image ">
                 <td>
-                    <span t-field="l.product_id.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+                    <span t-field="l.product_id.image"
+                          t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
                 </td>
             </t>
             <t t-if="doc.image_sizes == 'image_medium' and doc.print_image">
                 <td>
-                    <span t-field="l.product_id.image_medium" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+                    <span t-field="l.product_id.image_medium"
+                          t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
                 </td>
             </t>
             <t t-if="doc.image_sizes == 'image_small' and doc.print_image ">
                 <td>
-                    <span t-field="l.product_id.image_small" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+                    <span t-field="l.product_id.image_small"
+                          t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
                 </td>
             </t>
         </xpath>
