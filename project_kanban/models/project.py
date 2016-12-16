@@ -3,8 +3,8 @@
 
 from openerp import fields, models, api
 
-class project(models.Model):
 
+class project(models.Model):
     _inherit = 'project.project'
 
     @api.one
