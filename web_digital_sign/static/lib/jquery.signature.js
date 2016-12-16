@@ -19,8 +19,8 @@ var signatureOverrides = {
 
 	/* Initialise a new signature area. */
 	_create: function() {
-	
-		  
+
+
 		this.element.addClass(this.widgetFullName || this.widgetBaseClass);
 		try {
 			this.canvas = $('<canvas width="' + 170 + '" height="' +
