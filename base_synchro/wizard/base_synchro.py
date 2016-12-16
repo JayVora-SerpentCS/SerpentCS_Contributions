@@ -13,7 +13,6 @@ from openerp import models, fields, api
 
 
 class RPCProxyOne(object):
-
     def __init__(self, server, ressource):
         self.server = server
         local_url = 'http://%s:%d/xmlrpc/common' % (server.server_url,
@@ -28,24 +27,24 @@ class RPCProxyOne(object):
 
     def __getattr__(self, name):
         RPCProxy(self.server)
-        return lambda cr, uid, *args,**kwargs: self.rpc.execute(self.server.server_db,
+        return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.server_db,
                                                                  self.uid, self.server.password,
                                                                  self.ressource, name, *args)
 
 
 class RPCProxy(object):
-
     def __init__(self, server):
         self.server = server
 
     def get(self, ressource):
         return RPCProxyOne(self.server, ressource)
 
+
 class base_synchro(models.TransientModel):
     """Base Synchronization """
     _name = 'base.synchro'
 
-    server_url = fields.Many2one('base.synchro.server',"Server URL",
+    server_url = fields.Many2one('base.synchro.server', "Server URL",
                                  required=True)
     user_id = fields.Many2one('res.users', "Send Result To",
                               default=lambda self: self.env.user)
@@ -70,14 +69,14 @@ class base_synchro(models.TransientModel):
                                                         object.model_id.model,
                                                         object.synchronize_date,
                                                         eval(object.domain),
-                                                        {'action':'d'})
+                                                        {'action': 'd'})
 
         if object.action in ('u', 'b'):
             ids += pool2.get('base.synchro.obj').get_ids(self._cr, self.user_id.id,
                                                          object.model_id.model,
                                                          object.synchronize_date,
                                                          eval(object.domain),
-                                                         {'action':'u'})
+                                                         {'action': 'u'})
         ids.sort()
         iii = 0
         for dt, id, action in ids:
@@ -98,9 +97,9 @@ class base_synchro(models.TransientModel):
                 del value['create_date']
             if 'write_date' in value:
                 del value['write_date']
-            for key , val in value.iteritems():
+            for key, val in value.iteritems():
                 if type(val) == tuple:
-                    value.update({key:val[0]})
+                    value.update({key: val[0]})
             value = self.data_transform(pool_src, pool_dest,
                                         object.model_id.model,
                                         value, action)
@@ -227,7 +226,7 @@ class base_synchro(models.TransientModel):
     def upload_download(self):
         start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
         syn_obj = self.browse(self.ids)[0]
-#        pool = pooler.get_pool(self.env.cr.dbname)
+        #        pool = pooler.get_pool(self.env.cr.dbname)
         server = self.env['base.synchro.server'].browse(syn_obj.server_url.id)
         for obj_rec in server.obj_ids:
             dt = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -237,7 +236,7 @@ class base_synchro(models.TransientModel):
                 dt = time.strftime('%Y-%m-%d %H:%M:%S')
             self.env['base.synchro.obj'].write({'synchronize_date': dt})
         end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
-#        return {}
+        #        return {}
         if syn_obj.user_id:
             cr, uid, context = self.env.args
             request = pooler.get_pool(cr.dbname).get('res.request')
@@ -255,10 +254,10 @@ class base_synchro(models.TransientModel):
             summary += '\n'.join(self.report)
             if request:
                 request.create(cr, uid, {
-                    'name' : "Synchronization report",
-                    'act_from' : self.user_id.id,
+                    'name': "Synchronization report",
+                    'act_from': self.user_id.id,
                     'date': time.strftime('%Y-%m-%d, %H:%M:%S'),
-                    'act_to' : syn_obj.user_id.id,
+                    'act_to': syn_obj.user_id.id,
                     'body': summary,
                 }, context=context)
             return {}

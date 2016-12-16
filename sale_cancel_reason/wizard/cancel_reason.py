@@ -27,7 +27,6 @@ QUOTATION_STATES = ['draft', 'sent', 'sale']
 
 
 class SaleOrderCancel(models.TransientModel):
-
     """ Ask a reason for the sale order cancellation."""
     _name = 'sale.order.cancel'
     _description = __doc__

@@ -5,12 +5,12 @@ import openerp.addons.website_sale.controllers.main
 from openerp import SUPERUSER_ID
 from openerp.addons.website.models.website import slug
 from openerp.addons.website_sale.controllers.main import table_compute, QueryURL
+
 PPG = 20
 PPR = 4
 
 
 class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
-
     @http.route(['/shop', '/shop/page/<int:page>', '/shop/category/<model("product.public.category"):category>',
                  '/shop/category/<model("product.public.category"):category>\
                  /page/<int:page>', '/shop/brands'], type='http', auth='public', website=True)
@@ -67,7 +67,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
             category = pool['product.public.category'].browse(cr, uid, int(category), context=context)
             url = '/shop/category/%s' % slug(category)
         pager = request.website.pager(url=url, total=product_count, page=page, step=PPG, scope=7, url_args=post)
-        product_ids = product_obj.search(cr, uid, domain, limit=PPG, offset=pager['offset'], order='website_published desc, website_sequence desc', context=context)
+        product_ids = product_obj.search(cr, uid, domain, limit=PPG, offset=pager['offset'],
+                                         order='website_published desc, website_sequence desc', context=context)
         products = product_obj.browse(cr, uid, product_ids, context=context)
         style_obj = pool['product.style']
         style_ids = style_obj.search(cr, uid, [], context=context)
@@ -86,7 +87,8 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
         attributes = attributes_obj.browse(cr, uid, attributes_ids, context=context)
         from_currency = pool.get('product.price.type')._get_field_currency(cr, uid, 'list_price', context)
         to_currency = pricelist.currency_id
-        compute_currency = lambda price: pool['res.currency']._compute(cr, uid, from_currency, to_currency, price, context=context)
+        compute_currency = lambda price: pool['res.currency']._compute(cr, uid, from_currency, to_currency, price,
+                                                                       context=context)
         values.update({'search': search,
                        'category': category,
                        'attrib_values': attrib_values,

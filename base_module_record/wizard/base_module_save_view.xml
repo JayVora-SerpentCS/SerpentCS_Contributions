@@ -30,20 +30,20 @@
         </record>
 
         <menuitem
-            parent="menu_wizard_base_mod_rec"
-            name="Publish as Module"
-            action="action_base_module_save"
-            id="menu_wizard_base_module_save"/>
+                parent="menu_wizard_base_mod_rec"
+                name="Publish as Module"
+                action="action_base_module_save"
+                id="menu_wizard_base_module_save"/>
 
         <act_window
-            id="act_base_module_save"
-            name="Publish as Module"
-            res_model="base.module.save"
-            src_model="ir.module.module"
-            view_mode="form"
-            target="new"
-            multi="True"
-            key2="client_action_multi"/>
+                id="act_base_module_save"
+                name="Publish as Module"
+                res_model="base.module.save"
+                src_model="ir.module.module"
+                view_mode="form"
+                target="new"
+                multi="True"
+                key2="client_action_multi"/>
 
     </data>
 </openerp>

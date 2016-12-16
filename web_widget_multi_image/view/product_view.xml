@@ -13,7 +13,7 @@
                                 <field name="image"/>
                                 <field name="description"/>
                                 <field name="title"/>
-                            </tree> 
+                            </tree>
                         </field>
                     </page>
                 </notebook>

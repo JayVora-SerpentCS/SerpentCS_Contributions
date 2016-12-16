@@ -12,7 +12,7 @@
     'data': [
         'view/templates.xml',
         'view/product_view.xml',
-        ],
+    ],
     'website': 'http://www.serpentcs.com',
     'qweb': ['static/src/xml/image_multi.xml'],
     'installable': True,

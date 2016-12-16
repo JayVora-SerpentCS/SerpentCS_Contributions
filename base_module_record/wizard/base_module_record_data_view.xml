@@ -7,23 +7,23 @@
             <field name="model">base.module.data</field>
             <field name="arch" type="xml">
                 <form string="Data Recording">
-                <sheet>
-                    <group col="4">
-                        <field name="check_date"/>
-                        <field name="filter_cond"/>
-                    </group>
-                    <separator string="Choose objects to record" colspan="4"/>
-                    <field name="objects" colspan="4" nolabel="1"/>
-                    <group>
-                        <field name="info_yaml"/>
-                    </group>
-                    <footer>
-                        <button name="record_objects" string="Record" type="object" class="oe_highlight"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
-                    </footer>
-                </sheet>
-               </form>
+                    <sheet>
+                        <group col="4">
+                            <field name="check_date"/>
+                            <field name="filter_cond"/>
+                        </group>
+                        <separator string="Choose objects to record" colspan="4"/>
+                        <field name="objects" colspan="4" nolabel="1"/>
+                        <group>
+                            <field name="info_yaml"/>
+                        </group>
+                        <footer>
+                            <button name="record_objects" string="Record" type="object" class="oe_highlight"/>
+                            or
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
             </field>
         </record>
 
@@ -37,35 +37,35 @@
         </record>
 
         <menuitem
-            parent="menu_wizard_base_mod_rec"
-            name="Export Customizations As Data file"
-            action="action_base_module_record_data"
-            id="menu_wizard_base_module_record_data"/>
+                parent="menu_wizard_base_mod_rec"
+                name="Export Customizations As Data file"
+                action="action_base_module_record_data"
+                id="menu_wizard_base_module_record_data"/>
 
         <act_window
-            id="act_base_module_record_data"
-            name="Export Customizations As Data File"
-            res_model="base.module.data"
-            src_model="ir.module.module"
-            view_mode="form"
-            target="new"
-            multi="True"
-            key2="client_action_multi"/>
+                id="act_base_module_record_data"
+                name="Export Customizations As Data File"
+                res_model="base.module.data"
+                src_model="ir.module.module"
+                view_mode="form"
+                target="new"
+                multi="True"
+                key2="client_action_multi"/>
 
         <record id="module_create_xml_view" model="ir.ui.view">
             <field name="name">module.create.xml.form</field>
             <field name="model">base.module.record.data</field>
             <field name="arch" type="xml">
                 <form string="Data Recording">
-                <sheet>
-                    <group>
-                        <separator string="Result, paste this to your module's xml"/>
-                        <field name="res_text" nolabel="1" colspan="4"/>
-                    </group>
-                    <footer>
-                        <button string="Close" class="oe_link" special="cancel"/>
-                    </footer>
-                </sheet>
+                    <sheet>
+                        <group>
+                            <separator string="Result, paste this to your module's xml"/>
+                            <field name="res_text" nolabel="1" colspan="4"/>
+                        </group>
+                        <footer>
+                            <button string="Close" class="oe_link" special="cancel"/>
+                        </footer>
+                    </sheet>
                 </form>
             </field>
         </record>

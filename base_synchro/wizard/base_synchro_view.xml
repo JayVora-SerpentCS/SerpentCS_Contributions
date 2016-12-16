@@ -13,7 +13,8 @@
                         <field name="user_id"/>
                     </group>
                     <footer>
-                        <button name="upload_download_multi_thread" string="Synchronize" type="object" class="oe_highlight"/>
+                        <button name="upload_download_multi_thread" string="Synchronize" type="object"
+                                class="oe_highlight"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
@@ -47,7 +48,7 @@
         <menuitem id="next_id_62" name="Synchronization" parent="base.menu_administration"/>
 
         <menuitem parent="base_synchro.next_id_62" name="Synchronize objects"
-            action="action_view_base_synchro" id="menu_action_view_base_synchro"/>
+                  action="action_view_base_synchro" id="menu_action_view_base_synchro"/>
 
     </data>
 </openerp>

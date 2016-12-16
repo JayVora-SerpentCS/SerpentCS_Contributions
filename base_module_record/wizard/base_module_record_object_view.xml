@@ -35,25 +35,25 @@
         </record>
 
         <menuitem
-            parent="base.menu_custom"
-            name="Module Creation"
-            id="menu_wizard_base_mod_rec"/>
+                parent="base.menu_custom"
+                name="Module Creation"
+                id="menu_wizard_base_mod_rec"/>
 
         <menuitem
-            parent="menu_wizard_base_mod_rec"
-            name="Export Customizations As a Module"
-            action="action_base_module_record_objects"
-            id="menu_wizard_base_module_record_objects"/>
+                parent="menu_wizard_base_mod_rec"
+                name="Export Customizations As a Module"
+                action="action_base_module_record_objects"
+                id="menu_wizard_base_module_record_objects"/>
 
         <act_window
-            id="act_base_module_record_objects"
-            name="Export Customizations As a Module"
-            res_model="base.module.record"
-            src_model="ir.module.module"
-            view_mode="form"
-            target="new"
-            multi="True"
-            key2="client_action_multi"/>
+                id="act_base_module_record_objects"
+                name="Export Customizations As a Module"
+                res_model="base.module.record"
+                src_model="ir.module.module"
+                view_mode="form"
+                target="new"
+                multi="True"
+                key2="client_action_multi"/>
 
         <record id="module_create_form_view" model="ir.ui.view">
             <field name="name">module.create.form</field>
@@ -61,10 +61,10 @@
             <field name="arch" type="xml">
                 <form string="Module Recording">
                     <group>
-                         <separator string="Module successfully created !" colspan="4"/>
-                         <field name="module_filename" invisible="1"/>
-                         <newline/>
-                         <field name="module_file" filename="module_filename"/>
+                        <separator string="Module successfully created !" colspan="4"/>
+                        <field name="module_filename" invisible="1"/>
+                        <newline/>
+                        <field name="module_file" filename="module_filename"/>
                     </group>
                     <separator string="Information" colspan="4"/>
                     <label string="If you think your module could interest other people, we'd like you to publish it on

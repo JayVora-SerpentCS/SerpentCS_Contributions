@@ -27,10 +27,10 @@ class base_module_record(models.TransientModel):
                                  default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_object_rel', 'objects',
                                'model_id', 'Objects', default=_get_default_objects)
-    filter_cond =  fields.Selection([('created', 'Created'),
-                                     ('modified', 'Modified'),
-                                     ('created_modified', 'Created & Modified')],
-                                    'Records only', required=True, default='created')
+    filter_cond = fields.Selection([('created', 'Created'),
+                                    ('modified', 'Modified'),
+                                    ('created_modified', 'Created & Modified')],
+                                   'Records only', required=True, default='created')
     info_yaml = fields.Boolean('YAML')
 
     @api.multi
@@ -132,20 +132,20 @@ class base_module_record_objects(models.TransientModel):
         resource_id = model_data_ids.read(fields=['res_id'])[0]['res_id']
         context.update(res)
         module_rec = self.env['base.module.record.objects'].create({
-                     'module_filename': ustr(res['module_filename']),
-                     'module_file': ustr(res['module_file'])})
-        
+            'module_filename': ustr(res['module_filename']),
+            'module_file': ustr(res['module_file'])})
+
         res_id = self.create({
-                      'module_filename':ustr(res['module_filename']),
-                      'module_file' : ustr(res['module_file']),
-                      'name': ustr(res['name']),
-                      'directory_name':ustr(res['directory_name']),
-                      'version':ustr(res['version']),
-                      'author' : ustr(res['author']),
-                      'website':ustr(res['website']),
-                      'category':ustr(res['category']),
-                      'description':ustr(res['description']),
-                      })
+            'module_filename': ustr(res['module_filename']),
+            'module_file': ustr(res['module_file']),
+            'name': ustr(res['name']),
+            'directory_name': ustr(res['directory_name']),
+            'version': ustr(res['version']),
+            'author': ustr(res['author']),
+            'website': ustr(res['website']),
+            'category': ustr(res['category']),
+            'description': ustr(res['description']),
+        })
         return {
             'name': _('Module Recording'),
             'view_type': 'form',
@@ -157,17 +157,17 @@ class base_module_record_objects(models.TransientModel):
             'target': 'new',
         }
 
-    name = fields.Char('Module Name', size=64 )
-    directory_name = fields.Char('Directory Name', size=32 )
-    version = fields.Char('Version', size=16 )
+    name = fields.Char('Module Name', size=64)
+    directory_name = fields.Char('Directory Name', size=32)
+    version = fields.Char('Version', size=16)
     author = fields.Char('Author', size=64, required=True, default='OpenERP SA')
-    category =  fields.Char('Category', size=64, required=True,
-                            default='Vertical Modules/Parametrization')
+    category = fields.Char('Category', size=64, required=True,
+                           default='Vertical Modules/Parametrization')
     website = fields.Char('Documentation URL', size=64, required=True,
                           default='http://www.openerp.com')
     description = fields.Text('Full Description')
-    data_kind =  fields.Selection([('demo', 'Demo Data'),('update', 'Normal Data')],
-                                  'Type of Data', required=True, default='update')
+    data_kind = fields.Selection([('demo', 'Demo Data'), ('update', 'Normal Data')],
+                                 'Type of Data', required=True, default='update')
     module_file = fields.Binary('Module .zip File', filename="module_filename")
     module_filename = fields.Char('Filename', size=64)
     yaml_file = fields.Binary('Module .zip File')

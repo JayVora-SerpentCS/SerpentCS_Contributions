@@ -21,14 +21,14 @@
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
                 <form string="Transfered IDs Details">
-                <sheet>
-                    <group col="4">
-                        <field name="name" select="1"/>
-                        <field name="obj_id" select="1"/>
-                        <field name="local_id" readonly="1" select="2"/>
-                        <field name="remote_id" readonly="1" select="2"/>
-                    </group>
-                </sheet>
+                    <sheet>
+                        <group col="4">
+                            <field name="name" select="1"/>
+                            <field name="obj_id" select="1"/>
+                            <field name="local_id" readonly="1" select="2"/>
+                            <field name="remote_id" readonly="1" select="2"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -66,8 +66,9 @@
             <field name="view_type">form</field>
         </record>
 
-        <menuitem id="next_id_63" name="History"  groups="base.group_no_one" parent="base_synchro.next_id_62"/>
-        <menuitem action="action_base_synchro_obj_line_tree" id="menu_action_base_synchro_obj_line_tree" parent="base_synchro.next_id_63"/>
+        <menuitem id="next_id_63" name="History" groups="base.group_no_one" parent="base_synchro.next_id_62"/>
+        <menuitem action="action_base_synchro_obj_line_tree" id="menu_action_base_synchro_obj_line_tree"
+                  parent="base_synchro.next_id_63"/>
 
         <!--view_base_synchro_obj starts-->
 
@@ -121,8 +122,8 @@
                     <field name="model_id"/>
                     <field name="synchronize_date"/>
                     <group expand="0" string="Group By">
-                      <filter string="Object to synchronize" domain="[]" context="{'group_by':'model_id'}"/>
-                      <filter string="Latest synchronization" domain="[]" context="{'group_by':'synchronize_date'}"/>
+                        <filter string="Object to synchronize" domain="[]" context="{'group_by':'model_id'}"/>
+                        <filter string="Latest synchronization" domain="[]" context="{'group_by':'synchronize_date'}"/>
                     </group>
                 </search>
             </field>
@@ -188,8 +189,9 @@
             <field name="view_type">form</field>
         </record>
 
-        <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id" parent="base_synchro.synch_config"/>
-        
+        <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id"
+                  parent="base_synchro.synch_config"/>
+
         <!--view_base_synchro_server end -->
 
     </data>

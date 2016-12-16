@@ -1,5 +1,5 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
+:alt: License: AGPL-3
 
 ================================
 Website Product Multi-Image Zoom
@@ -53,7 +53,7 @@ Maintainer
 ----------
 
 .. image:: http://odoo-community.org/logo.png
-   :alt: Odoo Community Association
+:alt: Odoo Community Association
    :target: http://odoo-community.org
 
 This module is maintained by the OCA.

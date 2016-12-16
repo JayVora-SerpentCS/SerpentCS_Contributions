@@ -24,7 +24,7 @@
     'name': 'Sale Cancel Reason',
     'version': '9.0.1.0.0',
     'author': 'Camptocamp, Odoo Community Association (OCA),'
-            ', Serpent Consulting Services Pvt. Ltd.',
+              ', Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sale',
     'license': 'AGPL-3',
     'complexity': 'normal',
@@ -43,8 +43,8 @@ it is chosen from a configured list.
              'security/ir.model.access.csv',
              'data/sale_order_cancel_reason.xml',
              ],
-     'test': ['test/sale_order_cancel.yml'],
-     'installable': True,
-     'application': True,
-     'auto_install': False,
- }
+    'test': ['test/sale_order_cancel.yml'],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

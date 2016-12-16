@@ -22,7 +22,8 @@
                                     <div style="position: relative">
                                         <div class="oe_module_vignette">
                                             <a type="open">
-                                                <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})"
+                                                     class="oe_avatar oe_kanban_avatar_smallbox"/>
                                             </a>
                                             <div class="oe_module_desc">
                                                 <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
@@ -93,7 +94,8 @@
                                     <div style="position: relative">
                                         <div class="oe_module_vignette">
                                             <a type="open">
-                                                <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})" class="oe_avatar oe_kanban_avatar_smallbox"/>
+                                                <img t-att-src="kanban_image('res.partner', 'image', record.id.value, {'preview_image': 'image_small'})"
+                                                     class="oe_avatar oe_kanban_avatar_smallbox"/>
                                             </a>
                                             <div class="oe_module_desc">
                                                 <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
