@@ -5,6 +5,7 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
     var data = require('web.data');
     var FormView = require('web.FormView');
     var utils = require('web.utils');
+    var session = require('web.session');
 
     var _t = core._t;
     var QWeb = core.qweb;
@@ -15,33 +16,31 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
         render_value: function() {
             var self = this;
             var url;
-            if (this.get('value') && ! utils.is_bin_size(this.get('value'))) {
-                url = 'data:image/png;base64,' + this.get('value');
-            }else if (this.get('value')) {
-                var id = JSON.stringify(this.view.datarecord.id || null);
-                self.digita_dataset = new data.DataSetSearch(self, self.view.model, {}, []);
-                self.digita_dataset.read_slice(['id', self.name], {'domain': [['id', '=', id]]}).then(function(records){
-                    _.each(records,function(record){
-                        if(record[self.name]){
-                            images[self.name] = record[self.name]
-                        }else{
-                            images[self.name] = ""
-                        }
+            if(this.get('value')) {
+                if(!utils.is_bin_size(this.get('value'))) {
+                    url = 'data:image/png;base64,' + this.get('value');
+                } else {
+                    var id = JSON.stringify(this.view.datarecord.id || null);
+                    self.digita_dataset = new data.DataSetSearch(self, self.view.model, {}, []);
+                    self.digita_dataset.read_slice(['id', self.name], {'domain': [['id', '=', id]]}).then(function(records){
+                        _.each(records,function(record){
+                            if(record[self.name]){
+                                images[self.name] = record[self.name]
+                            }else{
+                                images[self.name] = ""
+                            }
+                        })
                     })
-                })
-                var field = this.name;
-                if (this.options.preview_image)
-                    field = this.options.preview_image;
-                url = this.session.url('/web/binary/image', {
-                          model: this.view.dataset.model,
-                          id: id,
-                          field: field,
-                          t: (new Date().getTime()),
-                });
-            }else {
-                images[self.name] = ""
-                url = this.placeholder;
-                self.set('value',images[self.name])
+                    var field = this.name;
+                    if (this.options.preview_image)
+                        field = this.options.preview_image;
+                    url = this.session.url('/web/binary/image', {
+                              model: this.view.dataset.model,
+                              id: id,
+                              field: field,
+                              t: (new Date().getTime()),
+                    });
+                }
             }
             var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
             this.$el.find('img').remove();
@@ -71,7 +70,12 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
                 self.$el.find('> img').remove();
                 images[self.name] = ""
                 $(self.$el[0]).find(".signature").show();
-                $(self.$el[0]).find(".signature").signature('clear');
+//                $(self.$el[0]).find(".signature").signature()
+                $(self.$el[0]).find(".signature").signature({
+                    clear: true
+                });
+                self.set('value',false)
+//                $(self.$el[0]).find(".signature").signature('clear');
             });
             $(this.$el[0]).find('.save_sign').on('click',function(){
                 var val
@@ -92,6 +96,7 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
                         t: (new Date().getTime()),
                     });
                 }else{
+//                    self.set('value',false)
                     var id = JSON.stringify(self.view.datarecord.id || null);
                     var field = self.name;
                     if (self.options.preview_image)
@@ -102,20 +107,18 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
                             field: field,
                             t: (new Date().getTime()),
                     });
+                    url = self.placeholder;
+//                    url = 'http://localhost:8080/web/static/src/img/placeholder.png'
                    var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: url }));
                    self.$el.find('> img').remove();
                 }
             });
-            $img.load(function() {
-                if (! self.options.size)
-                    return;
-                $img.css("max-width", "" + self.options.size[0] + "px");
-                $img.css("max-height", "" + self.options.size[1] + "px");
-                $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
-                $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
-            });
+            if (self.options.size) {
+                $img.css("width", "" + self.options.size[0] + "px");
+                $img.css("height", "" + self.options.size[1] + "px");
+            }
             $img.on('error', function() {
-                console.log("eroor")
+                self.on_clear();
                 $img.attr('src', self.placeholder);
                 self.do_warn(_t("Image"), _t("Could not display the selected image."));
             });
