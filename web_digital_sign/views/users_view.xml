@@ -9,7 +9,9 @@
                 <xpath expr="//field[@name='signature']" position="after">
                     <!--<label for="signature_image" class="oe_edit_only"/>-->
                     <label for="signature_image" class="oe_edit_only"/>
-                    <h2><field name="signature" widget="signature"/></h2>
+                    <h2>
+                        <field name="signature" widget="signature"/>
+                    </h2>
                 </xpath>
             </field>
         </record>
