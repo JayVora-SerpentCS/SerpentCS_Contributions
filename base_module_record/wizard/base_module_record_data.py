@@ -19,6 +19,7 @@ class base_module_data(models.TransientModel):
                  'workflow', 'workflow.activity', 'workflow.transition',
                  'ir.actions.server', 'ir.server.object.lines')
         return self.env['ir.model'].search([('model', 'in', names)])
+
     check_date = fields.Datetime('Record from Date', required=True,
                                  default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel', 'objects',
@@ -38,7 +39,7 @@ class base_module_data(models.TransientModel):
     def _create_yaml(self, data):
         mod = self.env['ir.module.record']
         res_xml = mod.generate_yaml()
-        return { 'res_text': res_xml}
+        return {'res_text': res_xml}
 
     @api.multi
     def record_objects(self):
@@ -80,7 +81,7 @@ class base_module_data(models.TransientModel):
                 res = self._create_xml(data)
             model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
                                              ('name', '=', 'module_create_xml_view')])
-            print "model_data_ids::::::::::::::::::",model_data_ids
+            print "model_data_ids::::::::::::::::::", model_data_ids
             resource_id = model_data_ids.read(['res_id'])[0]['res_id']
             return {
                 'name': _('Data Recording'),

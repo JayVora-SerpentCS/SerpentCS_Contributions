@@ -10,6 +10,7 @@ from openerp.exceptions import except_orm
 from openerp.tools.translate import _
 from openerp import models, fields, api
 
+
 @api.model
 def _create_yaml(self, data):
     mod = self.env['ir.module.record']
@@ -18,8 +19,9 @@ def _create_yaml(self, data):
     except Exception, e:
         raise except_orm(_('Error'), _(str(e)))
     return {
-    'yaml_file': base64.encodestring(res_xml),
-}
+        'yaml_file': base64.encodestring(res_xml),
+    }
+
 
 @api.model
 def _create_module(self, cr, uid, ids, context=None):
@@ -39,7 +41,7 @@ def _create_module(self, cr, uid, ids, context=None):
     cr, uid, context = self.env.args
     context = dict(context)
     depends = context.get('depends')
-    data['depends'] = ','.join(map(lambda x: '"'+x+'"', depends.keys()))
+    data['depends'] = ','.join(map(lambda x: '"' + x + '"', depends.keys()))
     _openerp = """{
         "name": "%(name)s",
         "version": "%(version)s",
@@ -58,7 +60,7 @@ def _create_module(self, cr, uid, ids, context=None):
         data['directory_name'] + '_data.xml': res_xml
     }
     for name, datastr in filewrite.items():
-        info = zipfile.ZipInfo(dname+'/'+name)
+        info = zipfile.ZipInfo(dname + '/' + name)
         info.compress_type = zipfile.ZIP_DEFLATED
         info.external_attr = 2175008768
         if not datastr:
@@ -68,13 +70,13 @@ def _create_module(self, cr, uid, ids, context=None):
     return {
         'module_file': base64.encodestring(s.getvalue()),
         'module_filename': data['directory_name'] + '-' + data['version'] + '.zip',
-        'name' : data['name'],
-        'version':data['version'],
-        'author' : data['author'],
-        'website':data['website'],
-        'category':data['category'],
-        'description':data['description'],
-        'directory_name':data['directory_name'],        
+        'name': data['name'],
+        'version': data['version'],
+        'author': data['author'],
+        'website': data['website'],
+        'category': data['category'],
+        'description': data['description'],
+        'directory_name': data['directory_name'],
     }
 
 
