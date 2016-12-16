@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        
+
         <!-- Label brand tree view -->
-        <record id="view_label_brand_tree" model="ir.ui.view" >
+        <record id="view_label_brand_tree" model="ir.ui.view">
             <field name="name">label.brand.tree</field>
             <field name="model">label.brand</field>
             <field name="arch" type="xml">
@@ -12,9 +12,9 @@
                 </tree>
             </field>
         </record>
-        
+
         <!-- Label brand form view -->
-        <record id="view_label_brand_form" model="ir.ui.view" >
+        <record id="view_label_brand_form" model="ir.ui.view">
             <field name="name">label.brand.form</field>
             <field name="model">label.brand</field>
             <field name="arch" type="xml">
@@ -28,9 +28,9 @@
                 </form>
             </field>
         </record>
-        
+
         <!-- Label Configration Form View -->
-        <record id="view_label_config_form" model="ir.ui.view" >
+        <record id="view_label_config_form" model="ir.ui.view">
             <field name="name">label.config.form</field>
             <field name="model">label.config</field>
             <field name="arch" type="xml">
@@ -50,9 +50,9 @@
                 </form>
             </field>
         </record>
-        
+
         <!-- Label Configration Tree View -->
-        <record id="view_label_config_tree" model="ir.ui.view" >
+        <record id="view_label_config_tree" model="ir.ui.view">
             <field name="name">label.config.tree</field>
             <field name="model">label.config</field>
             <field name="arch" type="xml">
@@ -68,16 +68,16 @@
                 </tree>
             </field>
         </record>
-        
-        <record id="action_label_config_form" model="ir.actions.act_window" >
+
+        <record id="action_label_config_form" model="ir.actions.act_window">
             <field name="name">Label Configuration</field>
             <field name="res_model">label.brand</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        
-        <menuitem id="menu_config" name="Configuration" parent="base.menu_administration" sequence="2" />
+
+        <menuitem id="menu_config" name="Configuration" parent="base.menu_administration" sequence="2"/>
         <menuitem id="menu_label_config_view" action="action_label_config_form" parent="menu_config"/>
-        
+
     </data>
 </openerp>
