@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 {
-    "name" : "Web Digital Signature v10.0",
-    "version" : "1.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
+    "name": "Web Digital Signature v10.0",
+    "version": "1.0",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": '',
     'complexity': "easy",
     'depends': ['web'],
