@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
-from openerp import models, fields, api, _
+from odoo import models, fields, api
 
 
 class CrmTeamInherit(models.Model):
@@ -23,9 +23,8 @@ class ProjectProject(models.Model):
     members = fields.Many2many('res.users', 'project_user_rel', 'project_id',
                                'uid', 'Project Members', help="""Project's
                                members are users who can have an access to
-                               the tasks related to this project.""",
-                               states={'close': [('readonly', True)],
-                                       'cancelled': [('readonly', True)]})
+                               the tasks related to this project."""
+                               )
     team_id = fields.Many2one('crm.team', string="Project Team",
                               domain=[('type_team', '=', 'project')])
 
