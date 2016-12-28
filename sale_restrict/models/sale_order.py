@@ -10,10 +10,12 @@ class sale_order(models.Model):
 
     @api.multi
     def action_confirm(self):
-        zero_price = [x.product_id.name for x in self.order_line if not x.price_unit]
+        zero_price = [x.product_id.name
+                      for x in self.order_line if not x.price_unit]
 
         if zero_price:
-            message = _("Please specify unit price for the following products:") + '\n'
+            message = _("Please specify unit price for "
+                        "the following products:") + '\n'
             message += '\n'.join(map(str, zero_price))
             raise Warning(message.rstrip())
         return super(sale_order, self).action_confirm()
