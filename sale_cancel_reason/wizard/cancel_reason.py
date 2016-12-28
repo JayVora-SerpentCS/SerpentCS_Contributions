@@ -50,5 +50,6 @@ class SaleOrderCancel(models.TransientModel):
         if sale.state in QUOTATION_STATES:
             sale.action_cancel()
         else:
-            raise UserError(_('You cannot cancel the Quotation/Order in the current state!'))
+            raise UserError(_('You cannot cancel the Quotation/Order in the \
+                              current state!'))
         return act_close

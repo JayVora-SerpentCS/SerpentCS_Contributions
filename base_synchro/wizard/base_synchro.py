@@ -27,9 +27,14 @@ class RPCProxyOne(object):
 
     def __getattr__(self, name):
         RPCProxy(self.server)
-        return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.server_db,
-                                                                 self.uid, self.server.password,
-                                                                 self.ressource, name, *args)
+        return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.\
+                                                                 server_db,
+                                                                 self.uid,
+                                                                 self.server.\
+                                                                 password,
+                                                                 self.\
+                                                                 ressource,
+                                                                 name, *args)
 
 
 class RPCProxy(object):
@@ -74,7 +79,8 @@ class base_synchro(models.TransientModel):
         if object.action in ('u', 'b'):
             ids += pool2.get('base.synchro.obj').get_ids(self._cr, self.user_id.id,
                                                          object.model_id.model,
-                                                         object.synchronize_date,
+                                                         object.\
+                                                         synchronize_date,
                                                          eval(object.domain),
                                                          {'action': 'u'})
         ids.sort()
@@ -121,7 +127,8 @@ class base_synchro(models.TransientModel):
                 self.report_write += 1
             else:
                 idnew = pool_dest.get(object.model_id.model).create(self._cr,
-                                                                    self.user_id.id,
+                                                                    self.\
+                                                                    user_id.id,
                                                                     value)
                 self.env['base.synchro.obj.line'].create({
                     'obj_id': object.id,
@@ -148,13 +155,13 @@ class base_synchro(models.TransientModel):
         return result
 
     @api.model
-    def relation_transform(self, pool_src, pool_dest, obj_model, res_id, action):
+    def relation_transform(self, pool_src, pool_dest, obj_model, res_id,
+                           action):
         if not res_id:
             return False
-        self._cr.execute('''select o.id from base_synchro_obj o 
-        left join ir_model m on (o.model_id =m.id) where
-         m.model=%s and 
-         o.active''', (obj_model,))
+        self._cr.execute('''select o.id from base_synchro_obj o
+                            left join ir_model m on (o.model_id =m.id) where
+                            m.model=%s and o.active''', (obj_model,))
         obj = self._cr.fetchone()
         result = False
         if obj:

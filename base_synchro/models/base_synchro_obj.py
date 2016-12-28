@@ -32,12 +32,17 @@ class base_synchro_obj(models.Model):
                                 ondelete='cascade', select=1, required=True)
     model_id = fields.Many2one('ir.model', string='Object to synchronize',
                                required=True)
-    action = fields.Selection([('d', 'Download'), ('u', 'Upload'), ('b', 'Both')],
-                              'Synchronisation direction', required=True, default='d')
+    action = fields.Selection([('d', 'Download'),
+                               ('u', 'Upload'),
+                               ('b', 'Both')],
+                              'Synchronisation direction', required=True,
+                              default='d')
     sequence = fields.Integer('Sequence')
     active = fields.Boolean('Active', default=True)
-    synchronize_date = fields.Datetime('Latest Synchronization', readonly=True)
-    line_id = fields.One2many('base.synchro.obj.line', 'obj_id', 'IDs Affected',
+    synchronize_date = fields.Datetime('Latest Synchronization',
+                                       readonly=True)
+    line_id = fields.One2many('base.synchro.obj.line', 'obj_id',
+                              'IDs Affected',
                               ondelete='cascade')
     avoid_ids = fields.One2many('base.synchro.obj.avoid', 'obj_id',
                                 'Fields Not Sync.')
@@ -79,10 +84,11 @@ class base_synchro_obj_avoid(models.Model):
 class base_synchro_obj_line(models.Model):
     '''Class to store the operations done by wizard'''
     _name = "base.synchro.obj.line"
-    _description = "Synchronized instances"
+    _description = "Synchronized Instances"
 
-    name = fields.Datetime('Date', required=True, default=lambda *args:
-    time.strftime('%Y-%m-%d %H:%M:%S'))
+    name = fields.Datetime('Date', required=True,
+                           default=lambda *args:
+                           time.strftime('%Y-%m-%d %H:%M:%S'))
     obj_id = fields.Many2one('base.synchro.obj', 'Object',
                              ondelete='cascade', select=1)
     local_id = fields.Integer('Local ID', readonly=True)
