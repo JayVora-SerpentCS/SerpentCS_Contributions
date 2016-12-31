@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    'name': 'Product Image for Sale Reports',
+    'name': 'Product Image for Sale',
     'author': 'Serpent Consulting Services Pvt. Ltd.,\
              Odoo Community Association (OCA)',
     'category': 'Sales Management',
