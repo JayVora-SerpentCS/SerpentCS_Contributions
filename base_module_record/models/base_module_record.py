@@ -4,6 +4,7 @@
 import string
 from xml.dom import minidom
 from odoo import api, fields, models
+from openerp.tools import ustr, frozendict
 from odoo.tools.translate import _
 from odoo.tools.misc import ustr
 
@@ -99,7 +100,7 @@ class base_module_record(models.Model):
         fields = model_pool.fields_get()
         for key, val in data.items():
             # functional fields check
-            if key in model_pool._columns.keys() and not model_pool._columns[key].store:
+            if key in model_pool._fields.keys() and not model_pool._fields[key].store:
                 continue
             if not (val or (fields[key]['type'] == 'boolean')):
                 continue
@@ -135,10 +136,10 @@ class base_module_record(models.Model):
             elif fields[key]['type'] in ('one2many',):
                 for valitem in (val or []):
                     if valitem[0] in (0, 1):
-                        if key in model_pool._columns:
-                            model_pool._columns[key]._fields_id
+                        if key in model_pool._fields:
+                            model_pool._fields[key].inverse_name
                         else:
-                            model_pool._inherit_fields[key][2]._fields_id
+                            model_pool._inherit_fields[key][2].inverse_name
                         if valitem[0] == 0:
                             newid = self._create_id(fields[key]['relation'], valitem[2])
                             valitem[1] = newid
@@ -220,10 +221,10 @@ class base_module_record(models.Model):
                 items = [[]]
                 for valitem in (val or []):
                     if valitem[0] in (0, 1):
-                        if key in model_pool._columns:
-                            fname = model_pool._columns[key]._fields_id
+                        if key in model_pool._fields:
+                            fname = model_pool._fields[key].inverse_name
                         else:
-                            fname = model_pool._inherit_fields[key][2]._fields_id
+                            fname = model_pool._inherit_fields[key][2].inverse_name
                         del valitem[2][fname]  # delete parent_field from child's fields list
                         childrecord = self._create_yaml_record(fields[key]['relation'],
                                                                valitem[2], None)
@@ -255,7 +256,7 @@ class base_module_record(models.Model):
     def get_copy_data(self, model, id, result):
         res = []
         obj = self.env[model]
-        data = self.pool[model].read(self._cr, self.env.user.id, [id], [])
+        data = obj.browse([id][0]).read([])
         if type(data) == type([]):
             del data[0]['id']
             data = data[0]
