@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Web one2many Kanban',
-    'version': '1.0',
+    'version': '10.0.1.0.0',
     'sequence': 6,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'description': """
