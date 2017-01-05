@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# See LICENSE file for full copyright and licensing details.
 
-from openerp import fields, models, api
+from odoo import fields, models, api
 
 
-class project(models.Model):
+class Project(models.Model):
     _inherit = 'project.project'
 
     @api.one
