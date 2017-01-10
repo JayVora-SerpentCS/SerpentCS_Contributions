@@ -7,7 +7,7 @@
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sales Management',
     'website': 'http://www.serpentcs.com',
-    'version': '9.0.1.0.1',
+    'version': '10.0.1.0.1',
     'license': 'AGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'description': '''This module is to hide price/discount in Sale Order
