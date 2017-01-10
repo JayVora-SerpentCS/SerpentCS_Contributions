@@ -24,6 +24,6 @@ This module will let you synchronize two Odoo Databases!
         "views/base_synchro_view.xml",
         "views/res_request_view.xml",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
 }
