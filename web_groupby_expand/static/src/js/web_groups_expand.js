@@ -194,7 +194,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 self.options.expand = true;
                 self.groups.render_auto_groups(false)
             })
-            this._super.apply(this, arguments);
+            var res = this._super.apply(this, arguments);
             $("#expand_icon").addClass('fa-expand');
             $("#expand_icon").removeClass('fa-compress');
             if (self.groups.datagroup.dataset) {
@@ -208,12 +208,14 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             } else {
                 $('.oe-list-expand').show();
             }
+            return res;
         },
 
         do_search: function (domain, context, group_by) {
-            this._super(domain, context, group_by);
+            var res = this._super(domain, context, group_by);
             this.options.expand = false;
             this.groups.groups_auto = []
+            return res;
         },
 
     });
