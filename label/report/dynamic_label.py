@@ -12,8 +12,20 @@ from barcode.writer import ImageWriter
 import base64
 
 # 3: local imports
-import utils
-import cairosvg
+try:
+    import utils
+    assert utils
+except (ImportError, AssertionError):
+    _logger.info('utils module not available. Please install "utils"\
+                      python package.')
+
+try:
+    import cairosvg
+    assert cairosvg
+except (ImportError, AssertionError):
+    _logger.info('cairosvg module not available. Please install "cairosvg"\
+                      python package.')
+
 import tempfile
 
 
