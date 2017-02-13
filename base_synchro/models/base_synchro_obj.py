@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 import time
-from openerp import models, fields, api
+
+from odoo import models, fields, api
 
 
-class base_synchro_server(models.Model):
-    '''Class to store the information regarding server'''
+class BaseSynchroServer(models.Model):
+    """Class to store the information regarding server."""
+
     _name = "base.synchro.server"
     _description = "Synchronized server"
 
@@ -20,8 +22,9 @@ class base_synchro_server(models.Model):
                               ondelete='cascade')
 
 
-class base_synchro_obj(models.Model):
-    '''Class to store the operations done by wizard'''
+class BaseSynchroObj(models.Model):
+    """Class to store the operations done by wizard."""
+
     _name = "base.synchro.obj"
     _description = "Register Class"
     _order = 'sequence'
@@ -32,23 +35,21 @@ class base_synchro_obj(models.Model):
                                 ondelete='cascade', select=1, required=True)
     model_id = fields.Many2one('ir.model', string='Object to synchronize',
                                required=True)
-    action = fields.Selection([('d', 'Download'),
-                               ('u', 'Upload'),
-                               ('b', 'Both')],
-                              'Synchronisation direction', required=True,
+    action = fields.Selection([('d', 'Download'), ('u', 'Upload'), ('b',
+                                                                    'Both')],
+                              'Synchronization direction', required=True,
                               default='d')
     sequence = fields.Integer('Sequence')
     active = fields.Boolean('Active', default=True)
-    synchronize_date = fields.Datetime('Latest Synchronization',
-                                       readonly=True)
+    synchronize_date = fields.Datetime('Latest Synchronization', readonly=True)
     line_id = fields.One2many('base.synchro.obj.line', 'obj_id',
-                              'IDs Affected',
-                              ondelete='cascade')
+                              'IDs Affected', ondelete='cascade')
     avoid_ids = fields.One2many('base.synchro.obj.avoid', 'obj_id',
                                 'Fields Not Sync.')
 
     @api.model
     def get_ids(self, obj, dt, domain=[], action=None):
+        """Method to get ids."""
         if action is None:
             action = {}
         return self._get_ids(obj, dt, domain, action=action)
@@ -57,39 +58,42 @@ class base_synchro_obj(models.Model):
     def _get_ids(self, obj, dt, domain=[], action=None):
         if action is None:
             action = {}
-        POOL = self.env[obj]
+        pool = self.env[obj]
         result = []
         if dt:
-            domain2 = domain + [('write_date', '>=', dt)]
-            domain3 = domain + [('create_date', '>=', dt)]
+            w_date = domain + [('write_date', '>=', dt)]
+            c_date = domain + [('create_date', '>=', dt)]
         else:
-            domain2 = domain3 = domain
-        obj_rec = POOL.search(domain2)
-        obj_rec += POOL.search(domain3)
+            w_date = c_date = domain
+        obj_rec = pool.search(w_date)
+        obj_rec += pool.search(c_date)
         for r in obj_rec.read(['create_date', 'write_date']):
-            result.append((r['write_date'] or r['create_date'],
-                           r['id'], action.get('action', 'd')))
+            result.append((r['write_date'] or r['create_date'], r['id'],
+                           action.get('action', 'd')))
         return result
 
 
-class base_synchro_obj_avoid(models.Model):
+class BaseSynchroObjAvoid(models.Model):
+    """Class to avoid the base syncro object."""
+
     _name = "base.synchro.obj.avoid"
     _description = "Fields to not synchronize"
 
     name = fields.Char('Field Name', select=1, required=True)
-    obj_id = fields.Many2one('base.synchro.obj', 'Object',
-                             required=True, ondelete='cascade')
+    obj_id = fields.Many2one('base.synchro.obj', 'Object', required=True,
+                             ondelete='cascade')
 
 
-class base_synchro_obj_line(models.Model):
-    '''Class to store the operations done by wizard'''
+class BaseSynchroObjLine(models.Model):
+    """Class to store object line in base syncro."""
+
     _name = "base.synchro.obj.line"
-    _description = "Synchronized Instances"
+    _description = "Synchronized instances"
 
     name = fields.Datetime('Date', required=True,
                            default=lambda *args:
                            time.strftime('%Y-%m-%d %H:%M:%S'))
-    obj_id = fields.Many2one('base.synchro.obj', 'Object',
-                             ondelete='cascade', select=1)
+    obj_id = fields.Many2one('base.synchro.obj', 'Object', ondelete='cascade',
+                             select=1)
     local_id = fields.Integer('Local ID', readonly=True)
     remote_id = fields.Integer('Remote ID', readonly=True)

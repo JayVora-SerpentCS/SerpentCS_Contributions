@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<!DOCTYPE html>
+<odoo>
 
-        <record id="view_base_synchro" model="ir.ui.view">
-            <field name="name">Base Synchronization</field>
-            <field name="model">base.synchro</field>
-            <field name="priority">1</field>
-            <field name="arch" type="xml">
-                <form string="Transfer Data To Server">
-                    <group col="4">
-                        <field name="server_url"/>
-                        <field name="user_id"/>
-                    </group>
-                    <footer>
-                        <button name="upload_download_multi_thread" string="Synchronize" type="object"
-                                class="oe_highlight"/>
-                        or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
-                    </footer>
-                </form>
-            </field>
-        </record>
+    <record id="view_base_synchro" model="ir.ui.view">
+        <field name="name">Base Synchronization</field>
+        <field name="model">base.synchro</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Data To Server">
+                <group col="4">
+                    <field name="server_url"/>
+                    <field name="user_id"/>
+                </group>
+                <footer>
+                    <button name="upload_download_multi_thread" string="Synchronize"
+                            type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 
-        <record id="action_view_base_synchro" model="ir.actions.act_window">
-            <field name="name">Base Synchronization</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">base.synchro</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_base_synchro"/>
-            <field name="target">new</field>
-        </record>
+    <record id="action_view_base_synchro" model="ir.actions.act_window">
+        <field name="name">Base Synchronization</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">base.synchro</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_base_synchro"/>
+        <field name="target">new</field>
+    </record>
 
-        <record id="view_base_synchro_finish" model="ir.ui.view">
-            <field name="name">Base Synchronization</field>
-            <field name="model">base.synchro</field>
-            <field name="arch" type="xml">
-                <form string="Synchronization Completed!">
-                    <label string="The synchronisation has been started. You will receive a request when it's done."/>
-                    <footer>
-                        <button string="Cancel" class="oe_link" special="cancel"/>
-                    </footer>
-                </form>
-            </field>
-        </record>
+    <record id="view_base_synchro_finish" model="ir.ui.view">
+        <field name="name">Base Synchronization</field>
+        <field name="model">base.synchro</field>
+        <field name="arch" type="xml">
+            <form string="Synchronization Completed!">
+                <label
+                        string="The synchronisation has been started. You will receive a request when it's done."/>
+                <footer>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 
-        <menuitem id="next_id_62" name="Synchronization" parent="base.menu_administration"/>
+    <menuitem id="next_id_62" name="Synchronization" parent="base.menu_administration"/>
 
-        <menuitem parent="base_synchro.next_id_62" name="Synchronize objects"
-                  action="action_view_base_synchro" id="menu_action_view_base_synchro"/>
+    <menuitem parent="base_synchro.next_id_62" name="Synchronize objects"
+              action="action_view_base_synchro" id="menu_action_view_base_synchro"/>
 
-    </data>
-</openerp>
+</odoo>
