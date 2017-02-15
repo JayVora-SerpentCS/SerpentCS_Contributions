@@ -11,6 +11,7 @@ import barcode
 from barcode.writer import ImageWriter
 import base64
 import logging
+import tempfile
 
 _logger = logging.getLogger(__name__)
 
@@ -28,8 +29,6 @@ try:
 except (ImportError, AssertionError):
     _logger.info('cairosvg module not available. Please install "cairosvg"\
                       python package.')
-
-import tempfile
 
 
 class report_dynamic_label(report_sxw.rml_parse):
