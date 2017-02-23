@@ -1,3 +1,5 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_awr_website_multi_image_product_image_public","product.image.public","website_multi_image_zoom.model_product_image","base.group_public",1,0,0,0
-"access_awr_website_multi_image_product_image_portal","product.image.portal","website_multi_image_zoom.model_product_image","base.group_portal",1,0,0,0
+"access_website_multi_image_product_image_public","product.image.public","website_multi_image_zoom.model_product_image",,1,0,0,0
+"access_multi_image_product_image_sales_manager","product.image.sales_manager","website_multi_image_zoom.model_product_image",base.group_sale_manager,1,1,1,1
+"access_multi_image_product_image_stock_user","product.image.stock_user","website_multi_image_zoom.model_product_image",stock.group_stock_user,1,1,1,0
+"access_multi_image_product_image_stock_manager","product.image.stock_manager","website_multi_image_zoom.model_product_image",stock.group_stock_manager,1,1,1,1
