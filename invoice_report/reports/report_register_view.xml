@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<report 
+			id="report_inv_rpt_wiz" 
+			string="Invoice Report"
+			model="account.invoice"
+			name="invoice_report.invoice_report_wiz_template" 
+			report_type="qweb-pdf" 
+			menu="False"
+			/>
+	</data>
+</openerp>

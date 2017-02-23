@@ -1,0 +1,40 @@
+<openerp>
+	<data>
+		<!-- Form View of Wizard for Invoice Report-->
+		<record id="invoice_report_wiz_form_view" model="ir.ui.view">
+			<field name="name">invoice.report.wiz.form.view</field>
+			<field name="model">inv.rpt.wiz</field>
+			<field name="arch" type="xml">
+				<form string="Invoice Report Wizard">
+					<group colspan="4" col="4">
+						<field name="date_start" required="1" />
+						<field name="date_stop" required="1"/>
+					</group>
+					<footer>
+						<button name="print_report" string="Print" type="object" class="oe_button oe_form_button oe_highlight" />
+						<button special="cancel" string="Cancel" class="oe_button oe_form_button oe_link" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<!-- Action of the Invoice Report  -->
+		<record id="action_inv_report_wiz" model="ir.actions.act_window">
+			<field name="name">Invoice Report Wizard</field>
+			<field name="res_model">inv.rpt.wiz</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<!-- Menu Will be visible in Customer Invoice-->
+		<act_window 
+			domain="[('type', '=', 'out_invoice')]" 
+			id="invoice_report_wizard_action"
+            name=" Print Invoice Report"
+            res_model="inv.rpt.wiz" src_model="account.invoice"
+            view_mode="form" 
+			target="new" 
+			view_type="form"
+        />
+	</data>
+</openerp>

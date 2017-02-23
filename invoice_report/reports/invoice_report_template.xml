@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<template id="invoice_report_wiz_template">
+			<style type="text/css">
+				td.line , span.line ,th.line {
+				font-family:times new roman;
+				font-size:12px;
+				}
+			</style>
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<div class="page">
+						<div class="oe_structure" />
+						<center><h3>Invoice Details</h3></center>
+						<table width="100%" class="table table-condensed">
+							<thead>
+								<tr>
+									<th class="text-left line" width="15%">Invoice No</th>
+									<th class="text-left line" width="15%">Invoice Date</th>
+									<th class="text-left line" width="20%">Partner</th>
+									<th class="text-right line" width="15%">Payment No</th>
+									<th class="text-right line" width="15%">Payment Date</th>
+									<th class="text-right line" width="20%">Payment Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									t-foreach="get_invoice(data['form']['date_start'],data['form']['date_stop'])['inv_ids']"
+									t-as="inv">
+									<td class="text-left line" width="15%">
+										<span t-field="inv.number" />
+									</td>
+									<td class="text-left line" width="15%">
+										<span t-field="inv.date_invoice" />
+									</td>
+									<td class="text-left line" width="20%">
+										<span t-field="inv.partner_id" />
+									</td>
+									<td class="text-right line" width="15%">
+									</td>
+									<td class="text-right line" width="15%">
+									</td>
+									<td class="text-right line" width="20%">
+									</td>
+									<tr t-foreach="inv.payment_ids" t-as="pay">
+										<td class="text-left line" width="15%">
+										</td>
+										<td class="text-left line" width="15%">
+										</td>
+										<td class="text-left line" width="20%">
+										</td>
+										<td class="text-right line" width="15%">
+											<span t-field="pay.ref" />
+										</td>
+										<td class="text-right line" width="15%">
+											<span t-field="pay.date" />
+										</td>
+										<td class="text-right line" width="20%">
+											<span t-esc="get_credit(pay,inv)['currency_name']"/>
+											<span t-esc="get_credit(pay,inv)['currency_symbol']"/>
+											<span t-esc="get_credit(pay,inv)['credit']"/>
+										</td>
+									</tr>
+								</tr>
+								<tr>
+									<th class="text-right line" width="80%" colspan="5">Total</th>
+									<th class="text-right line" width="20%">
+										<span t-esc="get_invoice(data['form']['date_start'],data['form']['date_stop'])['total']" />
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</t>
+			</t>
+		</template>
+	</data>
+</openerp>
