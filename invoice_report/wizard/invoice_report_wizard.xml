@@ -30,7 +30,7 @@
 		<act_window 
 			domain="[('type', '=', 'out_invoice')]" 
 			id="invoice_report_wizard_action"
-            name=" Print Invoice Report"
+            name="Print Invoice Report"
             res_model="inv.rpt.wiz" src_model="account.invoice"
             view_mode="form" 
 			target="new" 

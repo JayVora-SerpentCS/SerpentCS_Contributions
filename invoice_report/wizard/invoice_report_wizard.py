@@ -36,8 +36,5 @@ class invoice_report_wiz(models.TransientModel):
             'model': 'account.invoice',
             'form': self.read(['date_start', 'date_stop'])[0]
         }
-
-        return self.env['report'].get_action(self,
-                                             'invoice_report.\
-                                             invoice_report_wiz_template',
-                                             data)
+        template = 'invoice_report.invoice_report_wiz_template'
+        return self.env['report'].get_action(self, template, data)
