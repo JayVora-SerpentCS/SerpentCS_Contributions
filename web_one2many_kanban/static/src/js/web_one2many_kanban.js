@@ -308,11 +308,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             var self = this;
             var options = _.clone(this.record_options);
             // add empty invisible divs to make sure that all kanban records are left aligned
-            for (var i = 0, ghost_div; i < 6; i++) {
-                ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
-                ghost_div.appendTo(fragment);
-            }
-            this.postprocess_m2m_tags();
+            
             if(_.keys(self.dataset.o2m_field).length) {
                 _.each(this.data.records, function (record) {
                     if(_.keys(self.dataset.o2m_field).length) {
@@ -333,6 +329,13 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                         })
                     }
                 });
+                
+                for (var i = 0, ghost_div; i < 6; i++) {
+                    ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost o_kanban_flx");
+                    ghost_div.appendTo(fragment);
+                }
+                this.postprocess_m2m_tags();
+                
             } else {
                 _.each(this.data.records, function (record) {
                     var kanban_record = new KanbanRecord(self, record, options);
@@ -344,6 +347,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             for (var i = 0, ghost_div; i < 6; i++) {
                 ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
                 ghost_div.appendTo(fragment);
+                
             }
             this.postprocess_m2m_tags();
         },
@@ -382,7 +386,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             });
         },
 
-    })
+    });
 
 
     KanbanColumn.include({
