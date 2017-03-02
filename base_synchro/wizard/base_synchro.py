@@ -92,7 +92,7 @@ class BaseSynchro(models.TransientModel):
         sync_ids.sort()
         iii = 0
 
-        for action in sync_ids:
+        for dt, id, action in sync_ids:
             iii += 1
             destination_inverted = False
             if action == 'd':
@@ -178,7 +178,7 @@ class BaseSynchro(models.TransientModel):
         if not res_id:
             return False
         _logger.debug("Relation transform")
-        self._cr.execute('''select o.id from base_synchro_obj o left join/
+        self._cr.execute('''select o.id from base_synchro_obj o left join
                         ir_model m on (o.model_id =m.id) where
                         m.model=%s and o.active''', (obj_model,))
         obj = self._cr.fetchone()
@@ -298,8 +298,7 @@ Exceptions:
 
     @api.multi
     def upload_download_multi_thread(self):
-        target = self.upload_download()
-        threaded_synchronization = threading.Thread(target)
+        threaded_synchronization = threading.Thread(target=self.upload_download())
         threaded_synchronization.run()
         data_obj = self.env['ir.model.data']
         id2 = data_obj._get_id('base_synchro', 'view_base_synchro_finish')
