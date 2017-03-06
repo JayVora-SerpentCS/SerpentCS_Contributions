@@ -9,6 +9,8 @@
 					<group colspan="4" col="4">
 						<field name="date_start" required="1" />
 						<field name="date_stop" required="1"/>
+						<field name="inv_type"/>
+						<field name="is_open"/>
 					</group>
 					<footer>
 						<button name="print_report" string="Print" type="object" class="oe_button oe_form_button oe_highlight" />
@@ -26,15 +28,16 @@
 			<field name="target">new</field>
 		</record>
 		
-		<!-- Menu Will be visible in Customer Invoice-->
+		<!-- Menu of Invoice with Payment Details-->
 		<act_window 
-			domain="[('type', '=', 'out_invoice')]" 
 			id="invoice_report_wizard_action"
-            name="Print Invoice Report"
+            name="Invoice with Payment Details"
             res_model="inv.rpt.wiz" src_model="account.invoice"
             view_mode="form" 
 			target="new" 
 			view_type="form"
+			key2 ="client_print_multi"
+			multi="True"
         />
 	</data>
 </openerp>

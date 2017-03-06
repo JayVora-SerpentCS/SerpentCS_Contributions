@@ -21,16 +21,16 @@
 {
     'name': 'Report of Invoices with Payment Details',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'category': 'Reports',
+    'category': 'Report',
     'website': "http://www.serpentcs.com",
-    'version': '8.0.1.0.0',
-    'description': "This Module Adds a report for invoices alongwith its \
-payment details.",
+    'version': '8.0.1.0.1',
+    'description': 'This Module Adds a report for invoices alongwith its \
+payment details.',
     'depends': ['account'],
     'data': [
-             'wizard/invoice_report_wizard.xml',
-             'reports/invoice_report_template.xml',
-             'reports/report_register_view.xml',
+        'wizard/invoice_report_wizard.xml',
+        'reports/invoice_report_template.xml',
+        'reports/report_register_view.xml',
     ],
     'installable': True,
     'auto_install': False

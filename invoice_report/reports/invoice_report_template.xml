@@ -2,71 +2,77 @@
 <openerp>
 	<data>
 		<template id="invoice_report_wiz_template">
-			<style type="text/css">
-				td.line , span.line ,th.line {
-				font-family:times new roman;
-				font-size:12px;
-				}
-			</style>
 			<t t-call="report.html_container">
 				<t t-call="report.external_layout">
 					<div class="page">
 						<div class="oe_structure" />
-						<center><h3>Invoice Details</h3></center>
+						<center>
+							<h3>Invoice with Payment Details</h3>
+						</center>
 						<table width="100%" class="table table-condensed">
 							<thead>
 								<tr>
-									<th class="text-left line" width="15%">Invoice No</th>
-									<th class="text-left line" width="15%">Invoice Date</th>
-									<th class="text-left line" width="20%">Partner</th>
-									<th class="text-right line" width="15%">Payment No</th>
-									<th class="text-right line" width="15%">Payment Date</th>
-									<th class="text-right line" width="20%">Payment Amount</th>
+									<th class="text-left" width="15%">Invoice No</th>
+									<th class="text-left" width="10%">Date</th>
+									<th class="text-left" width="15%">Partner</th>
+									<th class="text-right" width="15%">Payment Ref</th>
+									<th class="text-right" width="20%">Payment Date</th>
+									<th class="text-right" width="25%">Payment Amount</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr
-									t-foreach="get_invoice(data['form']['date_start'],data['form']['date_stop'])['inv_ids']"
-									t-as="inv">
-									<td class="text-left line" width="15%">
+								<tr t-foreach="get_invoices(data)" t-as="inv">
+									<td class="text-left" width="15%">
 										<span t-field="inv.number" />
 									</td>
-									<td class="text-left line" width="15%">
-										<span t-field="inv.date_invoice" />
+									<td class="text-left" width="10%">
+										<span t-esc="formatLang(inv.date_invoice, date=True)" />
 									</td>
-									<td class="text-left line" width="20%">
+									<td class="text-left" width="15%">
 										<span t-field="inv.partner_id" />
 									</td>
-									<td class="text-right line" width="15%">
-									</td>
-									<td class="text-right line" width="15%">
-									</td>
-									<td class="text-right line" width="20%">
+									<td class="text-center" width="60%" colspan="3">
+										<t t-if="inv.payment_ids and inv.state=='paid'">
+											<span>
+												<strong>Paid</strong>
+											</span>
+										</t>
+										<t t-if="inv.payment_ids and inv.state=='open'">
+											<span>
+												<strong>Partial Paid</strong>
+											</span>
+										</t>
+										<t t-if="not inv.payment_ids">
+											<span>
+												<strong>Unpaid</strong>
+											</span>
+										</t>
 									</td>
 									<tr t-foreach="inv.payment_ids" t-as="pay">
-										<td class="text-left line" width="15%">
+										<td class="text-left" width="40%" colspan="3">
 										</td>
-										<td class="text-left line" width="15%">
-										</td>
-										<td class="text-left line" width="20%">
-										</td>
-										<td class="text-right line" width="15%">
+										<td class="text-right" width="15%">
 											<span t-field="pay.ref" />
 										</td>
-										<td class="text-right line" width="15%">
+										<td class="text-right" width="20%">
 											<span t-field="pay.date" />
 										</td>
-										<td class="text-right line" width="20%">
-											<span t-esc="get_credit(pay,inv)['currency_name']"/>
-											<span t-esc="get_credit(pay,inv)['currency_symbol']"/>
-											<span t-esc="get_credit(pay,inv)['credit']"/>
+										<td class="text-right" width="25%">
+											<t t-if="inv.type in ['out_invoice','in_refund']">
+												<span
+													t-esc="formatLang(pay.credit, currency_obj=user.company_id.currency_id)" />
+											</t>
+											<t t-if="inv.type in ['in_invoice','out_refund']">
+												<span t-esc="formatLang(pay.debit, currency_obj=user.company_id.currency_id)" />
+											</t>
 										</td>
 									</tr>
 								</tr>
 								<tr>
-									<th class="text-right line" width="80%" colspan="5">Total</th>
-									<th class="text-right line" width="20%">
-										<span t-esc="get_invoice(data['form']['date_start'],data['form']['date_stop'])['total']" />
+									<th class="text-right" width="80%" colspan="5">Total</th>
+									<th class="text-right" width="20%">
+										<span
+											t-esc="formatLang(get_total(),currency_obj=user.company_id.currency_id)" />
 									</th>
 								</tr>
 							</tbody>
