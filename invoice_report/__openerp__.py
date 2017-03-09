@@ -22,6 +22,7 @@
     'name': 'Report of Invoices with Payment Details',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Report',
+    'summary': 'Feature to print invoice report with Payment Details',
     'website': "http://www.serpentcs.com",
     'version': '8.0.1.0.1',
     'description': 'This Module Adds a report for invoices alongwith its \
