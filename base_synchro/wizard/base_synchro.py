@@ -15,8 +15,7 @@ _logger = logging.getLogger(__name__)
 
 class RPCProxyOne(object):
     def __init__(self, server, ressource):
-        """ Class to store one RPC proxy server."""
-
+        """Class to store one RPC proxy server."""
         self.server = server
         local_url = 'http://%s:%d/xmlrpc/common' % (server.server_url,
                                                     server.server_port)
@@ -36,7 +35,7 @@ class RPCProxyOne(object):
 
 
 class RPCProxy(object):
-    """ Class to store RPC proxy server."""
+    """Class to store RPC proxy server."""
 
     def __init__(self, server):
         self.server = server
@@ -47,6 +46,7 @@ class RPCProxy(object):
 
 class BaseSynchro(models.TransientModel):
     """Base Synchronization."""
+
     _name = 'base.synchro'
 
     server_url = fields.Many2one('base.synchro.server', "Server URL",
@@ -70,17 +70,17 @@ class BaseSynchro(models.TransientModel):
         pool1 = RPCProxy(server)
         pool2 = pool
         dt = object.synchronize_date
+        module = pool1.get('ir.module.module')
+        model_obj = object.model_id.model
+        module_id = module.search([("name", "ilike", "base_synchro"),
+                                   ('state', '=', 'installed')])
+        if not module_id:
+            raise Warning(_('Warning'),
+                          _('''If your Synchronization direction is/
+                          download or both, please install
+                          "Multi-DB Synchronization" module in targeted/
+                        server!'''))
         if object.action in ('d', 'b'):
-            module = pool1.get('ir.module.module')
-            model_obj = object.model_id.model
-            module_id = module.search([("name", "ilike", "base_synchro"),
-                                       ('state', '=', 'installed')])
-            if not module_id:
-                raise Warning(_('Warning'),
-                              _('''If your Synchronization direction is/
-                              download or both, please install
-                              "Multi-DB Synchronization" module in targeted/
-                            server!'''))
             sync_ids = pool1.get('base.synchro.obj').\
                 get_ids(model_obj, dt, eval(object.domain), {'action': 'd'})
 
@@ -241,14 +241,14 @@ class BaseSynchro(models.TransientModel):
                 if not data[f]:
                     del data[f]
             elif ftype == 'many2many':
-                DI = destination_inverted
-                res = map(lambda x: self.relation_transform(pool_src,
-                                                            pool_dest,
-                                                            fields[f]
-                                                            ['relation'],
-                                                            x, action,
-                                                            DI),
-                          data[f])
+                res = \
+                    map(lambda x: self.relation_transform(pool_src,
+                        pool_dest,
+                        fields[f]
+                        ['relation'],
+                        x, action,
+                        destination_inverted),
+                        data[f])
                 data[f] = [(6, 0, [x for x in res if x])]
         del data['id']
         return data
@@ -298,7 +298,8 @@ Exceptions:
 
     @api.multi
     def upload_download_multi_thread(self):
-        threaded_synchronization = threading.Thread(target=self.upload_download())
+        threaded_synchronization = \
+            threading.Thread(target=self.upload_download())
         threaded_synchronization.run()
         data_obj = self.env['ir.model.data']
         id2 = data_obj._get_id('base_synchro', 'view_base_synchro_finish')
