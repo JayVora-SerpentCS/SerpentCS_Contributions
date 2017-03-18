@@ -40,7 +40,7 @@
                 <label
                         string="The synchronisation has been started. You will receive a request when it's done."/>
                 <footer>
-                    <button string="Close" class="oe_link" special="cancel"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
         </field>
