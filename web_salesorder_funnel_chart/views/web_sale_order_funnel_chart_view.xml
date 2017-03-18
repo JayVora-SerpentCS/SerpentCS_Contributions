@@ -1,0 +1,11 @@
+<odoo>
+    <!-- Action for Funnel Chart -->
+    <record id="action_funnel_chart_sale" model="ir.actions.client">
+        <field name="name">Sales Order Funnel Chart</field>
+        <field name="tag">web_salesorder_funnel_chart.funnel_sale</field>
+    </record>
+
+    <menuitem id="FunnelChart" name="Sale Funnel Chart" parent="sales_team.menu_sales"
+              action="action_funnel_chart_sale" sequence="13"
+              groups="sales_team.group_sale_manager" />
+</odoo>
