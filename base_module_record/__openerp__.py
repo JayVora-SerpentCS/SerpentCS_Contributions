@@ -32,7 +32,7 @@ Select datetime criteria of recording and objects to be recorded and Record modu
         'wizard/base_module_record_object_view.xml',
         'wizard/base_module_record_data_view.xml',
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'images': ['images/base_module_record1.jpeg',
                'images/base_module_record2.jpeg',
