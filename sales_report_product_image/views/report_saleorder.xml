@@ -9,7 +9,7 @@
                     </th>
                 </t>
             </xpath>
-            <xpath expr="//table/tbody[@class='sale_tbody']/tr/td[1]" position="before">
+            <xpath expr="//table/t/t[2]/tr/td[1]" position="before">
                 <t t-if="o.image_sizes == 'image' and o.print_image ">
                     <td>
                         <span t-field="l.product_id.image" t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>

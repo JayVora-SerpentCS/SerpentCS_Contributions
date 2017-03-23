@@ -28,7 +28,7 @@
     'website': 'http://www.serpentcs.com',
     'version': '8.0.1.0.0',
     'sequence': 1,
-    'depends': ['sale', 'web_tree_image'],
+    'depends': ['sale_layout', 'web_tree_image'],
     'data': [
         'views/sale_product_view.xml',
         'views/report_saleorder.xml',
