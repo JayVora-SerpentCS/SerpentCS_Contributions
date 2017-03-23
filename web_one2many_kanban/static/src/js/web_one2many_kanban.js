@@ -8,6 +8,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
     var kanban_widgets = require('web_kanban.widgets');
     var KanbanColumn = require('web_kanban.Column');
     var fields_registry = kanban_widgets.registry;
+    var pyeval = require('web.pyeval');
     var QWeb = core.qweb;
     var _t = core._t;
 
@@ -349,11 +350,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
         render_ungrouped: function (fragment,el) {
             var self = this;
             var options = _.clone(this.record_options);
-            for (var i = 0, ghost_div; i < 6; i++) {
-                ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
-                ghost_div.appendTo(fragment);
-            }
-            this.postprocess_m2m_tags();
+            
             if(_.keys(self.dataset.o2m_field).length){
                 _.each(this.data.records, function (record) {
                     if(_.keys(self.dataset.o2m_field).length){
@@ -376,6 +373,12 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                         })
                     }
                 });
+                
+                for (var i = 0, ghost_div; i < 6; i++) {
+                    ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
+                    ghost_div.appendTo(fragment);
+                }
+                this.postprocess_m2m_tags();
             }else{
                 _.each(this.data.records, function (record) {
                     var kanban_record = new KanbanRecord(self, record, options);

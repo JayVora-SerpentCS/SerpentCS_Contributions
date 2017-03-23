@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of openerp
 from openerp.osv import osv
@@ -10,6 +10,10 @@ from openerp.osv.orm import browse_record
 import barcode
 from barcode.writer import ImageWriter
 import base64
+import logging
+import tempfile
+
+_logger = logging.getLogger(__name__)
 
 # 3: local imports
 try:
@@ -25,8 +29,6 @@ try:
 except (ImportError, AssertionError):
     _logger.info('cairosvg module not available. Please install "cairosvg"\
                       python package.')
-
-import tempfile
 
 
 class report_dynamic_label(report_sxw.rml_parse):

@@ -1,9 +1,18 @@
 .o_kanban_view.o_kanban_ungrouped .o_kanban_record {
--ms-flex: 0 1 340px !important;
--moz-flex: 0 1 340px !important;
+-ms-flex: 1 1 300px !important;
+-moz-flex: 1 1 300px !important;
 -webkit-box-flex: 1 !important;
--webkit-flex: 0 10 340px !important;
-flex: 0 1 340px !important;
+-webkit-flex: 1 10 300px !important;
+flex: 0 1 24% !important;
+}
+
+.o_kanban_flx{
+    height: 0;
+    min-height: 0!important; // to prevent view writers to override this height
+    visibility: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0;
 }
 // LAYOUT
 .o_kanban_view {
@@ -161,7 +170,7 @@ flex: 0 1 340px !important;
         min-height: 100%;
         padding: 0 @odoo-horizontal-padding - @o-kanban-group-padding - @o-kanban-record-margin;
         .o_kanban_record {
-            width: @o-kanban-default-record-width !important;
+           /* width: @o-kanban-default-record-width !important; */
         }
         &.o_kanban_small_column .o_kanban_group {
             &:not(.o_column_folded) {
@@ -175,7 +184,7 @@ flex: 0 1 340px !important;
 
     &.o_kanban_mobile {
         .o_kanban_record {
-            width: 400px;
+            /*width: 400px;*/
         }
         span {
             text-overflow: ellipsis;
