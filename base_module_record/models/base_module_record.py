@@ -45,7 +45,7 @@ def doc_createXElement(xdoc, tagName):
         return e
 
 import yaml
-from openerp.tools import yaml_tag # This import is not unused! Do not remove!
+from openerp.tools import yaml_tag  # This import is not unused! Do not remove!
 # Please do not override yaml_tag here: modify it in server bin/tools/yaml_tag.py
 
 class base_module_record(models.Model):
@@ -64,11 +64,11 @@ class base_module_record(models.Model):
         id_indx = 0
         while True:
             try:
-                name = filter(lambda x: x in string.letters, (data.get('name','') or '').lower())
+                name = filter(lambda x: x in string.letters, (data.get('name', '') or '').lower())
             except:
-                name=''
+                name = ''
 #            name=data.get('name','') or ''.lower()
-            val = model.replace('.','_') + '_' + name + str(id_indx)
+            val = model.replace('.', '_') + '_' + name + str(id_indx)
             if val not in self.blank_dict.values():
                 break
             id_indx += 1
@@ -126,12 +126,12 @@ class base_module_record(models.Model):
                 fields[key]['type'] == 'selection' and isinstance(val, int)):
                 field = doc.createElement('field')
                 field.setAttribute("name", key)
-                field.setAttribute("eval", val and str(val) or 'False' )
+                field.setAttribute("eval", val and str(val) or 'False')
                 record.appendChild(field)
             elif fields[key]['type'] in ('boolean',):
                 field = doc.createElement('field')
                 field.setAttribute("name", key)
-                field.setAttribute("eval", val and '1' or '0' )
+                field.setAttribute("eval", val and '1' or '0')
                 record.appendChild(field)
             elif fields[key]['type'] in ('many2one',):
                 field = doc.createElement('field')
@@ -162,7 +162,7 @@ class base_module_record(models.Model):
                             newid = self._create_id(fields[key]['relation'], valitem[2])
                             valitem[1] = newid
                         else:
-                            newid,update = self._get_id(fields[key]['relation'], valitem[1])
+                            newid, update = self._get_id(fields[key]['relation'], valitem[1])
                             if not newid:
                                 newid = self._create_id(fields[key]['relation'], valitem[2])
                                 valitem[1] = newid
@@ -197,7 +197,7 @@ class base_module_record(models.Model):
         record = {'model': model, 'id': str(record_id)}
         model_pool = self.env[model]
         data_pool = self.env['ir.model.data']
-        lids  = data_pool.search([('model', '=', model)])
+        lids = data_pool.search([('model', '=', model)])
         res = lids[:1].read(['module'])
         attrs = {}
         cr, uid, context = self.env.args
@@ -217,7 +217,7 @@ class base_module_record(models.Model):
         except:
             defaults[model] = {}
         for key, val in data.items():
-            if ((key in defaults[model]) and (val ==  defaults[model][key])) and not(fields[key].get('required', False)):
+            if ((key in defaults[model]) and (val == defaults[model][key])) and not(fields[key].get('required', False)):
                 continue
             if fields[key]['type'] in ('integer', 'float'):
                 if not val:
@@ -243,12 +243,12 @@ class base_module_record(models.Model):
                             fname = model_pool._columns[key]._fields_id
                         else:
                             fname = model_pool._inherit_fields[key][2]._fields_id
-                        del valitem[2][fname] #delete parent_field from child's fields list
+                        del valitem[2][fname]  # delete parent_field from child's fields list
                         childrecord = self._create_yaml_record(fields[key]['relation'], valitem[2], None)
                         items[0].append(childrecord['attrs'])
                 attrs[key] = items
             elif fields[key]['type'] in ('many2many',):
-                if (key in defaults[model]) and (val[0][2] ==  defaults[model][key]):
+                if (key in defaults[model]) and (val[0][2] == defaults[model][key]):
                     continue
                 res = []
                 for valitem in (val or []):
@@ -305,7 +305,9 @@ class base_module_record(models.Model):
                 if len(data[key]):
                     res1 = []
                     for rel_id in data[key]:
-                        res = [0,0]
+                        res = [0, 0]
+                        if rel == model:
+                            continue
                         res.append(self.get_copy_data(rel, rel_id, {}))
                         res1.append(res)
                     result[key] = res1
@@ -313,7 +315,7 @@ class base_module_record(models.Model):
                     result[key] = data[key]
 
             elif mod_fields[key]['type'] == 'many2many':
-                result[key]=[(6, 0, data[key])]
+                result[key] = [(6, 0, data[key])]
 
             else:
                 result[key] = data[key]
@@ -342,7 +344,7 @@ class base_module_record(models.Model):
         recording_data = context.get('recording_data')
         if rec[3] == 'write':
             for id in rec[4]:
-                id,update = self._get_id(rec[2], id)
+                id, update = self._get_id(rec[2], id)
                 noupdate = noupdate or update
                 if not id:
                     continue
@@ -356,13 +358,13 @@ class base_module_record(models.Model):
                 noupdate = noupdate or update
                 if not id:
                     continue
-                record,update = self._create_function(doc, rec[3], rec[4], id)
+                record, update = self._create_function(doc, rec[3], rec[4], id)
                 noupdate = noupdate or update
                 record_list += record
 
         elif rec[3] == 'create':
             id = self._create_id(rec[2], rec[4])
-            record,noupdate = self._create_record(doc, rec[2], rec[4], id)
+            record, noupdate = self._create_record(doc, rec[2], rec[4], id)
             self.blank_dict[(rec[2], result)] = id
             record_list += record
 
@@ -373,7 +375,7 @@ class base_module_record(models.Model):
             rec_data = [(recording_data[0][0], rec, recording_data[0][2], recording_data[0][3])]
             recording_data = rec_data
             id = self._create_id(rec[2], rec[5])
-            record,noupdate = self._create_record(doc, rec[2], rec[5], id)
+            record, noupdate = self._create_record(doc, rec[2], rec[5], id)
             self.blank_dict[(rec[2], result)] = id
             record_list += record
         return record_list, noupdate
@@ -384,7 +386,7 @@ class base_module_record(models.Model):
         context = dict(context)
         recording_data = context.get('recording_data')
         if self.mode == "create":
-            yml_id = self._create_id(rec[2],rec[4])
+            yml_id = self._create_id(rec[2], rec[4])
             self.blank_dict[(rec[2], result)] = yml_id
             record = self._create_yaml_record(rec[2], rec[4], yml_id)
             return record
@@ -419,18 +421,18 @@ class base_module_record(models.Model):
         if not active_id:
             active_id = 1
         rec_id, noupdate = self._get_id(model, ids[0])
-        temp_context['active_id'] = "ref('%s')"%unicode(active_id)
-        temp_context['active_ids'][0] = "ref('%s')"%str(active_id)
+        temp_context['active_id'] = "ref('%s')" % unicode(active_id)
+        temp_context['active_ids'][0] = "ref('%s')" % str(active_id)
         function = {}
         function['model'] = model
         function['action'] = action
-        attrs = "self.%s(cr, uid, [ref('%s')], {" %(action, rec_id,)
+        attrs = "self.%s(cr, uid, [ref('%s')], {" % (action, rec_id,)
         for k, v in temp_context.iteritems():
             if isinstance(v, str):
-                f = "'" + k + "': " + "'%s'"%v + ", "
+                f = "'" + k + "': " + "'%s'" % v + ", "
             else:
                 v = str(v).replace('"', '')
-                f = "'" + k + "': " + "%s"%v + ", "
+                f = "'" + k + "': " + "%s" % v + ", "
             attrs = attrs + f
         attrs = str(attrs) + '})'
         function['attrs'] = attrs
@@ -447,14 +449,14 @@ class base_module_record(models.Model):
         context = dict(context)
         recording_data = context.get('recording_data')
         if len(recording_data):
-            #upadate code here to pass blank dict into self replace with self.id = {} to self.blank_dict = {} 
+            # upadate code here to pass blank dict into self replace with self.id = {} to self.blank_dict = {}
             self.blank_dict = {}
             doc = minidom.Document()
             terp = doc.createElement("openerp")
             doc.appendChild(terp)
             for rec in recording_data:
                 if rec[0] == 'workflow':
-                    rec_id,noupdate = self._get_id(rec[1][2], rec[1][4])
+                    rec_id, noupdate = self._get_id(rec[1][2], rec[1][4])
                     if not rec_id:
                         continue
                     data = doc.createElement("data")
@@ -502,13 +504,13 @@ class base_module_record(models.Model):
                     continue
                 if self.mode == "workflow":
                     record = self._generate_object_yaml(rec[1], rec[0])
-                    yaml_file += "!comment Performing a workflow action %s on module %s"%(record['action'], record['model']) + '''\n'''
-                    yml_object = yaml.load(unicode('''\n !workflow %s \n'''%record,'iso-8859-1'))
+                    yaml_file += "!comment Performing a workflow action %s on module %s" % (record['action'], record['model']) + '''\n'''
+                    yml_object = yaml.load(unicode('''\n !workflow %s \n''' % record, 'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n\n'''
                 elif self.mode == 'osv_memory_action':
                     osv_action = self._generate_function_yaml(rec[1])
-                    yaml_file += "!comment Performing an osv_memory action %s on module %s"%(osv_action['action'], osv_action['model']) + '''\n'''
-                    osv_action = yaml.load(unicode('''\n !python %s \n'''%osv_action, 'iso-8859-1'))
+                    yaml_file += "!comment Performing an osv_memory action %s on module %s" % (osv_action['action'], osv_action['model']) + '''\n'''
+                    osv_action = yaml.load(unicode('''\n !python %s \n''' % osv_action, 'iso-8859-1'))
                     yaml_file += str(osv_action) + '''\n'''
                     attrs = yaml.dump(osv_action.attrs, default_flow_style=False)
                     attrs = attrs.replace("''", '"')
@@ -517,10 +519,10 @@ class base_module_record(models.Model):
                 else:
                     record = self._generate_object_yaml(rec[1], rec[3])
                     if self.mode == "create" or self.mode == "copy":
-                        yaml_file += "!comment Creating a %s record"%(record['model']) + '''\n'''
+                        yaml_file += "!comment Creating a %s record" % (record['model']) + '''\n'''
                     else:
-                        yaml_file += "!comment Modifying a %s record"%(record['model']) + '''\n'''
-                    yml_object = yaml.load(unicode('''\n !record %s \n'''%record, 'iso-8859-1'))
+                        yaml_file += "!comment Modifying a %s record" % (record['model']) + '''\n'''
+                    yml_object = yaml.load(unicode('''\n !record %s \n''' % record, 'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n'''
                     attrs = yaml.dump(yml_object.attrs, default_flow_style=False)
                     yaml_file += attrs + '''\n\n'''
@@ -530,9 +532,9 @@ class base_module_record(models.Model):
             if (line.find('!record') == 0) or (line.find('!workflow') == 0) or (line.find('!python') == 0):
                 line = "- \n" + "  " + line
             elif line.find('!comment') == 0:
-                line=line.replace('!comment', '- \n ')
+                line = line.replace('!comment', '- \n ')
             elif line.find('- -') != -1:
-                line=line.replace('- -', '  -')
+                line = line.replace('- -', '  -')
                 line = "    " + line
             else:
                 line = "    " + line
