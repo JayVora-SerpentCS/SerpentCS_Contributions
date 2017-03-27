@@ -19,12 +19,14 @@
             <field name="model">label.brand</field>
             <field name="arch" type="xml">
                 <form string="Label Configuration">
-                    <group colspan="4" col="4">
-                        <field name="brand_name"/>
-                        <newline/>
-                        <separator colspan="4" string="Label Config"/>
-                        <field name="label_config_ids" nolabel="1" colspan="4"/>
-                    </group>
+	                <sheet>
+	                    <group colspan="4" col="4">
+	                        <field name="brand_name"/>
+	                        <newline/>
+	                        <separator colspan="4" string="Label Config"/>
+	                        <field name="label_config_ids" nolabel="1" colspan="4"/>
+	                    </group>
+	                </sheet>
                 </form>
             </field>
         </record>
