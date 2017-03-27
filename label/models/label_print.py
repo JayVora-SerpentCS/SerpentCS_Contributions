@@ -102,6 +102,7 @@ class label_print(models.Model):
                     ir_values_obj_search.unlink()
         return True
 
+
 class label_print_field(models.Model):
 
     _name = "label.print.field"
@@ -122,6 +123,7 @@ class label_print_field(models.Model):
                                 'Position')
     nolabel = fields.Boolean('No Label')
     newline = fields.Boolean('New Line',deafult=True)
+
 
 class ir_model_fields(models.Model):
 
