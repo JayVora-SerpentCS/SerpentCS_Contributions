@@ -8,6 +8,7 @@
             <field name="model">label.print</field>
             <field name="arch" type="xml">
                 <form string="Label">
+                <sheet>
                     <group>
                         <field name="name"/>
                         <field name="model_id"/>
@@ -18,18 +19,16 @@
                             <group colspan="4" col="4">
                                 <field name="field_ids" colspan="4" nolabel="1">
                                     <form string="Fields">
-                                        <group colspan="4" col="6">
+                                        <group colspan="4" col="4">
                                             <field name="sequence"/>
                                             <field name="type"/>
                                             <field name="fontsize"/>
                                             <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
                                             <field name="newline"/>
                                             <field name="nolabel"/>
-                                            <group colspan="4" col="6">
-                                                <field name="python_expression"/>
-                                                <field name="field_id" attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"  context="{'model_list':parent.model_list}"/>
-                                                <field name="python_field" attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"/>
-                                            </group>
+                                            <field name="python_expression"/>
+                                            <field name="field_id" attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"  context="{'model_list':parent.model_list}"/>
+                                            <field name="python_field" attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"/>
                                             <newline/>
                                             <label string="Python experession field must be start with obj. e.g:- obj.M2O_field.field_name" colspan="4"/>
                                         </group>
@@ -55,6 +54,7 @@
                             </group>
                         </page>
                     </notebook>
+                </sheet>
                 </form>
             </field>
         </record>
