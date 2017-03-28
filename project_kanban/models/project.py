@@ -8,10 +8,12 @@ from odoo import fields, models, api
 class Project(models.Model):
     _inherit = 'project.project'
 
-    @api.one
+    @api.multi
     @api.depends('message_ids')
     def _get_recent_date(self):
-        date_lst = [x.date for x in self.message_ids]
-        self.recent_date = date_lst and max(date_lst) or False
+        for rec in self:
+            date_lst = [x.date for x in rec.message_ids]
+            rec.recent_date = date_lst and max(date_lst) or False
 
-    recent_date = fields.Datetime(compute="_get_recent_date", string="Recent date")
+    recent_date = fields.Datetime(compute="_get_recent_date",
+                                  string="Recent date")
