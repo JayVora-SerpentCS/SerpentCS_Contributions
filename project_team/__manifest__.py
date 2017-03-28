@@ -2,7 +2,7 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Project Team v10',
+    'name': 'Project - Set Team and members',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Adds Project Team Members.',
     'category': 'Project Management',
