@@ -1,31 +1,23 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-# 1:  imports of openerp
-from openerp.osv import osv
-from openerp.report import report_sxw
-from openerp.osv.orm import browse_record
-
-# 2: imports of python lib
-import barcode
-from barcode.writer import ImageWriter
-import base64
-
-# 3: local imports
-import utils
-import cairosvg
-import tempfile
+# 1:  imports of odoo
+from odoo import models, api
+from odoo.osv.orm import browse_record
 
 
-class report_dynamic_label(report_sxw.rml_parse):
+class ReportDynamicLabel(models.AbstractModel):
+    _name = 'report.label.report_label'
+
+    @api.multi
     def get_data(self, row, columns, ids, model, number_of_copy):
-        active_model_obj = self.pool.get(model)
-        label_print_obj = self.pool.get('label.print')
-        label_print_data = label_print_obj.browse(self.cr, self.uid,
-                                                  self.context.get('label_print'))
+        active_model_obj = self.env[model]
+        label_print_obj = self.env['label.print']
+        label_print_data = label_print_obj.\
+            browse(self.env.context.get('label_print'))
         result = []
         value_vals = []
-        for datas in active_model_obj.browse(self.cr, self.uid, ids):
+        for datas in active_model_obj.browse(ids):
             for i in range(0, number_of_copy):
                 vals = []
                 bot = False
@@ -45,18 +37,19 @@ class report_dynamic_label(report_sxw.rml_parse):
 
                     if isinstance(value, browse_record):
                         model_obj = self.pool.get(value._name)
-                        value = eval("obj." + model_obj._rec_name, {'obj': value})
+                        value = eval("obj." + model_obj._rec_name,
+                                     {'obj': value})
 
                     if not value:
                         value = ''
 
                     if field.nolabel:
-                        string = '';
+                        string = ''
                     else:
                         string += ' :- '
 
                     if field.type == 'image' or field.type == 'barcode':
-                        string = '';
+                        string = ''
                         if field.position != 'bottom':
                             pos = 'float:' + str(field.position) + ';'
                             bot = False
@@ -65,14 +58,16 @@ class report_dynamic_label(report_sxw.rml_parse):
                             bot_dict = {'string': string, 'value': value,
                                         'type': field.type,
                                         'newline': field.newline,
-                                        'style': "font-size:" + str(field.fontsize) + "px;" + pos}
+                                        'style': "font-size:" +
+                                        str(field.fontsize) + "px;" + pos}
                     else:
                         bot = False
                     if not bot:
                         vals_dict = {'string': string, 'value': value,
                                      'type': field.type,
                                      'newline': field.newline,
-                                     'style': "font-size:" + str(field.fontsize) + "px;" + pos}
+                                     'style': "font-size:" +
+                                     str(field.fontsize) + "px;" + pos}
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
@@ -133,18 +128,18 @@ class report_dynamic_label(report_sxw.rml_parse):
             new_list.append(new_val)
         return new_list
 
-    def __init__(self, cr, uid, name, context):
-
-        super(report_dynamic_label, self).__init__(cr, uid, name, context=context)
-        self.context = context
-        self.rec_no = 0
-        self.localcontext.update({
+    @api.model
+    def render_html(self, docids, data):
+        report = self.env['report']
+        lab_report = report._get_report_from_name('label.report_label')
+        if data is None:
+            data = {}
+        if not docids:
+            docids = data.get('docids')
+        docargs = {
+            'doc_ids': docids,
+            'doc_model': lab_report.model,
+            'data': data,
             'get_data': self.get_data,
-        })
-
-
-class report_employee(osv.AbstractModel):
-    _name = 'report.label.report_label'
-    _inherit = 'report.abstract_report'
-    _template = 'label.report_label'
-    _wrapped_report_class = report_dynamic_label
+        }
+        return report.render('label.report_label', docargs)

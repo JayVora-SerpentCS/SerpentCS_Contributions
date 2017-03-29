@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
+<odoo>
     <data>
 
         <!-- This view use for display label data fields -->
@@ -8,62 +8,60 @@
             <field name="model">label.print</field>
             <field name="arch" type="xml">
                 <form string="Label">
-                    <group>
+                    <sheet>
+                    <group colspan="4" col="4">
                         <field name="name"/>
                         <field name="model_id"/>
                         <field name="model_list" invisible="1"/>
                     </group>
                     <notebook colspan="4">
                         <page string="Fields">
-                            <group colspan="4" col="4">
-                                <field name="field_ids" colspan="4" nolabel="1">
-                                    <form string="Fields">
-                                        <group colspan="4" col="6">
-                                            <field name="sequence"/>
-                                            <field name="type"/>
-                                            <field name="fontsize"/>
-                                            <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
-                                            <field name="newline"/>
-                                            <field name="nolabel"/>
-                                            <group colspan="4" col="6">
-                                                <field name="python_expression"/>
-                                                <field name="field_id"
-                                                       attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
-                                                       domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"
-                                                       context="{'model_list':parent.model_list}"/>
-                                                <field name="python_field"
-                                                       attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"/>
-                                            </group>
-                                            <newline/>
-                                            <label string="Python experession field must be start with obj. e.g:- obj.M2O_field.field_name"
-                                                   colspan="4"/>
-                                        </group>
-                                    </form>
-                                    <tree string="Fields">
+                            <field name="field_ids" colspan="4" nolabel="1">
+                                <form string="Fields">
+                                    <group colspan="4" col="4">
                                         <field name="sequence"/>
-                                        <field name="field_id"
-                                               domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"/>
-                                        <field name="python_field"/>
                                         <field name="type"/>
-                                    </tree>
-                                </field>
-                            </group>
+                                        <field name="fontsize"/>
+                                        <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
+                                        <field name="newline"/>
+                                        <field name="nolabel"/>
+                                        <field name="python_expression"/>
+                                        <field name="field_id"
+                                               attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
+                                               domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"
+                                               context="{'model_list':parent.model_list}"/>
+                                        <field name="python_field"
+                                               attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"/>
+                                        <newline/>
+                                        <label string="Python experession field must be start with obj. e.g:- obj.M2O_field.field_name"
+                                               colspan="4"/>
+                                    </group>
+                                </form>
+                                <tree string="Fields">
+                                    <field name="sequence"/>
+                                    <field name="field_id"
+                                           domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"/>
+                                    <field name="python_field"/>
+                                    <field name="type"/>
+                                </tree>
+                            </field>
                         </page>
                         <page string="Advance">
                             <group colspan="2" col="2">
                                 <button name="create_action" string="Add sidebar button" type="object"
-                                        icon="gtk-execute"
+                                        icon="fa-plus"
                                         colspan="2" attrs="{'invisible':[('ref_ir_act_report','!=',False)]}"
                                         help="Display a button in the sidebar of related documents to open a composition wizard"/>
                                 <field name="ref_ir_act_report"
                                        attrs="{'invisible':[('ref_ir_act_report','=',False)]}"/>
                                 <field name="ref_ir_value" attrs="{'invisible':[('ref_ir_act_report','=',False)]}"/>
                                 <button name="unlink_action" string="Remove sidebar button" type="object"
-                                        icon="gtk-delete"
+                                        icon="fa-trash-o"
                                         attrs="{'invisible':[('ref_ir_act_report','=',False)]}" colspan="2"/>
                             </group>
                         </page>
                     </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -80,6 +78,7 @@
             </field>
         </record>
 
+        <!-- Label Print Action -->
         <record id="action_label_print_form" model="ir.actions.act_window">
             <field name="name">Label Print</field>
             <field name="res_model">label.print</field>
@@ -88,7 +87,8 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <!-- Menu of Label Print -->
         <menuitem id="menu_label_print_view" action="action_label_print_form" parent="label.menu_config"/>
 
     </data>
-</openerp>
+</odoo>
