@@ -2,14 +2,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     "name": "Mass Label Reporting",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": "Tools",
     "website": "http://www.serpentcs.com",
     "description": """
     The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
     """,
-    'depends': ['report_webkit'],
+    'depends': ['report'],
     'data': [
         'data/report_paperformat.xml',
         'security/label.brand.csv',
