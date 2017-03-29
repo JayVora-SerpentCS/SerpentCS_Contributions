@@ -26,20 +26,31 @@ from openerp.tools import frozendict, ustr
 from openerp.tools.translate import _
 from openerp import models, fields, api
 
+
 class base_module_record(models.TransientModel):
     _name = 'base.module.record'
     _description = "Base Module Record"
 
     @api.model
     def _get_default_objects(self):
-        names = ('ir.ui.view', 'ir.ui.menu', 'ir.model', 'ir.model.fields', 'ir.model.access',
-            'res.partner', 'res.partner.address', 'res.partner.category', 'workflow',
-            'workflow.activity', 'workflow.transition', 'ir.actions.server', 'ir.server.object.lines')
+        names = ('ir.ui.view', 'ir.ui.menu', 'ir.model', 'ir.model.fields',
+                 'ir.model.access', 'res.partner', 'res.partner.address',
+                 'res.partner.category', 'workflow', 'workflow.activity',
+                 'workflow.transition', 'ir.actions.server',
+                 'ir.server.object.lines')
         return self.env['ir.model'].search([('model', 'in', names)])
 
-    check_date = fields.Datetime('Record from Date', required=True, default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
-    objects = fields.Many2many('ir.model', 'base_module_record_object_rel', 'objects', 'model_id', 'Objects', default=_get_default_objects)
-    filter_cond =  fields.Selection([('created', 'Created'), ('modified', 'Modified'), ('created_modified', 'Created & Modified')], 'Records only', required=True, default='created')
+    check_date = fields.Datetime(
+        'Record from Date', required=True,
+        default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
+    objects = fields.Many2many('ir.model', 'base_module_record_object_rel',
+                               'objects', 'model_id', 'Objects',
+                               default=_get_default_objects)
+    filter_cond = fields.Selection([('created', 'Created'),
+                                    ('modified', 'Modified'),
+                                    ('created_modified',
+                                     'Created & Modified')], 'Records only',
+                                   required=True, default='created')
     info_yaml = fields.Boolean('YAML')
 
     @api.multi
@@ -64,7 +75,8 @@ class base_module_record(models.TransientModel):
             elif filter_cond == 'modified':
                 search_condition = [('write_date', '>', check_date)]
             elif filter_cond == 'created_modified':
-                search_condition = ['|', ('create_date', '>', check_date), ('write_date', '>', check_date)]
+                search_condition = ['|', ('create_date', '>', check_date),
+                                    ('write_date', '>', check_date)]
             if '_log_access' in dir(obj_pool):
                 if not (obj_pool._log_access):
                     search_condition = []
@@ -74,14 +86,17 @@ class base_module_record(models.TransientModel):
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name, 'copy', s_id.id, {})
+                args = (dbname, self.env.user.id, obj_name, 'copy',
+                        s_id.id, {})
                 recording_data.append(('query', args, {}, s_id.id))
         mod_obj = self.env['ir.model.data']
         if len(recording_data):
             if data['info_yaml']:
-#                mod = self.env['ir.module.record']
+                # mod = self.env['ir.module.record']
                 res = base_module_save._create_yaml(self, data)
-                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'yml_save_form_view')])
+                model_data_ids = mod_obj.search(
+                    [('model', '=', 'ir.ui.view'),
+                     ('name', '=', 'yml_save_form_view')])
                 resource_id = model_data_ids.read(['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
@@ -97,7 +112,9 @@ class base_module_record(models.TransientModel):
                     'target': 'new',
                 }
             else:
-                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'info_start_form_view')])
+                model_data_ids = mod_obj.search(
+                    [('model', '=', 'ir.ui.view'),
+                     ('name', '=', 'info_start_form_view')])
                 resource_id = model_data_ids.read(['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
@@ -109,7 +126,9 @@ class base_module_record(models.TransientModel):
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
-        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_recording_message_view')])
+        model_data_ids = mod_obj.search(
+            [('model', '=', 'ir.ui.view'),
+             ('name', '=', 'module_recording_message_view')])
         resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
@@ -122,6 +141,7 @@ class base_module_record(models.TransientModel):
             'target': 'new',
         }
 
+
 class base_module_record_objects(models.TransientModel):
     _name = 'base.module.record.objects'
     _description = "Base Module Record Objects"
@@ -132,9 +152,13 @@ class base_module_record_objects(models.TransientModel):
         context = dict(context)
         context.update({'depends': {}})
         self.env.args = cr, uid, frozendict(context)
-        res = base_module_save._create_module(self, self._cr, self.env.user.id, data, context=context)
+        res = base_module_save._create_module(self, self._cr,
+                                              self.env.user.id,
+                                              data, context=context)
         mod_obj = self.env['ir.model.data']
-        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'), ('name', '=', 'module_create_form_view')])
+        model_data_ids = mod_obj.search(
+            [('model', '=', 'ir.ui.view'),
+             ('name', '=', 'module_create_form_view')])
         resource_id = model_data_ids.read(fields=['res_id'])[0]['res_id']
         context.update(res)
         return {
@@ -154,11 +178,16 @@ class base_module_record_objects(models.TransientModel):
     name = fields.Char('Module Name', size=64, required=True)
     directory_name = fields.Char('Directory Name', size=32, required=True)
     version = fields.Char('Version', size=16, required=True)
-    author = fields.Char('Author', size=64, required=True, default='OpenERP SA')
-    category =  fields.Char('Category', size=64, required=True, default='Vertical Modules/Parametrization')
-    website = fields.Char('Documentation URL', size=64, required=True, default='http://www.openerp.com')
+    author = fields.Char('Author', size=64, required=True,
+                         default='OpenERP SA')
+    category = fields.Char('Category', size=64, required=True,
+                           default='Vertical Modules/Parametrization')
+    website = fields.Char('Documentation URL', size=64, required=True,
+                          default='http://www.openerp.com')
     description = fields.Text('Full Description', required=True)
-    data_kind =  fields.Selection([('demo', 'Demo Data'), ('update', 'Normal Data')], 'Type of Data', required=True, default='update')
+    data_kind = fields.Selection([('demo', 'Demo Data'),
+                                  ('update', 'Normal Data')], 'Type of Data',
+                                 required=True, default='update')
     module_file = fields.Binary('Module .zip File', filename="module_filename")
     module_filename = fields.Char('Filename', size=64)
     yaml_file = fields.Binary('Module .zip File')

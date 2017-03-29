@@ -39,8 +39,13 @@ This should help you to easily create reusable and publishable modules
 for custom configurations and demo/testing data.
 
 How to use it:
-Run Administration/Customization/Module Creation/Export Customizations As a Module wizard.
-Select datetime criteria of recording and objects to be recorded and Record module.
+
+Run Administration/Customization/Module Creation/Export Customizations As a
+Module wizard.
+
+Select datetime criteria of recording and objects to be recorded and Record
+module.
+
     """,
     'author': 'OpenERP SA, Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.openerp.com, http://www.serpentcs.com',
@@ -52,8 +57,8 @@ Select datetime criteria of recording and objects to be recorded and Record modu
     ],
     'demo': [],
     'installable': True,
-    'auto_install':False,
+    'auto_install': False,
     'images': ['images/base_module_record1.jpeg',
                'images/base_module_record2.jpeg',
-               'images/base_module_record3.jpeg',]
+               'images/base_module_record3.jpeg']
 }
