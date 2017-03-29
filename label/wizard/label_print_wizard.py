@@ -5,18 +5,18 @@
 import math
 
 # 2:  imports of openerp
-from openerp import fields, models, api, _
-from openerp.tools import misc
+from odoo import fields, models, api
+from odoo.tools import misc
 
 
-class label_print_wizard(models.TransientModel):
+class LabelPrintWizard(models.TransientModel):
     _name = 'label.print.wizard'
 
     @api.model
     def default_get(self, fields):
         if self._context is None:
             self._context = {}
-        result = super(label_print_wizard, self).default_get(fields)
+        result = super(LabelPrintWizard, self).default_get(fields)
         if self._context.get('label_print'):
             label_print_obj = self.env['label.print']
             label_print_data = label_print_obj.browse(self._context.get
@@ -42,7 +42,8 @@ class label_print_wizard(models.TransientModel):
     def print_report(self):
         if self._context is None:
             self._context = {}
-        if not self._context.get('label_print') or not self._context.get('active_ids'):
+        if not self._context.get('label_print') or not \
+                self._context.get('active_ids'):
             return False
         total_record = len(self._context.get('active_ids', []))
         datas = {}
@@ -82,4 +83,5 @@ class label_print_wizard(models.TransientModel):
             'model': 'label.config',
             'form': datas
         }
-        return self.env['report'].get_action(self, 'label.report_label', data=data)
+        return self.env['report'].get_action(self, 'label.report_label',
+                                             data=data)

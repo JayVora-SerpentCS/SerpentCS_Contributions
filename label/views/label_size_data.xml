@@ -1,102 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
-
-        <record id="ir_header_webkit_label_simple" model="ir.header_webkit">
-            <field name="orientation" eval="&quot;&quot;&quot;Portrait&quot;&quot;&quot;"/>
-            <field name="format" eval="&quot;&quot;&quot;A4&quot;&quot;&quot;"/>
-            <field name="margin_top" eval="-20"/>
-            <field name="margin_left" eval="-20"/>
-            <field name="margin_bottom" eval="-20"/>
-            <field name="margin_right" eval="-20"/>
-            <field name="css">
-                <![CDATA[
-body {
-font-family:helvetica;
-font-size:12;
-}
-
-
-.dest_address {
-margin-left:60%;
-font-size:12;
-}
-.header {
-margin-left:0;
-text-align:left;
-width:300px;
-font-size:12;
-}
-
-.title {
-font-size:16;
-font-weight: bold;
-
-}
-
-
-.basic_table{
-text-align:center;
-border:1px solid lightGrey;
-border-collapse: collapse;
-}
-.basic_table td {
-border:1px solid lightGrey;
-font-size:12;
-
-
-}
-
-.list_table {
-border-color:black;
-text-align:center;
-border-collapse: collapse;
-
-}
-.list_table td {
-border-color:gray;
-border-top:1px solid gray;
-text-align:left;
-font-size:12;
-padding-right:3px
-padding-left:3px
-padding-top:3px
-padding-bottom:3px
-}
-
-.list_table th {
-border-bottom:2px solid black;
-text-align:left;
-font-size:12;
-font-weight:bold;
-padding-right:3px
-padding-left:3px
-}
-
-.list_tabe thead {
-    display:table-header-group;
-}
-
-
-.total {
-width:100%;
-}
-.lib {
-width:10.3%;
-}
-.tot {
-text-align:right;
-width:15%;
-}
-.lefttot {
-width:74%;
-}
-.tax {
-width:50%;
-}]]>
-            </field>
-            <field eval="&quot;&quot;&quot;Label Sample&quot;&quot;&quot;" name="name"/>
-        </record>
 
         <record id="b1" model="label.brand">
             <field name="brand_name">Others</field>
@@ -242,4 +146,4 @@ width:50%;
         </record>
 
     </data>
-</openerp>
+</odoo>
