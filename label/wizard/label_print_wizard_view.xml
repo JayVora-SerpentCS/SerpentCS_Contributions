@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<openerp>
+<odoo>
     <data>
 
         <!-- This wizard view use for label formating like height,width,number of copy etc... -->
@@ -8,19 +8,19 @@
             <field name="model">label.print.wizard</field>
             <field name="arch" type="xml">
                 <form string="Print Label">
-                    <group>
-                        <field name="brand_id" colspan="4"/>
-                        <field name="name" colspan="4" domain="[('label_main_id', '=', brand_id)]"/>
-                        <field name="number_of_copy" colspan="4"/>
+                    <group colspan="4" col="4">
+                        <field name="brand_id"/>
+                        <field name="name" domain="[('label_main_id', '=', brand_id)]"/>
+                        <field name="number_of_copy"/>
                         <field name="is_image" invisible="1"/>
                     </group>
                     <group colspan="4" col="4">
-                        <group attrs="{'invisible': [('is_image','=', False)]}" string="Image height and width.">
+                        <group attrs="{'invisible': [('is_image','=', False)]}" string="Image height and width." colspan="2">
                             <field name="image_height"/>
                             <field name="image_width"/>
                         </group>
                         <field name="is_barcode" invisible="1"/>
-                        <group attrs="{'invisible': [('is_barcode', '=', False)]}" string="Barcode height and width.">
+                        <group attrs="{'invisible': [('is_barcode', '=', False)]}" string="Barcode height and width." colspan="2">
                             <field name="barcode_height"/>
                             <field name="barcode_width"/>
                         </group>
@@ -37,4 +37,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>
