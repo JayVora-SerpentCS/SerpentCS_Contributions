@@ -130,7 +130,7 @@ class base_module_record(models.Model):
             if not (val or (fields[key]['type'] == 'boolean')):
                 continue
             if (fields[key]['type'] in ('integer', 'float')
-                or fields[key]['type'] == 'selection'
+                    or fields[key]['type'] == 'selection'
                     and isinstance(val, int)):
                 field = doc.createElement('field')
                 field.setAttribute("name", key)
@@ -353,8 +353,11 @@ class base_module_record(models.Model):
 
             else:
                 result[key] = data[key]
-        for v in obj._inherits.values():
-            del result[v]
+
+#         Whatever the reference of model in obj,
+#         this lines delete the inherits value of that obj model.
+#        for v in obj._inherits.values():
+#            del result[v]
         return result
 
     @api.model
