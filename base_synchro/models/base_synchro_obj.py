@@ -47,6 +47,8 @@ class base_synchro_obj(models.Model):
     server_id = fields.Many2one('base.synchro.server', 'Server', ondelete='cascade', select=1, required=True)
     model_id =  fields.Many2one('ir.model', string='Object to synchronize', required=True)
     action = fields.Selection([('d', 'Download'), ('u', 'Upload'), ('b', 'Both')], 'Synchronisation direction', required=True, default='d')
+    fields_of_equality =  fields.Many2many('ir.model.fields', 'model_field_synchro_obj_rel',
+            'field_id', 'synchro_obj_id', string='Fields of Equality', help="Fields used to check if there is a record equals in destiny.")
     sequence =  fields.Integer('Sequence')
     active =  fields.Boolean('Active', default=True)
     synchronize_date = fields.Datetime('Latest Synchronization', readonly=True)
