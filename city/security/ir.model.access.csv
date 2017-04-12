@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_city_city_group_all","city_city group_user_all","model_city_city",,1,0,0,0
+"access_city_city_group_user","city_city group_user","model_city_city","base.group_partner_manager",1,1,1,1
+"access_city_area_group_all","city_area group_user_all","model_city_area",,1,0,0,0
+"access_city_area_group_user","city_area group_user","model_city_area","base.group_partner_manager",1,1,1,1

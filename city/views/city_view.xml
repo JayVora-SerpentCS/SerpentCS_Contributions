@@ -1,0 +1,132 @@
+<odoo>
+    <!-- Add location to the Partner form -->
+    <record model="ir.ui.view" id="view_partner_form_city">
+        <field name="name">res.partner.form.city</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="state_id" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                 <field name="country_id" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                 <field name="zip" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <field name="city" position="replace">
+                    <field name="area_id" colspan="4" placeholder="Enter Area"/>
+                    <field name="std_code" colspan="4" placeholder="Std Code"/>
+                </field>
+                <field name="child_ids" position="attributes">
+                    <attribute name="context">{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_area_id': area_id, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang}</attribute>
+                </field>
+            </data>
+        </field>
+    </record>
+
+    <!-- Add cities to the State form -->
+    <record model="ir.ui.view" id="view_country_state_form2">
+        <field name="name">view_country_state_form2</field>
+        <field name="model">res.country.state</field>
+        <field name="inherit_id" ref="base.view_country_state_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[1]" position="after">
+                <separator string="City Information"/>
+                <field name="city_ids" colspan="4" nolabel="1" widget="one2many_list"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- City -->
+    <record model="ir.ui.view" id="view_city_tree">
+        <field name="name">city.city.tree</field>
+        <field name="model">city.city</field>
+        <field name="arch" type="xml">
+            <tree string="City">
+                <field name="name"/>
+                <field name="zip"/>
+                <field name="state_id" domain="[('country_id','=',country_id)]"/>
+                <field name="country_id"/>
+                <field name="std_code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_city_form">
+        <field name="name">city.city.form</field>
+        <field name="model">city.city</field>
+        <field name="arch" type="xml">
+            <form string="City">
+              <group colspan="4" col="4">
+                <field name="name"/>
+                <field name="zip" required="1"/>
+                <field name="country_id" />
+                <field name="state_id" domain="[('country_id','=',country_id)]"/>
+                <field name="code"/>
+                <field name="std_code" />
+             </group>
+                <field name="area_ids" nolabel="1" colspan="4">
+                    <form string="Area">
+                    <group colspan="4" col="4">
+                        <field name="name"/>
+                        <field name="zip"/>
+                        <field name="code"/>
+                    </group>
+                    </form>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_city">
+        <field name="name">City</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">city.city</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Cities" groups="base.group_system" action="action_city" parent="sales_team.menu_localisation" id="menu_city_partner"/>
+
+
+    <!-- City Area-->
+    <record model="ir.ui.view" id="view_city_area_tree">
+        <field name="name">city.area.tree</field>
+        <field name="model">city.area</field>
+        <field name="arch" type="xml">
+            <tree string="Area">
+                <field name="name"/>
+                <field name="zip"/>
+                <field name="code"/>
+                <field name="city_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_city_area_form">
+        <field name="name">city.area.form</field>
+        <field name="model">city.area</field>
+        <field name="arch" type="xml">
+            <form string="Area">
+                <group colspan="4" col="4">
+                    <field name="name"/>
+                    <field name="zip"/>
+                    <field name="code"/>
+                    <field name="city_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_area">
+        <field name="name">Area</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">city.area</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Areas" groups="base.group_system" action="action_area" parent="sales_team.menu_localisation" id="menu_area_city_partner"/>
+</odoo>
