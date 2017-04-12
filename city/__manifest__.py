@@ -4,7 +4,7 @@
 {
     "name": "City-Helps to keep Homogeneous address data in the Database",
     'version': '10.0.1.0.0',
-    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "author": "Pablo Rocandio, Serpent Consulting Services Pvt. Ltd.",
     "category": "Hidden",
     "website": 'http://www.serpentcs.com',
     "description": """Creates a model for storing cities
