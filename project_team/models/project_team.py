@@ -31,11 +31,7 @@ class ProjectProject(models.Model):
 
     @api.onchange('team_id')
     def get_team_members(self):
-        self.members = [(4, [rec.id for rec in self.team_id.team_members])]
-
-    # @api.model
-    # def create(self, vals):
-    #     res = super(ProjectProject, self).create(vals)
-    #     if res.team_id and not res.members:
-    #         res.write({'members': [(4, res.team_id.team_members.ids)]})
-    #     return res
+        self.members = False
+        if self.team_id:
+            self.members = [(6, 0, [rec.id for rec in self.team_id.team_members
+                                    ])]
