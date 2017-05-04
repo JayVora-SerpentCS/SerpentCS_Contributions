@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+# See LICENSE file for full copyright and licensing details.
+
+{
+    'name': 'Website Product Multi-Image Zoom',
+    'category': 'Website',
+    'summary': 'MultiImage Zoom For Product In WebSite',
+    'author': 'Serpent Consulting Services Pvt. Ltd.,'
+              'Odoo Community Association (OCA)',
+    'website': 'http://www.serpentcs.com',
+    'version': '10.0.1.0.1',
+    'depends': [
+        'website_sale',
+        'stock',
+    ],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/product_images.xml',
+        'views/templates.xml',
+    ],
+    'installable': True,
+}
