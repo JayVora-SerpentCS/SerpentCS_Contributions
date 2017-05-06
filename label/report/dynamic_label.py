@@ -23,6 +23,7 @@ class ReportDynamicLabel(models.AbstractModel):
                 bot = False
                 bot_dict = {}
                 for field in label_print_data.field_ids:
+                    string = ''
                     pos = ''
                     if field.python_expression and field.python_field:
                         string = field.python_field.split('.')[-1]
@@ -109,11 +110,10 @@ class ReportDynamicLabel(models.AbstractModel):
                 for add_data in range(0, number_of_copy):
                     remain_data.append(data_value_vals)
 
+        diff = 0
         if newlist_len < number_of_copy:
             diff = number_of_copy - newlist_len
 
-        new_val = []
-        list_newdata = []
         if len(ids) == 1:
             for new_result in range(0, diff):
                 result1.append(temp)
