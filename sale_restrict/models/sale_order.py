@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from openerp import models, fields, api, _
-from openerp.exceptions import Warning
+from odoo import models, api, _
+from odoo.exceptions import Warning
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
@@ -18,4 +18,4 @@ class sale_order(models.Model):
                         "the following products:") + '\n'
             message += '\n'.join(map(str, zero_price))
             raise Warning(message.rstrip())
-        return super(sale_order, self).action_confirm()
+        return super(SaleOrder, self).action_confirm()
