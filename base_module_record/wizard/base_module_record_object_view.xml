@@ -145,7 +145,7 @@
                     <separator string="YAML file successfully created !" colspan="4"/>
                     <group>
                         <field name="module_filename" invisible="1"/>
-                        <field string="YAML File" name="yaml_file" filename="module_filename"/>
+                        <field string="YAML File" name="yaml_file" filename="module_filename" readonly="1"/>
                     </group>
                     <footer>
                         <button string="Close" class="oe_link" special="cancel"/>
