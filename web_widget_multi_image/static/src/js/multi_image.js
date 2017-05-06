@@ -151,17 +151,21 @@ odoo.define('web.MultiImage', function (require) {
             this.viewmanager.on("switch_mode", self, function(n_mode) {
                 $.when(self.commit_value()).done(function() {
                     if (n_mode === "list") {
-                        $.async_when().done(function() {
-                            self.reload_current_view();
-                        });
+                    	 self.reload_current_view();
+//                        $.async_when().done(function() {
+//                           self.reload_current_view();
+//                        });
                     }
                 });
             });
-            $.async_when().done(function () {
-                if (!self.isDestroyed()) {
-                    self.viewmanager.appendTo(self.$el);
-                }
-            });
+            if (!self.isDestroyed()) {
+              self.viewmanager.appendTo(self.$el);
+              }
+//            $.async_when().done(function () {
+//                if (!self.isDestroyed()) {
+//                    self.viewmanager.appendTo(self.$el);
+//                }
+//            });
             return def;
         },
     })
@@ -170,7 +174,7 @@ odoo.define('web.MultiImage', function (require) {
 
         load_list: function(data) {
             var self = this;
-            this._super(data);
+            var result = this._super.apply(this, arguments);
             this.$el.find('.oe-image-preview').click(function(){
                 var url_list = [];
                 var model = self.dataset.model;
@@ -230,6 +234,7 @@ odoo.define('web.MultiImage', function (require) {
                     self.on_render_dialog();
                 });
             });
+            return result;
         },
 
         on_render_dialog: function() {

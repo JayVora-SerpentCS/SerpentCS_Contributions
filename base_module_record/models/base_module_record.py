@@ -7,8 +7,7 @@ from odoo import api, models
 from odoo.tools import ustr, frozendict
 
 import yaml
-from odoo.tools import yaml_tag  # This import is not unused! Do not remove!
-
+# from odoo.tools import yaml_tag  # This import is not unused! Do not remove!
 
 # Please don't override yaml_tag here:modify it in server bin/tools/yaml_tag.py
 
@@ -168,11 +167,11 @@ class base_module_record(models.Model):
                 for valitem in (val or []):
                     if valitem[0] == 6:
                         for id2 in valitem[2]:
-                            res.append(id)
                             id, update = self._get_id(fields[key]['relation'],
                                                       id2)
                             self.blank_dict[(fields[key]['relation'],
                                              id2)] = id
+                            res.append(id)
                             noupdate = noupdate or update
                         field = doc.createElement('field')
                         field.setAttribute("name", key)
@@ -286,7 +285,7 @@ class base_module_record(models.Model):
             if key in result:
                 continue
             if mod_fields[key]['type'] == 'many2one':
-                if type(data[key]) == type(True) or type(data[key]) == type(1):
+                if isinstance(data[key], bool):
                     result[key] = data[key]
                 elif not data[key]:
                     result[key] = False
