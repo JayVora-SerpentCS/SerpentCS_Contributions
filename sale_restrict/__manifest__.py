@@ -3,7 +3,7 @@
 
 {
     'name': "SO - Product Price Check",
-    'version': '9.0.1.1.0',
+    'version': '10.0.1.0.0',
     'category': 'Sales Management',
     'description': """
         This module restricts a user from confirming a Sale Order/Quotation
