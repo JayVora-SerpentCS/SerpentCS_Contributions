@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <!-- Grade views -->
     <record id="view_employee_grade_form" model="ir.ui.view">
         <field name="name">grade.grade.form</field>
