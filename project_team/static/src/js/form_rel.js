@@ -9,7 +9,7 @@ var _t = core._t;
 var COMMANDS = common.commands;
 
 Form_Relation.AbstractManyField.include({
-	get_value: function() {
+get_value: function() {
         var self = this,
             is_one2many = this.field.type === "one2many",
             not_delete = this.options.not_delete,
@@ -68,5 +68,5 @@ Form_Relation.AbstractManyField.include({
 
         return command_list;
     },
-	});
+    });
 })
