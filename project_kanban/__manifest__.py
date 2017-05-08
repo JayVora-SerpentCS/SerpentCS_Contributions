@@ -14,9 +14,7 @@
     'category': 'Project Management',
     'license': 'AGPL-3',
     'sequence': 1,
-    'data': [
-             'views/project_kanban_view.xml',
-        ],
+    'data': ['views/project_kanban_view.xml'],
     'installable': True,
     'auto_install': False,
 }
