@@ -209,9 +209,9 @@ class base_module_record(models.Model):
         except:
             defaults[model] = {}
         for key, val in data.items():
-            if (((key in defaults[model])
-                 and (val == defaults[model][key]))
-                    and not (fields[key].get('required', False))):
+            if (((key in defaults[model]) and (
+                val == defaults[model][key])) and not (
+                    fields[key].get('required', False))):
                 continue
             if fields[key]['type'] in ('integer', 'float'):
                 if not val:
