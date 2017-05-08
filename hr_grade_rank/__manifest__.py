@@ -4,12 +4,13 @@
 {
     'name': 'HR-Grade Rank',
     'version': '10.0.1.0.0',
+    'license': 'AGPL-3',
     'description': """
-    HR-Grade Rank
-    =============
-    This module is used to add grade of employees.
-        """,
-    'author': 'Serpent Consulting Services Pvt. Ltd.',
+        HR-Grade Rank
+        =============
+        This module is used to add grade of employees.""",
+    'author': 'Serpent Consulting Services Pvt. Ltd.,'
+              'Odoo Community Association (OCA)',
     'category': 'Human Resources',
     'website': 'https://www.serpentcs.com',
     'depends': ['hr'],
