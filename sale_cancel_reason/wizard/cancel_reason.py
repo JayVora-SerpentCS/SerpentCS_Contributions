@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # Author: Guewen Baconnier
 # Copyright 2013 Camptocamp SA
-# Copyright 2016 Serpent Consulting Services Pvt. Ltd. (http://www.serpentcs.com)
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# (http://www.serpentcs.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 QUOTATION_STATES = ['draft', 'sent', 'sale']
@@ -33,9 +34,8 @@ class SaleOrderCancel(models.TransientModel):
         # in the official addons, they call the signal on quotations
         # but directly call action_cancel on sales orders
         if sale.state in QUOTATION_STATES:
-	    sale.action_cancel()
+            sale.action_cancel()
         else:
-	    raise UserError(_('You cannot cancel the Quotation/Order in the \
--                              current state!'))
-
+            raise UserError(_('You cannot cancel the Quotation/Order in the '
+                              'current state!'))
         return act_close

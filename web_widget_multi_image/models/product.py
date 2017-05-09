@@ -1,24 +1,20 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from openerp.osv import osv, fields
+from odoo import fields, models
 
 
-class multi_images(osv.osv):
+class multi_images(models.Model):
     _name = "multi.images"
 
-    _columns = {
-        'image': fields.binary('Images'),
-        'description': fields.char('Description'),
-        'title': fields.char('title'),
-        'product_template_id': fields.many2one('product.template', 'Product')
-    }
+    image = fields.Binary('Images')
+    description = fields.Char('Description')
+    title = fields.Char('title')
+    product_template_id = fields.Many2one('product.template', 'Product')
 
 
-class product_template(osv.osv):
+class product_template(models.Model):
     _inherit = "product.template"
 
-    _columns = {
-        'multi_images': fields.one2many('multi.images', 'product_template_id',
-                                        'Multi Images'),
-    }
+    multi_images = fields.One2many('multi.images', 'product_template_id',
+                                   'Multi Images')

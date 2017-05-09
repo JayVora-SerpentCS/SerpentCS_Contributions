@@ -27,11 +27,11 @@
         </table>
     </t>
 
-    <t t-name="One2Many.listview" t-extend="ListView">
-        <t t-jquery="thead > tr:first">
+    <t t-name="listview" t-extend="ListView">
+       <t t-jquery="thead > tr:first">
             this.removeAttr('t-if');
         </t>
-        <t t-jquery=".oe_list_content thead" t-operation="prepend">
+        <t t-jquery=".o_list_view table table-condensed table-striped" t-operation="prepend">
             <t t-if="options.multi_image"> 
                 <tr style="background:white;">
                     <td style="padding: 0px 150px 15px 132px;">
