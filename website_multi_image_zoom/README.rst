@@ -1,5 +1,5 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-:alt: License: AGPL-3
+:alt: License: AGPL-3.
 
 ================================
 Website Product Multi-Image Zoom
@@ -8,15 +8,20 @@ Website Product Multi-Image Zoom
 Description
 ===========
 
-* This module was written to add the functionality of adding multiple images for product and zoom in/out feature on product image.
-* The Module provides a good zoom feature for your product images, is always a plus point online.
-* As it allows visitors to see multiple images for a product and the minor details of your products,
-as sometimes customers prefer to feel and touch, so you can easily replace this by having a good zoom feature with multiple image
-which really brings out the details in your product.
-* While shopping online, we have seen various eShops having a multiple images and zoom feature in website,
-which ODOO does not yet provide officially.Website Product multi image fills the gap
-at certain extent and by providing you to add multiple images and zoom feature, thus reducing end-user able to zoom in/out
-the products he/she wants to purchase.
+* This module was written to add the functionality of adding multiple images
+ for product and zoom in/out feature on product image.
+* The Module provides a good zoom feature for your product images, is always
+ a plus point online.
+* As it allows visitors to see multiple images for a product and the minor
+ details of your products, as sometimes customers prefer to feel and touch,
+ so you can easily replace this by having a good zoom feature with multiple
+ image which really brings out the details in your product.
+* While shopping online, we have seen various eShops having a multiple
+ images and zoom feature in website, which ODOO does not yet provide
+ officially.
+ Website Product multi image fills the gap at certain extent and by
+ providing you to add multiple images and zoom feature, thus reducing
+ end-user able to zoom in/out the products he/she wants to purchase.
 
 Usage
 =====
@@ -47,7 +52,7 @@ Contributors
 ------------
 
 * Jay Vora <jay.vora@serpentcs.com>
-* Meet Dholakia <m.dholakia.serpentcs@gmail.com>
+* Meet Dholakia <m.dholakia.serpentcs@gmail.com>.
 
 Maintainer
 ----------
