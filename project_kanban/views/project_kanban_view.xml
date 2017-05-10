@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <record id="project_kanaban_view_form" model="ir.ui.view">
-            <field name="name">project.kanban.view.form</field>
-            <field name="model">project.project</field>
-            <field name="inherit_id" ref="project.edit_project"/>
-            <field name="arch" type="xml">
-                <field name="partner_id" position="after">
-                    <newline/>
-                    <field name="write_date" readonly="1"/>
-                    <newline/>
-                    <field name="recent_date"/>
-                </field>
-            </field>
-        </record>
-        
-        <record id="project_kanaban_view_kanban" model="ir.ui.view">
-            <field name="name">project.kanban.view.kanban</field>
-            <field name="model">project.project</field>
-            <field name="inherit_id" ref="project.view_project_kanban"/>
-            <field name="arch" type="xml">
-               <field name="task_ids" position="after">
-                    <field name="write_date" readonly="1"/>
-                    <field name="recent_date"/>
-                </field>
-                <xpath expr="//div[contains(@class, 'o_kanban_primary_left')]" position="after">
-                    <a style="font-size: 10px;">Last updated on:
-                        <field name="write_date"/>
-                    </a>
-                </xpath> 
-                <xpath expr="//div[contains(@class, 'o_kanban_primary_left')]" position="after">
-                    <div style="font-size: 10px;">
-                        <a>Recent Log Date:
-                            <field name="recent_date" string="Recent Date"/>
-                        </a>
-                    </div>
-                </xpath>
-            </field>
-        </record>
-    </data>
-</openerp>
+<odoo>
+
+	<record id="project_kanaban_view_form" model="ir.ui.view">
+		<field name="name">project.kanban.view.form</field>
+		<field name="model">project.project</field>
+		<field name="inherit_id" ref="project.edit_project" />
+		<field name="arch" type="xml">
+			<field name="partner_id" position="after">
+				<newline />
+				<field name="write_date" readonly="1" />
+				<newline />
+				<field name="recent_date" />
+			</field>
+		</field>
+	</record>
+
+	<record id="project_kanaban_view_kanban" model="ir.ui.view">
+		<field name="name">project.kanban.view.kanban</field>
+		<field name="model">project.project</field>
+		<field name="inherit_id" ref="project.view_project_kanban" />
+		<field name="arch" type="xml">
+		    <field name="name" position="after">
+				<field name="write_date" />
+				<field name="recent_date" />
+			</field>
+			<xpath expr="//div[contains(@class, 'o_kanban_primary_left')]"
+				position="after">
+				<a style="font-size: 10px;">
+					Last updated on:
+					<field name="write_date" />
+				</a>
+			</xpath>
+			<xpath expr="//div[contains(@class, 'o_kanban_primary_left')]"
+				position="after">
+				<div style="font-size: 10px;">
+					<a>
+						Recent Log Date:
+						<field name="recent_date" string="Recent Date" />
+					</a>
+				</div>
+			</xpath>
+		</field>
+	</record>
+
+</odoo>
