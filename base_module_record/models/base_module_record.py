@@ -33,13 +33,13 @@ def doc_createXElement(xdoc, tagName):
     return e
 
 
-class base_module_record(models.Model):
+class BaseModuleRecord(models.Model):
     _name = "ir.module.record"
     _description = "Module Record"
 
     def __init__(self, *args, **kwargs):
         self.recording = 0
-        super(base_module_record, self).__init__(*args, **kwargs)
+        super(BaseModuleRecord, self).__init__(*args, **kwargs)
 
     # To Be Improved
     @api.model
