@@ -6,6 +6,7 @@ from odoo.tests import common
 
 
 class SaleOrderTest(common.TransactionCase):
+
     def setup(self):
         super(SaleOrderTest, self).setup()
 
@@ -26,4 +27,4 @@ class SaleOrderTest(common.TransactionCase):
                         'product_uom_qty': 2, 'product_uom': p.uom_id.id,
                         'price_unit': p.list_price
                         })for (_, p) in self.products.iteritems()],
-            })
+        })
