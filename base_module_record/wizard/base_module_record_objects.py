@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.base_module_record.wizard import base_module_save
+from . import base_module_save
 
 from odoo.tools import frozendict, ustr
 from odoo.tools.translate import _
