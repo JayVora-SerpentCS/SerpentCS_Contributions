@@ -19,8 +19,8 @@ class LabelPrintWizard(models.TransientModel):
         result = super(LabelPrintWizard, self).default_get(fields)
         if self._context.get('label_print'):
             label_print_obj = self.env['label.print']
-            label_print_data = label_print_obj.browse(self._context.get
-                                                      ('label_print'))
+            label_print_data = label_print_obj.browse(
+                self._context.get('label_print'))
             for field in label_print_data.field_ids:
                 if field.type == 'image':
                     result['is_image'] = True
