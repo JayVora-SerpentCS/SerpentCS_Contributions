@@ -9,8 +9,7 @@
         HR-Grade Rank
         =============
         This module is used to add grade of employees.""",
-    'author': 'Serpent Consulting Services Pvt. Ltd.,'
-              'Odoo Community Association (OCA)',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Human Resources',
     'website': 'https://www.serpentcs.com',
     'depends': ['hr'],
