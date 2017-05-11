@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class SaleOrder(models.Model):
+    # print "hgfhghgfhgh"
     _inherit = 'sale.order'
 
     print_image = fields.Boolean('Print Image', help="""If ticked, you can see
@@ -15,9 +16,8 @@ class SaleOrder(models.Model):
                                    'Image Sizes',
                                    default="image_small",
                                    help="Image size to be displayed in report")
-
-
 class SaleOrderLine(models.Model):
+    # print "ndbfDGHBHdhjgg"
     _inherit = 'sale.order.line'
 
     image_small = fields.Binary('Product Image',
