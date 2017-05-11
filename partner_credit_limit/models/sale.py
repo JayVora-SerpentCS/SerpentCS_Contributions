@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
                     ('full_reconcile_id', '=', False)])
 
         debit, credit = 0.0, 0.0
-        today_dt = datetime.strftime(datetime.now().date(),DF)
+        today_dt = datetime.strftime(datetime.now().date(), DF)
         for line in movelines:
             if line.date_maturity < today_dt:
                 credit += line.debit
@@ -34,14 +34,13 @@ class SaleOrder(models.Model):
                       '%s as on %s !\nCheck Partner Accounts or Credit ' \
                       'Limits !' % (credit - debit, today_dt)
                 raise UserError(_('Credit Over Limits !\n' + msg))
-                return False
             else:
                 partner.write({
                     'credit_limit': credit - debit + self.amount_total})
                 return True
         else:
             return True
-    
+
     @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
