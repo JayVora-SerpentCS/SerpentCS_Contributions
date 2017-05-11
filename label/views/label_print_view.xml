@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
 
         <!-- This view use for display label data fields -->
         <record id="view_label_print_form" model="ir.ui.view">
@@ -90,5 +89,4 @@
         <!-- Menu of Label Print -->
         <menuitem id="menu_label_print_view" action="action_label_print_form" parent="label.menu_config"/>
 
-    </data>
 </odoo>
