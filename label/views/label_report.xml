@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
 
         <!-- QWEB Report use paperformat -->
         <report id="dynamic_label"
@@ -10,5 +9,4 @@
                 report_type="qweb-pdf"
                 paperformat="label.paperformat_euro"/>
 
-    </data>
 </odoo>

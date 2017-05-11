@@ -9,7 +9,7 @@ class LabelMain(models.Model):
     _name = 'label.brand'
     _rec_name = 'brand_name'
 
-    brand_name = fields.Char("Name", size=64, index=True)
+    brand_name = fields.Char('Name', size=64, index=True)
     label_config_ids = fields.One2many('label.config', 'label_main_id',
                                        'Label Config')
 

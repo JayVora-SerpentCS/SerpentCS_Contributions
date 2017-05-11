@@ -3,8 +3,9 @@
 {
     "name": "Mass Label Reporting",
     "version": "10.0.1.0.0",
-    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "author": 'Serpent Consulting Services Pvt. Ltd.',
     "category": "Tools",
+    "license": "AGPL-3",
     "website": "http://www.serpentcs.com",
     "description": """
     The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
@@ -14,6 +15,7 @@
         'data/report_paperformat.xml',
         'security/label.brand.csv',
         'security/label.config.csv',
+        'security/ir.model.access.csv',
         'views/label_config_view.xml',
         'views/label_print_view.xml',
         'views/label_size_data.xml',

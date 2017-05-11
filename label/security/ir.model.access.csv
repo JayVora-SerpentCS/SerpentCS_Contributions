@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_label_brand","access_label_brand","model_label_brand",,1,1,1,1
+"access_label_config","access_label_config","model_label_config",,1,1,1,1
+"access_label_print_field","access_label_print_field","model_label_print_field",,1,1,1,1
+"access_label_print","access_label_print","model_label_print",,1,1,1,1
