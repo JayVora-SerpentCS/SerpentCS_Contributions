@@ -1,5 +1,4 @@
 <odoo>
-    <data>
 
         <!-- Qweb Report design -->
         <template id="report_label">
@@ -44,5 +43,4 @@
             </t>
         </template>
 
-    </data>
 </odoo>

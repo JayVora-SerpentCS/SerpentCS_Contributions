@@ -5,8 +5,7 @@
     'name': 'Website Product Multi-Image Zoom',
     'category': 'Website',
     'summary': 'MultiImage Zoom For Product In WebSite',
-    'author': 'Serpent Consulting Services Pvt. Ltd.,'
-              'Odoo Community Association (OCA)',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.1',
     'license': 'AGPL-3',

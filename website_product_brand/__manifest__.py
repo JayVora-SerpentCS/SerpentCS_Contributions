@@ -4,8 +4,7 @@
 {
     'name': 'Product Brand Filtering in Website',
     'category': 'Website',
-    'author': 'Serpent Consulting Services Pvt. Ltd.,'
-              'Odoo Community Association (OCA)',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'license': 'AGPL-3',
     'summary': '',

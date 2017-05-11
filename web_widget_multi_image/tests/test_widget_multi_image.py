@@ -5,24 +5,23 @@
 from odoo.tests import common
 
 
-class MultiImageZoomTest(common.TransactionCase):
+class WidgetMultiImageTest(common.TransactionCase):
     def setUp(self):
-        super(MultiImageZoomTest, self).setUp()
+        super(WidgetMultiImageTest, self).setUp()
 
-    def test_multiimagezoom_action(self):
+    def test_widgetmultiimage_action(self):
         self.category = self.env['product.category']
         self.categoryA = self.category.\
             create({'name': 'My category',
                     'property_valuation': 'manual_periodic'})
 
-        self.product = self.env['product.product']
+        self.product = self.env['product.template']
         self.productA = self.product.create({
             'name': 'Test Product PC',
-            'type': 'product',
             'categ_id': self.categoryA.id,
-            'images_variant': [
-                (0, 0, {'name': 'Product PC image1',
+            'multi_images': [
+                (0, 0, {'title': 'Product PC image1',
                         'image': 'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8'}),
-                (0, 0, {'name': 'Product PC image1',
+                (0, 0, {'title': 'Product PC image1',
                         'image': 'iVBORw0KGgoAAAANSUhEUgAAAB4AAAAbCAYAAABr/SR'
                         })]})

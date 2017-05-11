@@ -5,6 +5,7 @@
     "name": "Multi-DB Synchronization",
     "version": "10.0.1.0.0",
     "category": "Tools",
+    "license": "AGPL-3",
     "description": """ Synchronization with all objects
      Configure servers and trigger synchronization with its database objects.
      This module will let you synchronize two Odoo Databases!

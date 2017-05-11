@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
-from . import test_crmlead
+from . import test_widget_multi_image
