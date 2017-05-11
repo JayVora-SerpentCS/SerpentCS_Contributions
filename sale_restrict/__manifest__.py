@@ -11,8 +11,7 @@
     """,
     'license': 'AGPL-3',
     'author': "Serpent Consulting Services Pvt. Ltd.",
-    'website': 'http://www.serpentcs.com,'
-               'Odoo Community Association (OCA)',
+    'website': 'http://www.serpentcs.com',
     'depends': ['sale'],
     'installable': True,
     'auto_install': False,
