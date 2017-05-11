@@ -6,8 +6,7 @@
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Adds Project Team Members.',
     'category': 'Project Management',
-    'website': 'http://www.serpentcs.com,'
-               'Odoo Community Association (OCA)',
+    'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.0',
     'license': 'AGPL-3',
     'sequence': 1,
