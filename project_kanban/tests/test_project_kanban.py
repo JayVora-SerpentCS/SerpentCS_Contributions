@@ -13,4 +13,5 @@ class ProjectTestCase(common.TransactionCase):
         self.project_obj = self.env['project.project']
         self.record = self.project_obj.\
             create({'name': 'Project Kanban',
-                    'recent_date': self.project_obj._get_recent_date()})
+                    'recent_date': self.project_obj._compute_get_recent_date()
+                    })

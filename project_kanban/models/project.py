@@ -10,10 +10,10 @@ class Project(models.Model):
 
     @api.multi
     @api.depends('message_ids')
-    def _get_recent_date(self):
+    def _compute_get_recent_date(self):
         for rec in self:
             date_lst = [x.date for x in rec.message_ids]
             rec.recent_date = date_lst and max(date_lst) or False
 
-    recent_date = fields.Datetime(compute="_get_recent_date",
+    recent_date = fields.Datetime(compute="_compute_get_recent_date",
                                   string="Recent date")
