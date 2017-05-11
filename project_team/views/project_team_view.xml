@@ -108,6 +108,7 @@
     </record>
 
     <menuitem id="project_team_menu" action="project_team_action_tree" parent="project.menu_project_config"/>
+
     <record id="sales_team.crm_team_salesteams_act" model="ir.actions.act_window">
         <field name="domain">[('type_team','=','sale')]</field>
     </record>

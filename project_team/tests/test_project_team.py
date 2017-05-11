@@ -4,32 +4,20 @@ from odoo.tests import common
 
 
 class ProjectProjectTestCase(common.TransactionCase):
+
     def setup(self):
         super(ProjectProjectTestCase, self).setup()
 
     def test_project_action(self):
-        self.res_user_model = self.env['res.users']
-        self.team_member_user = self.res_user_model.with_context({
-            'no_reset_password': True}).create(dict(
-                name="Team Member",
-                company_id=self.env.user.company_id.id,
-                login="test",
-                email="team@yourcompany.com"))
-
-        self.team_member_user2 = self.res_user_model.with_context({
-            'no_reset_password': True}).create(dict(
-                name="Team Member 2",
-                company_id=self.env.user.company_id.id,
-                login="acc",
-                email="team2@yourcompany.com"))
+        self.team = self.env.ref('base.user_root')
+        self.team1 = self.env.ref('base.user_demo')
 
         self.team = self.env['crm.team'].sudo().create({
             'name': 'Test Project Team',
-            'user_id': self.team_member_user.id,
+            'user_id': self.team.id,
             'type_team': 'sale',
-            'team_members': [(6, 0, [self.team_member_user2.id,
-                                     self.team_member_user.id])]})
-
+            'team_members': [(6, 0, [self.team.id,
+                                     self.team1.id])]})
         self.project = self.env['project.project'].create({
             'name': 'Test Project',
             'team_id': self.team.id})
