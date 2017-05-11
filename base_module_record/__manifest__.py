@@ -5,6 +5,7 @@
     'name': 'Record and Create Modules',
     'version': '10.0.1.0.0',
     'category': 'Tools',
+    'license': 'AGPL-3',
     'description': """
 This module allows you to create a new module without any development.
 ======================================================================
@@ -26,8 +27,7 @@ Creation/Export Customizations As a Module wizard.
 Select datetime criteria of recording and
 objects to be recorded and Record module.
     """,
-    'author': 'Serpent Consulting Services Pvt. Ltd.,'
-              'Odoo Community Association (OCA)',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'depends': ['base'],
     'data': [
