@@ -17,7 +17,7 @@ get_value: function() {
             replace_with_ids = [],
             add_ids = [],
             command_list = [],
-            id, index, record;
+            index = 0;
 
         _.each(this.get('value'), function (id) {
             index = starting_ids.indexOf(id);
@@ -29,7 +29,7 @@ get_value: function() {
                 var values = _.clone(record.changes);
                 // format many2one values
                 for (var k in values) {
-                    if ((values[k] instanceof Array) && values[k].length === 2 && typeof values[k][0] === "number" && typeof values[k][1] === "string") {
+                    if (values[k] instanceof Array && values[k].length === 2 && typeof values[k][0] === "number" && typeof values[k][1] === "string") {
                         values[k] = values[k][0];
                     }
                 }
@@ -69,4 +69,4 @@ get_value: function() {
         return command_list;
     },
     });
-})
+});
