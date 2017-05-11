@@ -5,7 +5,7 @@
 from openerp import fields, models
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     show_price = fields.Boolean('Show Price', help="If checked, you can see"
