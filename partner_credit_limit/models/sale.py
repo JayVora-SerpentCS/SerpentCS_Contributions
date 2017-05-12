@@ -12,7 +12,7 @@ class SaleOrder(models.Model):
 
     @api.one
     def check_limit(self):
-        partner = self.partner_id
+        partner = self.partner_invoice_id
         moveline_obj = self.env['account.move.line']
         movelines = moveline_obj.\
             search([('partner_id', '=', partner.id),
@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
                 credit += line.debit
                 debit += line.credit
 
-        if (credit - debit + self.amount_total) > partner.credit_limit:
+        if (credit - debit + self.amount_total) > (partner.credit_limit-partner.credit):
             if not partner.over_credit:
                 msg = 'Can not confirm Sale Order, Total mature due Amount ' \
                       '%s as on %s !\nCheck Partner Accounts or Credit ' \
