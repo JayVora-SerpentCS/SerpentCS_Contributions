@@ -18,7 +18,8 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
     var _t = core._t;
 
     /*Kanban view For one2many*/
-    function qweb_add_if(node, condition) {
+    function qweb_add_if(node, conditions) {
+        var condition = conditions;
         if (node.attrs[QWeb.prefix + '-if']) {
             condition = _.str.sprintf("(%s) and (%s)", node.attrs[QWeb.prefix + '-if'], condition);
         }
@@ -69,9 +70,9 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                 break;
             case 'field':
                 var ftype = fvg.fields[node.attrs.name].type;
-                ftype = node.attrs.widget ?
-                    node.attrs.widget :
-                    ftype;
+                ftype = node.attrs.widget
+                    ? node.attrs.widget
+                    : ftype;
                 if (ftype === 'many2many') {
                     if (_.indexOf(many2manys, node.attrs.name) < 0) {
                         many2manys.push(node.attrs.name);
@@ -153,8 +154,9 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             return this._super();
         },
 
-        load_groups: function(options) {
+        load_groups: function(option) {
             var self = this;
+            var options = option;
             var group_by_field = options.group_by_field || options.default_group_by;
             this.fields_keys = _.uniq(this.fields_keys.concat(group_by_field));
 
@@ -164,131 +166,124 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                     self.fields = fields;
                 });
             }
-            var load_groups_def = new Model(this.model, this.search_context, this.search_domain)
-                .query(this.fields_keys)
-                .group_by([group_by_field])
-                .then(function(groups) {
-                    // Check in the arch the fields to fetch on the stage to get tooltips data.
-                    // Fetching data is done in batch for all stages, to avoid doing multiple
-                    // calls. The first naive implementation of group_by_tooltip made a call
-                    // for each displayed stage and was quite limited.
-                    // Data for the group tooltip (group_by_tooltip) and to display stage-related
-                    // legends for kanban state management (states_legend) are fetched in
-                    // one call.
-                    var group_by_fields_to_read = [];
-                    var group_options = {};
-                    var recurse = function(node) {
-                        if (node.tag === "field" && node.attrs && node.attrs.options && node.attrs.name === group_by_field) {
-                            options = pyeval.py_eval(node.attrs.options);
-                            group_options = options;
-                            var states_fields_to_read = _.map(
-                                options && options.states_legend || {},
-                                function(value, key, list) {
-                                    return value;
-                                });
-                            var tooltip_fields_to_read = _.map(
-                                options && options.group_by_tooltip || {},
-                                function(value, key, list) {
-                                    return key;
-                                });
-                            group_by_fields_to_read = _.union(
-                                group_by_fields_to_read,
-                                states_fields_to_read,
-                                tooltip_fields_to_read);
-                            return;
-                        }
-                        _.each(node.children, function(child) {
-                            recurse(child);
-                        });
-                    };
-                    recurse(self.fields_view.arch);
-
-                    // fetch group data (display information)
-                    var group_ids = _.without(typeof _.map(groups, function(elem) {
-                        return elem.attributes.value[0];
-                    }), "undefined");
-                    if (self.grouped_by_m2o && group_ids.length) {
-                        return new data.DataSet(self, self.relation)
-                            .read_ids(group_ids, _.union(['display_name'], group_by_fields_to_read))
-                            .then(function(results) {
-                                _.each(groups, function(group) {
-                                    var group_id = group.attributes.value[0];
-                                    var result = _.find(results, function(gdata) {
-                                        return group_id === gdata.id;
-                                    });
-                                    group.title = result ?
-                                        result.display_name :
-                                        _t("Undefined");
-                                    group.values = result;
-                                    group.id = group_id;
-                                    group.options = group_options;
-                                });
-                                return groups;
+            var load_groups_def = new Model(this.model, this.search_context, this.search_domain).query(this.fields_keys).group_by([group_by_field]).then(function(groups) {
+                // Check in the arch the fields to fetch on the stage to get tooltips data.
+                // Fetching data is done in batch for all stages, to avoid doing multiple
+                // calls. The first naive implementation of group_by_tooltip made a call
+                // for each displayed stage and was quite limited.
+                // Data for the group tooltip (group_by_tooltip) and to display stage-related
+                // legends for kanban state management (states_legend) are fetched in
+                // one call.
+                var group_by_fields_to_read = [];
+                var group_options = {};
+                var recurse = function(node) {
+                    if (node.tag === "field" && node.attrs && node.attrs.options && node.attrs.name === group_by_field) {
+                        options = pyeval.py_eval(node.attrs.options);
+                        group_options = options;
+                        var states_fields_to_read = _.map(
+                            (options && options.states_legend) || {},
+                            function(value, key, list) {
+                                return value;
                             });
-                    } else {
+                        var tooltip_fields_to_read = _.map(
+                            (options && options.group_by_tooltip) || {},
+                            function(value, key, list) {
+                                return key;
+                            });
+                        group_by_fields_to_read = _.union(
+                            group_by_fields_to_read,
+                            states_fields_to_read,
+                            tooltip_fields_to_read);
+                        return;
+                    }
+                    _.each(node.children, function(child) {
+                        recurse(child);
+                    });
+                };
+                recurse(self.fields_view.arch);
+
+                // fetch group data (display information)
+                var group_ids = _.without(typeof _.map(groups, function(elem) {
+                    return elem.attributes.value[0];
+                }), "undefined");
+                if (self.grouped_by_m2o && group_ids.length) {
+                    return new data.DataSet(self, self.relation).read_ids(group_ids, _.union(['display_name'], group_by_fields_to_read)).then(function(results) {
                         _.each(groups, function(group) {
-                            var value = group.attributes.value;
-                            group.id = value instanceof Array ?
-                                value[0] :
-                                value;
-                            var field = self.fields_view.fields[self.group_by_field];
-                            if (field && field.type === "selection") {
-                                value = _.find(field.selection, function(s) {
-                                    return s[0] === group.id;
-                                });
-                            }
-                            group.title = (value instanceof Array ?
-                                value[1] :
-                                value) || _t("Undefined");
-                            group.values = {};
+                            var group_id = group.attributes.value[0];
+                            var result = _.find(results, function(gdata) {
+                                return group_id === gdata.id;
+                            });
+                            group.title = result
+                                ? result.display_name
+                                : _t("Undefined");
+                            group.values = result;
+                            group.id = group_id;
+                            group.options = group_options;
                         });
-                        return $.when(groups);
-                    }
-                })
-                .then(function(groups) {
-                    var undef_index = _.findIndex(groups, function(g) {
-                        return g.title === _t("Undefined");
+                        return groups;
                     });
-                    if (undef_index >= 1) {
-                        var undef_group = groups[undef_index];
-                        groups.splice(undef_index, 1);
-                        groups.unshift(undef_group);
-                    }
-                    return groups;
-                })
-                .then(function(groups) {
-                    // load records for each group
-                    var is_empty = true;
-                    return $.when.apply(null, _.map(groups, function(group) {
-                        var def = $.when([]);
-                        var dataset = new data.DataSetSearch(self, self.dataset.model,
-                            new data.CompoundContext(self.dataset.get_context(), group.model.context()), group.model.domain());
-                        if (self.dataset._sort) {
-                            dataset.set_sort(self.dataset._sort);
-                        }
-                        if (group.attributes.length >= 1) {
-                            def = dataset.read_slice(self.fields_keys.concat(['__last_update']), {
-                                'limit': self.limit
+                } else {
+                    _.each(groups, function(group) {
+                        var value = group.attributes.value;
+                        group.id = value instanceof Array
+                            ? value[0]
+                            : value;
+                        var field = self.fields_view.fields[self.group_by_field];
+                        if (field && field.type === "selection") {
+                            value = _.find(field.selection, function(s) {
+                                return s[0] === group.id;
                             });
                         }
-                        return def.then(function(records) {
-                            self.dataset.ids.push.apply(self.dataset.ids, _.difference(dataset.ids, self.dataset.ids));
-                            group.records = records;
-
-                            dataset.o2m_field = self.dataset.o2m_field;
-
-                            group.dataset = dataset;
-                            is_empty = is_empty && !records.length;
-                            return group;
-                        });
-                    })).then(function() {
-                        return {
-                            groups: Array.prototype.slice.call(arguments, 0),
-                            is_empty: is_empty,
-                            grouped: true,
-                        };
+                        group.title = (value instanceof Array
+                            ? value[1]
+                            : value) || _t("Undefined");
+                        group.values = {};
                     });
+                    return $.when(groups);
+                }
+            }).then(function(groups) {
+                var undef_index = _.findIndex(groups, function(g) {
+                    return g.title === _t("Undefined");
                 });
+                if (undef_index >= 1) {
+                    var undef_group = groups[undef_index];
+                    groups.splice(undef_index, 1);
+                    groups.unshift(undef_group);
+                }
+                return groups;
+            }).then(function(groups) {
+                // load records for each group
+                var is_empty = true;
+                return $.when.apply(null, _.map(groups, function(group) {
+                    var def = $.when([]);
+                    var dataset = new data.DataSetSearch(self, self.dataset.model,
+                        new data.CompoundContext(self.dataset.get_context(), group.model.context()), group.model.domain());
+                    if (self.dataset._sort) {
+                        dataset.set_sort(self.dataset._sort);
+                    }
+                    if (group.attributes.length >= 1) {
+                        def = dataset.read_slice(self.fields_keys.concat(['__last_update']), {
+                            'limit': self.limit
+                        });
+                    }
+                    return def.then(function(records) {
+                        self.dataset.ids.push.apply(self.dataset.ids, _.difference(dataset.ids, self.dataset.ids));
+                        group.records = records;
+
+                        dataset.o2m_field = self.dataset.o2m_field;
+
+                        group.dataset = dataset;
+                        is_empty = is_empty && !records.length;
+                        return group;
+                    });
+                })).then(function() {
+                    return {
+                        groups: Array.prototype.slice.call(arguments, 0),
+                        is_empty: is_empty,
+                        grouped: true,
+                    };
+                });
+            });
             return $.when(load_groups_def, fields_def);
         },
 
@@ -348,17 +343,15 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                             var model = ddata.model;
                             var fields = ddata.fields;
                             var o2m_model = new Model(model);
-                            o2m_model.query(fields)
-                                .filter([
-                                    ['id', 'in', ids]
-                                ])
-                                .all().then(function(field_record) {
-                                    record[ddata.field_name] = field_record;
-                                    var kanban_record = new KanbanRecord(self, record, options);
-                                    self.widgets.push(kanban_record);
-                                    kanban_record.appendTo(fragment);
-                                    el.append(fragment);
-                                });
+                            o2m_model.query(fields).filter([
+                                ['id', 'in', ids]
+                            ]).all().then(function(field_record) {
+                                record[ddata.field_name] = field_record;
+                                var kanban_record = new KanbanRecord(self, record, options);
+                                self.widgets.push(kanban_record);
+                                kanban_record.appendTo(fragment);
+                                el.append(fragment);
+                            });
                         });
                     }
                 });
@@ -435,22 +428,21 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                 _.each(self.data_records, function(record) {
                     if (_.keys(self.dataset.o2m_field).length) {
                         var count = 0;
-                        _.each(self.dataset.o2m_field, function(data, index) {
-                            var ids = record[data.field_name];
-                            var model = data.model;
-                            var fields = data.fields;
+                        _.each(self.dataset.o2m_field, function(datas, index) {
+                            var ids = record[datas.field_name];
+                            var model = datas.model;
+                            var fields = datas.fields;
                             var o2m_model = new Model(model);
-                            o2m_model.query(fields)
-                                .filter([
+                            o2m_model.query(fields).filter(
+                                [
                                     ['id', 'in', ids]
-                                ])
-                                .all().then(function(field_record) {
-                                    record[data.field_name] = field_record;
-                                    count++;
-                                    self.add_record(record, {
-                                        no_update: true
-                                    });
+                                ]).all().then(function(field_record) {
+                                record[datas.field_name] = field_record;
+                                count++;
+                                self.add_record(record, {
+                                    no_update: true
                                 });
+                            });
                         });
                     }
                 });

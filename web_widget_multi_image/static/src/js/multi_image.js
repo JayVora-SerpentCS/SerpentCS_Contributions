@@ -40,10 +40,8 @@ odoo.define('web.MultiImage', function(require) {
             }
             var self = this;
             var id = self.x2m.dataset.index
-                ?
-                self.x2m.dataset.ids[self.x2m.dataset.index]
-                :
-                null;
+                ? self.x2m.dataset.ids[self.x2m.dataset.index]
+                : null;
             var pop = new common.FormViewDialog(this, {
                 res_model: self.x2m.field.relation,
                 res_id: id,
@@ -59,10 +57,8 @@ odoo.define('web.MultiImage', function(require) {
                     });
                 },
                 alternative_form_view: typeof self.x2m.field.views
-                    ?
-                    self.x2m.field.views.form
-                    :
-                    "undefined",
+                    ? self.x2m.field.views.form
+                    : "undefined",
                 parent_view: self.x2m.view,
                 child_name: self.x2m.name,
                 read_function: function(ids, fields, options) {
@@ -88,10 +84,8 @@ odoo.define('web.MultiImage', function(require) {
 
             var view_types = this.node.attrs.mode;
             view_types = Boolean(view_types)
-                ?
-                view_types.split(",")
-                :
-                [this.default_view];
+                ? view_types.split(",")
+                : [this.default_view];
             var views = [];
             _.each(view_types, function(view_type) {
                 if (!_.include(["list", "tree", "graph", "kanban"], view_type)) {
@@ -100,10 +94,8 @@ odoo.define('web.MultiImage', function(require) {
                 var view = {
                     view_id: false,
                     view_type: view_type === "tree"
-                        ?
-                        "list"
-                        :
-                        view_type,
+                        ? "list"
+                        : view_type,
                     options: {}
                 };
                 if (self.field.views && self.field.views[view_type]) {
@@ -114,14 +106,10 @@ odoo.define('web.MultiImage', function(require) {
                         addable: null,
                         selectable: self.multi_selection,
                         multi_image: (self.node.attrs.widget
-                                ?
-                                self.node.attrs.widget === 'image_multi'
-                                :
-                                false)
-                                ?
-                            true
-                            :
-                            false;
+                                ? self.node.attrs.widget === 'image_multi'
+                                : false)
+                                ? true
+                            : false,
                         sortable: true,
                         import_enabled: false,
                         deletable: true
@@ -131,14 +119,10 @@ odoo.define('web.MultiImage', function(require) {
                             deletable: null,
                             reorderable: false,
                             multi_image: (self.node.attrs.widget
-                                    ?
-                                    self.node.attrs.widget === 'image_multi'
-                                    :
-                                    false)
-                                    ?
-                                true
-                                :
-                                false,
+                                    ? self.node.attrs.widget === 'image_multi'
+                                    : false)
+                                    ? true
+                                : false,
                         });
                     }
                 } else if (view.view_type === "kanban") {
@@ -230,15 +214,11 @@ odoo.define('web.MultiImage', function(require) {
                                     src = "data:image/jpeg;base64," + img.image;
                                 }
                                 var title = img.title
-                                    ?
-                                    img.title
-                                    :
-                                    '';
+                                    ? img.title
+                                    : '';
                                 var description = img.description
-                                    ?
-                                    img.description
-                                    :
-                                    '';
+                                    ? img.description
+                                    : '';
                                 url_list.push({
                                     "url": src,
                                     "title": 'Title:-' + title + '<br/>Description:-' + description

@@ -67,19 +67,13 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 if (group.openable && group.length) {
                     $row.click(function(e) {
                         if ($row.data('open')) {
-                            $row.removeData('open')
-                                .find('span.ui-icon')
-                                .removeClass('ui-icon-triangle-1-s')
-                                .addClass('ui-icon-triangle-1-e');
+                            $row.removeData('open').find('span.ui-icon').removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
                             child.close();
                             // force recompute the selection as closing group reset properties
                             var selection = self.get_selection();
                             $(self).trigger('selected', [selection.ids, this.records]);
                         } else {
-                            $row.data('open', true)
-                                .find('span.ui-icon')
-                                .removeClass('ui-icon-triangle-1-e')
-                                .addClass('ui-icon-triangle-1-s');
+                            $row.data('open', true).find('span.ui-icon').removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
                             child.open(self.point_insertion(e.currentTarget));
                         }
                     });
@@ -133,11 +127,9 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 if (self.options.selectable) {
                     $row.append('<td>');
                 }
-                _(self.columns).chain()
-                    .filter(function(column) {
+                _(self.columns).chain().filter(function(column) {
                         return column.invisible !== '1';
-                    })
-                    .each(function(column) {
+                    }).each(function(column) {
                         if (column.meta) {
                             // do not do anything
                         } else if (column.id in group.aggregates) {
@@ -145,11 +137,9 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                             r[column.id] = {
                                 value: group.aggregates[column.id]
                             };
-                            $('<td class="oe_number">')
-                                .html(column.format(r, {
-                                    process_modifiers: false
-                                }))
-                                .appendTo($row);
+                            $('<td class="oe_number">').html(column.format(r, {
+                                process_modifiers: false
+                            })).appendTo($row);
                         } else {
                             $row.append('<td>');
                         }
@@ -161,26 +151,21 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             return placeholder;
         },
 
-        render_auto_groups: function(groups_auto) {
+        render_auto_groups: function(groups_auto_) {
             var self = this;
+            var groups_auto = groups_auto_;
             if (!groups_auto) {
                 groups_auto = self.groups_auto;
             }
             _.each(groups_auto, function(vals) {
                 if (vals[1].datagroup.openable) {
                     if (vals[0].data('open')) {
-                        vals[0].removeData('open')
-                            .find('span.ui-icon')
-                            .removeClass('ui-icon-triangle-1-s')
-                            .addClass('ui-icon-triangle-1-e');
+                        vals[0].removeData('open').find('span.ui-icon').removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
                         vals[1].close();
                         $("#expand_icon").addClass('fa-expand');
                         $("#expand_icon").removeClass('fa-compress');
                     } else {
-                        vals[0].data('open', true)
-                            .find('span.ui-icon')
-                            .removeClass('ui-icon-triangle-1-e')
-                            .addClass('ui-icon-triangle-1-s');
+                        vals[0].data('open', true).find('span.ui-icon').removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
                         vals[1].open(self.point_insertion(vals[0]));
                         $("#expand_icon").removeClass('fa-expand');
                         $("#expand_icon").addClass('fa-compress');

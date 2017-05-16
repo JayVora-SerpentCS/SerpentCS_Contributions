@@ -28,7 +28,7 @@ $(window).load(function() {
                         xzoom.closezoom();
                     });
                 };
-                xzoom.openzoom(ev);
+                xzoom.openzoom(event);
             });
         });
     }
@@ -50,17 +50,17 @@ $(window).load(function() {
 });
 
 //Method to change Main product image when click on thumbnail image
-function pro_img_click(proimg) {
+(function pro_img_click(proimg) {
     var demo = '<div class="xzoom-container"><img class="xzoom"	id="xzoom-default" xoriginal="' + proimg.src + '" style="width: 300px; height: 350px;" src="' + proimg.src + '"/></div>';
     $('#ex1 span').html(demo);
-}
+})();
 
 //Show Model
-function full_img(sample) {
+(function full_img(sample) {
     var wi = $(window).width();
     if (wi < 980) {
         var img_bin = $(sample).find("img");
         $('#modal_img').attr('src', $(img_bin).attr("src"));
         $('#img_modal').modal('show');
     }
-}
+})();

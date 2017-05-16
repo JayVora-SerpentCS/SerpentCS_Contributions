@@ -1,4 +1,3 @@
-/*global i*/
 odoo.define('website_multi_image_zoom.website_sale', function(require) {
 
     var ajax = require('web.ajax');
@@ -8,16 +7,17 @@ odoo.define('website_multi_image_zoom.website_sale', function(require) {
             $('#ex1 span').html(demo);
             var oe_website_sale = this;
 
-            function price_to_str(price) {
+            function price_to_str(prices) {
+            	var price = prices;
                 price = Math.round(price * 100) / 100;
                 var dec = Math.round((price % 1) * 100);
                 return price +
-                    (dec ?
-                        '' :
-                        '.0') +
-                    (dec % 10 ?
-                        '' :
-                        '0');
+                    (dec
+                        ? ''
+                        : '.0') +
+                    (dec % 10
+                        ? ''
+                        : '0');
             }
 
             $(oe_website_sale).on('change', 'input.js_variant_change, select.js_variant_change, ul[data-attribute_value_ids]', function(ev) {
@@ -32,7 +32,7 @@ odoo.define('website_multi_image_zoom.website_sale', function(require) {
                         }).then(function(data) {
                             var str = '<li><img onclick="pro_img_click(this)" class="xzoom-gallery" width="80" src="/web/image/product.product/' + product_id + '/image" xpreview="/web/image/product.product/' + product_id + '/image"/></li>';
                             var pro_imgs = data.product_rec;
-                            for (i = 0; i < pro_imgs.length; i++) {
+                            for (var i = 0; i < pro_imgs.length; i++) {
                                 str += '<li><img onclick="pro_img_click(this)" class="xzoom-gallery" width="80" src="/web/image/product.image/' + pro_imgs[i] + '/image" xpreview="/web/image/product.image/' + pro_imgs[i] + '/image" /></li>';
                             }
                             var first_append = "<div id='carousel-custom' class='carousel slide'><ol class='carousel-indicators'>" + str + "</ol></div>";

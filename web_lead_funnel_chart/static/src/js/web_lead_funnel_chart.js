@@ -30,7 +30,7 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                             dataLabels: {
                                 enabled: true,
                                 format: "<b>{point.name}</b>({point.y:,.0f})",
-                                color: "black" || (Highcharts.theme && Highcharts.theme.contrastTextColor),
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || "black",
                                 softConnector: true
                             },
                             neckWidth: "30%",

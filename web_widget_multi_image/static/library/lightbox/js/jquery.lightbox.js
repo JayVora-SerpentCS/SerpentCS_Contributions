@@ -18,6 +18,7 @@
 /*global wDiff*/
 /*global hDiff*/
 /*global afterTimeout*/
+/*global newHeight*/
 (function($) {
     $.fn.lightbox = function(options) {
         // build main options
@@ -38,9 +39,9 @@
 
             // if jsonData, build the imageArray from data provided in JSON format
             if (opts.jsonData && opts.jsonData.length > 0) {
-                var parser = opts.jsonDataParser ?
-                    opts.jsonDataParser :
-                    $.fn.lightbox.parseJsonData;
+                var parser = opts.jsonDataParser
+                    ? opts.jsonDataParser
+                    : $.fn.lightbox.parseJsonData;
                 opts.imageArray = [];
                 opts.imageArray = parser(opts.jsonData);
             }
@@ -99,7 +100,7 @@
         # Returns a numerically indexed array of document width/height and window width/height
         */
         function getPageSize() {
-            var jqueryPageSize = new Array($(document).width(), $(document).height(), $(window).width(), $(window).height());
+            var jqueryPageSize = new Array[$(document).width(), $(document).height(), $(window).width(), $(window).height()];
             return jqueryPageSize;
         };
 
@@ -118,7 +119,7 @@
                 xScroll = document.body.scrollLeft;
             }
 
-            var arrayPageScroll = new Array(xScroll, yScroll);
+            var arrayPageScroll = new Array[xScroll, yScroll];
             return arrayPageScroll;
         };
 
@@ -153,20 +154,20 @@
             if (!opts.jsonData) {
                 opts.imageArray = [];
                 // if image is NOT part of a set..
-                if (!imageObject.rel || (imageObject.rel === '') && !opts.allSet) {
+                if (!imageObject.rel || ((imageObject.rel === '') && !opts.allSet)) {
                     // add single image to Lightbox.imageArray
-                    opts.imageArray.push(new Array(imageObject.href,
-                        opts.displayTitle ?
-                        imageObject.title :
-                        ''));
+                    opts.imageArray.push(new Array[imageObject.href,
+                        opts.displayTitle
+                        ? imageObject.title
+                        : '']);
                 } else {
                     // if image is part of a set..
                     $("a").each(function() {
                         if (this.href && (this.rel === imageObject.rel)) {
-                            opts.imageArray.push(new Array(this.href,
-                                opts.displayTitle ?
-                                this.title :
-                                ''));
+                            opts.imageArray.push(new Array[this.href,
+                                opts.displayTitle
+                                ? this.title
+                                : '']);
                         }
                     });
                 }
@@ -240,7 +241,7 @@
                 if (opts.fitToScreen) {
                     var arrayPageSize = getPageSize();
                     var ratio = 0;
-                    var initialPageWidth = arrayPageSize[2] - 2 * opts.borderSize;
+                    var initialPageWidth = (arrayPageSize[2] - 2) * opts.borderSize;
                     var initialPageHeight = arrayPageSize[3] - 200;
 
                     var dI = initialPageWidth / initialPageHeight;
@@ -262,7 +263,7 @@
                 if (newHeight > 500) {
                     newHeight = 500;
                 }
-                var line_height = (newHeight / 100) * 7 + 24;
+                var line_height = (newHeight / 100) * (7 + 24);
                 // $("#imageContainer").attr("style", "line-height:" + line_height)
                 // $("#lightboxImage").attr("style", "line-height:" + line_height)
                 $("#imageContainer").attr("style", "line-height:" + "");
@@ -285,14 +286,14 @@
         function preloadNeighborImages() {
             if (opts.loopImages && opts.imageArray.length > 1) {
                 preloadNextImage = new Image();
-                preloadNextImage.src = opts.imageArray[(opts.activeImage === (opts.imageArray.length - 1)) ?
-                    0 :
-                    opts.activeImage + 1][0];
+                preloadNextImage.src = opts.imageArray[(opts.activeImage === (opts.imageArray.length - 1))
+                    ? 0
+                    : opts.activeImage + 1][0];
 
                 preloadPrevImage = new Image();
-                preloadPrevImage.src = opts.imageArray[(opts.activeImage === 0) ?
-                    (opts.imageArray.length - 1) :
-                    opts.activeImage - 1][0];
+                preloadPrevImage.src = opts.imageArray[(opts.activeImage === 0)
+                    ? (opts.imageArray.length - 1)
+                    : opts.activeImage - 1][0];
             } else {
                 if ((opts.imageArray.length - 1) > opts.activeImage) {
                     preloadNextImage = new Image();
@@ -420,16 +421,16 @@
                 // if loopImages is true, always show next and prev image buttons 
                 if (opts.loopImages) {
                     $('#prevLink,#prevLinkText').show().click(function() {
-                        changeImage((opts.activeImage === 0) ?
-                            (opts.imageArray.length - 1) :
-                            opts.activeImage - 1);
+                        changeImage((opts.activeImage === 0)
+                            ? (opts.imageArray.length - 1)
+                            : opts.activeImage - 1);
                         return false;
                     });
 
                     $('#nextLink,#nextLinkText').show().click(function() {
-                        changeImage((opts.activeImage === (opts.imageArray.length - 1)) ?
-                            0 :
-                            opts.activeImage + 1);
+                        changeImage((opts.activeImage === (opts.imageArray.length - 1))
+                            ? 0
+                            : opts.activeImage + 1);
                         return false;
                     });
                 } else {
@@ -469,9 +470,9 @@
             } else if ((key === 'p') || (keycode === 37)) {
                 if (o.loopImages) {
                     disableKeyboardNav();
-                    changeImage((o.activeImage === 0) ?
-                        (o.imageArray.length - 1) :
-                        o.activeImage - 1);
+                    changeImage((o.activeImage === 0)
+                        ? (o.imageArray.length - 1)
+                        : o.activeImage - 1);
                 } else if (o.activeImage !== 0) {
                     disableKeyboardNav();
                     changeImage(o.activeImage - 1);
@@ -481,9 +482,9 @@
             } else if ((key === 'n') || (keycode === 39)) {
                 if (opts.loopImages) {
                     disableKeyboardNav();
-                    changeImage((o.activeImage === (o.imageArray.length - 1)) ?
-                        0 :
-                        o.activeImage + 1);
+                    changeImage((o.activeImage === (o.imageArray.length - 1))
+                        ? 0
+                        : o.activeImage + 1);
                 } else if (o.activeImage !== (o.imageArray.length - 1)) {
                     disableKeyboardNav();
                     changeImage(o.activeImage + 1);
@@ -500,13 +501,13 @@
         function disableKeyboardNav() {
             $(document).unbind('keydown');
         };
-    };
+    }();
 
     $.fn.lightbox.parseJsonData = function(data) {
         var imageArray = [];
 
         $.each(data, function() {
-            imageArray.push(new Array(this.url, this.title));
+            imageArray.push(new Array[this.url, this.title]);
         });
 
         return imageArray;
@@ -518,7 +519,7 @@
         fileBottomNavCloseImage: '/web_widget_multi_image/static/library/lightbox/images/closelabel.gif',
         overlayOpacity: 0.6,
         borderSize: 10,
-        imageArray: new Array,
+        imageArray: new Array(),
         activeImage: null,
         inprogress: false,
         resizeSpeed: 350,
