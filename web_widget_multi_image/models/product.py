@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class multi_images(models.Model):
+class MultiImages(models.Model):
     _name = "multi.images"
 
     image = fields.Binary('Images')
@@ -13,7 +13,7 @@ class multi_images(models.Model):
     product_template_id = fields.Many2one('product.template', 'Product')
 
 
-class product_template(models.Model):
+class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     multi_images = fields.One2many('multi.images', 'product_template_id',

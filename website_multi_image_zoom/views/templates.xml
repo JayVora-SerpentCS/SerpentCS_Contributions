@@ -16,9 +16,6 @@
                     src="/website_multi_image_zoom/static/src/js/website_sale.js"/>
             <script type="text/javascript"
                     src="/website_multi_image_zoom/static/src/js/zoom.js"/>
-            <!-- PlugIn for touch and scroll -->
-            <link rel="stylesheet" type="text/css"
-                  href="/website_multi_image_zoom/static/src/css/jquery.mCustomScrollbar.min.css"/>
             <link rel="stylesheet"
                   href="/website_multi_image_zoom/static/src/css/pro_img.css"/>
         </xpath>

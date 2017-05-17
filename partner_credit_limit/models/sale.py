@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
 # See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models, _
@@ -17,7 +18,7 @@ class SaleOrder(models.Model):
         movelines = moveline_obj.\
             search([('partner_id', '=', partner.id),
                     ('account_id.user_type_id.name', 'in',
-                     ['Receivable', 'Payable']),
+                    ['Receivable', 'Payable']),
                     ('full_reconcile_id', '=', False)])
 
         debit, credit = 0.0, 0.0
@@ -29,11 +30,10 @@ class SaleOrder(models.Model):
 
         if (credit - debit + self.amount_total) > partner.credit_limit:
             if not partner.over_credit:
-                msg = 'Can not confirm Sale Order, Total mature due Amount ' \
+                msg = 'Can not confirm Sale Order,Total mature due Amount ' \
                       '%s as on %s !\nCheck Partner Accounts or Credit ' \
                       'Limits !' % (credit - debit, today_dt)
                 raise UserError(_('Credit Over Limits !\n' + msg))
-                return False
             else:
                 partner.write({
                     'credit_limit': credit - debit + self.amount_total})

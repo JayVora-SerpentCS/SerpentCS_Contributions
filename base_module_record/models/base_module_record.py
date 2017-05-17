@@ -12,7 +12,7 @@ import yaml
 # Please don't override yaml_tag here:modify it in server bin/tools/yaml_tag.py
 
 
-class xElement(minidom.Element):
+class XElement(minidom.Element):
     """dom.Element with compact print
     The Element in minidom has a problem: if printed, adds whitespace
     around the text nodes. The standard will not ignore that whitespace.
@@ -28,18 +28,18 @@ class xElement(minidom.Element):
 
 
 def doc_createXElement(xdoc, tagName):
-    e = xElement(tagName)
+    e = XElement(tagName)
     e.ownerDocument = xdoc
     return e
 
 
-class base_module_record(models.Model):
+class BaseModuleRecord(models.Model):
     _name = "ir.module.record"
     _description = "Module Record"
 
     def __init__(self, *args, **kwargs):
         self.recording = 0
-        super(base_module_record, self).__init__(*args, **kwargs)
+        super(BaseModuleRecord, self).__init__(*args, **kwargs)
 
     # To Be Improved
     @api.model
@@ -136,10 +136,6 @@ class base_module_record(models.Model):
             elif fields[key]['type'] in ('one2many',):
                 for valitem in (val or []):
                     if valitem[0] in (0, 1):
-                        if key in model_pool._fields:
-                            model_pool._fields[key].inverse_name
-                        else:
-                            model_pool._inherit_fields[key][2].inverse_name
                         if valitem[0] == 0:
                             newid = self._create_id(fields[key]['relation'],
                                                     valitem[2])

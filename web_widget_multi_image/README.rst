@@ -1,16 +1,18 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-:alt: License: AGPL-3
+   :alt: License: AGPL-3
 
+=======================
 Web Widget Multi Image
-==================================
+=======================
 
 Description
------------
+===========
 
 This module provides the functionality to store multiple images for one record.
 All images store in server directory. so database size does not increase.
+
 Usage
-------------
+=====
 
 To use this module, you need to:
 
@@ -19,9 +21,7 @@ To use this module, you need to:
 
 Your XML form view definition will look a like:
 
-    ...
-    <field name="YOUR_TEXT_FIELD" widget="image_multi"/>
-    ...
+<field name="YOUR_TEXT_FIELD" widget="image_multi"/>
 
 It will display text field as a signature.
 

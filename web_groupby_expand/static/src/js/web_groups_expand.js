@@ -7,50 +7,54 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 
     ListView.Groups.include({
 
-        init:function (view, options) {
+        init: function(view, options) {
             this._super(view, options);
             this.groups_auto = [];
         },
 
-        render: function (post_render) {
+        render: function(post_render) {
             var self = this;
             var $el = $('<tbody>');
             this.elements = [$el[0]];
 
             this.datagroup.list(
-                _(this.view.visible_columns).chain()
-                    .filter(function (column) { return column.tag === 'field' })
-                    .pluck('name').value(),
-                function (groups) {
+                _(this.view.visible_columns).chain().filter(function(column) {
+                    return column.tag === 'field';
+                }).pluck('name').value(),
+                function(groups) {
                     $el[0].appendChild(
                         self.render_groups(groups));
-                    if (post_render) { post_render(); }
+                    if (post_render) {
+                        post_render();
+                    }
                     if (self.options.expand) {
                         self.render_auto_groups(self.groups_auto);
                     }
-                }, function (dataset) {
-                    self.render_dataset(dataset).done(function (list) {
-                        self.children[null] = list;
-                        self.elements =
-                            [list.$current.replaceAll($el)[0]];
+                },
+                function(dataset) {
+                    self.render_dataset(dataset).done(function(list) {
+                        self.children.null = list;
+                        self.elements = [list.$current.replaceAll($el)[0]];
                         self.setup_resequence_rows(list, dataset);
                     }).always(function() {
-                        if (post_render) { post_render(); }
+                        if (post_render) {
+                            post_render();
+                        }
                         self.view.trigger('view_list_rendered');
                     });
                 });
             return $el;
         },
 
-        render_groups: function (datagroups) {
+        render_groups: function(datagroups) {
             var self = this;
             var placeholder = this.make_fragment();
-            _(datagroups).each(function (group) {
+            _(datagroups).each(function(group) {
                 if (self.children[group.value]) {
                     self.records.proxy(group.value).reset();
                     delete self.children[group.value];
                 }
-                var child = self.children[group.value] = new (self.view.options.GroupsType)(self.view, {
+                var child = self.children[group.value] = new self.view.options.GroupsType(self.view, {
                     records: self.records.proxy(group.value),
                     options: self.options,
                     columns: self.columns
@@ -59,24 +63,18 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 child.datagroup = group;
 
                 var $row = child.$row = $('<tr class="oe_group_header">');
-                self.groups_auto.push([$row,child])
+                self.groups_auto.push([$row, child]);
                 if (group.openable && group.length) {
-                    $row.click(function (e) {
-                        if (!$row.data('open')) {
-                            $row.data('open', true)
-                                .find('span.ui-icon')
-                                    .removeClass('ui-icon-triangle-1-e')
-                                    .addClass('ui-icon-triangle-1-s');
-                            child.open(self.point_insertion(e.currentTarget));
-                        } else {
-                            $row.removeData('open')
-                                .find('span.ui-icon')
-                                    .removeClass('ui-icon-triangle-1-s')
-                                    .addClass('ui-icon-triangle-1-e');
+                    $row.click(function(e) {
+                        if ($row.data('open')) {
+                            $row.removeData('open').find('span.ui-icon').removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
                             child.close();
                             // force recompute the selection as closing group reset properties
                             var selection = self.get_selection();
                             $(self).trigger('selected', [selection.ids, this.records]);
+                        } else {
+                            $row.data('open', true).find('span.ui-icon').removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+                            child.open(self.point_insertion(e.currentTarget));
                         }
                     });
                 }
@@ -88,8 +86,9 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                     var row_data = {};
                     row_data[group.grouped_on] = group;
                     var group_label = _t("Undefined");
-                    var group_column = _(self.columns).detect(function (column) {
-                        return column.id === group.grouped_on; });
+                    var group_column = _(self.columns).detect(function(column) {
+                        return column.id === group.grouped_on;
+                    });
                     if (group_column) {
                         try {
                             group_label = group_column.format(row_data, {
@@ -128,17 +127,19 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 if (self.options.selectable) {
                     $row.append('<td>');
                 }
-                _(self.columns).chain()
-                    .filter(function (column) { return column.invisible !== '1'; })
-                    .each(function (column) {
+                _(self.columns).chain().filter(function(column) {
+                        return column.invisible !== '1';
+                    }).each(function(column) {
                         if (column.meta) {
                             // do not do anything
                         } else if (column.id in group.aggregates) {
                             var r = {};
-                            r[column.id] = {value: group.aggregates[column.id]};
-                            $('<td class="oe_number">')
-                                .html(column.format(r, {process_modifiers: false}))
-                                .appendTo($row);
+                            r[column.id] = {
+                                value: group.aggregates[column.id]
+                            };
+                            $('<td class="oe_number">').html(column.format(r, {
+                                process_modifiers: false
+                            })).appendTo($row);
                         } else {
                             $row.append('<td>');
                         }
@@ -150,29 +151,24 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             return placeholder;
         },
 
-        render_auto_groups: function (groups_auto) {
+        render_auto_groups: function(groups_auto_) {
             var self = this;
+            var groups_auto = groups_auto_;
             if (!groups_auto) {
                 groups_auto = self.groups_auto;
             }
             _.each(groups_auto, function(vals) {
                 if (vals[1].datagroup.openable) {
-                    if (!vals[0].data('open')) {
-                        vals[0].data('open', true)
-                            .find('span.ui-icon')
-                                .removeClass('ui-icon-triangle-1-e')
-                                .addClass('ui-icon-triangle-1-s');
-                        vals[1].open(self.point_insertion(vals[0]));
-                        $("#expand_icon").removeClass('fa-expand');
-                        $("#expand_icon").addClass('fa-compress');
-                    } else {
-                        vals[0].removeData('open')
-                            .find('span.ui-icon')
-                                .removeClass('ui-icon-triangle-1-s')
-                                .addClass('ui-icon-triangle-1-e');
+                    if (vals[0].data('open')) {
+                        vals[0].removeData('open').find('span.ui-icon').removeClass('ui-icon-triangle-1-s').addClass('ui-icon-triangle-1-e');
                         vals[1].close();
                         $("#expand_icon").addClass('fa-expand');
                         $("#expand_icon").removeClass('fa-compress');
+                    } else {
+                        vals[0].data('open', true).find('span.ui-icon').removeClass('ui-icon-triangle-1-e').addClass('ui-icon-triangle-1-s');
+                        vals[1].open(self.point_insertion(vals[0]));
+                        $("#expand_icon").removeClass('fa-expand');
+                        $("#expand_icon").addClass('fa-compress');
                     }
                 }
             });
@@ -181,28 +177,28 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 
     ListView.include({
 
-        set_default_options: function (options) {
+        set_default_options: function(options) {
             this._super(options);
             _.defaults(this.options, {
-                expand : false,
+                expand: false,
             });
         },
 
         load_list: function(data) {
             var self = this;
-            $('.oe-list-expand').unbind('click').bind('click',function() {
+            $('.oe-list-expand').unbind('click').bind('click', function() {
                 self.options.expand = true;
-                self.groups.render_auto_groups(false)
-            })
+                self.groups.render_auto_groups(false);
+            });
             var res = this._super.apply(this, arguments);
             $("#expand_icon").addClass('fa-expand');
             $("#expand_icon").removeClass('fa-compress');
             if (self.groups.datagroup.dataset) {
                 $('.oe-list-expand').hide();
             }
-            if (self.groups.datagroup.group_by == "") {
+            if (self.groups.datagroup.group_by === "") {
                 $('.oe-list-expand').hide();
-            } else if (self.groups.datagroup.group_by == undefined) {
+            } else if (typeof self.groups.datagroup.group_by === "undefined") {
                 $('.oe-list-expand').hide();
                 $(".oe_list_pager").hide();
             } else {
@@ -211,10 +207,10 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             return res;
         },
 
-        do_search: function (domain, context, group_by) {
+        do_search: function(domain, context, group_by) {
             var res = this._super(domain, context, group_by);
             this.options.expand = false;
-            this.groups.groups_auto = []
+            this.groups.groups_auto = [];
             return res;
         },
 
@@ -222,13 +218,13 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 
     ViewManager.include({
 
-        switch_mode: function (view_type, no_store, options) {
+        switch_mode: function(view_type, no_store, options) {
             var res = this._super.apply(this, arguments);
-            if (view_type != 'list') {
+            if (view_type !== 'list') {
                 $('.oe-list-expand').hide();
             }
             return res;
-        }, 
+        },
     });
 
 });

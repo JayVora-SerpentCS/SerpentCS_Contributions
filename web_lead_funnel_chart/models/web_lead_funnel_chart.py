@@ -11,9 +11,6 @@ class Crmleadextended(models.Model):
         stage_ids = self.env['crm.stage'].search([])
         crm_lst = []
         for stage in stage_ids:
-            self._cr.execute(
-                '''select count(*) from crm_lead where stage_id=%s'''
-                % stage.id)
-            leads = self._cr.fetchone()
-            crm_lst.append((stage.name, int(leads[0])))
+            leads = self.search_count([('stage_id', '=', stage.id)])
+            crm_lst.append((stage.name, int(leads)))
         return crm_lst

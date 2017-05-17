@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html>
 <odoo>
 
         <menuitem id="synch_config" name="Synchronization" parent="base.menu_administration" sequence="30"/>

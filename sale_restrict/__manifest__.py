@@ -9,8 +9,9 @@
         This module restricts a user from confirming a Sale Order/Quotation
         if it contains products having sale price zero.
     """,
+    'license': 'AGPL-3',
     'author': "Serpent Consulting Services Pvt. Ltd.",
-    'website': "http://www.serpentcs.com",
+    'website': 'http://www.serpentcs.com',
     'depends': ['sale'],
     'installable': True,
     'auto_install': False,

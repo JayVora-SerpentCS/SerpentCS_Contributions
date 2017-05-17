@@ -3,12 +3,12 @@
 
 {
     'name': 'Product Image for Sale',
-    'author': 'Serpent Consulting Services Pvt. Ltd.,\
-             Odoo Community Association (OCA)',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sales Management',
     'summary': 'Product Image for Sale Reports',
+    'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'sequence': 1,
     'depends': ['sale', 'web_tree_image'],
     'data': [

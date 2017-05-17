@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <!-- Grade views -->
@@ -9,19 +9,19 @@
             <form string="Employees Grade">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" />
                     </group>
                     <notebook>
                         <page string="Ranks">
                             <field name="rank_ids">
                                 <tree string="Ranks">
-                                    <field name="name"/>
-                                    <field name="salary_range"/>
+                                    <field name="name" />
+                                    <field name="salary_range" />
                                 </tree>
                             </field>
                         </page>
                     </notebook>
-                    <field name="description" placeholder="Description"/>
+                    <field name="description" placeholder="Description" />
                 </sheet>
             </form>
         </field>
@@ -32,8 +32,8 @@
         <field name="model">grade.grade</field>
         <field name="arch" type="xml">
             <tree string="Grades">
-                <field name="name"/>
-                <field name="description"/>
+                <field name="name" />
+                <field name="description" />
             </tree>
         </field>
     </record>
@@ -45,7 +45,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_grade" parent="hr.menu_human_resources_configuration" action="action_employee_grade"/>
+    <menuitem id="menu_grade" parent="hr.menu_human_resources_configuration" action="action_employee_grade" />
 
     <!-- Rank views -->
     <record id="view_employee_rank_form" model="ir.ui.view">
@@ -55,12 +55,12 @@
             <form string="Employees Rank">
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" />
                     </group>
                     <group>
-                        <field name="salary_range"/>
+                        <field name="salary_range" />
                     </group>
-                    <field name="description" placeholder="Description"/>
+                    <field name="description" placeholder="Description" />
                 </sheet>
             </form>
         </field>
@@ -71,9 +71,9 @@
         <field name="model">rank.rank</field>
         <field name="arch" type="xml">
             <tree string="Ranks">
-                <field name="name"/>
-                <field name="salary_range"/>
-                <field name="description"/>
+                <field name="name" />
+                <field name="salary_range" />
+                <field name="description" />
             </tree>
         </field>
     </record>
@@ -85,17 +85,17 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_rank" parent="hr.menu_human_resources_configuration" action="action_employee_rank"/>
+    <menuitem id="menu_rank" parent="hr.menu_human_resources_configuration" action="action_employee_rank" />
 
     <!-- Employees inherited views -->
     <record id="view_employee_form_grade_rank" model="ir.ui.view">
         <field name="name">hr.employee.form.grade.rank</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="inherit_id" ref="hr.view_employee_form" />
         <field name="arch" type="xml">
             <field name="job_id" position="after">
-                <field name="grade_id"/>
-                <field name="rank_id"/>
+                <field name="grade_id" />
+                <field name="rank_id" />
             </field>
         </field>
     </record>
@@ -103,11 +103,11 @@
     <record id="view_employee_tree_grade_rank" model="ir.ui.view">
         <field name="name">hr.employee.tree.grade.rank</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="inherit_id" ref="hr.view_employee_tree" />
         <field name="arch" type="xml">
             <field name="job_id" position="after">
-                <field name="grade_id"/>
-                <field name="rank_id"/>
+                <field name="grade_id" />
+                <field name="rank_id" />
             </field>
         </field>
     </record>
@@ -115,11 +115,11 @@
     <record id="view_employee_filter_grade_rank" model="ir.ui.view">
         <field name="name">Employees Grade Rank</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="inherit_id" ref="hr.view_employee_filter" />
         <field name="arch" type="xml">
             <filter context="{'group_by':'job_id'}" position="after">
-                <filter string="Grade" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'grade_id'}"/>
-                <filter string="Rank" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'rank_id'}"/>
+                <filter string="Grade" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'grade_id'}" />
+                <filter string="Rank" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'rank_id'}" />
             </filter>
         </field>
     </record>
@@ -127,20 +127,21 @@
     <record id="hr_kanban_view_emp_grade_rank" model="ir.ui.view">
         <field name="name">hr.employee.kanban.grade.rank</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees" />
         <field name="arch" type="xml">
             <xpath expr="//templates" position="before">
-                <field name="grade_id"/>
-                <field name="rank_id"/>
+                <field name="grade_id" />
+                <field name="rank_id" />
             </xpath>
             <xpath expr="//field[@name='work_email']" position="after">
                 <li t-if="record.grade_id.raw_value">
-                    <field name="grade_id"/>
+                    <field name="grade_id" />
                 </li>
                 <li t-if="record.rank_id.raw_value">
-                    <field name="rank_id"/>
+                    <field name="rank_id" />
                 </li>
             </xpath>
         </field>
     </record>
+
 </odoo>
