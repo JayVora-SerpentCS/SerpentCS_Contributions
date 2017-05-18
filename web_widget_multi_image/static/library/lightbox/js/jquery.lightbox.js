@@ -501,7 +501,7 @@
         function disableKeyboardNav() {
             $(document).unbind('keydown');
         };
-    }();
+    };
 
     $.fn.lightbox.parseJsonData = function(data) {
         var imageArray = [];
