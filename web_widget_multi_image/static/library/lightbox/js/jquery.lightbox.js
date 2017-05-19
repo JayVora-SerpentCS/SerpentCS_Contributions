@@ -19,6 +19,7 @@
 /*global hDiff*/
 /*global afterTimeout*/
 /*global newHeight*/
+
 (function($) {
     $.fn.lightbox = function(options) {
         // build main options
@@ -69,7 +70,7 @@
                 $("body").append(string);
             }
 
-            //$("#overlay, #lightbox").click(function(){ end(); }).hide();
+          //$("#overlay, #lightbox").click(function(){ end(); }).hide();
             $("#loadingLink, #bottomNavClose").click(function() {
                 end();
                 return false;
@@ -100,13 +101,12 @@
         # Returns a numerically indexed array of document width/height and window width/height
         */
         function getPageSize() {
-            var jqueryPageSize = new Array[$(document).width(), $(document).height(), $(window).width(), $(window).height()];
+            var jqueryPageSize = new Array($(document).width(), $(document).height(), $(window).width(), $(window).height());
             return jqueryPageSize;
         };
 
         function getPageScroll() {
-            var xScroll = 0,
-                yScroll = 0;
+            var xScroll, yScroll;
 
             if (self.pageYOffset) {
                 yScroll = self.pageYOffset;
@@ -119,7 +119,7 @@
                 xScroll = document.body.scrollLeft;
             }
 
-            var arrayPageScroll = new Array[xScroll, yScroll];
+            var arrayPageScroll = new Array(xScroll, yScroll);
             return arrayPageScroll;
         };
 
@@ -156,18 +156,18 @@
                 // if image is NOT part of a set..
                 if (!imageObject.rel || ((imageObject.rel === '') && !opts.allSet)) {
                     // add single image to Lightbox.imageArray
-                    opts.imageArray.push(new Array[imageObject.href,
+                    opts.imageArray.push(new Array(imageObject.href,
                         opts.displayTitle
                         ? imageObject.title
-                        : '']);
+                        : ''));
                 } else {
                     // if image is part of a set..
                     $("a").each(function() {
                         if (this.href && (this.rel === imageObject.rel)) {
-                            opts.imageArray.push(new Array[this.href,
+                            opts.imageArray.push(new Array(this.href,
                                 opts.displayTitle
                                 ? this.title
-                                : '']);
+                                : ''));
                         }
                     });
                 }
@@ -305,7 +305,6 @@
                 }
             }
         };
-
         function resizeImageContainer(imgWidth, imgHeight) {
             // get current width and height
             opts.widthCurrent = $("#outerImageContainer").outerWidth();
@@ -507,49 +506,50 @@
         var imageArray = [];
 
         $.each(data, function() {
-            imageArray.push(new Array[this.url, this.title]);
+            imageArray.push(new Array(this.url, this.title));
         });
 
         return imageArray;
     };
+
     $.fn.lightbox.defaults = {
-        triggerEvent: "click",
-        allSet: false,
-        fileLoadingImage: '/web_widget_multi_image/static/library/lightbox/images/loading.gif',
-        fileBottomNavCloseImage: '/web_widget_multi_image/static/library/lightbox/images/closelabel.gif',
-        overlayOpacity: 0.6,
-        borderSize: 10,
-        imageArray: new Array(),
-        activeImage: null,
-        inprogress: false,
-        resizeSpeed: 350,
-        widthCurrent: 250,
-        heightCurrent: 250,
-        scaleImages: false,
-        xScale: 1,
-        yScale: 1,
-        displayTitle: true,
-        navbarOnTop: true,
-        displayDownloadLink: false,
-        slideNavBar: false,
-        navBarSlideSpeed: 350,
-        displayHelp: false,
-        strings: {
-            help: ' \u2190 / P - previous image\u00a0\u00a0\u00a0\u00a0\u2192 / N - next image\u00a0\u00a0\u00a0\u00a0ESC / X - close image gallery',
-            prevLinkTitle: 'previous image',
-            nextLinkTitle: 'next image',
-            prevLinkText: '&laquo; Previous',
-            nextLinkText: 'Next &raquo;',
-            closeTitle: 'close image gallery',
-            image: 'Image ',
-            of: ' of ',
-            download: 'Download'
-        },
-        fitToScreen: false,
-        disableNavbarLinks: false,
-        loopImages: false,
-        imageClickClose: true,
-        jsonData: null,
-        jsonDataParser: null
+            triggerEvent: "click",
+            allSet: false,
+            fileLoadingImage: '/web_widget_multi_image/static/library/lightbox/images/loading.gif',
+            fileBottomNavCloseImage: '/web_widget_multi_image/static/library/lightbox/images/closelabel.gif',
+            overlayOpacity: 0.6,
+            borderSize: 10,
+            imageArray: new Array(),
+            activeImage: null,
+            inprogress: false,
+            resizeSpeed: 350,
+            widthCurrent: 250,
+            heightCurrent: 250,
+            scaleImages: false,
+            xScale: 1,
+            yScale: 1,
+            displayTitle: true,
+            navbarOnTop: true,
+            displayDownloadLink: false,
+            slideNavBar: false,
+            navBarSlideSpeed: 350,
+            displayHelp: false,
+            strings: {
+                help: ' \u2190 / P - previous image\u00a0\u00a0\u00a0\u00a0\u2192 / N - next image\u00a0\u00a0\u00a0\u00a0ESC / X - close image gallery',
+                prevLinkTitle: 'previous image',
+                nextLinkTitle: 'next image',
+                prevLinkText: '&laquo; Previous',
+                nextLinkText: 'Next &raquo;',
+                closeTitle: 'close image gallery',
+                image: 'Image ',
+                of: ' of ',
+                download: 'Download'
+            },
+            fitToScreen: false,
+            disableNavbarLinks: false,
+            loopImages: false,
+            imageClickClose: true,
+            jsonData: null,
+            jsonDataParser: null
     };
 })(jQuery);

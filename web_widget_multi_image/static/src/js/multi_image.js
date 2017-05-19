@@ -79,64 +79,61 @@ odoo.define('web.MultiImage', function(require) {
         init: function() {
             this._super.apply(this, arguments);
         },
+        start: function() {
+            this._super.apply(this, arguments);
+        },
         load_views: function() {
-            var self = this;
-
+        	var self = this;
             var view_types = this.node.attrs.mode;
-            view_types = Boolean(view_types)
-                ? view_types.split(",")
-                : [this.default_view];
+            view_types = !!view_types ? view_types.split(",") : [this.default_view];
             var views = [];
             _.each(view_types, function(view_type) {
-                if (!_.include(["list", "tree", "graph", "kanban"], view_type)) {
+                if (! _.include(["list", "tree", "graph", "kanban"], view_type)) {
                     throw new Error(_.str.sprintf(_t("View type '%s' is not supported in X2Many."), view_type));
                 }
                 var view = {
                     view_id: false,
-                    view_type: view_type === "tree"
-                        ? "list"
-                        : view_type,
-                    options: {}
+                    view_type: view_type === "tree" ? "list" : view_type,
+                    fields_view: self.field.views && self.field.views[view_type],
+                    options: {},
                 };
-                if (self.field.views && self.field.views[view_type]) {
-                    view.embedded_view = self.field.views[view_type];
-                }
-                if (view.view_type === "list") {
-                    _.extend(view.options, {
-                        addable: null,
-                        selectable: self.multi_selection,
-                        multi_image: (self.node.attrs.widget
-                                ? self.node.attrs.widget === 'image_multi'
-                                : false)
-                                ? true
-                            : false,
-                        sortable: true,
-                        import_enabled: false,
-                        deletable: true
-                    });
-                    if (self.get("effective_readonly")) {
-                        _.extend(view.options, {
-                            deletable: null,
-                            reorderable: false,
-                            multi_image: (self.node.attrs.widget
-                                    ? self.node.attrs.widget === 'image_multi'
-                                    : false)
-                                    ? true
-                                : false,
-                        });
-                    }
+                if(view.view_type === "list") {
+                   _.extend(view.options, {
+                      action_buttons: false, // to avoid 'Save' and 'Discard' buttons to appear in X2M fields
+                      addable: null,
+                      selectable: self.multi_selection,
+                      multi_image: (self.node.attrs.widget
+                              ? self.node.attrs.widget === 'image_multi'
+                              : false)
+                              ? true
+                          : false,
+                      sortable: true,
+                      import_enabled: false,
+                      deletable: true
+                  });
+                  if (self.get("effective_readonly")) {
+                      _.extend(view.options, {
+                          deletable: null,
+                          reorderable: false,
+                          multi_image: (self.node.attrs.widget
+                                  ? self.node.attrs.widget === 'image_multi'
+                                  : false)
+                                  ? true
+                              : false,
+                      });
+                  }
                 } else if (view.view_type === "kanban") {
-                    _.extend(view.options, {
-                        confirm_on_delete: false,
-                    });
-                    if (self.get("effective_readonly")) {
-                        _.extend(view.options, {
-                            action_buttons: false,
-                            quick_creatable: false,
-                            creatable: false,
-                            read_only_mode: true,
-                        });
-                    }
+                  _.extend(view.options, {
+                      confirm_on_delete: false,
+                  });
+                  if (self.get("effective_readonly")) {
+                      _.extend(view.options, {
+                          action_buttons: false,
+                          quick_creatable: false,
+                          creatable: false,
+                          read_only_mode: true,
+                      });
+                  }
                 }
                 views.push(view);
             });
@@ -149,12 +146,12 @@ odoo.define('web.MultiImage', function(require) {
             });
             this.viewmanager.on("controller_inited", self, function(view_type, controller) {
                 controller.x2m = self;
-                if (view_type === "list") {
+                if (view_type == "list") {
                     if (self.get("effective_readonly")) {
-                        controller.on('edit:before', self, function(e) {
+                        controller.on('edit:before', self, function (e) {
                             e.cancel = true;
                         });
-                        _(controller.columns).find(function(column) {
+                        _(controller.columns).find(function (column) {
                             if (!(column instanceof list_widget_registry.get('field.handle'))) {
                                 return false;
                             }
@@ -162,7 +159,7 @@ odoo.define('web.MultiImage', function(require) {
                             return true;
                         });
                     }
-                } else if (view_type === "graph") {
+                } else if (view_type == "graph") {
                     self.reload_current_view();
                 }
                 def.resolve();
@@ -170,21 +167,16 @@ odoo.define('web.MultiImage', function(require) {
             this.viewmanager.on("switch_mode", self, function(n_mode) {
                 $.when(self.commit_value()).done(function() {
                     if (n_mode === "list") {
-                        self.reload_current_view();
-                        //                        $.async_when().done(function() {
-                        //                           self.reload_current_view();
-                        //                        });
+                        utils.async_when().done(function() {
+                            self.reload_current_view();
+                        });
                     }
                 });
             });
-            if (!self.isDestroyed()) {
-                self.viewmanager.appendTo(self.$el);
-            }
-            //            $.async_when().done(function () {
-            //                if (!self.isDestroyed()) {
-            //                    self.viewmanager.appendTo(self.$el);
-            //                }
-            //            });
+            utils.async_when().done(function () {
+                self.$el.addClass('o_view_manager_content');
+                self.alive(self.viewmanager.attachTo(self.$el));
+            });
             return def;
         },
     });

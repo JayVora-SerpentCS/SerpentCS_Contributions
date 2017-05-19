@@ -4,7 +4,7 @@
 {
     'name': 'Web Lead Funnel Chart 10.0',
     'category': 'Web',
-    'author': 'http://www.serpentcs.com',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Funnel Chart for Leads & Opportunities',
     'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.0',
