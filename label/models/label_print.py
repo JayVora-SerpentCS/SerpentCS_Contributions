@@ -71,19 +71,11 @@ class LabelPrint(models.Model):
 
     @api.multi
     def unlink_action(self):
-        ir_values_obj = self.env['ir.values']
-
-        act_window_obj = self.env['ir.actions.act_window']
-
         for template in self:
             if template.ref_ir_act_report.id:
-                act_window_obj_search = act_window_obj.\
-                    browse(template.ref_ir_act_report.id)
-                act_window_obj_search.unlink()
+                template.ref_ir_act_report.unlink()
             if template.ref_ir_value.id:
-                ir_values_obj_search = ir_values_obj.\
-                    browse(template.ref_ir_value.id)
-                ir_values_obj_search.unlink()
+                template.ref_ir_value.unlink()
         return True
 
 

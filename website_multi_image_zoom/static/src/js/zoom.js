@@ -50,10 +50,10 @@ $(window).load(function() {
 });
 
 //Method to change Main product image when click on thumbnail image
-(function pro_img_click(proimg) {
-    var demo = '<div class="xzoom-container"><img class="xzoom"	id="xzoom-default" xoriginal="' + proimg.src + '" style="width: 300px; height: 350px;" src="' + proimg.src + '"/></div>';
+function pro_img_click(proimg) {
+    var demo = '<div class="xzoom-container"><img class="xzoom" id="xzoom-default" xoriginal="' + proimg.src + '" style="width: 300px; height: 350px;" src="' + proimg.src + '"/></div>';
     $('#ex1 span').html(demo);
-})();
+};
 
 //Show Model
 (function full_img(sample) {
