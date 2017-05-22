@@ -15,36 +15,35 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         template: 'FieldSignature',
         render_value: function() {
             var self = this;
-            var url = '';
-            if (this.get('value')) {
-                if (utils.is_bin_size(this.get('value'))) {
+            var url;
+            if(this.get('value')) {
+                if(!utils.is_bin_size(this.get('value'))) {
+                    url = 'data:image/png;base64,' + this.get('value');
+                } else {
                     var id = JSON.stringify(this.view.datarecord.id || null);
                     self.digita_dataset = new data.DataSetSearch(self, self.view.model, {}, []);
                     self.digita_dataset.read_slice(['id', self.name], {
-                        'domain': [
-                            ['id', '=', id]
-                        ]
+                      'domain': [
+                          ['id', '=', id]
+                      ]
                     }).then(function(records) {
-                        _.each(records, function(record) {
-                            if (record[self.name]) {
-                                images[self.name] = record[self.name];
-                            } else {
-                                images[self.name] = "";
-                            }
-                        });
+                      _.each(records, function(record) {
+                          if (record[self.name]) {
+                              images[self.name] = record[self.name];
+                          } else {
+                              images[self.name] = "";
+                          }
+                      });
                     });
                     var field = this.name;
-                    if (this.options.preview_image) {
+                    if (this.options.preview_image)
                         field = this.options.preview_image;
-                    }
                     url = this.session.url('/web/binary/image', {
                         model: this.view.dataset.model,
                         id: id,
                         field: field,
-                        t: new Date().getTime(),
+                        t: (new Date().getTime()),
                     });
-                } else {
-                    url = 'data:image/png;base64,' + this.get('value');
                 }
             }
             var $img = $(QWeb.render("FieldBinaryImage-img", {
