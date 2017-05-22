@@ -191,44 +191,50 @@ odoo.define('web.MultiImage', function(require) {
                 var model = self.dataset.model;
                 self.images_list = [];
                 self.image_dataset = new dataset.DataSetSearch(self, self.model, {}, []);
-                self.image_dataset.read_slice([], {
-                    'domain': [
-                        ['id', 'in', self.dataset.ids]
-                    ]
-                }).done(function(records) {
-                    self.images_list = records;
-                    var images_list = self.images_list;
-                    if (images_list && !_.isEmpty(images_list)) {
-                        _.each(images_list, function(img) {
-                            if (img) {
-                                var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
-                                if (img.image) {
-                                    src = "data:image/jpeg;base64," + img.image;
+                if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
+                    return alert("Please Save the record when you are adding an image for the first time !!")
+                } else if (_.every(self.dataset.ids, function(i) { return _.isNumber(i)})){
+                    self.image_dataset.read_slice([], {
+                        'domain': [
+                            ['id', 'in', self.dataset.ids]
+                        ]
+                    }).done(function(records) {
+                        self.images_list = records;
+                        var images_list = self.images_list;
+                        if (images_list && !_.isEmpty(images_list)) {
+                            _.each(images_list, function(img) {
+                                if (img) {
+                                    var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
+                                    if (img.image) {
+                                        src = "data:image/jpeg;base64," + img.image;
+                                    }
+                                    var title = img.title
+                                        ? img.title
+                                        : '';
+                                    var description = img.description
+                                        ? img.description
+                                        : '';
+                                    url_list.push({
+                                        "url": src,
+                                        "title": 'Title:-' + title + '<br/>Description:-' + description
+                                    });
                                 }
-                                var title = img.title
-                                    ? img.title
-                                    : '';
-                                var description = img.description
-                                    ? img.description
-                                    : '';
-                                url_list.push({
-                                    "url": src,
-                                    "title": 'Title:-' + title + '<br/>Description:-' + description
-                                });
-                            }
+                            });
+                        } else {
+                            self.do_warn("Image", "Image not available !");
+                            return;
+                        }
+                        self.$el.find('.oe-image-preview').lightbox({
+                            fitToScreen: true,
+                            jsonData: url_list,
+                            loopImages: true,
+                            imageClickClose: false,
+                            disableNavbarLinks: true
                         });
-                    } else {
-                        self.do_warn("Image", "Image not available !");
-                        return;
-                    }
-                    self.$el.find('.oe-image-preview').lightbox({
-                        fitToScreen: true,
-                        jsonData: url_list,
-                        loopImages: true,
-                        imageClickClose: false,
-                        disableNavbarLinks: true
                     });
-                });
+                } else {
+                     return alert("Please Save the record when you are adding an image for the first time !!")
+                }
             });
 
             this.$el.find('.oe_image_list').click(function() {
