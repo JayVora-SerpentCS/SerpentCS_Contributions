@@ -15,6 +15,7 @@
     'license': 'AGPL-3',
     'sequence': 1,
     'data': ['views/project_kanban_view.xml'],
+    'images': ['static/description/ProjectKanban.png'],
     'installable': True,
     'auto_install': False,
 }
