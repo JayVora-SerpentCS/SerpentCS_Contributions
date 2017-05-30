@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Add location to the Partner form -->
     <record model="ir.ui.view" id="view_partner_form_city">

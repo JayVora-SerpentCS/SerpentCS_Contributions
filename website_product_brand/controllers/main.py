@@ -1,21 +1,22 @@
+# -*- coding: utf-8 -*-
 import werkzeug
-from openerp import http
-from openerp.http import request
-import openerp.addons.website_sale.controllers.main
-from openerp import SUPERUSER_ID
-from openerp.addons.website.models.website import slug
-from openerp.addons.website_sale.controllers.main import table_compute, QueryURL
+from odoo import http
+from odoo.http import request
+import odoo.addons.website_sale.controllers.main
+from odoo.addons.website.models.website import slug
+from odoo.addons.website_sale.controllers.main import TableCompute, QueryURL
 
 PPG = 20
 PPR = 4
 
 
-class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
-    @http.route(['/shop', '/shop/page/<int:page>', '/shop/category/<model("product.public.category"):category>',
+class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
+    @http.route(['/shop', '/shop/page/<int:page>',
+                 '/shop/category/<model("product.public.category"):category>',
                  '/shop/category/<model("product.public.category"):category>\
-                 /page/<int:page>', '/shop/brands'], type='http', auth='public', website=True)
+                 /page/<int:page>', '/shop/brands'], type='http',
+                auth='public', website=True)
     def shop(self, page=0, category=None, search='', brand=None, **post):
-        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
         values = {}
         domain = request.website.sale_product_domain()
         if search:
@@ -45,50 +46,54 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
 
             if attrib:
                 domain += [('attribute_line_ids.value_ids', 'in', ids)]
-        keep = QueryURL('/shop', category=category and int(category), search=search, attrib=attrib_list)
-        if not context.get('pricelist'):
-            pricelist = self.get_pricelist()
-            context['pricelist'] = int(pricelist)
+        keep = QueryURL('/shop', category=category and int(category),
+                        search=search, attrib=attrib_list)
+
+        pricelist_context = dict(request.env.context)
+        if not pricelist_context.get('pricelist'):
+            pricelist = request.website.get_current_pricelist()
+            pricelist_context['pricelist'] = pricelist.id
         else:
-            pricelist = pool.get('product.pricelist').browse(cr, uid, context['pricelist'], context)
-        product_obj = pool.get('product.template')
+            pricelist = request.env['product.pricelist'].browse(
+                pricelist_context['pricelist'])
+
+        product_obj = request.env['product.template']
 
         # Brand's product search
         if brand:
             values.update({'brand': brand})
-            product_designer_obj = pool.get('product.brand')
-            brand_ids = product_designer_obj.search(cr, SUPERUSER_ID, [('id', '=', int(brand))])
-            domain += [('product_brand_id', 'in', brand_ids)]
+            product_designer_obj = request.env['product.brand']
+            brand_ids = product_designer_obj.search([('id', '=', int(brand))])
+            domain += [('product_brand_id', 'in', brand_ids.ids)]
         url = '/shop'
-        product_count = product_obj.search_count(cr, uid, domain, context=context)
+        product_count = product_obj.search_count(domain)
         if search:
             post['search'] = search
         if category:
-            category = pool['product.public.category'].browse(cr, uid, int(category), context=context)
+            category = request.env['product.public.category'].\
+                browse(int(category))
             url = '/shop/category/%s' % slug(category)
-        pager = request.website.pager(url=url, total=product_count, page=page, step=PPG, scope=7, url_args=post)
-        product_ids = product_obj.search(cr, uid, domain, limit=PPG, offset=pager['offset'],
-                                         order='website_published desc, website_sequence desc', context=context)
-        products = product_obj.browse(cr, uid, product_ids, context=context)
-        style_obj = pool['product.style']
-        style_ids = style_obj.search(cr, uid, [], context=context)
-        styles = style_obj.browse(cr, uid, style_ids, context=context)
-        category_obj = pool['product.public.category']
-        category_ids = category_obj.search(cr, uid, [], context=context)
-        categories = category_obj.browse(cr, uid, category_ids, context=context)
+        pager = request.website.\
+            pager(url=url, total=product_count, page=page, step=PPG,
+                  scope=7, url_args=post)
+        products = product_obj.\
+            search(domain, limit=PPG, offset=pager['offset'],
+                   order='website_published desc, website_sequence desc')
+        style_obj = request.env['product.style']
+        styles = style_obj.search([])
+        category_obj = request.env['product.public.category']
+        categories = category_obj.search([])
         categs = filter(lambda x: not x.parent_id, categories)
         if category:
             selected_id = int(category)
-            child_prod_ids = category_obj.search(cr, uid, [('parent_id', '=', selected_id)], context=context)
-            children_ids = category_obj.browse(cr, uid, child_prod_ids)
+            children_ids = category_obj.\
+                search([('parent_id', '=', selected_id)])
             values.update({'child_list': children_ids})
-        attributes_obj = request.registry['product.attribute']
-        attributes_ids = attributes_obj.search(cr, uid, [], context=context)
-        attributes = attributes_obj.browse(cr, uid, attributes_ids, context=context)
-        from_currency = pool.get('product.price.type')._get_field_currency(cr, uid, 'list_price', context)
+        attributes_obj = request.env['product.attribute']
+        attributes = attributes_obj.search([])
+        from_currency = request.env.user.company_id.currency_id
         to_currency = pricelist.currency_id
-        compute_currency = lambda price: pool['res.currency']._compute(cr, uid, from_currency, to_currency, price,
-                                                                       context=context)
+        compute_currency = self.currency_compute(from_currency, to_currency)
         values.update({'search': search,
                        'category': category,
                        'attrib_values': attrib_values,
@@ -96,34 +101,39 @@ class website_sale(openerp.addons.website_sale.controllers.main.website_sale):
                        'pager': pager,
                        'pricelist': pricelist,
                        'products': products,
-                       'bins': table_compute().process(products),
+                       'bins': TableCompute().process(products),
                        'rows': PPR,
                        'styles': styles,
                        'categories': categs,
                        'attributes': attributes,
                        'compute_currency': compute_currency,
                        'keep': keep,
-                       'style_in_product': lambda style, product: style.id in [s.id for s in product.website_style_ids],
-                       'attrib_encode': lambda attribs: werkzeug.url_encode([('attrib', i) for i in attribs])})
-        return request.website.render('website_sale.products', values)
+                       'style_in_product':
+                           lambda style, product: style.id in [
+                               s.id for s in product.website_style_ids],
+                       'attrib_encode': lambda attribs: werkzeug.url_encode
+                       ([('attrib', i) for i in attribs])})
+        return request.render('website_sale.products', values)
+
+    def currency_compute(self, from_currency, to_currency):
+        return lambda price: from_currency.compute(price,
+                                                   to_currency)
 
     # Method to get the brands.
-    @http.route(['/page/product_brands'], type='http', auth='public', website=True)
+    @http.route(['/page/product_brands'], type='http', auth='public',
+                website=True)
     def product_brands(self, **post):
-        cr, context, pool = (request.cr, request.context, request.registry)
         brand_values = []
-        brand_obj = pool['product.brand']
+        brand_obj = request.env['product.brand']
         domain = []
         if post.get('search'):
             domain += [('name', 'ilike', post.get('search'))]
-        brand_ids = brand_obj.search(cr, SUPERUSER_ID, domain)
-        for brand_rec in brand_obj.browse(cr, SUPERUSER_ID, brand_ids, context=context):
+        brand_ids = brand_obj.search(domain)
+        for brand_rec in brand_ids:
             brand_values.append(brand_rec)
 
         keep = QueryURL('/page/product_brands', brand_id=[])
         values = {'brand_rec': brand_values, 'keep': keep}
         if post.get('search'):
             values.update({'search': post.get('search')})
-        return request.website.render('website_product_brand.product_brands', values)
-
-# vim:expandtab:tabstop=4:softtabstop=4:shiftwidth=4:
+        return request.render('website_product_brand.product_brands', values)

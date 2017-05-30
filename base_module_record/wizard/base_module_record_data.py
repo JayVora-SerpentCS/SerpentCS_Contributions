@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import time
-
 from openerp.tools import frozendict, ustr
 from openerp.tools.translate import _
 from openerp import models, fields, api
 
 
-class base_module_data(models.TransientModel):
+class BaseModuleData(models.TransientModel):
     _name = "base.module.data"
     _description = "Base Module Data"
 
@@ -21,12 +19,16 @@ class base_module_data(models.TransientModel):
         return self.env['ir.model'].search([('model', 'in', names)])
 
     check_date = fields.Datetime('Record from Date', required=True,
-                                 default=lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'))
-    objects = fields.Many2many('ir.model', 'base_module_record_model_rel', 'objects',
-                               'model_id', 'Objects', default=_get_default_objects)
-    filter_cond = fields.Selection([('created', 'Created'), ('modified', 'Modified'),
-                                    ('created_modified', 'Created & Modified')],
-                                   'Records only', required=True, default='created')
+                                 default=fields.Datetime.now)
+    objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
+                               'objects',
+                               'model_id', 'Objects',
+                               default=_get_default_objects)
+    filter_cond = fields.Selection([('created', 'Created'),
+                                    ('modified', 'Modified'),
+                                    ('created_modified', 'Created & Modified')
+                                    ], 'Records only',
+                                   required=True, default='created')
     info_yaml = fields.Boolean('YAML')
 
     @api.model
@@ -52,8 +54,8 @@ class base_module_data(models.TransientModel):
         context.update({'recording_data': []})
         recording_data = context.get('recording_data')
         self.env.args = cr, uid, frozendict(context)
-        for id in data['objects']:
-            obj_name = (mod_obj.browse(id)).model
+        for o_id in data['objects']:
+            obj_name = (mod_obj.browse(o_id)).model
             obj_pool = self.env[obj_name]
             if filter_cond == 'created':
                 search_condition = [('create_date', '>', check_date)]
@@ -71,7 +73,8 @@ class base_module_data(models.TransientModel):
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name, 'copy', s_id.id, {})
+                args = (dbname, self.env.user.id, obj_name,
+                        'copy', s_id.id, {})
                 recording_data.append(('query', args, {}, s_id.id))
         mod_obj = self.env['ir.model.data']
         if len(recording_data):
@@ -79,9 +82,9 @@ class base_module_data(models.TransientModel):
                 res = self._create_yaml(data)
             else:
                 res = self._create_xml(data)
-            model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                             ('name', '=', 'module_create_xml_view')])
-            print "model_data_ids::::::::::::::::::", model_data_ids
+            model_data_ids = mod_obj.\
+                search([('model', '=', 'ir.ui.view'),
+                        ('name', '=', 'module_create_xml_view')])
             resource_id = model_data_ids.read(['res_id'])[0]['res_id']
             return {
                 'name': _('Data Recording'),
@@ -93,8 +96,9 @@ class base_module_data(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'target': 'new',
             }
-        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                         ('name', '=', 'module_recording_message_view')])
+        model_data_ids = mod_obj.\
+            search([('model', '=', 'ir.ui.view'),
+                    ('name', '=', 'module_recording_message_view')])
         resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
@@ -108,7 +112,7 @@ class base_module_data(models.TransientModel):
         }
 
 
-class base_module_record_data(models.TransientModel):
+class BaseModuleRecordData(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
 

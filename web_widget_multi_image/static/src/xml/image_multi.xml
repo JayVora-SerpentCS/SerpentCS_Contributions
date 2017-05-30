@@ -27,14 +27,14 @@
         </table>
     </t>
 
-    <t t-name="One2Many.listview" t-extend="ListView">
+    <t t-extend="ListView">
         <t t-jquery="thead > tr:first">
             this.removeAttr('t-if');
         </t>
-        <t t-jquery=".oe_list_content thead" t-operation="prepend">
+        <t t-jquery=".o_list_view thead" t-operation="prepend">
             <t t-if="options.multi_image"> 
                 <tr style="background:white;">
-                    <td style="padding: 0px 150px 15px 132px;">
+                    <td style="padding: 10px 150px 15px 132px;">
                         <button class="fa fa-search oe-image-preview btn btn-sm oe_form_binary btn-primary" type="button" title="Preview">
                             <span>Image Preview</span>
                         </button>

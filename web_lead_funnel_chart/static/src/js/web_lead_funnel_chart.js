@@ -1,37 +1,40 @@
-odoo.define('web_lead_funnel_chart.web_lead_funnel_chart', function (require) {
-"use strict";
+/*global Highcharts*/
+odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
+    "use strict";
 
-    var core = require('web.core');
+    var core = require("web.core");
     var dataset = require("web.data");
-    var Widget = require('web.Widget');
+    var Widget = require("web.Widget");
     var _t = core._t;
 
     var web_lead_funnel_chart = Widget.extend({
-        template: 'FunnelChart',
-        start: function(){
+        template: "FunnelChart",
+        start: function() {
             var self = this;
-            var emp_child = []
-            self.crm_lead_dataset = new dataset.DataSetSearch(self, 'crm.lead', {}, []);
-            self.crm_lead_dataset.call('get_lead_stage_data',[[]]).done(function(callbacks){
-                $('#container').highcharts({
+            var emp_child = [];
+            self.crm_lead_dataset = new dataset.DataSetSearch(self, "crm.lead", {}, []);
+            self.crm_lead_dataset.call("get_lead_stage_data", [
+                []
+            ]).done(function(callbacks) {
+                $("#container").highcharts({
                     chart: {
-                        type: 'funnel',
+                        type: "funnel",
                         marginRight: 100
                     },
                     title: {
-                        text: _t('Lead/Opportunity Funnel Chart'),
+                        text: _t("Lead/Opportunity Funnel Chart"),
                         x: -50
                     },
                     plotOptions: {
                         series: {
                             dataLabels: {
                                 enabled: true,
-                                format: '<b>{point.name}</b> ({point.y:,.0f})',
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+                                format: "<b>{point.name}</b>({point.y:,.0f})",
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || "black",
                                 softConnector: true
                             },
-                            neckWidth: '30%',
-                            neckHeight: '25%'
+                            neckWidth: "30%",
+                            neckHeight: "25%"
 
                             //-- Other available options
                             // height: pixels or percent
@@ -42,7 +45,7 @@ odoo.define('web_lead_funnel_chart.web_lead_funnel_chart', function (require) {
                         enabled: false
                     },
                     series: [{
-                        name: _t('Number Of Leads'),
+                        name: _t("Number Of Leads"),
                         data: callbacks
                     }]
                 });
@@ -51,6 +54,6 @@ odoo.define('web_lead_funnel_chart.web_lead_funnel_chart', function (require) {
         },
     });
 
-    core.action_registry.add('web_lead_funnel_chart.funnel',web_lead_funnel_chart);
+    core.action_registry.add("web_lead_funnel_chart.funnel", web_lead_funnel_chart);
 
 });

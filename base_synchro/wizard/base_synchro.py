@@ -75,8 +75,7 @@ class BaseSynchro(models.TransientModel):
         module_id = module.search([("name", "ilike", "base_synchro"),
                                    ('state', '=', 'installed')])
         if not module_id:
-            raise Warning(_('Warning'),
-                          _('''If your Synchronization direction is/
+            raise Warning(_('''If your Synchronization direction is/
                           download or both, please install
                           "Multi-DB Synchronization" module in targeted/
                         server!'''))

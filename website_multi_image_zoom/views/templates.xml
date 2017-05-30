@@ -1,85 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
+<odoo>
 
-<openerp>
-    <data>
+    <template id="multi_zoom_assets_frontend" inherit_id="website.assets_frontend"
+              name="Shop Inherited">
+        <xpath expr="." position="inside">
+            <!-- jQuery addons -->
+            <script type="text/javascript"
+                    src="/web/static/lib/jquery.scrollTo/jquery.scrollTo.js"/>
+            <!-- Added PlugIn files required for magnifying image -->
+            <link rel="stylesheet"
+                  href="/website_multi_image_zoom/static/src/lib/xzoom.css"/>
+            <script type="text/javascript"
+                    src="/website_multi_image_zoom/static/src/lib/xzoom.js"/>
+            <script type="text/javascript"
+                    src="/website_multi_image_zoom/static/src/js/website_sale.js"/>
+            <script type="text/javascript"
+                    src="/website_multi_image_zoom/static/src/js/zoom.js"/>
+            <link rel="stylesheet"
+                  href="/website_multi_image_zoom/static/src/css/pro_img.css"/>
+        </xpath>
+    </template>
 
-        <template id="multi_zoom_assets_frontend" inherit_id="website.assets_frontend"
-                  name="Shop Inherited">
-            <xpath expr="." position="inside">
-                <!-- jQuery addons -->
-                <script type="text/javascript" src="/web/static/lib/jquery.validate/jquery.validate.js"></script>
-                <script type="text/javascript" src="/web/static/lib/jquery.scrollTo/jquery.scrollTo.js"></script>
-                <link rel="stylesheet" href="/web/static/lib/jquery.textext/jquery.textext.css"/>
-                <script type="text/javascript" src="/web/static/lib/jquery.textext/jquery.textext.js"></script>
-                <!-- Added PlugIn files required for magnifying image -->
-                <link rel="stylesheet"
-                      href="/website_multi_image_zoom/static/src/css/multizoom.css"/>
-                <script type="text/javascript"
-                        src="/website_multi_image_zoom/static/src/js/multizoom.js"></script>
-                <script type="text/javascript"
-                        src="/website_multi_image_zoom/static/src/js/zoom.js"></script>
-                <!-- PlugIn for touch and scroll -->
-                <link rel="stylesheet" type="text/css"
-                      href="/website_multi_image_zoom/static/src/css/jquery.mCustomScrollbar.min.css"/>
-                <link rel="stylesheet"
-                      href="/website_multi_image_zoom/static/src/css/pro_img.css"/>
-                <script type="text/javascript" src="/website_multi_image_zoom/static/src/js/website_sale.js"></script>
-            </xpath>
-        </template>
+    <!-- Template For Multiple Product Image Zoom & Image Responsive -->
 
-        <!-- Template For Multiple Product Image Zoom & Image Responsive -->
-
-        <template id="product_extended" name="product_extended"
-                  inherit_id="website_sale.product">
-            <xpath
-                    expr="//section[@id='product_detail']/div[@class='row']/div[@class='col-sm-7 col-md-7 col-lg-7']"
-                    position="replace">
-                <input type="hidden" id="variant_img_display" t-att-value="product.variant_bool"/>
-                <input type="hidden" id="product_img_display" t-att-value="product.id"/>
-                <div class="col-sm-7 col-md-7 col-lg-7">
-                    <!-- Assigned id to the span for able to find image which 
-                        like to be magnifying -->
-                    <div class="image_bigsize">
-                        <div id="ex1" onclick='full_img(this)'>
-                            <span itemprop="image" t-field="product.image"
-                                  t-field-options='{"widget": "image", "class": "img_set"}'/>
-                        </div>
+    <template id="product_extended" name="product_extended"
+              inherit_id="website_sale.product">
+        <xpath
+                expr="//section[@id='product_detail']/div[@class='row']/div[@class='col-sm-7']" position="replace">
+            <input type="hidden" id="variant_img_display" t-att-value="product.variant_bool"/>
+            <input type="hidden" id="product_img_display" t-att-value="product.id"/>
+            <div class="col-sm-7 col-md-7 col-lg-7">
+                <!-- Assigned id to the span for able to find image which
+                    like to be magnifying -->
+                <div class="image_bigsize">
+                    <div id="ex1" onclick='full_img(this)'>
+                        <span itemprop="image" t-field="product.image"
+                              t-field-options='{"widget": "image", "class": "img_set"}'/>
                     </div>
-                    <!-- Model to display image instead of image zoom when in mobile view -->
-                    <div class="modal fade" tabindex="-1" role="dialog"
-                         id="img_modal" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                                        style="padding:5px;margin-bottom:-8%;color:red;">x
-                                </button>
-                                <img class="img img-responsive" id="modal_img"/>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Carousel indicators as Image ThumbNails -->
-                    <div id="thumb_img_add">
-                        <div id='carousel-custom' class='carousel slide'>
-                            <!-- Indicators -->
-                            <ol class='carousel-indicators'>
-                                <li>
-                                    <img onclick="pro_img_click(this)" itemprop="image"
-                                         class="image_thumb img-responsive"
-                                         t-att-src="'data:image/jpeg;base64,%s' %product.image"/>
-                                </li>
-                                <t t-foreach="product.images" t-as="i">
-                                    <li>
-                                        <img onclick="pro_img_click(this)" class="image_thumb img-responsive"
-                                             t-att-src="'data:image/jpeg;base64,%s' %i.image"/>
-                                    </li>
-                                </t>
-                            </ol>
-                        </div>
-                    </div>
-                    <hr></hr>
                 </div>
-            </xpath>
-        </template>
+                <!-- Model to display image instead of image zoom when in mobile view -->
+                <div class="modal fade" tabindex="-1" role="dialog"
+                     id="img_modal" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                    style="padding:5px;margin-bottom:-8%;color:red;">x
+                            </button>
+                            <img class="img img-responsive" id="modal_img"/>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carousel indicators as Image ThumbNails -->
+                <div id="thumb_img_add">
+                    <div id='carousel-custom' class='carousel slide'>
+                        <!-- Indicators -->
+                        <ol class='carousel-indicators'>
+                            <li>
+                                <img onclick="pro_img_click(this)" itemprop="image"
+                                     class="image_thumb img-responsive"
+                                     t-att-src="'data:image/jpeg;base64,%s' %product.image"/>
+                            </li>
+                            <t t-foreach="product.images" t-as="i">
+                                <li>
+                                    <img onclick="pro_img_click(this)" class="image_thumb img-responsive"
+                                         t-att-src="'data:image/jpeg;base64,%s' %i.image"/>
+                                </li>
+                            </t>
+                        </ol>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </xpath>
+    </template>
 
-    </data>
-</openerp>
+</odoo>

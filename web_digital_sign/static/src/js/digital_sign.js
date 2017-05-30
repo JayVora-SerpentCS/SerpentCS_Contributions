@@ -1,4 +1,4 @@
-odoo.define('web_digital_sign.web_digital_sign',function(require){
+odoo.define('web_digital_sign.web_digital_sign', function(require) {
     "use strict";
 
     var core = require('web.core');
@@ -22,100 +22,114 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
                 } else {
                     var id = JSON.stringify(this.view.datarecord.id || null);
                     self.digita_dataset = new data.DataSetSearch(self, self.view.model, {}, []);
-                    self.digita_dataset.read_slice(['id', self.name], {'domain': [['id', '=', id]]}).then(function(records){
-                        _.each(records,function(record){
-                            if(record[self.name]){
-                                images[self.name] = record[self.name]
-                            }else{
-                                images[self.name] = ""
-                            }
-                        })
-                    })
+                    self.digita_dataset.read_slice(['id', self.name], {
+                      'domain': [
+                          ['id', '=', id]
+                      ]
+                    }).then(function(records) {
+                      _.each(records, function(record) {
+                          if (record[self.name]) {
+                              images[self.name] = record[self.name];
+                          } else {
+                              images[self.name] = "";
+                          }
+                      });
+                    });
                     var field = this.name;
                     if (this.options.preview_image)
                         field = this.options.preview_image;
                     url = this.session.url('/web/binary/image', {
-                              model: this.view.dataset.model,
-                              id: id,
-                              field: field,
-                              t: (new Date().getTime()),
-                    });
-                }
-            }
-            var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
-            this.$el.find('img').remove();
-            if(this.view.get("actual_mode") !== 'edit' && this.view.get("actual_mode") !== 'create'){
-                this.$el.prepend($img);
-            }else if(this.view.get("actual_mode") == 'edit' ){
-                this.$el.find('> img').remove();
-                this.$el.find('> canvas').remove();
-                if(! this.get('value')){
-                    this.$el.find('> img').remove();
-                    $(this.$el[0]).find(".signature").signature();
-                }else if(this.get('value')){
-                    this.$el.prepend($img);
-                }
-            }else if( this.view.get("actual_mode") == 'create'){
-                images = {}
-                this.$el.find('> img').remove();
-                this.$el.find('> canvas').remove();
-                if(! this.get('value')){
-                    this.$el.find('> img').remove();
-                    $(this.$el[0]).find(".signature").signature();
-                }else if(this.get('value')){
-                    this.$el.prepend($img);
-                }
-            }
-            $(this.$el[0]).find('.clear_sign').click(function(){
-                self.$el.find('> img').remove();
-                images[self.name] = ""
-                $(self.$el[0]).find(".signature").show();
-//                $(self.$el[0]).find(".signature").signature()
-                $(self.$el[0]).find(".signature").signature({
-                    clear: true
-                });
-                self.set('value',false)
-//                $(self.$el[0]).find(".signature").signature('clear');
-            });
-            $(this.$el[0]).find('.save_sign').on('click',function(){
-                var val
-                if($(self.$el[0]).find(".signature").hasClass( "kbw-signature" ) && ! $(self.$el[0]).find(".signature").signature('isEmpty')){
-                    $(self.$el[0]).find(".signature").hide();
-                    val = $(self.$el[0]).find(".signature > canvas")[0].toDataURL();
-                    images[self.name] = val.split(',')[1]
-                    var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: val }));
-                    self.$el.find('> img').remove();
-                    self.$el.prepend($img);
-                    self.set('value',val.split(',')[1])
-                    var id = JSON.stringify(self.view.datarecord.id || null);
-                    var field = self.name;
-                    url = self.session.url('/web/binary/image', {
-                        model: self.view.dataset.model,
+                        model: this.view.dataset.model,
                         id: id,
                         field: field,
                         t: (new Date().getTime()),
                     });
-                }else{
-//                    self.set('value',false)
-                    var id = JSON.stringify(self.view.datarecord.id || null);
-                    var field = self.name;
-                    if (self.options.preview_image)
-                        field = self.options.preview_image;
+                }
+            }
+            var $img = $(QWeb.render("FieldBinaryImage-img", {
+                widget: this,
+                url: url
+            }));
+            this.$el.find('img').remove();
+            if (this.view.get("actual_mode") !== 'edit' && this.view.get("actual_mode") !== 'create') {
+                this.$el.prepend($img);
+            } else if (this.view.get("actual_mode") === 'edit') {
+                this.$el.find('> img').remove();
+                this.$el.find('> canvas').remove();
+                if (!this.get('value')) {
+                    this.$el.find('> img').remove();
+                    $(this.$el[0]).find(".signature").signature();
+                } else if (this.get('value')) {
+                    this.$el.prepend($img);
+                }
+            } else if (this.view.get("actual_mode") === 'create') {
+                images = {};
+                this.$el.find('> img').remove();
+                this.$el.find('> canvas').remove();
+                if (!this.get('value')) {
+                    this.$el.find('> img').remove();
+                    $(this.$el[0]).find(".signature").signature();
+                } else if (this.get('value')) {
+                    this.$el.prepend($img);
+                }
+            }
+            $(this.$el[0]).find('.clear_sign').click(function() {
+                self.$el.find('> img').remove();
+                images[self.name] = "";
+                $(self.$el[0]).find(".signature").show();
+                //                $(self.$el[0]).find(".signature").signature()
+                $(self.$el[0]).find(".signature").signature({
+                    clear: true
+                });
+                self.set('value', false);
+                //                $(self.$el[0]).find(".signature").signature('clear');
+            });
+            $(this.$el[0]).find('.save_sign').on('click', function() {
+                var val = '';
+                if ($(self.$el[0]).find(".signature").hasClass("kbw-signature") && !$(self.$el[0]).find(".signature").signature('isEmpty')) {
+                    $(self.$el[0]).find(".signature").hide();
+                    val = $(self.$el[0]).find(".signature > canvas")[0].toDataURL();
+                    images[self.name] = val.split(',')[1];
+                    $img = $(QWeb.render("FieldBinaryImage-extend", {
+                        widget: self,
+                        url: val
+                    }));
+                    self.$el.find('> img').remove();
+                    self.$el.prepend($img);
+                    self.set('value', val.split(',')[1]);
+                    var did = JSON.stringify(self.view.datarecord.id || null);
+                    var dfield = self.name;
                     url = self.session.url('/web/binary/image', {
-                            model: self.view.dataset.model,
-                            id: id,
-                            field: field,
-                            t: (new Date().getTime()),
+                        model: self.view.dataset.model,
+                        id: did,
+                        field: dfield,
+                        t: new Date().getTime(),
+                    });
+                } else {
+                    //                    self.set('value',false)
+                    id = JSON.stringify(self.view.datarecord.id || null);
+                    field = self.name;
+                    if (self.options.preview_image) {
+                        field = self.options.preview_image;
+                    }
+                    url = self.session.url('/web/binary/image', {
+                        model: self.view.dataset.model,
+                        id: id,
+                        field: field,
+                        t: new Date().getTime(),
                     });
                     url = self.placeholder;
-//                    url = 'http://localhost:8080/web/static/src/img/placeholder.png'
-                   var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: url }));
-                   self.$el.find('> img').remove();
+                    //                    url = 'http://localhost:8080/web/static/src/img/placeholder.png'
+                    $img = $(QWeb.render("FieldBinaryImage-extend", {
+                        widget: self,
+                        url: url
+                    }));
+                    self.$el.find('> img').remove();
                 }
             });
             if (self.options.size) {
-                $img.css("width", "" + self.options.size[0] + "px");
-                $img.css("height", "" + self.options.size[1] + "px");
+                $img.css("width", String(self.options.size[0]) + "px");
+                $img.css("height", String(self.options.size[1]) + "px");
             }
             $img.on('error', function() {
                 self.on_clear();
@@ -125,17 +139,21 @@ odoo.define('web_digital_sign.web_digital_sign',function(require){
         },
     });
 
-    core.form_widget_registry.add('signature', FieldSignature)
+    core.form_widget_registry.add('signature', FieldSignature);
 
     FormView.include({
         save: function(prepend_on_create) {
             var self = this;
-            $('.save_sign').click()
-            var save_obj = {prepend_on_create: prepend_on_create, ret: null};
+            $('.save_sign').click();
+            var save_obj = {
+                prepend_on_create: prepend_on_create,
+                ret: null
+            };
             this.save_list.push(save_obj);
             return self._process_operations().then(function() {
-                if (save_obj.error)
+                if (save_obj.error) {
                     return $.Deferred().reject();
+                }
                 return $.when.apply($, save_obj.ret);
             }).done(function(result) {
                 self.$el.removeClass('oe_form_dirty');

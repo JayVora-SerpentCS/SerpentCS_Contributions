@@ -8,10 +8,12 @@
     'category': 'Project Management',
     'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.0',
+    'license': 'AGPL-3',
     'sequence': 1,
-    'depends': ['project', 'crm'],
+    'depends': ['project', 'crm', 'web'],
     'data': [
-        'views/project_team_view.xml'
+        'views/template.xml',
+        'views/project_team_view.xml',
     ],
     'installable': True,
     'auto_install': False

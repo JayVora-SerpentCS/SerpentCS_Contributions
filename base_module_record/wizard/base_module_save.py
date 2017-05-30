@@ -24,7 +24,7 @@ def _create_yaml(self, data):
 
 
 @api.model
-def _create_module(self, cr, uid, ids, context=None):
+def _create_module(self, ids):
     mod = self.env['ir.module.record']
     res_xml = mod.generate_xml()
     ids = self.search([('id', 'in', ids)])
@@ -69,7 +69,8 @@ def _create_module(self, cr, uid, ids, context=None):
     zip_file.close()
     return {
         'module_file': base64.encodestring(s.getvalue()),
-        'module_filename': data['directory_name'] + '-' + data['version'] + '.zip',
+        'module_filename': data['directory_name'
+                                ] + '-' + data['version'] + '.zip',
         'name': data['name'],
         'version': data['version'],
         'author': data['author'],
@@ -80,7 +81,7 @@ def _create_module(self, cr, uid, ids, context=None):
     }
 
 
-class base_module_save(models.TransientModel):
+class BaseModuleSave(models.TransientModel):
     _name = 'base.module.save'
     _description = "Base Module Save"
 
@@ -92,7 +93,7 @@ class base_module_save(models.TransientModel):
         context = dict(context)
         recording_data = context.get('recording_data')
         info = "Details of " + str(len(recording_data)) + " Operation(s):\n\n"
-        res = super(base_module_save, self).default_get(fields)
+        res = super(BaseModuleSave, self).default_get(fields)
         for line in recording_data:
             result.setdefault(line[0], {})
             result[line[0]].setdefault(line[1][3], {})
@@ -119,7 +120,7 @@ class base_module_save(models.TransientModel):
 
     @api.multi
     def record_save(self):
-        data = self.read(self._cr, self.user_id.id, ids, [])[0]
+        data = self.read(self._cr, self.user_id.id, self._ids, [])[0]
         mod_obj = self.env['ir.model.data']
         cr, uid, context = self.env.args
         context = dict(context)
@@ -127,9 +128,11 @@ class base_module_save(models.TransientModel):
         if len(recording_data):
             if data['info_yaml']:
                 res = _create_yaml(self, data)
-                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                                 ('name', '=', 'yml_save_form_view')])
-                resource_id = mod_obj.read(self._cr, self.user_id.id, model_data_ids,
+                model_data_ids = mod_obj.\
+                    search([('model', '=', 'ir.ui.view'),
+                            ('name', '=', 'yml_save_form_view')])
+                resource_id = mod_obj.read(self._cr, self.user_id.id,
+                                           model_data_ids,
                                            fields=['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
@@ -144,9 +147,11 @@ class base_module_save(models.TransientModel):
                     'target': 'new',
                 }
             else:
-                model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                                 ('name', '=', 'info_start_form_view')])
-                resource_id = mod_obj.read(self._cr, self.user_id.id, model_data_ids,
+                model_data_ids = mod_obj.\
+                    search([('model', '=', 'ir.ui.view'),
+                            ('name', '=', 'info_start_form_view')])
+                resource_id = mod_obj.read(self._cr,
+                                           self.user_id.id, model_data_ids,
                                            fields=['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
@@ -158,9 +163,11 @@ class base_module_save(models.TransientModel):
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
-        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
-                                         ('name', '=', 'module_recording_message_view')])
-        resource_id = mod_obj.read(model_data_ids, fields=['res_id'])[0]['res_id']
+        model_data_ids = mod_obj.\
+            search([('model', '=', 'ir.ui.view'),
+                    ('name', '=', 'module_recording_message_view')])
+        resource_id = mod_obj.read(model_data_ids,
+                                   fields=['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
             'context': context,

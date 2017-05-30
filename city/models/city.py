@@ -35,7 +35,7 @@ class City(models.Model):
     zip = fields.Char('ZIP', size=64, index=True)
     country_id = fields.Many2one('res.country', 'Country', index=True)
     code = fields.Char('City Code', size=64,
-                        help="The official code for the city")
+                       help="The official code for the city")
     area_ids = fields.One2many('city.area', 'city_id', 'Area')
     std_code = fields.Char('STD Code', size=32)
 

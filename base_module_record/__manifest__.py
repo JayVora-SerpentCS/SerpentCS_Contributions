@@ -3,8 +3,9 @@
 
 {
     'name': 'Record and Create Modules',
-    'version': '9.0.1.0.0',
+    'version': '10.0.1.0.0',
     'category': 'Tools',
+    'license': 'AGPL-3',
     'description': """
 This module allows you to create a new module without any development.
 ======================================================================
@@ -21,11 +22,13 @@ This should help you to easily create reusable and publishable modules
 for custom configurations and demo/testing data.
 
 How to use it:
-Run Administration/Customization/Module Creation/Export Customizations As a Module wizard.
-Select datetime criteria of recording and objects to be recorded and Record module.
+Run Administration/Customization/Module
+Creation/Export Customizations As a Module wizard.
+Select datetime criteria of recording and
+objects to be recorded and Record module.
     """,
-    'author': 'OpenERP SA, Serpent Consulting Services Pvt. Ltd.',
-    'website': 'http://www.openerp.com, http://www.serpentcs.com',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'website': 'http://www.serpentcs.com',
     'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',
