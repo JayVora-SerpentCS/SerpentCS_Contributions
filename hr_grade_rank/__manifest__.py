@@ -17,4 +17,5 @@
         'security/ir.model.access.csv',
         'views/hr_grade_rank_view.xml',
     ],
+    'images': ['static/description/HRGradeRank.png'],
 }
