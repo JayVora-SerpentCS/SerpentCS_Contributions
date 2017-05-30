@@ -23,6 +23,7 @@
         'views/label_report.xml',
         'report/dynamic_label.xml'
     ],
+    'images': ['static/description/Label.png'],
     'installable': True,
     'auto_install': False,
 }
