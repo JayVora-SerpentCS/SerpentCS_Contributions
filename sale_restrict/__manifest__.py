@@ -13,6 +13,7 @@
     'author': "Serpent Consulting Services Pvt. Ltd.",
     'website': 'http://www.serpentcs.com',
     'depends': ['sale'],
+    'images': ['static/description/PriceCheck.png'],
     'installable': True,
     'auto_install': False,
 }
