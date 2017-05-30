@@ -15,6 +15,7 @@
         'views/template.xml',
         'views/project_team_view.xml',
     ],
+    'images': ['static/description/ProjectTeam.png'],
     'installable': True,
     'auto_install': False
 }
