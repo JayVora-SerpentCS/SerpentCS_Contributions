@@ -25,6 +25,7 @@
             'security/ir.model.access.csv',
             'data/sale_order_cancel_reason.xml',
         ],
+    'images': ['static/description/SaleCancelReason.png'],
     'auto_install': False,
     'installable': True,
 }

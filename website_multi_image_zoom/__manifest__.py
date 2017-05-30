@@ -18,5 +18,6 @@
         'views/product_images.xml',
         'views/templates.xml',
     ],
+    'images': ['static/description/MultiImageZoom.png'],
     'installable': True,
 }

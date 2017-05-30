@@ -23,6 +23,7 @@
     "data": [
         "view/templates.xml",
     ],
+    'images': ['static/description/o2mKanban.png'],
     "installable": True,
     "application": True,
 }
