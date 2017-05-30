@@ -33,6 +33,7 @@ This module is used to add grade of employees.
         'security/ir.model.access.csv',
         'views/hr_grade_rank_view.xml',
     ],
+    'images': ['static/description/HRGradeRank.png'],
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
