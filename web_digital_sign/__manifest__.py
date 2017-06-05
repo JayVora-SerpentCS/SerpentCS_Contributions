@@ -9,9 +9,9 @@
     'complexity': 'easy',
     'depends': ['web'],
     'description': '''
-     This module provides the functionality to store digital signature 
+     This module provides the functionality to store digital signature
      image for a record.
-        -> This  module is helpfull to make your business process a little 
+        -> This  module is helpfull to make your business process a little
            bit more faster & makes it more user friendly by providing you
            digital signature functionality on your documents.
         -> It is touch screen enable so user can add signature with touch
