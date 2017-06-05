@@ -9,7 +9,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
 
     var _t = core._t;
     var QWeb = core.qweb;
-    
+
     var FieldSignature = core.form_widget_registry.map.image.extend({
         template: 'FieldSignature',
         placeholder: "/web/static/src/img/placeholder.png",
@@ -19,29 +19,30 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             this.$el.find('.signature > canvas').remove();
             var sign_options = {'background-color': '#fff','height':'150','width':'550'};
             this.$el.find("#signature").jSignature("init",sign_options);
-            this.$el.find("#signature").attr({"tabindex": "0",'height':"100"})
+            this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
             this.empty_sign = this.$el.find("#signature").jSignature("getData",'image');
             this.$el.find('#sign_clean').click(this.on_clear_sign);
             this.$el.find('.save_sign').click(this.on_save_sign);
         },
         on_clear_sign: function() {
             var self = this;
-            $(this.$el[0]).find(".signature > canvas").remove()
+            $(this.$el[0]).find(".signature > canvas").remove();
             this.$el.find('> img').remove();
             $(this.$el[0]).find(".signature").attr("tabindex", "0");
             var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','height':'150','width':'550','clear': true};
             $(this.$el[0]).find(".signature").jSignature(sign_options);
-            $(this.$el[0]).find(".signature").focus()
+            $(this.$el[0]).find(".signature").focus();
             self.set('value', false);
         },
         on_save_sign: function(value_) {
             var self = this;
-            var val;
             this.$el.find('> img').remove();
             var signature = self.$el.find("#signature").jSignature("getData",'image');
-            var is_empty = signature ? self.empty_sign[1] == signature[1] : false;
-            if(! is_empty && signature !== undefined && signature[1]){
-                self.set('value',signature[1])
+            var is_empty = signature ? 
+                    self.empty_sign[1] === signature[1] :
+                        false;
+            if (! is_empty && signature !== undefined && signature[1]) {
+                self.set('value',signature[1]);
             }
         },
         render_value: function() {
@@ -50,71 +51,68 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             if (this.get('value') && !utils.is_bin_size(this.get('value'))) {
                 url = 'data:image/png;base64,' + this.get('value');
             } else if (this.get('value')) {
-                var id = JSON.stringify(this.view.datarecord.id || null);
-                var field = this.name;
-                if (this.options.preview_image)
-                    field = this.options.preview_image;
                 url = this.session.url('/web/binary/image', {
-                                            model: this.view.dataset.model,
-                                            id: id,
-                                            field: field,
-                                            t: (new Date().getTime()),
+                    model: this.view.dataset.model,
+                    id: JSON.stringify(this.view.datarecord.id || null),
+                    field: (this.options.preview_image)? 
+                            this.options.preview_image : 
+                            this.name,
+                    t: (new Date().getTime())
                 });
-            }else {
+            } else {
                 url = this.placeholder;
             }
-            if(this.view.get("actual_mode") == 'view'){
+            if (this.view.get("actual_mode") === 'view') {
                 var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
                 this.$el.find('> img').remove();
                 this.$el.find("#signature").hide();
                 this.$el.prepend($img);
                 $img.load(function() {
-                    if (! self.options.size)
+                    if (! self.options.size) {
                         return;
-                    $img.css("max-width", "" + self.options.size[0] + "px");
-                    $img.css("max-height", "" + self.options.size[1] + "px");
-                    $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
-                    $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
+                    } else {
+                        $img.css("max-width", "" + self.options.size[0] + "px");
+                        $img.css("max-height", "" + self.options.size[1] + "px");
+                        $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
+                        $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
+                    }
                 });
                 $img.on('error', function() {
                     $img.attr('src', self.placeholder);
                     self.do_warn(_t("Image"), _t("Could not display the selected image."));
                 });
-            }else if(this.view.get("actual_mode") == 'edit'){
+            } else if (this.view.get("actual_mode") === 'edit') {
                 this.$el.find('> img').remove();
-                if(this.get('value')){
-                    var id = JSON.stringify(this.view.datarecord.id || null);
-                    var field = this.name;
-                    if (this.options.preview_image)
-                        field = this.options.preview_image;
-                    new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field]]).done(function(data) {
-                        if(data){
-                            var field_desc = _.values(_.pick(data[0], field));
-                            
+                if (this.get('value')) {
+                    var field_name = this.options.preview_image ?
+                            this.options.preview_image :
+                            this.name;
+                    new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
+                        if (data) {
+                            var field_desc = _.values(_.pick(data[0], field_name));
                             $(self.$el[0]).find(".signature").jSignature("reset");
                             $(self.$el[0]).find(".signature").jSignature("setData", 'data:image/png;base64,'+field_desc[0]);
                         }
                     });
-                }else{
+                } else {
                     this.$el.find('> img').remove();
                     this.$el.find('.signature > canvas').remove();
                     var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000','background-color': '#fff','height':'150','width':'550'};
                     this.$el.find("#signature").jSignature("init",sign_options);
                 }
-          }else if(this.view.get("actual_mode") == 'create'){
+          } else if (this.view.get("actual_mode") === 'create') {
               this.$el.find('> img').remove();
               this.$el.find('> canvas').remove();
-              if(!this.get('value')){
+              if (!this.get('value')) {
                   var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000','background-color': '#fff','height':'150','width':'550'};
                   this.$el.find(".signature").empty().jSignature("init",sign_options);
               }
-              
           }
         },
     });
-    
+
     core.form_widget_registry.add('signature', FieldSignature);
-    
+
    FormView.include({
         save: function() {
             this.$el.find('.save_sign').click();
@@ -122,5 +120,4 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         },
     });
 
-   
 });
