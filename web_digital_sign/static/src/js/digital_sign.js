@@ -38,9 +38,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             var self = this;
             this.$el.find('> img').remove();
             var signature = self.$el.find("#signature").jSignature("getData",'image');
-            var is_empty = signature ?
-                    self.empty_sign[1] === signature[1] :
-                        false;
+            var is_empty = signature ? self.empty_sign[1] === signature[1] : false;
             if (! is_empty && signature !== undefined && signature[1]) {
                 self.set('value',signature[1]);
             }
@@ -55,7 +53,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     model: this.view.dataset.model,
                     id: JSON.stringify(this.view.datarecord.id || null),
                     field:  this.options.preview_image ? this.options.preview_image : this.name,
-                    t: (new Date().getTime())
+                    t: new Date().getTime()
                 });
             } else {
                 url = this.placeholder;
@@ -82,11 +80,12 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
                     var field_name = this.options.preview_image ? this.options.preview_image : this.name;
+
                     new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data[0], field_name));
                             $(self.$el[0]).find(".signature").jSignature("reset");
-                            $(self.$el[0]).find(".signature").jSignature("setData", 'data:image/png;base64,'+field_desc[0]);
+                            $(self.$el[0]).find(".signature").jSignature("setData",'data:image/png;base64,'+field_desc[0]);
                         }
                     });
                 } else {
