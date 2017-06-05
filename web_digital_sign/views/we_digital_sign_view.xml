@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <template id="sale_order_backend" name="sale_order assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <link rel="stylesheet" href="/web_digital_sign/static/src/css/digital.css"/>
-                <link rel="stylesheet" href="/web_digital_sign/static/src/css/jquery.signature.css"/>
-                <script type="text/javascript"
-                        src="/web_digital_sign/static/lib/excanvas.js"/>
-                <script type="text/javascript"
-                        src="/web_digital_sign/static/lib/jquery.signature.js"/>
-                <script type="text/javascript"
-                        src="/web_digital_sign/static/src/js/digital_sign.js"/>
-                <script type="text/javascript"
-                        src="/web_digital_sign/static/lib/touch-punch.js"/>
-            </xpath>
-        </template>
-    </data>
+    <template id="web_digital_sign_backend" name="web_digital_sign assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/web_digital_sign/static/lib/jSignature/jSignatureCustom.js"></script>
+            <script type="text/javascript"
+                    src="/web_digital_sign/static/src/js/digital_sign.js"></script>
+        </xpath>
+    </template>
 </odoo>
