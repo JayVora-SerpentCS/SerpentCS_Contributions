@@ -9,7 +9,7 @@
                 </div>
                 <strong>Draw your signature</strong>
             </div>
-            <div id="signature" class="signature panel-body " style="padding: 0"/>
+            <div id="signature" class="signature panel-body "/>
         </div>
     </t>
     <t t-name="FieldBinaryImage-extend">
@@ -21,3 +21,4 @@
         />
     </t>
 </templates>
+

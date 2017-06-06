@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-
         <record id="inherited_res_users_form" model="ir.ui.view">
             <field name="name">inherited.res.users.form</field>
             <field name="model">res.users</field>
@@ -13,6 +12,6 @@
                 </xpath>
             </field>
         </record>
-
     </data>
 </openerp>
+
