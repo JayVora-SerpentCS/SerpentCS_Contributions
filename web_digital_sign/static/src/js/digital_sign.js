@@ -31,7 +31,7 @@ openerp.web_digital_sign = function(instance) {
             var self = this;
             var signature = self.$el.find("#signature").jSignature("getData",'image');
             var is_empty = signature
-                ? self.empty_sign[1] == signature[1]
+                ? self.empty_sign[1] === signature[1]
                     : false;
             if (! is_empty && typeof signature !== "undefined" && signature[1]) {
                 self.set('value',signature[1]);
@@ -39,7 +39,7 @@ openerp.web_digital_sign = function(instance) {
         },
         render_value: function() {
             var self = this;
-            var url;
+            var url = this.placeholder;
             if (this.get('value') && !instance.web.form.is_bin_size(this.get('value'))) {
                 url = 'data:image/png;base64,' + this.get('value');
             } else if (this.get('value')) {
@@ -65,7 +65,7 @@ openerp.web_digital_sign = function(instance) {
             } else {
                 url = this.placeholder;
             }
-            if (this.view.get("actual_mode") == 'view') {
+            if (this.view.get("actual_mode") === 'view') {
                 var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
                 this.$el.find('> img').remove();
                 this.$el.find("#signature").hide();
@@ -83,7 +83,7 @@ openerp.web_digital_sign = function(instance) {
                     $img.attr('src', self.placeholder);
                     instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
                 });
-            }else if(this.view.get("actual_mode") == 'edit' || this.view.get("actual_mode") == 'create'){
+            }else if(this.view.get("actual_mode") === 'edit' || this.view.get("actual_mode") === 'create'){
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
                     var field_name = this.options.preview_image
@@ -107,5 +107,5 @@ openerp.web_digital_sign = function(instance) {
                 return this._super.apply(this, arguments);
             }
         });
-}
+};
 

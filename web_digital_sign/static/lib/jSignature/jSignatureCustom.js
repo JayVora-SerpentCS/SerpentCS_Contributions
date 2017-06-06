@@ -351,7 +351,6 @@ function Point(x,y){
  * 
  */
 function DataEngine(storageObject, context, startStrokeFn, addToStrokeFn, endStrokeFn){
-    console.log("storageObjectstorageObject",storageObject)
     this.data = storageObject; // we expect this to be an instance of Array
     this.context = context;
 
