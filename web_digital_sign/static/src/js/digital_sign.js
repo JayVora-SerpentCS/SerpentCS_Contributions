@@ -38,9 +38,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             var self = this;
             this.$el.find('> img').remove();
             var signature = self.$el.find("#signature").jSignature("getData",'image');
-            var is_empty = signature ?
-                    self.empty_sign[1] === signature[1] :
-                        false;
+            var is_empty = signature
+                ? self.empty_sign[1] === signature[1]
+                : false;
             if (! is_empty && typeof signature !== "undefined" && signature[1]) {
                 self.set('value',signature[1]);
             }
@@ -54,9 +54,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 url = this.session.url('/web/binary/image', {
                     model: this.view.dataset.model,
                     id: JSON.stringify(this.view.datarecord.id || null),
-                    field:  this.options.preview_image ?
-                            this.options.preview_image :
-                                this.name,
+                    field:  this.options.preview_image
+                    ? this.options.preview_image
+                            : this.name,
                     t: new Date().getTime()
                 });
             } else {
@@ -73,8 +73,12 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     }
                     $img.css("max-width", "" + self.options.size[0] + "px");
                     $img.css("max-height", "" + self.options.size[1] + "px");
-                    $img.css("margin-left", "" + ((self.options.size[0] - $img.width()) / 2) + "px");
-                    $img.css("margin-top", "" + ((self.options.size[1] - $img.height()) / 2) + "px");
+                    $img.css("margin-left", ""
+                            + (self.options.size[0] - $img.width())
+                            / 2 + "px");
+                    $img.css("margin-top", ""
+                            + (self.options.size[1] - $img.height())
+                            / 2 + "px");
                 });
                 $img.on('error', function() {
                     $img.attr('src', self.placeholder);
