@@ -38,8 +38,10 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             var self = this;
             this.$el.find('> img').remove();
             var signature = self.$el.find("#signature").jSignature("getData",'image');
-            var is_empty = signature ? self.empty_sign[1] === signature[1] : false;
-            if (! is_empty && signature !== undefined && signature[1]) {
+            var is_empty = signature
+                ? self.empty_sign[1] === signature[1]
+                : false;
+            if (! is_empty && typeof signature !== "undefined" && signature[1]) {
                 self.set('value',signature[1]);
             }
         },
@@ -52,7 +54,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 url = this.session.url('/web/binary/image', {
                     model: this.view.dataset.model,
                     id: JSON.stringify(this.view.datarecord.id || null),
-                    field:  this.options.preview_image ? this.options.preview_image : this.name,
+                    field:  this.options.preview_image
+                        ? this.options.preview_image
+                                : this.name,
                     t: new Date().getTime()
                 });
             } else {
@@ -79,8 +83,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             } else if (this.view.get("actual_mode") === 'edit') {
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
-                    var field_name = this.options.preview_image ? this.options.preview_image : this.name;
-
+                    var field_name = this.options.preview_image
+                        ? this.options.preview_image
+                                : this.name;
                     new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data[0], field_name));
@@ -101,7 +106,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                   this.$el.find(".signature").empty().jSignature("init",{'decor-color' : '#D1D0CE', 'color': '#000','background-color': '#fff','height':'150','width':'550'});
               }
           }
-        },
+        }
     });
 
     core.form_widget_registry.add('signature', FieldSignature);
@@ -110,7 +115,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         save: function() {
             this.$el.find('.save_sign').click();
             return this._super.apply(this, arguments);
-        },
+        }
     });
 
 });
