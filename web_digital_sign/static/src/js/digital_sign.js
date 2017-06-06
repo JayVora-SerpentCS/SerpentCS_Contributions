@@ -39,7 +39,8 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             this.$el.find('> img').remove();
             var signature = self.$el.find("#signature").jSignature("getData",'image');
             var is_empty = signature ? self.empty_sign[1] === signature[1] : false;
-            if (! is_empty && signature !== undefined && signature[1]) {
+
+            if (! is_empty && typeof signature !== "undefined" && signature[1]) {
                 self.set('value',signature[1]);
             }
         },
@@ -69,8 +70,8 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     }
                     $img.css("max-width", "" + self.options.size[0] + "px");
                     $img.css("max-height", "" + self.options.size[1] + "px");
-                    $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
-                    $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
+                    $img.css("margin-left", "" + (((self.options.size[0] - $img.width()) / 2) + "px"));
+                    $img.css("margin-top", "" + (((self.options.size[1] - $img.height()) / 2) + "px"));
                 });
                 $img.on('error', function() {
                     $img.attr('src', self.placeholder);
@@ -80,6 +81,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
                     var field_name = this.options.preview_image ? this.options.preview_image : this.name;
+
                     new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data, field_name));
@@ -100,16 +102,17 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                   this.$el.find(".signature").empty().jSignature("init",{'decor-color' : '#D1D0CE', 'color': '#000','background-color': '#fff','height':'150','width':'550'});
               }
           }
-        },
+        }
     });
 
     core.form_widget_registry.add('signature', FieldSignature);
 
-   FormView.include({
+    FormView.include({
         save: function() {
             this.$el.find('.save_sign').click();
             return this._super.apply(this, arguments);
-        },
+        }
     });
 
 });
+

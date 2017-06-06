@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 {
     "name" : "Web Digital Signature 9.0",
     "version" : "9.0.1.0.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
     "category": '',
+    'license': 'AGPL-3',
     'complexity': "easy",
     'depends': ['web'],
     'description': '''
