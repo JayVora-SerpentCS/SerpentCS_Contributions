@@ -73,12 +73,8 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     }
                     $img.css("max-width", "" + self.options.size[0] + "px");
                     $img.css("max-height", "" + self.options.size[1] + "px");
-                    $img.css("margin-left", ""
-                            + (self.options.size[0] - $img.width())
-                            / 2 + "px");
-                    $img.css("margin-top", ""
-                            + (self.options.size[1] - $img.height())
-                            / 2 + "px");
+                    $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
+                    $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
                 });
                 $img.on('error', function() {
                     $img.attr('src', self.placeholder);
@@ -87,9 +83,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             } else if (this.view.get("actual_mode") === 'edit') {
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
-                    var field_name = this.options.preview_image ?
-                            this.options.preview_image :
-                                this.name;
+                    var field_name = this.options.preview_image
+                        ? this.options.preview_image
+                                : this.name;
                     new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data, field_name));
