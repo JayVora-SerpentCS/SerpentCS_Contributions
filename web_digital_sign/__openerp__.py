@@ -23,7 +23,7 @@
 
 {
     "name": "Web Digital Signature",
-    "version": "1.1",
+    "version": "8.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     'website': 'http://www.serpentcs.com',
     "category": 'web',
