@@ -17,7 +17,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             var self = this;
             this.$el.find('> img').remove();
             this.$el.find('.signature > canvas').remove();
-            var sign_options = {'background-color': '#fff','height':'150','width':'550'};
+            var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','height':'150','width':'550'};
             this.$el.find("#signature").jSignature("init",sign_options);
             this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
             this.empty_sign = this.$el.find("#signature").jSignature("getData",'image');
@@ -26,12 +26,12 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         },
         on_clear_sign: function() {
             var self = this;
-            $(this.$el[0]).find(".signature > canvas").remove();
+            this.$el.find(".signature > canvas").remove();
             this.$el.find('> img').remove();
-            $(this.$el[0]).find(".signature").attr("tabindex", "0");
+            this.$el.find(".signature").attr("tabindex", "0");
             var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','height':'150','width':'550','clear': true};
-            $(this.$el[0]).find(".signature").jSignature(sign_options);
-            $(this.$el[0]).find(".signature").focus();
+            this.$el.find(".signature").jSignature(sign_options);
+            this.$el.find(".signature").focus();
             self.set('value', false);
         },
         on_save_sign: function(value_) {
@@ -89,8 +89,8 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     new Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data, field_name));
-                            $(self.$el[0]).find(".signature").jSignature("reset");
-                            $(self.$el[0]).find(".signature").jSignature("setData",'data:image/png;base64,'+field_desc[0]);
+                            self.$el.find(".signature").jSignature("reset");
+                            self.$el.find(".signature").jSignature("setData",'data:image/png;base64,'+field_desc[0]);
                         }
                     });
                 } else {
