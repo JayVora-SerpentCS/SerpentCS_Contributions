@@ -10,9 +10,9 @@ openerp.web_digital_sign = function(instance) {
         placeholder: "/web/static/src/img/placeholder.png",
         initialize_content: function() {
             this._super();
-            this.$el.find("#signature").empty().jSignature("init",{'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','width':'600','height':'150'});
-            this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
-            this.empty_sign = this.$el.find("#signature").jSignature("getData",'image');
+            this.$el.find(".signature").empty().jSignature("init",{'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','width':'600','height':'150'});
+            this.$el.find(".signature").attr({"tabindex": "0",'height':"100"});
+            this.empty_sign = this.$el.find(".signature").jSignature("getData",'image');
             this.$el.find('#sign_clean').click(this.on_clear_sign);
             this.$el.find('.save_sign').click(this.on_save_sign);
         },
@@ -29,7 +29,7 @@ openerp.web_digital_sign = function(instance) {
         },
         on_save_sign: function(value_) {
             var self = this;
-            var signature = self.$el.find("#signature").jSignature("getData",'image');
+            var signature = self.$el.find(".signature").jSignature("getData",'image');
             var is_empty = signature
                 ? self.empty_sign[1] === signature[1]
                     : false;
@@ -51,7 +51,7 @@ openerp.web_digital_sign = function(instance) {
                                 : this.name,
                     t: new Date().getTime()
                 });
-            } else if (this.get('value') !== true) {
+            } else if (! this.get('value')) {
                 this.$el.find(".signature > canvas").remove();
                 var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','width':'600','height':'150'};
                 if ('width' in self.node.attrs) {
@@ -60,15 +60,15 @@ openerp.web_digital_sign = function(instance) {
                 if ('height' in self.node.attrs) {
                     sign_options.height = self.node.attrs.height;
                 }
-                this.$el.find("#signature").empty().jSignature("init",sign_options);
-                this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
+                this.$el.find(".signature").empty().jSignature("init",sign_options);
+                this.$el.find(".signature").attr({"tabindex": "0",'height':"100"});
             } else {
                 url = this.placeholder;
             }
             if (this.view.get("actual_mode") === 'view') {
-                var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
+                var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: this, url: url }));
                 this.$el.find('> img').remove();
-                this.$el.find("#signature").hide();
+                this.$el.find(".signature").hide();
                 this.$el.prepend($img);
                 $img.load(function() {
                     if (! self.options.size) {
