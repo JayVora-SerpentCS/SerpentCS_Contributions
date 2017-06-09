@@ -18,9 +18,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             this.$el.find('> img').remove();
             this.$el.find('.signature > canvas').remove();
             var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','height':'150','width':'550'};
-            this.$el.find("#signature").jSignature("init",sign_options);
-            this.$el.find("#signature").attr({"tabindex": "0",'height':"100"});
-            this.empty_sign = this.$el.find("#signature").jSignature("getData",'image');
+            this.$el.find(".signature").jSignature("init",sign_options);
+            this.$el.find(".signature").attr({"tabindex": "0",'height':"100"});
+            this.empty_sign = this.$el.find(".signature").jSignature("getData",'image');
             this.$el.find('#sign_clean').click(this.on_clear_sign);
             this.$el.find('.save_sign').click(this.on_save_sign);
         },
@@ -37,7 +37,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         on_save_sign: function(value_) {
             var self = this;
             this.$el.find('> img').remove();
-            var signature = self.$el.find("#signature").jSignature("getData",'image');
+            var signature = self.$el.find(".signature").jSignature("getData",'image');
             var is_empty = signature
                 ? self.empty_sign[1] === signature[1]
                 : false;
@@ -63,9 +63,9 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 url = this.placeholder;
             }
             if (this.view.get("actual_mode") === 'view') {
-                var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
+                var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: this, url: url }));
                 this.$el.find('> img').remove();
-                this.$el.find("#signature").hide();
+                this.$el.find(".signature").hide();
                 this.$el.prepend($img);
                 $img.load(function() {
                     if (! self.options.size) {
@@ -97,7 +97,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     this.$el.find('> img').remove();
                     this.$el.find('.signature > canvas').remove();
                     var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000','background-color': '#fff','height':'150','width':'550'};
-                    this.$el.find("#signature").jSignature("init",sign_options);
+                    this.$el.find(".signature").jSignature("init",sign_options);
                 }
           } else if (this.view.get("actual_mode") === 'create') {
               this.$el.find('> img').remove();

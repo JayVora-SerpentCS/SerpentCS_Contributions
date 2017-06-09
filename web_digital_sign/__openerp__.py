@@ -10,7 +10,7 @@
     'depends': ['web'],
     'description': '''
      This module provides the functionality to store digital signature
-     image for a record.
+     for a record.
         -> This  module is helpfull to make your business process a little
            bit more faster & makes it more user friendly by providing you
            digital signature functionality on your documents.
