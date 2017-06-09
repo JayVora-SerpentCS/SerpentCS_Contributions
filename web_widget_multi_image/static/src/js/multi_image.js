@@ -238,42 +238,34 @@ odoo.define('web.MultiImage', function(require) {
             });
 
             this.$el.find('.oe_image_list').click(function() {
-                var url_list = [];
-                var model = self.dataset.model;
                 self.images_list = [];
                 self.image_dataset = new dataset.DataSetSearch(self, self.model, {}, []);
-                if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
-                    return alert("Please Save the record when you are adding an image for the first time !!")
-                } else if (_.every(self.dataset.ids, function(i) { return _.isNumber(i)})){
-                    self.image_dataset.read_slice([], {
-                        'domain': [
-                            ['id', 'in', self.dataset.ids]
-                        ]
-                    }).done(function(records) {
-                        self.images_list = records;
-                        if (self.images_list.length === 0) {
-                            self.do_warn(_t("Image"), _t("Image not available !"));
-                            return;
-                        }
-                        self.image_list_dialog = new Dialog(self, {
-                            title: _t("Image List"),
-                            width: '840px',
-                            height: '70%',
-                            min_width: '600px',
-                            min_height: '500px',
-                            buttons: [{
-                                text: _t("Close"),
-                                click: function() {
-                                    self.image_list_dialog.close();
-                                },
-                                close: true
-                            }],
-                        }).open();
-                        self.on_render_dialog();
-                    });
-                } else {
-                     return alert("Please Save the record when you are adding an image for the first time !!")
-                }
+                self.image_dataset.read_slice([], {
+                    'domain': [
+                        ['id', 'in', self.dataset.ids]
+                    ]
+                }).done(function(records) {
+                    self.images_list = records;
+                    if (self.images_list.length === 0) {
+                        self.do_warn(_t("Image"), _t("Image not available !"));
+                        return;
+                    }
+                    self.image_list_dialog = new Dialog(self, {
+                        title: _t("Image List"),
+                        width: '840px',
+                        height: '70%',
+                        min_width: '600px',
+                        min_height: '500px',
+                        buttons: [{
+                            text: _t("Close"),
+                            click: function() {
+                                self.image_list_dialog.close();
+                            },
+                            close: true
+                        }],
+                    }).open();
+                    self.on_render_dialog();
+                });
             });
             return result;
         },
