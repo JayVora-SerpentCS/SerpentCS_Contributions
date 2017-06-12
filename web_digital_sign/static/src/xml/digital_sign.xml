@@ -9,7 +9,7 @@
                 </div>
                 <strong>Draw your signature</strong>
             </div>
-            <div id="signature" class="signature panel-body " style="padding: 0"/>
+            <div class="signature panel-body "/>
         </div>
     </t>
     <t t-name="FieldBinaryImage-extend">
@@ -18,6 +18,8 @@
             t-att-name="widget.name"
             t-att-width="widget.node.attrs.img_width || widget.node.attrs.width"
             t-att-height="widget.node.attrs.img_height || widget.node.attrs.height"
+            t-att-tabindex="widget.node.attrs.img_tabindex || widget.node.attrs.tabindex"
         />
     </t>
 </templates>
+

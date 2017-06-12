@@ -3,7 +3,6 @@ jSignature v2 "${buildDate}" "${commitID}"
 Copyright (c) 2012 Willow Systems Corp http://willow-systems.com
 Copyright (c) 2010 Brinley Ang http://www.unbolt.net
 MIT License <http://www.opensource.org/licenses/mit-license.php> 
-
 */
 ;(function() {
 
@@ -12,7 +11,6 @@ var apinamespace = 'jSignature'
 /**
 Allows one to delay certain eventual action by setting up a timer for it and allowing one to delay it
 by "kick"ing it. Sorta like "kick the can down the road"
-
 @public
 @class
 @param
@@ -1196,24 +1194,19 @@ var GlobalJSignatureObjectInitializer = function(window){
             // a bunch of events to jSignatureInstance.events
             // (look at the source of jSignatureClass to see when these fire)
             // and your special pieces of code will attach by themselves.
-
             // this function runs every time a new instance is set up.
             // this means every var you create will live only for one instance
             // unless you attach it to something outside, like "window."
             // and pick it up later from there.
-
             // when globalEvents' events fire, 'this' is globalEvents object
             // when jSignatureInstance's events fire, 'this' is jSignatureInstance
-
             // Here,
             // this = is new jSignatureClass's instance.
-
             // The way you COULD approch setting this up is:
             // if you have multistep set up, attach event to "jSignature.initializing"
             // that attaches other events to be fired further lower the init stream.
             // Or, if you know for sure you rely on only one jSignatureInstance's event,
             // just attach to it directly
-
             this.events.subscribe(
                 // name of the event
                 apinamespace + '.initializing'
@@ -1338,7 +1331,7 @@ var GlobalJSignatureObjectInitializer = function(window){
         var topOfDOM = false;
         e = e.parentNode;
         while (e && !topOfDOM){
-            topOfDOM = e.body;
+            topOfDOM = $('.oe_form');
             e = e.parentNode;
         }
         return !topOfDOM;
