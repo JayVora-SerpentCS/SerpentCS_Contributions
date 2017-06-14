@@ -8,8 +8,8 @@
     'description': """
     This module provides the functionality to generalize security on
     any type of button.
-    -> Offers company level security & restricted access.
-    -> Configuring security code to buttons from company configuration
+    -> Offers user level security & restricted access.
+    -> Configuring security code to buttons from user configuration
        menu.
     -> Enhances webpage security at the interface level.
     Passing the options attributes inside the button like below.
@@ -20,7 +20,7 @@
     'website': 'http://www.serpentcs.com',
     'depends': ['base', 'web'],
     'data': [
-        'views/res_company_security.xml',
+        'views/res_users_security.xml',
         'views/templates.xml'
     ],
     'qweb': ['static/src/xml/web_security_dialog.xml'],
