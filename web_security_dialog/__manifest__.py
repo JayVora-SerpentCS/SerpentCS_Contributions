@@ -14,8 +14,9 @@
     -> Enhances webpage security at the interface level.
     Passing the options attributes inside the button like below.
         -> <button name="method_name" type="object" string="create
-        invoice" options='{"security":"security_field"}'/> """,
+        invoice" options='{"security":"security_field"}'/>""",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': ['base', 'web'],
     'data': [
