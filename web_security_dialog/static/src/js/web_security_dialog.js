@@ -14,9 +14,13 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
         init : function(field_manager, node) {
             this._super(field_manager, node);
             if(this.node.attrs.options) {
-                this.options = JSON.parse(this.node.attrs.options) ? JSON.parse(this.node.attrs.options) : false;
+                this.options = JSON.parse(this.node.attrs.options)
+                    ? JSON.parse(this.node.attrs.options)
+                            : false;
                 if(this.options) {
-                    this.is_dialog_security = this.options.security ? this.options.security : false;
+                    this.is_dialog_security = this.options.security
+                    ? this.options.security
+                            : false;
                 }else{
                     this.is_dialog_security = false;
                 }
@@ -41,7 +45,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                     buttons: [
                                 {
                                     text:_t('Cancel'),
-                                    close:true,
+                                    close:true
                                 },
                                 {
                                     text: _t("Ok"),
@@ -57,14 +61,17 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                                    curr_obj.close();
                                                    self.click_operation();
                                                }else {
-                                                   alert("Password is Wrong!!!!");
+                                                   Dialog.alert(self, _t("Password is Wrong"));
+                                                   return;
                                                }
                                            }).fail(function(error) {
                                                framework.unblockUI();
-                                               alert("Connection lost.");
+                                               Dialog.alert(self, _t("Connection lost"));
+                                               return;
                                            });
                                        }else {
-                                           alert("Please Enter the Password.");
+                                           Dialog.alert(self, _t("Please Enter the Password."));
+                                           return;
                                        }
                                     }
                                 }
