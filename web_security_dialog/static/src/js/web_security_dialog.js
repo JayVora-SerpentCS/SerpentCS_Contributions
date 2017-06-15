@@ -47,9 +47,9 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 });
             }else if (self.node.attrs.confirm) {
                     var def = $.Deferred();
-                    Dialog.confirm(self, self.node.attrs.confirm, { confirm_callback: self.on_confirmed })
-                          .on("closed", null, function() {
-                              def.resolve(); 
+                    Dialog.confirm(self, self.node.attrs.confirm, { confirm_callback: self.on_confirmed }).
+                        on("closed", null, function() {
+                              def.resolve();
                               });
                     return def.promise();
                 } else {
