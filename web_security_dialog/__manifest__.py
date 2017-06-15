@@ -24,7 +24,5 @@
         'views/templates.xml'
     ],
     'qweb': ['static/src/xml/web_security_dialog.xml'],
-    'auto_install': False,
     'installable': True,
-    'application': True,
 }

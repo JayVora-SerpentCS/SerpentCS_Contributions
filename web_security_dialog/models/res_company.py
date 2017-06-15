@@ -7,7 +7,7 @@ class SecurityDialog(models.Model):
 
     _inherit = 'res.company'
 
-    pincode = fields.Char('Security Code')
+    security_key = fields.Char('Security Code')
 
     @api.multi
     def check_security(self, vals):
