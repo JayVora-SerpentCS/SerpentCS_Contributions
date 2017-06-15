@@ -84,7 +84,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                                curr_obj.close();
                                               self.on_confirmed();
                                            }else {
-                                               Dialog.alert(self, _t("Invalid or Wrong Password!"));
+                                               Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                                return;
                                            }
                                        }).fail(function(error) {

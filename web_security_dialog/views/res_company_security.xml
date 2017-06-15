@@ -8,12 +8,8 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page" position="after">
-                    <page string="WebDialogSecurity">
-                        <group>
-                            <field name="pincode" password="True"/>
-                        </group>
-                    </page>
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="security_key" password="True"/>
                 </xpath>
             </field>
         </record>
