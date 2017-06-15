@@ -26,80 +26,93 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 }
             }
         },
-        on_click : function() {
+        execute_action: function() {
             var self = this;
-            if (this.view.is_disabled) {
-                return;
-            }
-            self.view.enable_button();
-            self.force_disabled = false;
-            self.check_disable();
-            if (self.$el.hasClass('o_wow')) {
-                self.show_wow();
-            }
-            if (this.is_dialog_security) {
-                self.dialog = new Dialog(self,{
-                    title: _t('Security'),
-                    size : "small",
-                    $content: QWeb.render('DialogSecurity'),
+            var exec_action = function() {
+            if (self.node.attrs.confirm && self.is_dialog_security){
+                Dialog.confirm(self, self.node.attrs.confirm, {
                     buttons: [
-                                {
-                                    text:_t('Cancel'),
-                                    close:true
-                                },
-                                {
-                                    text: _t("Ok"),
-                                    click: function(){
-                                       var curr_obj = this;
-                                       var pass_value = this.$el.find("#d_security").val();
-                                       if (pass_value) {
-                                           framework.blockUI();
-                                           var callback = self.validate_user(self.is_dialog_security,pass_value);
-                                           callback.done(function(result) {
-                                               framework.unblockUI();
-                                               if (result) {
-                                                   curr_obj.close();
-                                                   self.click_operation();
-                                               }else {
-                                                   Dialog.alert(self, _t("Password is Wrong"));
-                                                   return;
-                                               }
-                                           }).fail(function(error) {
-                                               framework.unblockUI();
-                                               Dialog.alert(self, _t("Connection lost"));
-                                               return;
-                                           });
-                                       }else {
-                                           Dialog.alert(self, _t("Please Enter the Password."));
-                                           return;
-                                       }
-                                    }
-                                }
-                            ]
-                }).open();
-            }else {
-            self.click_operation();
+                              {
+                                  text: _t("Ok"),
+                                  classes: 'btn-primary',
+                                  click: function(){
+                                      this.close();
+                                      self.open_pincode_dialog();
+                                  }
+                              },
+                              {
+                                  text:_t('Cancel'),
+                                  close:true
+                              }]
+                });
+            }else if (self.node.attrs.confirm) {
+                    var def = $.Deferred();
+                    Dialog.confirm(self, self.node.attrs.confirm, { confirm_callback: self.on_confirmed })
+                          .on("closed", null, function() {
+                              def.resolve(); 
+                              });
+                    return def.promise();
+                } else {
+                    return self.on_confirmed();
+                }
+            };
+            if (!this.node.attrs.special) {
+                return this.view.recursive_save().then(exec_action);
+            } else {
+                return exec_action();
             }
         },
-        click_operation : function() {
+        open_pincode_dialog : function(){
             var self = this;
-            this.execute_action().always(function() {
-                self.view.enable_button();
-                self.force_disabled = false;
-                self.check_disable();
-                if (self.$el.hasClass('o_wow')) {
-                    self.show_wow();
-                }
-            });
+            new Dialog(self,{
+                title: _t('Security'),
+                size : "small",
+                $content: QWeb.render('DialogSecurity'),
+                buttons: [
+                            {
+                                text: _t("Ok"),
+                                classes: 'btn-primary',
+                                click: function(){
+                                   var curr_obj = this;
+                                   var password = this.$el.find("#pincode").val();
+                                   if (password) {
+                                       framework.blockUI();
+                                       var callback = self.validate_pincode(self.is_dialog_security,password);
+                                       callback.done(function(result) {
+                                           framework.unblockUI();
+                                           if (result) {
+                                               curr_obj.close();
+                                              self.on_confirmed();
+                                           }else {
+                                               Dialog.alert(self, _t("Invalid or Wrong Password!"));
+                                               return;
+                                           }
+                                       }).fail(function(error) {
+                                           framework.unblockUI();
+                                           Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
+                                           return;
+                                       });
+                                   }else {
+                                       Dialog.alert(self, _t("Please Enter the Password."));
+                                       return;
+                                   }
+                                }
+                            },
+                            {
+                                text:_t('Cancel'),
+                                close:true
+                            }
+                        ]
+            }).open();
         },
-        validate_user : function(field,value) {
+        validate_pincode : function(field,value) {
             var self = this;
             var data_vals = {
                     "field" : field,
                     "password"  : value,
-                    "userId" : self.session.uid
+                    "companyId" : self.session.company_id
                 };
-          return new Model("res.users").call("check_security",[[],data_vals]);
+          return new Model("res.company").call("check_security",[[],data_vals]);
         }
     });
 

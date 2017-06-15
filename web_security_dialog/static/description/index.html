@@ -4,8 +4,8 @@
             <h2 class="oe_slogan">Web Security Dialog</h2>
             <h3 class="oe_slogan">This module provides the functionality to generalize security on any type of button.</h3>
             <ul>
-                <li style="font-size: 18px;">Offers user level security & restricted access.</li>
-                <li style="font-size: 18px;">Configuring security code to buttons from user configuration menu.</li>
+                <li style="font-size: 18px;">Offers company level security & restricted access.</li>
+                <li style="font-size: 18px;">Configuring security code to buttons from company configuration menu.</li>
                 <li style="font-size: 18px;">Enhances webpage security at the interface level.</li>
             </ul>
         </div>
@@ -15,12 +15,12 @@
     <div class="oe_row">
         <div class="oe_span6">
             <div class="oe_bg_img">
-                <img class="oe_picture oe_screenshot" src="img/add_code.png">
+                <img class="oe_picture oe_screenshot" src="img/res_company.png">
             </div>
         </div>
         <div class="oe_span6">
           <h3 class="oe_slogan">Add security code</h3>
-          <p class='oe_mt32' style="font-size: 18px;">As shown in the image, user can add a security code from user configuration menu.</p>
+          <p class='oe_mt32' style="font-size: 18px;">As shown in the image, user can add a security code from company configuration menu.</p>
         </div>
    </div>
 </section>
@@ -29,9 +29,10 @@
         <div class="oe_span12">
           <h3 class="oe_slogan">Example of web security dialog module.</h3>
             <ul>
-                <li style="font-size: 17px;">Passing the options attributes inside the button like below.</li>
+                <li style="font-size: 17px;">Passing the options and confirm attributes inside the button like below.</li>
+                <li style="font-size: 17px;">Required the confirm attributes.</li>
                 <ul>
-                    <li style="font-size: 15px;">&lt;button name="method_name" type="object" string="create invoice" options='{"security":"security_field"}'/&gt;</li>
+                    <li style="font-size: 15px;">&lt;button name="method_name" type="object" confirm="message" string="create invoice" options='{"security":"security_field"}'/&gt;</li>
                 </ul>
             </ul>
         </div>
