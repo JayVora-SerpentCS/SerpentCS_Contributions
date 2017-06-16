@@ -534,7 +534,7 @@ function detect_old_ie() {
                     break;
                 default:
                     preview.append(imgObj);
-                    lens.append(lensImg);
+                    //lens.append(lensImg);
             }
         }
 
