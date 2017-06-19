@@ -189,83 +189,103 @@ odoo.define('web.MultiImage', function(require) {
             this.$el.find('.oe-image-preview').click(function() {
                 var url_list = [];
                 var model = self.dataset.model;
+                var saved_images = [];
                 self.images_list = [];
                 self.image_dataset = new dataset.DataSetSearch(self, self.model, {}, []);
-                if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
-                    return alert("Please Save the record when you are adding an image for the first time !!")
-                } else if (_.every(self.dataset.ids, function(i) { return _.isNumber(i)})){
-                    self.image_dataset.read_slice([], {
-                        'domain': [
-                            ['id', 'in', self.dataset.ids]
-                        ]
-                    }).done(function(records) {
-                        self.images_list = records;
-                        var images_list = self.images_list;
-                        if (images_list && !_.isEmpty(images_list)) {
-                            _.each(images_list, function(img) {
-                                if (img) {
-                                    var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
-                                    if (img.image) {
-                                        src = "data:image/jpeg;base64," + img.image;
-                                    }
-                                    var title = img.title
+                if(self.dataset.ids.length != 0){
+                    if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
+                        return alert("Please Save the record when you are adding an image for the first time !!")
+                    }else{
+                        _.each(self.dataset.ids, function(i) { 
+                            if (_.isNumber(i)){
+                                saved_images.push(i)
+                            }
+                        })
+                        self.image_dataset.read_slice([], {
+                            'domain': [['id', 'in', saved_images]]
+                        }).done(function(records) {
+                            self.images_list = records;
+                            var images_list = self.images_list;
+                            if (images_list && !_.isEmpty(images_list)) {
+                                _.each(images_list, function(img) {
+                                    if (img) {
+                                        var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
+                                        if (img.image) {
+                                            src = "data:image/jpeg;base64," + img.image;
+                                        }
+                                        var title = img.title
                                         ? img.title
                                         : '';
-                                    var description = img.description
+                                        var description = img.description
                                         ? img.description
                                         : '';
-                                    url_list.push({
-                                        "url": src,
-                                        "title": 'Title:-' + title + '<br/>Description:-' + description
-                                    });
-                                }
+                                        url_list.push({
+                                            "url": src,
+                                            "title": 'Title:-' + title + '<br/>Description:-' + description
+                                        });
+                                    }
+                                });
+                            } else {
+                                self.do_warn("Image", "Image not available !");
+                                return;
+                            }
+                            self.$el.find('.oe-image-preview').lightbox({
+                                fitToScreen: true,
+                                jsonData: url_list,
+                                loopImages: true,
+                                imageClickClose: false,
+                                disableNavbarLinks: true
                             });
-                        } else {
-                            self.do_warn("Image", "Image not available !");
-                            return;
-                        }
-                        self.$el.find('.oe-image-preview').lightbox({
-                            fitToScreen: true,
-                            jsonData: url_list,
-                            loopImages: true,
-                            imageClickClose: false,
-                            disableNavbarLinks: true
                         });
-                    });
-                } else {
-                     return alert("Please Save the record when you are adding an image for the first time !!")
-                }
+                        }
+                    }else{
+                        return alert("There are no image for showing in preview !!")
+                    }
             });
 
             this.$el.find('.oe_image_list').click(function() {
                 self.images_list = [];
+                var saved_images = [];
                 self.image_dataset = new dataset.DataSetSearch(self, self.model, {}, []);
-                self.image_dataset.read_slice([], {
-                    'domain': [
-                        ['id', 'in', self.dataset.ids]
-                    ]
-                }).done(function(records) {
-                    self.images_list = records;
-                    if (self.images_list.length === 0) {
-                        self.do_warn(_t("Image"), _t("Image not available !"));
-                        return;
+                if(self.dataset.ids.length != 0){
+                    if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
+                        return alert("Please Save the record when you are adding an image for the first time !!")
+                    }else{
+                        _.each(self.dataset.ids, function(i) { 
+                            if (_.isNumber(i)){
+                            	saved_images.push(i)
+                            }
+                        })
+                        self.image_dataset.read_slice([], {
+                            'domain': [
+                            ['id', 'in', saved_images]
+                            ]
+                        }).then(function(records) {
+                            self.images_list = records;
+                            if (self.images_list.length === 0) {
+                                self.do_warn(_t("Image"), _t("Image not available !"));
+                                return;
+                            }
+                            self.image_list_dialog = new Dialog(self, {
+                                title: _t("Image List"),
+                                width: '840px',
+                                height: '70%',
+                                min_width: '600px',
+                                min_height: '500px',
+                                buttons: [{
+                                    text: _t("Close"),
+                                    click: function() {
+                                        self.image_list_dialog.close();
+                                    },
+                                    close: true
+                                }],
+                            }).open();
+                            self.on_render_dialog();
+                        });
                     }
-                    self.image_list_dialog = new Dialog(self, {
-                        title: _t("Image List"),
-                        width: '840px',
-                        height: '70%',
-                        min_width: '600px',
-                        min_height: '500px',
-                        buttons: [{
-                            text: _t("Close"),
-                            click: function() {
-                                self.image_list_dialog.close();
-                            },
-                            close: true
-                        }],
-                    }).open();
-                    self.on_render_dialog();
-                });
+                }else{
+                     return alert("There are no image to display !!")
+                }
             });
             return result;
         },
