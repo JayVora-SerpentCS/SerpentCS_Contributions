@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2012-Today Serpent Consulting Services Pvt. Ltd. (<http://www.serpentcs.com>)
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    Copyright (C) 2012-TODAY Serpent Consulting Services Pvt.Ltd. (<http://www.serpentcs.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,9 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
     'name': 'Record and Create Modules',
-    'version': '1.0',
+    'version': '7.0.0.1.0',
     'category': 'Tools',
     'description': """
 This module allows you to create a new module without any development.
@@ -42,7 +45,7 @@ Run Administration/Customization/Module Creation/Export Customizations As a Modu
 Select datetime criteria of recording and objects to be recorded and Record module.
     """,
     'author': 'OpenERP SA, Serpent Consulting Services Pvt. Ltd.',
-    'website': 'http://www.openerp.com, http://www.serpentcs.com',
+    'website': 'http://www.openerp.com',
     'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',
@@ -51,8 +54,5 @@ Select datetime criteria of recording and objects to be recorded and Record modu
     ],
     'demo': [],
     'installable': True,
-    'auto_install':False,
     'images': ['images/base_module_record1.jpeg','images/base_module_record2.jpeg','images/base_module_record3.jpeg',]
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
