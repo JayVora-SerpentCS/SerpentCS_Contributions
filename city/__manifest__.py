@@ -12,13 +12,11 @@
         state and country fields are replaced with a location
         field in partner and partner contact forms.
         This module helps to keep homogeneous address data in the database.""",
-    "depends": ['sales_team','stock_sale_info', 'sales_commission_multi_level', 'construction_management_app', 'sales_commission_calculation', 'portal_user_join_invitation'],
+    "depends": ["sales_team"],
     "data": [
         'views/city_view.xml',
         'security/ir.model.access.csv',
         ],
     "installable": True,
     'auto_install': False,
-    'price':1,
-    'currency':'EUR'
 }
