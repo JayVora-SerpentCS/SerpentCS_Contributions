@@ -25,4 +25,5 @@
     ],
     'qweb': ['static/src/xml/web_security_dialog.xml'],
     'installable': True,
+    'application': True
 }
