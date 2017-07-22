@@ -1,0 +1,183 @@
+<odoo>
+
+	<!-- register qweb report to create project task detail report -->
+	<report
+		id = "report_project_task_detail"
+		string="Task Details"
+		model="project.task"
+		name="project_task_detail_report.project_task_qweb_report"
+		report_type="qweb-pdf"/>
+
+	<!-- template for project detail -->
+	<template id="project_task_qweb_report">
+		<t>
+			<t t-foreach="docs" t-as="e">
+				<t t-call="report.external_layout">
+					<div class="page">
+						<form>
+							<br/>
+							<div class="container">
+								<tr>
+									<th>
+										<t t-if="e.name">
+											<h2><b><span t-field="e.name"/>
+											<t t-if="e.stage_id">
+												(&amp;nbsp;<span t-field="e.stage_id"/>&amp;nbsp;)
+											</t>
+											</b></h2>
+										</t>
+									</th>
+								</tr>
+								<table class="table table-condensed">
+									<thead>
+										<tr style="border-bottom:1px black;border-style: solid;">
+											<th>Project</th>
+											<th>Customer</th>
+											<th>Assigned To</th>
+											<th>Assigning Date</th>
+											<th>Deadline</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<t t-if='e.project_id'>
+													<span t-field="e.project_id"/>
+												</t>
+												<t t-if="not e.project_id">-</t>
+											</td>
+											<td>
+												<t t-if='e.partner_id'>
+													<span t-field="e.partner_id"/>
+												</t>
+												<t t-if="not e.partner_id">-</t>
+											</td>
+											<td>
+												<t t-if='e.user_id'>
+													<span t-field="e.user_id"/>
+												</t>
+												<t t-if="not e.user_id">-</t>
+											</td>
+											<td>
+												<t t-if='e.date_assign'>
+													<span t-field="e.date_assign"/>
+												</t>
+												<t t-if="not e.date_assign">-</t>
+											</td>
+											<td>
+												<t t-if='e.date_deadline'>
+													<span t-field="e.date_deadline"/>
+												</t>
+												<t t-if="not e.date_deadline">-</t>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<t t-if="e.timesheet_ids">
+									<div>
+										<tr>
+											<th>
+												<h2>Timesheet</h2>
+											</th>
+										</tr>
+									</div>
+									<table class="table table-condensed">
+										<thead>
+											<tr style="border-bottom:1px black;border-style: solid;">
+												<th>Date</th>
+												<th>User</th>
+												<th>Description</th>
+												<th>Analytic Account</th>
+												<th>Duration</th>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="e.timesheet_ids" t-as="t">
+												<tr>
+													<td>
+														<t t-if='t.date'>
+															<span t-field="t.date"/>
+														</t>
+														<t t-if="not t.date">-</t>
+													</td>
+													<td>
+														<t t-if='t.user_id'>
+															<span t-field="t.user_id"/>
+														</t>
+														<t t-if="not t.user_id">-</t>
+													</td>
+													<td>
+														<t t-if='t.name'>
+															<span t-field="t.name"/>
+														</t>
+														<t t-if="not t.name">-</t>
+													</td>
+													<td>
+														<t t-if='t.project_id.analytic_account_id'>
+															<span t-field="t.project_id.analytic_account_id"/>
+														</t>
+														<t t-if="not t.project_id.analytic_account_id">-</t>
+													</td>
+													<td>
+														<t t-if='t.unit_amount'>
+															<t t-esc="'%02d:%02d' % (int(t.unit_amount), t.unit_amount % 1 * 60)" />
+														</t>
+														<t t-if="not t.unit_amount">00:00</t>
+													</td>
+												</tr>
+											</t>
+										</tbody>
+									</table>
+								</t>
+								<div col="2" colspan="4">
+									<div class="pull-right">
+										<table>
+											<tr style="border-top:1px #b5b1b1;border-style: solid;">
+												<td>Initial Planned Hours :</td>
+												<td style=" width:60%; padding:5px 0px 5px 0px;" class="text-right">
+													<span class="col-lg-10"/>
+													<t t-if="e.planned_hours">
+														<t t-esc="'%02d:%02d' % (int(e.planned_hours), e.planned_hours % 1 * 60)" />
+													</t>
+													<t t-if="not e.planned_hours">00:00</t>
+												</td>
+											</tr>
+											<tr style="border-top:1px #b5b1b1;border-style: solid;">
+												<td style="padding:5px 0px 5px 35px;">Effective Hours :</td>
+												<td style="width:50% padding:0px 0px 0px 0px;" class="text-right">
+													<span class="col-lg-10"/>
+													<t t-if="e.effective_hours">
+														<t t-esc="'%02d:%02d' % (int(e.effective_hours), e.effective_hours % 1 * 60)" />
+													</t>
+													<t t-if="not e.effective_hours">00:00</t>
+												</td>
+											</tr>
+											<tr style="border-top:1px #b5b1b1;border-style: solid;">
+												<td style="padding:5px 0px 5px 23px;">Remaining Hours :</td>
+												<td style="width:50% padding:5px 0px 0px 0px;" class="text-right">
+													<t t-if="e.remaining_hours">
+														<t t-esc="'%02d:%02d' % (int(e.remaining_hours), e.remaining_hours % 1 * 60)" />
+													</t>
+													<t t-if="not e.remaining_hours">00:00</t>
+												</td>
+											</tr>
+										</table>
+									</div>
+									<br/><br/><br/><br/>
+									<div>
+										<tr>
+											<td>
+												Signature :_______________________
+											</td>
+										</tr>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+
+</odoo>
