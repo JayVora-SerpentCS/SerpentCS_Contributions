@@ -1,0 +1,157 @@
+<odoo>
+
+	<!-- register qweb report to create project detail report -->
+	<report
+		id = "report_project_detail"
+		string="Project Details"
+		model="project.project"
+		name="project_detail_report.project_detail_qweb_report"
+		report_type="qweb-pdf" />
+
+	<!-- Paper Format -->
+    <record id="project_paperformat_qweb" model="report.paperformat">
+       <field name="name">Project Details Paper Format</field>
+       <field name="default" eval="True" />
+       <field name="format">A4</field>
+       <field name="page_height">0</field>
+       <field name="page_width">0</field>
+       <field name="orientation">Portrait</field>
+       <field name="margin_top">50</field>
+       <field name="margin_bottom">15</field>
+       <field name="margin_left">10</field>
+       <field name="margin_right">10</field>
+       <field name="header_line" eval="False" />
+       <field name="header_spacing">45</field>
+       <field name="dpi">90</field>
+       <field name="report_ids" eval="[
+                                       (4, ref('project_detail_report.report_project_detail'))
+                                       ]"/>
+    </record>
+
+	<!-- template for project detail -->
+	<template id="project_detail_qweb_report">
+		<t>
+			<t t-foreach="docs" t-as="e">
+				<t t-call="report.external_layout">
+					<div class="page">
+						<form>
+							<br/>
+							<div class="container">
+								<tr>
+									<th>
+										<t t-if="e.name">
+											<h2><b><span t-field="e.name"/></b></h2>
+										</t>
+									</th>
+								</tr>
+								<table class="table table-condensed">
+									<thead>
+										<tr style="border-bottom:1px black;border-style: solid;">
+											<th>Customer</th>
+											<th>Project Manager</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<t t-if='e.partner_id'>
+													<span t-field="e.partner_id"/>
+												</t>
+												<t t-if="not e.partner_id">-</t>
+											</td>
+											<td>
+												<t t-if='e.user_id'>
+													<span t-field="e.user_id"/>
+												</t>
+												<t t-if="not e.user_id">-</t>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<t t-if="e.tasks">
+									<br/>
+									<div>
+										<tr>
+											<th>
+												<h2><b>Tasks:</b></h2>
+											</th>
+										</tr>
+									</div>
+									<table class="table table-condensed">
+										<thead>
+											<tr style="border-bottom:1px black;border-style: solid;">
+												<th>Task Name</th>
+												<th>Planned Hours</th>
+												<th>Spent Hours</th>
+												<th>Remaining Hours</th>
+												<th>Assigned To</th>
+												<th>Assigning Date</th>
+												<th>Deadline</th>
+												<th>Stage</th>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="e.tasks" t-as="t">
+												<tr>
+													<td>
+														<t t-if='t.name'>
+															<span t-field="t.name"/>
+														</t>
+														<t t-if="not t.name">-</t>
+													</td>
+													<td>
+														<t t-if='t.planned_hours'>
+															<t t-esc="'%02d:%02d' % (int(t.planned_hours), t.planned_hours % 1 * 60)" />
+														</t>
+														<t t-if="not t.planned_hours">00:00</t>
+													</td>
+													<td>
+														<t t-if='t.effective_hours'>
+															<t t-esc="'%02d:%02d' % (int(t.effective_hours), t.effective_hours % 1 * 60)" />
+														</t>
+														<t t-if="not t.effective_hours">00:00</t>
+													</td>
+													<td>
+														<t t-if='t.remaining_hours'>
+															<t t-esc="'%02d:%02d' % (int(t.remaining_hours), t.remaining_hours % 1 * 60)" />
+														</t>
+														<t t-if="not t.remaining_hours">00:00</t>
+													</td>
+													<td>
+														<t t-if='t.user_id'>
+															<span t-field="t.user_id"/>
+														</t>
+														<t t-if="not t.user_id">-</t>
+													</td>
+													<td>
+														<t t-if='t.date_assign'>
+															<span t-field="t.date_assign"/>
+														</t>
+														<t t-if="not t.date_assign">-</t>
+													</td>
+													<td>
+														<t t-if='t.date_deadline'>
+															<span t-field="t.date_deadline"/>
+														</t>
+														<t t-if="not t.date_deadline">-</t>
+													</td>
+													<td>
+														<t t-if='t.stage_id'>
+															<span t-field="t.stage_id"/>
+														</t>
+														<t t-if="not t.stage_id">-</t>
+													</td>
+												</tr>
+											</t>
+										</tbody>
+									</table>
+								</t>
+							</div>
+						</form>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+
+</odoo>
