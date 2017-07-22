@@ -1,11 +1,11 @@
 <odoo>
 
 	<!-- register qweb report to create project task detail report -->
-	<report 
+	<report
 		id = "report_project_task_detail"
 		string="Task Details"
 		model="project.task"
-		name="project_task_report.project_task_qweb_report"
+		name="project_task_detail_report.project_task_qweb_report"
 		report_type="qweb-pdf"/>
 
 	<!-- template for project detail -->

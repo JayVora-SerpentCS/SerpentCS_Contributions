@@ -1,13 +1,13 @@
 <odoo>
 
 	<!-- register qweb report to create project detail report -->
-	<report 
+	<report
 		id = "report_project_detail"
 		string="Project Details"
 		model="project.project"
-		name="project_report.project_detail_qweb_report"
+		name="project_detail_report.project_detail_qweb_report"
 		report_type="qweb-pdf" />
-	
+
 	<!-- Paper Format -->
     <record id="project_paperformat_qweb" model="report.paperformat">
        <field name="name">Project Details Paper Format</field>
@@ -16,7 +16,7 @@
        <field name="page_height">0</field>
        <field name="page_width">0</field>
        <field name="orientation">Portrait</field>
-       <field name="margin_top">50</field> 
+       <field name="margin_top">50</field>
        <field name="margin_bottom">15</field>
        <field name="margin_left">10</field>
        <field name="margin_right">10</field>
@@ -24,9 +24,9 @@
        <field name="header_spacing">45</field>
        <field name="dpi">90</field>
        <field name="report_ids" eval="[
-                                       (4, ref('project_report.report_project_detail'))
+                                       (4, ref('project_detail_report.report_project_detail'))
                                        ]"/>
-    </record> 
+    </record>
 
 	<!-- template for project detail -->
 	<template id="project_detail_qweb_report">
