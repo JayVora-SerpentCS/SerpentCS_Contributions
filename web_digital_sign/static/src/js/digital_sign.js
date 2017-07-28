@@ -1,111 +1,132 @@
 openerp.web_digital_sign = function(instance) {
-    "use strict";
     var _t = instance.web._t;
     var QWeb = instance.web.qweb;
+    var images = {}
 
     instance.web.form.widgets.add('signature', 'instance.web.form.FieldSignature');
-
-    instance.web.form.FieldSignature = instance.web.form.FieldBinary.extend({
+        instance.web.form.FieldSignature = instance.web.form.FieldBinaryImage.extend({
         template: 'FieldSignature',
-        placeholder: "/web/static/src/img/placeholder.png",
-        initialize_content: function() {
-            this._super();
-            this.$el.find(".signature").empty().jSignature("init",{'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','width':'600','height':'150'});
-            this.$el.find(".signature").attr({"tabindex": "0",'height':"100"});
-            this.empty_sign = this.$el.find(".signature").jSignature("getData",'image');
-            this.$el.find('#sign_clean').click(this.on_clear_sign);
-            this.$el.find('.save_sign').click(this.on_save_sign);
-        },
-        on_clear_sign: function() {
-            if (this.get('value') !== false) {
-                this.binary_value = false;
-                this.internal_set_value(false);
-            }
-             this.$el.find(".signature > canvas").remove();
-             this.$el.find(".signature").attr("tabindex", "0");
-             this.$el.find(".signature").jSignature("init",{'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','width':'600','height':'150','clear':true});
-             this.$el.find(".signature").focus();
-            return false;
-        },
-        on_save_sign: function(value_) {
-            var self = this;
-            var signature = self.$el.find(".signature").jSignature("getData",'image');
-            var is_empty = signature
-                ? self.empty_sign[1] === signature[1]
-                    : false;
-            if (! is_empty && typeof signature !== "undefined" && signature[1]) {
-                self.set('value',signature[1]);
-            }
-        },
         render_value: function() {
             var self = this;
-            var url = this.placeholder;
+            var url;
             if (this.get('value') && !instance.web.form.is_bin_size(this.get('value'))) {
                 url = 'data:image/png;base64,' + this.get('value');
-            } else if (this.get('value')) {
-                url = this.session.url('/web/binary/image', {
-                    model: this.view.dataset.model,
-                    id: JSON.stringify(this.view.datarecord.id || null),
-                    field: this.options.preview_image
-                        ? this.options.preview_image
-                                : this.name,
-                    t: new Date().getTime()
-                });
-            } else if (! this.get('value')) {
-                this.$el.find(".signature > canvas").remove();
-                var sign_options = {'decor-color' : '#D1D0CE', 'color': '#000', 'background-color': '#fff','width':'600','height':'150'};
-                if ('width' in self.node.attrs) {
-                    sign_options.width = self.node.attrs.width;
-                }
-                if ('height' in self.node.attrs) {
-                    sign_options.height = self.node.attrs.height;
-                }
-                this.$el.find(".signature").empty().jSignature("init",sign_options);
-                this.$el.find(".signature").attr({"tabindex": "0",'height':"100"});
-            } else {
-                url = this.placeholder;
-            }
-            if (this.view.get("actual_mode") === 'view') {
-                var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: this, url: url }));
-                this.$el.find('> img').remove();
-                this.$el.find(".signature").hide();
-                this.$el.prepend($img);
-                $img.load(function() {
-                    if (! self.options.size) {
-                        return;
-                    }
-                    $img.css("max-width", "" + self.options.size[0] + "px");
-                    $img.css("max-height", "" + self.options.size[1] + "px");
-                    $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
-                    $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
-                });
-                $img.on('error', function() {
-                    $img.attr('src', self.placeholder);
-                    instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
-                });
-            }else if(this.view.get("actual_mode") === 'edit' || this.view.get("actual_mode") === 'create'){
-                this.$el.find('> img').remove();
-                if (this.get('value')) {
-                    var field_name = this.options.preview_image
-                        ? this.options.preview_image
-                                : this.name;
-                    new instance.web.Model(this.view.dataset.model).call("read", [this.view.datarecord.id, [field_name]]).done(function(data) {
-                        if(data){
-                            var field_desc = _.values(_.pick(data, field_name));
-                            self.$el.find(".signature").jSignature('reset');
-                            self.$el.find(".signature").jSignature("setData", 'data:image/png;base64,'+field_desc[0]);
+            }else if (this.get('value')) {
+                var id = JSON.stringify(this.view.datarecord.id || null);
+                self.digita_dataset = new instance.web.DataSetSearch(self, self.view.model, {}, []);
+                self.digita_dataset.read_slice(['id', self.name], {'domain': [['id', '=', id]]}).then(function(records){
+                    _.each(records,function(record){
+                        if(record[self.name]){
+                            images[self.name] = record[self.name]
+                        }else{
+                            images[self.name] = ""
                         }
-                    });
-                }
-          }
-        }
-    });
-
-        instance.web.FormView.include({
-            save: function() {
-                this.$el.find('.save_sign').click();
-                return this._super.apply(this, arguments);
+                    })
+                })
+                var field = this.name;
+                if (this.options.preview_image)
+                    field = this.options.preview_image;
+                url = this.session.url('/web/binary/image', {
+                          model: this.view.dataset.model,
+                          id: id,
+                          field: field,
+                          t: (new Date().getTime()),
+                });
+            }else {
+                images[self.name] = ""
+                url = this.placeholder;
+                self.set('value',images[self.name])
             }
-        });
-};
-
+            var $img = $(QWeb.render("FieldBinaryImage-img", { widget: this, url: url }));
+            this.$el.find('img').remove();
+            if(this.view.get("actual_mode") !== 'edit' && this.view.get("actual_mode") !== 'create'){
+                this.$el.prepend($img);
+            }else if(this.view.get("actual_mode") == 'edit' ){
+                this.$el.find('> img').remove();
+                this.$el.find('> canvas').remove();
+                if(! this.get('value')){
+                    this.$el.find('> img').remove();
+                    $(this.$el[0]).find(".signature").signature();
+                }else if(this.get('value')){
+                    this.$el.prepend($img);
+                }
+            }else if( this.view.get("actual_mode") == 'create'){
+                images = {}
+                this.$el.find('> img').remove();
+                this.$el.find('> canvas').remove();
+                if(! this.get('value')){
+                    this.$el.find('> img').remove();
+                    $(this.$el[0]).find(".signature").signature();
+                }else if(this.get('value')){
+                    this.$el.prepend($img);
+                }
+            }
+            $(this.$el[0]).find('.clear_sign').click(function(){
+                self.$el.find('> img').remove();
+                images[self.name] = ""
+                $(self.$el[0]).find(".signature").show();
+                $(self.$el[0]).find(".signature").signature('clear');
+            });
+            $('.save_sign').click(function(){
+                var val
+                if($(self.$el[0]).find(".signature").hasClass( "kbw-signature" ) && ! $(self.$el[0]).find(".signature").signature('isEmpty')){
+                    $(self.$el[0]).find(".signature").hide();
+                    val = $(self.$el[0]).find(".signature > canvas")[0].toDataURL();
+                    images[self.name] = val.split(',')[1]
+                    var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: val }));
+                    self.$el.find('> img').remove();
+                    self.$el.prepend($img);
+                    self.set('value',val.split(',')[1])
+                    var id = JSON.stringify(self.view.datarecord.id || null);
+                    var field = self.name;
+                    url = self.session.url('/web/binary/image', {
+                        model: self.view.dataset.model,
+                        id: id,
+                        field: field,
+                        t: (new Date().getTime()),
+                    });
+                }else{
+                        var id = JSON.stringify(self.view.datarecord.id || null);
+                        var field = self.name;
+                        if (self.options.preview_image)
+                            field = self.options.preview_image;
+                        url = self.session.url('/web/binary/image', {
+                                model: self.view.dataset.model,
+                                id: id,
+                                field: field,
+                                t: (new Date().getTime()),
+                        });
+                       var $img = $(QWeb.render("FieldBinaryImage-extend", { widget: self, url: url }));
+                       self.$el.find('> img').remove();
+                }
+            });
+            $img.load(function() {
+                if (! self.options.size)
+                    return;
+                $img.css("max-width", "" + self.options.size[0] + "px");
+                $img.css("max-height", "" + self.options.size[1] + "px");
+                $img.css("margin-left", "" + (self.options.size[0] - $img.width()) / 2 + "px");
+                $img.css("margin-top", "" + (self.options.size[1] - $img.height()) / 2 + "px");
+            });
+            $img.on('error', function() {
+                $img.attr('src', self.placeholder);
+                instance.webclient.notification.warn(_t("Image"), _t("Could not display the selected image."));
+            });
+        },
+    });
+    instance.web.FormView.include({
+        save: function(prepend_on_create) {
+            var self = this;
+            $('.save_sign').click()
+            var save_obj = {prepend_on_create: prepend_on_create, ret: null};
+            this.save_list.push(save_obj);
+            return this._process_operations().then(function() {
+                if (save_obj.error)
+                    return $.Deferred().reject();
+                return $.when.apply($, save_obj.ret);
+            }).done(function() {
+                self.$el.removeClass('oe_form_dirty');
+            });
+        },
+    })
+}
