@@ -27,7 +27,8 @@
       This module used to print report of project details.""",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
-    'summary': """Print Project Detail report with task list and task details.""",
+    'summary': """
+      Print Project Detail report with task list and task details.""",
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'depends': ['hr_timesheet'],
     'data': [
