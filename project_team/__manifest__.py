@@ -4,7 +4,8 @@
 {
     'name': 'Project - Set Team and members',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'summary': 'Adds Project Team Members.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
+    'summary': 'Project Team Management',
     'category': 'Project Management',
     'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.0',
