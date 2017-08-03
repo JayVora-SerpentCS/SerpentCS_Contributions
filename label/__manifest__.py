@@ -4,9 +4,11 @@
     "name": "Mass Label Reporting",
     "version": "10.0.1.0.0",
     "author": 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     "category": "Tools",
     "license": "AGPL-3",
     "website": "http://www.serpentcs.com",
+    "summary":"Generate customised labels of any document",
     "description": """
     The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
     """,
