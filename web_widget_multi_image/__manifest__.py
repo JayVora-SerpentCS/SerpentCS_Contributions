@@ -8,7 +8,6 @@
     'complexity': 'easy',
     'depends': ['product'],
     'license': 'AGPL-3',
-    'description': ''' ''',
     'data': [
         'view/templates.xml',
         'view/product_view.xml',

@@ -7,7 +7,6 @@
     "website": "http://www.serpentcs.com",
     "category": "Web",
     "license": "AGPL-3",
-    "description": "Adds Expand button to expand all groups on a list view.",
     "depends": [
         "web",
     ],
