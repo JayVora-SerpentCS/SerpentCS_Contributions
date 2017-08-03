@@ -6,6 +6,7 @@
     'name': 'Project - Status by Recent Activities',
     'version': '10.0.1.0.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'summary': """Find your Idle projects - Displays last
                 updated date and recent updated date
