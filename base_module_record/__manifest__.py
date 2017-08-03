@@ -7,6 +7,7 @@
     'category': 'Tools',
     'license': 'AGPL-3',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'depends': ['base'],
     'data': [
