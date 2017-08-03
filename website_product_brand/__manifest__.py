@@ -5,9 +5,10 @@
     'name': 'Product Brand Filtering in Website',
     'category': 'Website',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'license': 'AGPL-3',
-    'summary': '',
+    'summary': 'Product Brand based filters',
     'version': '10.0.0.0.1',
     'description': """
         Allows to use product brands as filtering for products in website.

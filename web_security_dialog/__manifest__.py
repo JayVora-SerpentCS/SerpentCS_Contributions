@@ -16,6 +16,7 @@
         -> <button name="method_name" type="object" string="create
         invoice" options='{"security":"security_field"}'/>""",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': ['base', 'web'],
@@ -24,6 +25,7 @@
         'views/templates.xml'
     ],
     'qweb': ['static/src/xml/web_security_dialog.xml'],
+    'images': ['static/description/web_banner.png'],
     'installable': True,
     'application': True
 }

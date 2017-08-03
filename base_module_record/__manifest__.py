@@ -28,6 +28,7 @@ Select datetime criteria of recording and
 objects to be recorded and Record module.
     """,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'depends': ['base'],
     'data': [
