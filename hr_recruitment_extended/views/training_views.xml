@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_course_type_tree">
+            <field name="name">view.course.type.tree</field>
+            <field name="model">course.type</field>
+            <field name="arch" type="xml">
+                <tree string="Course Type" editable="top">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action Of Form & Tree Views Of Medical Details Button -->
+        <record id="action_course_type_list" model="ir.actions.act_window">
+            <field name="name">Course Type</field>
+            <field name="res_model">course.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_course_type_tree" />
+        </record>
+
+        <menuitem id="menu_course_item" name="Course Type" parent="hr_recruitment.menu_hr_recruitment_configuration" action="action_course_type_list"/>
+
+        <record model="ir.ui.view" id="view_training_courses_tree">
+            <field name="name">view.training.courses.tree</field>
+            <field name="model">training.courses</field>
+            <field name="arch" type="xml">
+                <tree string="Training Courses">
+                    <field name="name"/>
+                    <field name="course_type_id"/>
+                    <field name="job_id"/>
+                    <field name="department"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_training_courses_form">
+            <field name="name">view.training.courses.form</field>
+            <field name="model">training.courses</field>
+            <field name="arch" type="xml">
+                <form string="Training Courses" version="9.0">
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" required="1"/>
+                            <field name="course_type_id" required="1"/>
+                            <field name="job_id" required="1"/>
+                            <field name="department"/>
+                            <label for="duration"/>
+                            <div>
+                                <field name="duration" required="1"/>
+                                <field name="duration_type" required="1"/>
+                            </div>
+                            <field name="training_location"/>
+                            <field name="local_short_description" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action Of Form & Tree Views Of Prev. Occupation Button -->
+        <record id="action_training_courses_list" model="ir.actions.act_window">
+            <field name="name">Training Courses</field>
+            <field name="res_model">training.courses</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_training_courses_tree"/>
+        </record>
+
+        <menuitem id="menu_training_main" name="Training" string="Training" parent="hr_recruitment.menu_hr_recruitment_root"/>
+        <menuitem id="menu_training_course" name="Training Course" parent="menu_training_main" action="action_training_courses_list"/>
+
+        <record model="ir.ui.view" id="view_training_class_form">
+            <field name="name">view.training.class.form</field>
+            <field name="model">training.class</field>
+            <field name="arch" type="xml">
+                <form string="Training" version="9.0">
+                    <header>
+                        <button name="action_to_be_approve" type="object" states="draft" string="Send for Approval" class="oe_highlight"/>
+                        <button name="action_approve" type="object" states="to_be_approved" string="Approve" class="oe_highlight"/>
+                        <button name="action_to_be_approve" type="object" states="draft" string="Send for Approval" class="oe_highlight"/>
+                        <button name="action_completed" type="object" states="approved" string="Mark as Complete" class="oe_highlight"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="draft,to_be_approved,approved"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,to_be_approved,approved,completed" statusbar_colors='{"draft":"blue"}' />
+                    </header>	
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="course_id" required="1"  attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}"/>
+                            <field name="department"/>
+                            <field name="job_id"/>
+                            <field name="course_categ_id"/>
+                            <field name="training_location"/>
+                            <field name="training_start_date"/>
+                            <field name="training_attendees" attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}"/>
+                            <field name="training_end_date"/>
+                        </group>
+                        <notebook>
+                            <page string="List of Attendees" name="list_of_attendees">
+                                <field name="attendees_ids" colspan="4" nolabel="1" attrs="{'readonly': [('state', 'in', ['draft', 'to_be_approved', 'completed', 'cancel'])]}"/>
+                            </page>
+                            <page string="Description" name="description">
+                                <field name="description" nolabel="1" colspan="4"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+       </record>
+
+        <record model="ir.ui.view" id="view_training_class_tree">
+            <field name="name">view.training.class.tree</field>
+            <field name="model">training.class</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="course_id"/>
+                    <field name="department"/>
+                    <field name="job_id"/>
+                    <field name="training_start_date"/>
+                    <field name="training_end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Action Of Form & Tree Views Of Medical Details Button -->
+        <record id="action_training_class_list" model="ir.actions.act_window">
+            <field name="name">Training</field>
+            <field name="res_model">training.class</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_training_class_tree" />
+        </record>
+
+        <menuitem id="menu_training" name="Training" parent="menu_training_main" action="action_training_class_list"/>
+
+        <record model="ir.ui.view" id="view_list_of_attendees_form">
+            <field name="name">view.list.of.attendees.form</field>
+            <field name="model">list.of.attendees</field>
+            <field name="arch" type="xml">
+                <form string="Training" version="9.0">
+                    <header>
+                        <button name="action_awaiting_training_start" type="object" states="draft" string="Awaiting For Training Start" class="oe_highlight"/>
+                        <button name="action_in_training" type="object" states="awaiting_training_start" string="In Training" class="oe_highlight"/>
+                        <button name="action_training_completed" type="object" states="in_training" string="Training Completed" class="oe_highlight"/>
+                        <button name="action_in_complete" type="object" states="in_training" string="Training Incomplete" class="oe_highlight"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="draft,awaiting_training_start,to_be_approved,approved"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_training,train_completed" statusbar_colors='{"draft":"blue"}' />
+                    </header>
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <group col="2" colspan="2">
+                                <field name="employee_id" required="1"/>
+                            </group>
+                            <group col="2" colspan="2">
+                                <field name="attendees_image" style="padding-left:40px" class="oe_avatar" widget="image" readonly="1" nolabel="1"/>
+                            </group>
+                        </group>
+                        <group col="4" colspan="4">
+                             <field name="training_start_date"/>
+                             <field name="date_of_arrival" attrs="{'required': [('state', '=', 'awaiting_training_start')]}"/>
+                             <field name="training_end_date"/>
+                             <field name="class_id" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Attachments" name="attachment_ids">
+                                <field name="attachment_ids" colspan="4" nolabel="1" attrs="{'readonly': [('state', 'in', ['in_complete','train_completed'])]}"/>
+                            </page>
+                            <page string="Comments" name="comments">
+                                <field name="comments" nolabel="1" colspan="4"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+       </record>
+
+        <record model="ir.ui.view" id="view_list_of_attendees_tree">
+            <field name="name">view.list.of.attendees.tree</field>
+            <field name="model">list.of.attendees</field>
+            <field name="arch" type="xml">
+                <tree string="Training">
+                    <field name="employee_id"/>
+                    <field name="training_start_date"/>
+                    <field name="training_end_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>
