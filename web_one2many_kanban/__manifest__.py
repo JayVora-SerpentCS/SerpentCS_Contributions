@@ -7,7 +7,7 @@
     "sequence": 6,
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
-    "website": "http://www.serpentcs.com/",
+    "website": "http://www.serpentcs.com",
     "license": "AGPL-3",
     'summary': 'Display one2many widget as kanban',
     "description": """
