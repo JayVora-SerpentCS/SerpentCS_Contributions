@@ -121,7 +121,7 @@ class report_dynamic_label(report_sxw.rml_parse):
 
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals[0]['value'] not in value_vals:
+                if vals and vals[0]['value'] not in value_vals:
                     value_vals.append(vals[0]['value'])
                 result.append(vals)
                 temp = vals
