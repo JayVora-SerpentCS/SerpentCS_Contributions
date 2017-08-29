@@ -6,7 +6,7 @@
     'version': '1.0',
     'sequence': 6,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'description' : """
+    'description': """
         You need to define o2m field in kanban view definition and use
         for loop to display fields like:
 
@@ -16,10 +16,9 @@
     """,
     'installable': True,
     'application': True,
-    'data':[
-            'view/templates.xml',
-            ],
+    'data': [
+        'view/templates.xml'
+    ],
     'depends': ['web'],
     'auto_install': False,
 }
-

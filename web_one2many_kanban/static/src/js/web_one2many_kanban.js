@@ -9,15 +9,16 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
     var KanbanView = require('web_kanban.KanbanView');
     var kanban_widgets = require('web_kanban.widgets');
     var KanbanColumn = require('web_kanban.Column');
-    var quick_create = require('web_kanban.quick_create')
+    var quick_create = require('web_kanban.quick_create');
     var pyeval = require('web.pyeval');
+    var session = require('web.session');
     var ColumnQuickCreate = quick_create.ColumnQuickCreate;
     var fields_registry = kanban_widgets.registry;
 
     var QWeb = core.qweb;
     var _t = core._t;
-    
-    var o2m_model = new Model("kanban.record")
+
+    var o2m_model = new Model("kanban.record");
 
     /*Kanban view For one2many*/
     function qweb_add_if(node, condition) {
@@ -43,31 +44,33 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             case 'td':
             case 'span':
             case 't':
-                self.dataset.o2m_field = {}
-                if(node.attrs['t-foreach'] != undefined){
-                    var field_name = node.attrs['t-foreach'].split('.')[1]
-                    if(field_name != undefined){
+                self.dataset.o2m_field = {};
+                if(node.attrs['t-foreach'] !== undefined){
+                    var field_name = node.attrs['t-foreach'].split('.')[1];
+                    if(field_name !== undefined){
                         self.field_details = self.fields_view.fields[field_name];
-                        if(self.field_details.type == 'one2many' && (self.field_details.related != undefined || self.field_details.relation_field != undefined) && self.same_field.indexOf(field_name) == -1){
-                            self.same_field.push(field_name)
-                            var model = self.field_details.relation
+                        if(self.field_details.type === 'one2many' && (self.field_details.related !== undefined || self.field_details.relation_field !== undefined) && self.same_field.indexOf(field_name) == -1){
+                            self.same_field.push(field_name);
+                            var model = self.field_details.relation;
                             self.o2m_dataset = new data.DataSetSearch(self,model, {}, []);
-                            self.o2m_dataset.call('fields_get').done(function(data) {
-                                var fields=[]
-                                _.each(data, function(field_def, field_name) {
-                                    if(field_def.type != 'many2many'){
-                                        fields.push(field_name)
+                            self.o2m_dataset.call('fields_get').done(function(fields_data) {
+                                var fields=[];
+                                _.each(fields_data, function(field_def, field_name) {
+                                    if (field_def.type !== 'many2many') {
+                                        fields.push(field_name);
                                     }
                                 });
-                                self.dataset.o2m_field[field_name] = {'field_name':field_name,'model':model,'fields':fields}
-                            })
+                                self.dataset.o2m_field[field_name] = {'field_name': field_name, 'model': model, 'fields': fields};
+                            });
                         }
                     }
                 }
                 break;
             case 'field':
                 var ftype = fvg.fields[node.attrs.name].type;
-                ftype = node.attrs.widget ? node.attrs.widget : ftype;
+                ftype = node.attrs.widget ?
+                        node.attrs.widget :
+                            ftype;
                 if (ftype === 'many2many') {
                     if (_.indexOf(many2manys, node.attrs.name) < 0) {
                         many2manys.push(node.attrs.name);
@@ -187,12 +190,12 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             });
            _.each(relations, function(rel, rel_name) {
                 var dataset = new data.DataSetSearch(self, rel_name, self.dataset.get_context(rel.context));
-                var call = false
+                var call = false;
                 dataset.read_ids(_.uniq(rel.ids), ['name', 'color']).done(function(result) {
                     if(!call){
                         result.forEach(function(record) {
                             // Does not display the tag if color = 0
-                            if (record['color']){
+                            if (record['color']) {
                                 var $tag = $('<span>')
                                     .addClass('o_tag o_tag_color_' + record['color'])
                                     .attr('title', _.str.escapeHTML(record['name']));
@@ -362,14 +365,14 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                         self.widgets.push(kanban_record);
                         kanban_record.appendTo(fragment);
                         el.append(fragment);
-                    })
-                })
+                    });
+                });
             });
         },
         render_ungrouped: function (fragment,el) {
             var self = this;
-            if(!_.keys(self.dataset.o2m_field).length){
-                this._super(fragment,el)
+            if(!_.keys(self.dataset.o2m_field).length) {
+                this._super(fragment,el);
             }
             if(_.keys(self.dataset.o2m_field).length){
                 this.render_ungrouped_saving_mutex = new utils.Mutex();
@@ -381,7 +384,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                         ghost_div.appendTo(fragment);
                     }
                     self.postprocess_m2m_tags();
-                })
+                });
             }
         },
         reload_record: function (record) {
@@ -454,7 +457,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                     if (this.ViewManager.searchview.groupby_menu && this.ViewManager.searchview.groupby_menu.groupable_fields) {
                         group_by_field_attrs = _.find(this.ViewManager.searchview.groupby_menu.groupable_fields, function(field) {
                             return field.name === self.group_by_field;
-                        })
+                        });
                     }
                 }
                 // Deactivate the drag'n'drop if:
@@ -464,13 +467,12 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                 if (group_by_field_attrs) {
                     if (group_by_field_attrs.type === "date" || group_by_field_attrs.type === "datetime") {
                         var draggable = false;
-                    }
-                    else if (group_by_field_attrs.readonly !== undefined) {
+                    } else if (group_by_field_attrs.readonly !== undefined) {
                         var draggable = !(group_by_field_attrs.readonly);
                     }
                 }
                 var record_options = _.extend(this.record_options, {
-                    draggable: draggable,
+                    draggable: draggable
                 });
 
                 var column_options = this.get_column_options();
@@ -583,12 +585,14 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                         self.add_record(record, {no_update: true});
                         requests.push(record);
                     });
-                    $.async_when.apply($, requests).then(function() { def.resolve(); });
+                    $.async_when.apply($, requests).then(function() {
+                        def.resolve();
+                    });
                 });
             });
                return def.promise();
         }
 
-    });
+     });
 
 });

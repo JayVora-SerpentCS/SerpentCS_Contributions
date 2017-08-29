@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from openerp import api, fields, models
+
+from openerp import api, models
 
 
 class O2mKanbanRecord(models.Model):
-
     _name = "kanban.record"
 
-
     @api.model
-    def getKanbanRecord(self,records,o2m_dataset):
+    def getKanbanRecord(self, records, o2m_dataset):
         updated_record = []
         for record in records:
             for key, value in o2m_dataset.items():
@@ -20,4 +19,3 @@ class O2mKanbanRecord(models.Model):
                 record[value["field_name"]] = o2m_data
             updated_record.append(record)
         return updated_record
-
