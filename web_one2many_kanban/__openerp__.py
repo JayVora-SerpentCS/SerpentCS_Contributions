@@ -22,3 +22,4 @@
     'depends': ['web'],
     'auto_install': False,
 }
+
