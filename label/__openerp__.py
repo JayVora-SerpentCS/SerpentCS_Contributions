@@ -21,11 +21,11 @@
 ##############################################################################
 
 {
-    "name" : "Mass Label Reporting",
-    "version" : "1.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
-    "category" : "Tools",
-    "website" : "http://www.serpentcs.com",
+    "name": "Mass Label Reporting",
+    "version": "1.0",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "category": "Tools",
+    "website": "http://www.serpentcs.com",
     "description": """
     The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
     """,
@@ -41,6 +41,7 @@
              'wizard/label_print_wizard_view.xml',
              'report/dynamic_label.xml'
     ],
+    'uninstall_hook': 'uninstall_hook',
     'installable': True,
     'auto_install': False,
 }
