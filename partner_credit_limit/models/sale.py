@@ -11,8 +11,10 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.one
+    @api.multi
     def check_limit(self):
+        """Check if credit limit for partner was exceeded."""
+        self.ensure_one()
         partner = self.partner_id
         moveline_obj = self.env['account.move.line']
         movelines = moveline_obj.\
