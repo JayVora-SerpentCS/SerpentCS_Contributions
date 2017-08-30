@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+        """Extend to check credit limit before confirming sale order."""
         for order in self:
             order.check_limit()
-        return res
+        return super(SaleOrder, self).action_confirm()
