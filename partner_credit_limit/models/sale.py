@@ -17,8 +17,8 @@ class SaleOrder(models.Model):
         moveline_obj = self.env['account.move.line']
         movelines = moveline_obj.\
             search([('partner_id', '=', partner.id),
-                    ('account_id.user_type_id.name', 'in',
-                    ['Receivable', 'Payable']),
+                    ('account_id.user_type_id.type', 'in',
+                    ['receivable', 'payable']),
                     ('full_reconcile_id', '=', False)])
 
         debit, credit = 0.0, 0.0
