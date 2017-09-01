@@ -3,6 +3,7 @@
 
 from openerp import fields, models, api
 
+
 class project(models.Model):
 
     _inherit = 'project.project'
@@ -13,4 +14,5 @@ class project(models.Model):
         date_lst = [x.date for x in self.message_ids]
         self.recent_date = date_lst and max(date_lst) or False
 
-    recent_date = fields.Datetime(compute="_get_recent_date", string="Recent date")
+    recent_date = fields.Datetime(compute="_get_recent_date",
+                                  string="Recent date")

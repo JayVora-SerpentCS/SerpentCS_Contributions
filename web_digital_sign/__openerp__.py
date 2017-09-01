@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 {
-    "name" : "Web Digital Signature 9.0",
-    "version" : "9.0.1.0.0",
+    "name": "Web Digital Signature 9.0",
+    "version": "9.0.1.0.0",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     "category": '',
     'license': 'AGPL-3',
@@ -31,4 +31,3 @@
     'installable': True,
     'auto_install': False,
 }
-

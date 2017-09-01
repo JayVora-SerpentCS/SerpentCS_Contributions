@@ -11,13 +11,17 @@ class label_print(models.Model):
 
     name = fields.Char("Name", size=64, required=True, select=1)
     model_id = fields.Many2one('ir.model', 'Model', required=True, select=1)
-    field_ids = fields.One2many("label.print.field", 'report_id', string='Fields')
-    ref_ir_act_report = fields.Many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
+    field_ids = fields.One2many("label.print.field", 'report_id',
+                                string='Fields')
+    ref_ir_act_report = fields.Many2one('ir.actions.act_window',
+                                        string='Sidebar action', readonly=True,
                                         help="""Sidebar action to make this
-                                                template available on records
-                                                of the related document model""")
-    ref_ir_value = fields.Many2one('ir.values', 'Sidebar button', readonly=True,
-                                   help="Sidebar button to open the sidebar action")
+                                            template available on records
+                                            of the related document model""")
+    ref_ir_value = fields.Many2one('ir.values', 'Sidebar button',
+                                   readonly=True,
+                                   help="""Sidebar button to open the
+                                           sidebar action""")
     model_list = fields.Char('Model List', size=256)
 
     @api.onchange('model_id')
@@ -50,8 +54,8 @@ class label_print(models.Model):
                  'src_model': src_obj,
                  'view_type': 'form',
                  'context': "{'label_print' : %d}" % (data.id),
-                 'view_mode':'form,tree',
-                 'target' : 'new',
+                 'view_mode': 'form,tree',
+                 'target': 'new',
             })
             id_temp = vals['ref_ir_act_report'].id
             vals['ref_ir_value'] = self.env['ir.values'].create({
@@ -62,9 +66,9 @@ class label_print(models.Model):
                  'object': True,
              })
         self.write({
-                    'ref_ir_act_report': vals.get('ref_ir_act_report', False).id,
-                    'ref_ir_value': vals.get('ref_ir_value', False).id,
-                })
+            'ref_ir_act_report': vals.get('ref_ir_act_report', False).id,
+            'ref_ir_value': vals.get('ref_ir_value', False).id,
+        })
         return True
 
     @api.multi
@@ -75,10 +79,12 @@ class label_print(models.Model):
 
         for template in self:
                 if template.ref_ir_act_report.id:
-                    act_window_obj_search = act_window_obj.browse(template.ref_ir_act_report.id)
+                    act_window_obj_search = act_window_obj.browse(
+                                              template.ref_ir_act_report.id)
                     act_window_obj_search.unlink()
                 if template.ref_ir_value.id:
-                    ir_values_obj_search = ir_values_obj.browse(template.ref_ir_value.id)
+                    ir_values_obj_search = ir_values_obj.browse(
+                                              template.ref_ir_value.id)
                     ir_values_obj_search.unlink()
         return True
 
@@ -98,9 +104,10 @@ class label_print_field(models.Model):
     python_field = fields.Char('Fields', size=32)
     fontsize = fields.Float("Font Size", default=8.0)
     position = fields.Selection([('left', 'Left'), ('right', 'Right'),
-                                 ('top', 'Top'), ('bottom', 'Bottom')], 'Position')
-    nolabel = fields.Boolean('No Label')
-    newline = fields.Boolean('New Line', deafult=True)
+                                 ('top', 'Top'), ('bottom', 'Bottom')],
+                                string='Position')
+    nolabel = fields.Boolean(string='No Label')
+    newline = fields.Boolean(string='New Line', deafult=True)
 
 
 class ir_model_fields(models.Model):
@@ -112,6 +119,8 @@ class ir_model_fields(models.Model):
 
         data = self._context['model_list']
         args.append(('model', 'in', eval(data)))
-        ret_vat = super(ir_model_fields, self).name_search(name=name, args=args,
-                                                           operator=operator, limit=limit)
+        ret_vat = super(ir_model_fields, self).name_search(name=name,
+                                                           args=args,
+                                                           operator=operator,
+                                                           limit=limit)
         return ret_vat

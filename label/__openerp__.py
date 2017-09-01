@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    "name" : "Mass Label Reporting",
-    "version" : "9.0.1.0.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
-    "category" : "Tools",
-    "website" : "http://www.serpentcs.com",
+    "name": "Mass Label Reporting",
+    "version": "9.0.1.0.0",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "category": "Tools",
+    "website": "http://www.serpentcs.com",
     "description": """
     The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
     """,

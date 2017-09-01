@@ -7,11 +7,7 @@ from openerp.report import report_sxw
 from openerp.osv.orm import browse_record
 
 # 2: imports of python lib
-import barcode
-from barcode.writer import ImageWriter
-import base64
 import logging
-import tempfile
 
 _logger = logging.getLogger(__name__)
 
@@ -37,7 +33,8 @@ class report_dynamic_label(report_sxw.rml_parse):
         active_model_obj = self.pool.get(model)
         label_print_obj = self.pool.get('label.print')
         label_print_data = label_print_obj.browse(self.cr, self.uid,
-                                                  self.context.get('label_print'))
+                                                  self.context.get(
+                                                               'label_print'))
         result = []
         value_vals = []
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
@@ -60,34 +57,40 @@ class report_dynamic_label(report_sxw.rml_parse):
 
                     if isinstance(value, browse_record):
                         model_obj = self.pool.get(value._name)
-                        value = eval("obj." + model_obj._rec_name, {'obj': value})
+                        value = eval("obj." + model_obj._rec_name,
+                                     {'obj': value})
 
                     if not value:
                         value = ''
 
                     if field.nolabel:
-                        string = '';
-                    else :
+                        string = ''
+                    else:
                         string += ' :- '
 
                     if field.type == 'image' or field.type == 'barcode':
-                        string = '';
+                        string = ''
                         if field.position != 'bottom':
                             pos = 'float:' + str(field.position) + ';'
                             bot = False
-                        else :
+                        else:
                             bot = True
-                            bot_dict = {'string': string, 'value':  value,
-                                        'type': field.type,
-                                        'newline': field.newline,
-                                        'style': "font-size:" + str(field.fontsize) + "px;" + pos}
+                            style = "font-size:" + str(field.fontsize) + \
+                                    "px;" + pos
+                            bot_dict = {
+                                'string': string, 'value':  value,
+                                'type': field.type,
+                                'newline': field.newline,
+                                'style': style}
                     else:
                         bot = False
                     if not bot:
+                        style = "font-size:" + str(field.fontsize) + \
+                                "px;" + pos
                         vals_dict = {'string': string, 'value':  value,
                                      'type': field.type,
                                      'newline': field.newline,
-                                     'style': "font-size:" + str(field.fontsize) + "px;" + pos}
+                                     'style': style}
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
@@ -115,7 +118,7 @@ class report_dynamic_label(report_sxw.rml_parse):
         remain_data = []
         counter = 0
         for newlist_data in list_newdata:
-                if  newlist_data in list_newdata:
+                if newlist_data in list_newdata:
                     counter = counter + 1
                 if counter > number_of_copy:
                     counter = 1
@@ -126,8 +129,8 @@ class report_dynamic_label(report_sxw.rml_parse):
 
         for data_value_vals in value_vals:
             if data_value_vals not in list_newdata:
-                 for add_data in range(0, number_of_copy):
-                     remain_data.append(data_value_vals)
+                for add_data in range(0, number_of_copy):
+                    remain_data.append(data_value_vals)
 
         if newlist_len < number_of_copy:
             diff = number_of_copy - newlist_len
@@ -136,7 +139,7 @@ class report_dynamic_label(report_sxw.rml_parse):
         list_newdata = []
         if len(ids) == 1:
             for new_result in range(0, diff):
-                    result1.append(temp)
+                result1.append(temp)
 
         if len(ids) > 1:
                 for remain_data_value in remain_data:
@@ -150,12 +153,14 @@ class report_dynamic_label(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
 
-        super(report_dynamic_label, self).__init__(cr, uid, name, context=context)
+        super(report_dynamic_label, self).__init__(cr, uid, name,
+                                                   context=context)
         self.context = context
         self.rec_no = 0
         self.localcontext.update({
-            'get_data':self.get_data,
+            'get_data': self.get_data,
         })
+
 
 class report_employee(osv.AbstractModel):
     _name = 'report.label.report_label'

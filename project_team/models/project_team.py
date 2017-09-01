@@ -12,7 +12,7 @@ class CrmTeamInherit(models.Model):
                                  string="Type", default="sale")
 
     team_members = fields.Many2many('res.users', 'project_team_user_rel',
-                                    'team_id','uid', 'Project Members',
+                                    'team_id', 'uid', 'Project Members',
                                     help="""Project's members are users who
                                      can have an access to the tasks related
                                      to this project.""")
@@ -26,11 +26,11 @@ class ProjectProject(models.Model):
                                'uid', 'Project Members', help="""Project's
                                members are users who can have an access to
                                the tasks related to this project.""",
-                               states={'close':[('readonly',True)],
-                                       'cancelled':[('readonly',True)]})
+                               states={'close': [('readonly', True)],
+                                       'cancelled': [('readonly', True)]})
     team_id = fields.Many2one('crm.team', string="Project Team",
                               domain=[('type_team', '=', 'project')])
 
     @api.onchange('team_id')
     def get_team_members(self):
-        self.members = [(6,0,[rec.id for rec in self.team_id.team_members])]
+        self.members = [(6, 0, [rec.id for rec in self.team_id.team_members])]
