@@ -5,7 +5,7 @@
     'name': 'HR-Grade Rank',
     'version': '10.0.1.0.0',
     'license': 'AGPL-3',
-    'summary' :'Manage grade and rank of employee',
+    'summary': 'Manage grade and rank of employee',
     'description': """
         HR-Grade Rank
         =============
