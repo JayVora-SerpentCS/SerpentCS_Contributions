@@ -6,8 +6,10 @@
     "version": "10.0.2.0.0",
     "sequence": 6,
     "author": "Serpent Consulting Services Pvt. Ltd.",
-    "website": "http://www.serpentcs.com/",
+    "maintainer": "Serpent Consulting Services Pvt. Ltd.",
+    "website": "http://www.serpentcs.com",
     "license": "AGPL-3",
+    'summary': 'Display one2many widget as kanban',
     "description": """
         You need to define o2m field in kanban view definition and use
         for loop to display fields like:
@@ -23,7 +25,7 @@
     "data": [
         "view/templates.xml",
     ],
-    'images': ['static/description/o2mKanban.png'],
+    "images": ["static/description/o2mKanban.png"],
     "installable": True,
     "application": True,
 }

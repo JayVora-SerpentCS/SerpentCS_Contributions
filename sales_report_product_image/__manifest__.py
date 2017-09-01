@@ -4,6 +4,7 @@
 {
     'name': 'Product Image for Sale',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sales Management',
     'summary': 'Product Image for Sale Reports',
     'license': 'AGPL-3',

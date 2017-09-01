@@ -6,6 +6,7 @@
     'category': 'Website',
     'summary': 'MultiImage Zoom For Product In WebSite',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.1',
     'license': 'AGPL-3',

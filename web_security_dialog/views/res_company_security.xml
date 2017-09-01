@@ -13,5 +13,15 @@
                 </xpath>
             </field>
         </record>
+        <record id="res_users_form_view_inherit" model="ir.ui.view">
+            <field name="name">res.users.form.extend</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/header/button[1]" position="replace">
+                    <button string="Change Password" type="action" confirm="Do you want to Change your password?" name="%(base.change_password_wizard_action)d" help="Change the user password." options='{"security":"security_key"}'/>
+                </xpath>
+            </field>
+       </record>
     </data>
 </odoo>
