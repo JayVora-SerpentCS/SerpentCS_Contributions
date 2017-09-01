@@ -1,16 +1,24 @@
 odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
     var core = require('web.core');
+    var config = require('web.config');
     var Model = require('web.DataModel');
     var data = require('web.data');
     var utils = require('web.utils');
+    var framework = require('web.framework');
     var KanbanRecord = require('web_kanban.Record');
     var KanbanView = require('web_kanban.KanbanView');
     var kanban_widgets = require('web_kanban.widgets');
     var KanbanColumn = require('web_kanban.Column');
-    var fields_registry = kanban_widgets.registry;
+    var quick_create = require('web_kanban.quick_create');
     var pyeval = require('web.pyeval');
+    var session = require('web.session');
+    var ColumnQuickCreate = quick_create.ColumnQuickCreate;
+    var fields_registry = kanban_widgets.registry;
+
     var QWeb = core.qweb;
     var _t = core._t;
+
+    var o2m_model = new Model("kanban.record");
 
     /*Kanban view For one2many*/
     function qweb_add_if(node, condition) {
@@ -36,31 +44,33 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             case 'td':
             case 'span':
             case 't':
-                self.dataset.o2m_field = {}
-                if(node.attrs['t-foreach'] != undefined){
-                    var field_name = node.attrs['t-foreach'].split('.')[1]
-                    if(field_name != undefined){
+                self.dataset.o2m_field = {};
+                if(node.attrs['t-foreach'] !== undefined){
+                    var field_name = node.attrs['t-foreach'].split('.')[1];
+                    if(field_name !== undefined){
                         self.field_details = self.fields_view.fields[field_name];
-                        if(self.field_details.type == 'one2many' && (self.field_details.related != undefined || self.field_details.relation_field != undefined) && self.same_field.indexOf(field_name) == -1){
-                            self.same_field.push(field_name)
-                            var model = self.field_details.relation
+                        if(self.field_details.type === 'one2many' && (self.field_details.related !== undefined || self.field_details.relation_field !== undefined) && self.same_field.indexOf(field_name) == -1){
+                            self.same_field.push(field_name);
+                            var model = self.field_details.relation;
                             self.o2m_dataset = new data.DataSetSearch(self,model, {}, []);
-                            self.o2m_dataset.call('fields_get').done(function(data) {
-                                var fields=[]
-                                _.each(data, function(field_def, field_name) {
-                                    if(field_def.type != 'many2many'){
-                                        fields.push(field_name)
+                            self.o2m_dataset.call('fields_get').done(function(fields_data) {
+                                var fields=[];
+                                _.each(fields_data, function(field_def, field_name) {
+                                    if (field_def.type !== 'many2many') {
+                                        fields.push(field_name);
                                     }
                                 });
-                                self.dataset.o2m_field[field_name] = {'field_name':field_name,'model':model,'fields':fields}
-                            })
+                                self.dataset.o2m_field[field_name] = {'field_name': field_name, 'model': model, 'fields': fields};
+                            });
                         }
                     }
                 }
                 break;
             case 'field':
                 var ftype = fvg.fields[node.attrs.name].type;
-                ftype = node.attrs.widget ? node.attrs.widget : ftype;
+                ftype = node.attrs.widget ?
+                        node.attrs.widget :
+                            ftype;
                 if (ftype === 'many2many') {
                     if (_.indexOf(many2manys, node.attrs.name) < 0) {
                         many2manys.push(node.attrs.name);
@@ -114,7 +124,6 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
     }
 
     KanbanView.include({
-
         view_loading: function(fvg) {
             this.$el.addClass(fvg.arch.attrs.class);
             this.fields_view = fvg;
@@ -181,12 +190,12 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             });
            _.each(relations, function(rel, rel_name) {
                 var dataset = new data.DataSetSearch(self, rel_name, self.dataset.get_context(rel.context));
-                var call = false
+                var call = false;
                 dataset.read_ids(_.uniq(rel.ids), ['name', 'color']).done(function(result) {
                     if(!call){
                         result.forEach(function(record) {
                             // Does not display the tag if color = 0
-                            if (record['color']){
+                            if (record['color']) {
                                 var $tag = $('<span>')
                                     .addClass('o_tag o_tag_color_' + record['color'])
                                     .attr('title', _.str.escapeHTML(record['name']));
@@ -310,7 +319,6 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                 });
             });
         },
-
         render: function () {
             // cleanup
             this.$el.css({display:'-webkit-flex'});
@@ -346,166 +354,245 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
             }
             this.$el.append(fragment);
         },
-
-        render_ungrouped: function (fragment,el) {
+        get_o2m_data: function(fragment,el){
             var self = this;
             var options = _.clone(this.record_options);
-            
-            if(_.keys(self.dataset.o2m_field).length){
-                _.each(this.data.records, function (record) {
-                    if(_.keys(self.dataset.o2m_field).length){
-                        var count = 0
-                        _.each(self.dataset.o2m_field,function(data,index){
-                            var ids = record[data.field_name];
-                            var model = data.model;
-                            var fields = data.fields;
-                            var o2m_model = new Model(model);
-                            o2m_model.query(fields)
-                            .filter([['id', 'in', ids]])
-                            .all().then(function (field_record) {
-                                record[data.field_name] = field_record
-                                count ++ ;
-                                var kanban_record = new KanbanRecord(self, record, options);
-                                self.widgets.push(kanban_record);
-                                kanban_record.appendTo(fragment);
-                                el.append(fragment);
-                            });
-                        })
-                    }
+            framework.blockUI();
+            return self.render_ungrouped_saving_mutex.exec(function() {
+                return o2m_model.call("getKanbanRecord",[self.data.records, self.dataset.o2m_field]).done(function(record_list){
+                    _.each(record_list, function(rec){
+                        var kanban_record = new KanbanRecord(self, rec, options);
+                        self.widgets.push(kanban_record);
+                        kanban_record.appendTo(fragment);
+                        el.append(fragment);
+                    });
                 });
-                
-                for (var i = 0, ghost_div; i < 6; i++) {
-                    ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
-                    ghost_div.appendTo(fragment);
-                }
-                this.postprocess_m2m_tags();
-            }else{
-                _.each(this.data.records, function (record) {
-                    var kanban_record = new KanbanRecord(self, record, options);
-                    self.widgets.push(kanban_record);
-                    kanban_record.appendTo(fragment);
-                });
-            }
-            // add empty invisible divs to make sure that all kanban records are left aligned
-            for (var i = 0, ghost_div; i < 6; i++) {
-                ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
-                ghost_div.appendTo(fragment);
-            }
-            this.postprocess_m2m_tags();
+            });
         },
-
+        render_ungrouped: function (fragment,el) {
+            var self = this;
+            if(!_.keys(self.dataset.o2m_field).length) {
+                this._super(fragment,el);
+            }
+            if(_.keys(self.dataset.o2m_field).length){
+                this.render_ungrouped_saving_mutex = new utils.Mutex();
+                return self.get_o2m_data(fragment,el).done(function() {
+                    framework.unblockUI();
+                    // add empty invisible divs to make sure that all kanban records are left aligned
+                    for (var i = 0, ghost_div; i < 6; i++) {
+                        ghost_div = $("<div>").addClass("o_kanban_record o_kanban_ghost");
+                        ghost_div.appendTo(fragment);
+                    }
+                    self.postprocess_m2m_tags();
+                });
+            }
+        },
         reload_record: function (record) {
             var self = this;
-            this.dataset.read_ids([record.id], this.fields_keys.concat(['__last_update'])).done(function(records) {
-                if(_.keys(self.dataset.o2m_field).length){
-                    var count = 0
-                    _.each(self.dataset.o2m_field,function(field,index){
-                        var ids = records[0][field.field_name];
-                        var fields = field.fields;
-                        var model = field.model;
-                        var o2m_dataset = new data.DataSetSearch(self, model, {}, []);
-                        o2m_dataset.read_slice(fields, {'domain': [['id', 'in', ids]]}).then(function(field_record){
-                            count ++ ;
-                            records[0][field.field_name] = field_record
-                            if(count == _.keys(self.dataset.o2m_field).length){
-                                if (records.length) {
-                                    record.update(records[0]);
-                                    self.postprocess_m2m_tags(record);
+            if (!_.keys(self.dataset.o2m_field).length) {
+                self._super(record);
+            }
+            if (_.keys(self.dataset.o2m_field).length) {
+                self.dataset.read_ids([record.id], this.fields_keys.concat(['__last_update'])).done(function(records) {
+                    o2m_model.call("getKanbanRecord",[records, self.dataset.o2m_field]).done(function(records) {
+                        if (records.length) {
+                            record.update(records[0]);
+                            self.postprocess_m2m_tags(record);
+                        } else {
+                            record.destroy();
+                        }
+                    });
+                });
+            }
+        },
+        get_column_options: function () {
+            return {
+                editable: this.is_action_enabled('group_edit'),
+                deletable: this.is_action_enabled('group_delete'),
+                has_active_field: this.has_active_field(),
+                grouped_by_m2o: this.grouped_by_m2o,
+                relation: this.relation,
+                qweb: this.qweb,
+                fields: this.fields_view.fields,
+                quick_create: this._is_quick_create_enabled(),
+            };
+        },
+        render_groups_records : function(fragment,column_options,record_options) {
+            var self = this;
+            var def = $.Deferred();
+            var requests = [];
+            return self.render_grouped_saving_mutex.exec(function() {
+                framework.blockUI();
+                return $.when(_.each(self.data.groups, function (group) {
+                        var column = new KanbanColumn(self, group, column_options, record_options);
+                        column.appendTo(fragment);
+                        self.widgets.push(column);
+                        requests.push(column);
+                   })).done(function(){
+                       return $.when.apply($, requests).then(function() {
+                           def.resolve();
+                       }).fail(function(){
+                           framework.unblockUI();
+                       });
+                   }).fail(function(){
+                       framework.unblockUI();
+                   });
+            });
+            return def.promise();
+        },
+       render_grouped: function (fragment) {
+            var self = this;
+            if (!_.keys(self.dataset.o2m_field).length) {
+                return self._super(fragment)
+            }
+            if (_.keys(self.dataset.o2m_field).length) {
+                framework.blockUI();
+                // FORWARDPORT UP TO SAAS-10, NOT IN MASTER!
+                // Drag'n'drop activation/deactivation
+                var group_by_field_attrs = this.fields_view.fields[this.group_by_field];
+
+                // Group_by field might not be in the Kanban view, so we need to get it somewhere else...
+                // This somewhere else is on the search view.
+                if (group_by_field_attrs === undefined) {
+                    if (this.ViewManager.searchview.groupby_menu && this.ViewManager.searchview.groupby_menu.groupable_fields) {
+                        group_by_field_attrs = _.find(this.ViewManager.searchview.groupby_menu.groupable_fields, function(field) {
+                            return field.name === self.group_by_field;
+                        });
+                    }
+                }
+                // Deactivate the drag'n'drop if:
+                // - field is a date or datetime since we group by month
+                // - field is readonly
+                var draggable = true;
+                if (group_by_field_attrs) {
+                    if (group_by_field_attrs.type === "date" || group_by_field_attrs.type === "datetime") {
+                        var draggable = false;
+                    } else if (group_by_field_attrs.readonly !== undefined) {
+                        var draggable = !(group_by_field_attrs.readonly);
+                    }
+                }
+                var record_options = _.extend(this.record_options, {
+                    draggable: draggable
+                });
+
+                var column_options = this.get_column_options();
+
+                self.render_grouped_saving_mutex = new utils.Mutex();
+                return self.render_groups_records(fragment,column_options,record_options).done(function() {
+                    framework.unblockUI();
+                    self.$el.sortable({
+                        axis: 'x',
+                        items: '> .o_kanban_group',
+                        handle: '.o_kanban_header',
+                        cursor: 'move',
+                        revert: 150,
+                        delay: 100,
+                        tolerance: 'pointer',
+                        forcePlaceholderSize: true,
+                        stop: function () {
+                            var ids = [];
+                            self.$('.o_kanban_group').each(function (index, u) {
+                                ids.push($(u).data('id'));
+                            });
+                            self.resequence(ids);
+                        },
+                    });
+                    if (self.is_action_enabled('group_create') && self.grouped_by_m2o) {
+                        self.column_quick_create = new ColumnQuickCreate(self);
+                        self.column_quick_create.appendTo(fragment);
+                    }
+                    $.async_when().then(function () {
+                        setTimeout(function() {
+                            self.postprocess_m2m_tags();
+                        }, 500);
+                    });
+                });
+            }
+        },
+    });
+
+ KanbanColumn.include({
+        start: function() {
+           var self = this;
+            if (!_.keys(self.dataset.o2m_field).length) {
+                self._super();
+            }
+            if (_.keys(self.dataset.o2m_field).length) {
+                this.$header = this.$('.o_kanban_header');
+                self.render_column_saving_mutex = new utils.Mutex();
+                return $.async_when(self.get_o2m_group_data()).done(function(){
+                    self.$header.tooltip();
+                    if (config.device.size_class > config.device.SIZES.XS && self.draggable !== false) {
+                        // deactivate sortable in mobile mode.  It does not work anyway,
+                        // and it breaks horizontal scrolling in kanban views.  Someday, we
+                        // should find a way to use the touch events to make sortable work.
+                        self.$el.sortable({
+                            connectWith: '.o_kanban_group',
+                            revert: 0,
+                            delay: 0,
+                            items: '> .o_kanban_record:not(.o_updating)',
+                            helper: 'clone',
+                            cursor: 'move',
+                            over: function () {
+                                self.$el.addClass('o_kanban_hover');
+                                self.update_column();
+                            },
+                            out: function () {
+                                self.$el.removeClass('o_kanban_hover');
+                            },
+                            update: function (event, ui) {
+                                var record = ui.item.data('record');
+                                var index = self.records.indexOf(record);
+                                var test2 = $.contains(self.$el[0], record.$el[0]);
+                                record.$el.removeAttr('style');  // jqueryui sortable add display:block inline
+                                if (index >= 0 && test2) {
+                                    // resequencing records
+                                    self.trigger_up('kanban_column_resequence');
+                                } else if (index >= 0 && !test2) {
+                                    // removing record from this column
+                                    self.records.splice(self.records.indexOf(record), 1);
+                                    self.dataset.remove_ids([record.id]);
                                 } else {
-                                    record.destroy();
+                                    // adding record to this column
+                                    self.records.push(record);
+                                    self.dataset.add_ids([record.id]);
+                                    record.setParent(self);
+                                    ui.item.addClass('o_updating');
+                                    self.trigger_up('kanban_column_add_record', {record: record});
                                 }
+                                self.update_column();
                             }
                         });
+                    }
+                    self.update_column();
+                    self.$el.click(function (event) {
+                        if (self.$el.hasClass('o_column_folded')) {
+                            event.preventDefault();
+                            self.folded = false;
+                            self.update_column();
+                        }
                     });
-                }else{
-                    if (records.length) {
-                        record.update(records[0]);
-                        self.postprocess_m2m_tags(record);
-                    } else {
-                        record.destroy();
-                    }
-                }
-            });
-        },
-
-    })
-
-    KanbanColumn.include({
-
-        start: function() {
-            var self = this;
-            this.$header = this.$('.o_kanban_header');
-            if(_.keys(self.dataset.o2m_field).length){
-                _.each(self.data_records,function(record){
-                    if(_.keys(self.dataset.o2m_field).length){
-                        var count = 0
-                        _.each(self.dataset.o2m_field,function(data,index){
-                            var ids = record[data.field_name];
-                            var model = data.model;
-                            var fields = data.fields;
-                            var o2m_model = new Model(model);
-                            o2m_model.query(fields)
-                                .filter([['id', 'in', ids]])
-                                .all().then(function (field_record) {
-                                    record[data.field_name] = field_record
-                                    count ++ ;
-                                    self.add_record(record, {no_update: true});
-                            });
-                        })
-                    }
-               });
-            }else{
-                for (var i = 0; i < this.data_records.length; i++) {
-                    this.add_record(this.data_records[i], {no_update: true});
-                }
+                });
             }
-            this.$header.tooltip();
-
-            this.$el.sortable({
-                connectWith: '.o_kanban_group',
-                revert: 0,
-                delay: 0,
-                items: '> .o_kanban_record',
-                helper: 'clone',
-                cursor: 'move',
-                over: function () {
-                    self.$el.addClass('o_kanban_hover');
-                    self.update_column();
-                },
-                out: function () {
-                    self.$el.removeClass('o_kanban_hover');
-                },
-                update: function (event, ui) {
-                    var record = ui.item.data('record');
-                    var index = self.records.indexOf(record);
-                    var test2 = $.contains(self.$el[0], record.$el[0]);
-                    record.$el.removeAttr('style');  // jqueryui sortable add display:block inline
-                    if (index >= 0 && test2) {
-                        // resequencing records
-                        self.trigger_up('kanban_column_resequence');
-                    } else if (index >= 0 && !test2) {
-                        // removing record from this column
-                        self.records.splice(self.records.indexOf(record), 1);
-                        self.dataset.remove_ids([record.id]);
-                    } else {
-                        // adding record to this column
-                        self.records.push(record);
-                        record.setParent(self);
-                        self.trigger_up('kanban_column_add_record', {record: record});
-                    }
-                    self.update_column();
-                }
-            });
-            this.update_column();
-            this.$el.click(function (event) {
-                if (self.$el.hasClass('o_column_folded')) {
-                    event.preventDefault();
-                    self.folded = false;
-                    self.update_column();
-                }
-            });
         },
+        get_o2m_group_data : function() {
+            var self = this;
+            var def = $.Deferred();
+            return self.render_column_saving_mutex.exec(function() {
+                return $.async_when(o2m_model.call("getKanbanRecord",[self.data_records, self.dataset.o2m_field])).done(function(record_list){
+                      var requests = [];
+                    _.each(record_list,function(record){
+                        self.add_record(record, {no_update: true});
+                        requests.push(record);
+                    });
+                    $.async_when.apply($, requests).then(function() {
+                        def.resolve();
+                    });
+                });
+            });
+               return def.promise();
+        }
 
-    });
+     });
 
 });

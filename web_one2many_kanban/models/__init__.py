@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import models
+import o2m_kanban_record
 
