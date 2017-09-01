@@ -314,7 +314,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                 fields: this.fields_view.fields,
                 qweb: this.qweb,
                 model: this.model,
-                read_only_mode: this.options.read_only_mode,
+                read_only_mode: this.options.read_only_mode
             };
 
             // actual rendering
@@ -405,12 +405,11 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                     framework.unblockUI();
                 });
             });
-            return def.promise();
         },
         render_grouped: function (fragment) {
             var self = this;
             if (!_.keys(self.dataset.o2m_field).length) {
-                return self._super(fragment)
+                return self._super(fragment);
             }
             if (_.keys(self.dataset.o2m_field).length) {
                 framework.blockUI();
@@ -429,7 +428,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                     }
                 }
                 var record_options = _.extend(this.record_options, {
-                    draggable: draggable,
+                    draggable: draggable
                 });
 
                 var column_options = this.get_column_options();
@@ -452,7 +451,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                                 ids.push($(u).data('id'));
                             });
                             self.resequence(ids);
-                        },
+                        }
                     });
                     if (self.is_action_enabled('group_create') && self.grouped_by_m2o) {
                         self.column_quick_create = new ColumnQuickCreate(self);
@@ -465,7 +464,7 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                     });
                 });
             }
-        },
+        }
     });
 
 
@@ -552,7 +551,6 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                     });
                 });
             });
-            return def.promise();
         }
 
     });
