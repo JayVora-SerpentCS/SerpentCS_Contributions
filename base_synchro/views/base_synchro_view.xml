@@ -3,8 +3,6 @@
     <data>
 
         <menuitem id="synch_config" name="Synchronization" parent="base.menu_config" sequence="30"/>
-
-        <!-- Tree view of base.synchro.obj.line -->
         <record id="view_transfer_line_tree" model="ir.ui.view">
             <field name="name">base.synchro.obj.line.tree</field>
             <field name="model">base.synchro.obj.line</field>
@@ -18,27 +16,25 @@
             </field>
         </record>
 
-        <!-- Form view of base.synchro.obj.line -->
         <record id="view_transfer_line_form" model="ir.ui.view">
             <field name="name">base.synchro.obj.line.form</field>
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
                 <form string="Transfered IDs Details">
-                    <sheet>
-                        <group col="4">
-                            <field name="name" select="1"/>
-                            <field name="obj_id" select="1"/>
-                            <field name="local_id" readonly="1" select="2"/>
-                            <field name="remote_id" readonly="1" select="2"/>
-                        </group>
-                    </sheet>
+                <sheet>
+                    <group col="4">
+                        <field name="name" select="1"/>
+                        <field name="obj_id" select="1"/>
+                        <field name="local_id" readonly="1" select="2"/>
+                        <field name="remote_id" readonly="1" select="2"/>
+                    </group>
+                </sheet>
                 </form>
             </field>
         </record>
 
-        <!-- Search view of base.synchro.obj.line -->
         <record id="ir_filters_transfer_line_form" model="ir.ui.view">
-            <field name="name">base.synchro.obj.line.search</field>
+            <field name="name">base.synchro.obj.line.form</field>
             <field name="model">base.synchro.obj.line</field>
             <field name="arch" type="xml">
                 <search string="Transfered Ids Details">
@@ -53,6 +49,7 @@
         </record>
 
         <!--Filters action-->
+
         <record id="actions_transfer_line_form" model="ir.actions.act_window">
             <field name="name">Filters</field>
             <field name="type">ir.actions.act_window</field>
@@ -72,8 +69,9 @@
         <menuitem id="next_id_63" name="History"  groups="base.group_no_one" parent="base_synchro.next_id_62"/>
         <menuitem action="action_base_synchro_obj_line_tree" id="menu_action_base_synchro_obj_line_tree" parent="base_synchro.next_id_63"/>
 
-        <!-- form view of base synchro obj -->
-        <record id="base_synchro_obj_form" model="ir.ui.view">
+<!--view_base_synchro_obj starts-->
+
+        <record id="view_transfer_form" model="ir.ui.view">
             <field name="name">base.synchro.obj.form</field>
             <field name="model">base.synchro.obj</field>
             <field name="arch" type="xml">
@@ -100,7 +98,7 @@
             </field>
         </record>
 
-        <record id="base_synchro_obj_tree" model="ir.ui.view">
+        <record id="view_regclass_tree" model="ir.ui.view">
             <field name="name">base.synchro.obj.tree</field>
             <field name="model">base.synchro.obj</field>
             <field name="arch" type="xml">
@@ -131,11 +129,12 @@
         </record>
 
         <!-- Filters action-->
+
         <record id="actions_regclass_tree" model="ir.actions.act_window">
             <field name="name">Filters</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">base.synchro.obj</field>
-            <field name="view_id" ref="base_synchro_obj_tree"/>
+            <field name="view_id" ref="view_regclass_tree"/>
             <field name="search_view_id" ref="ir_filters_regclass_tree"/>
         </record>
 
@@ -148,7 +147,8 @@
 
         <menuitem action="action_transfer_tree" id="transfer_menu_id" parent="base_synchro.next_id_63"/>
 
-        <!--Tree View of base.synchro.server -->
+<!--view_base_synchro_server starts -->
+
         <record id="view_base_synchro_server_tree" model="ir.ui.view">
             <field name="name">base.synchro.server.tree</field>
             <field name="model">base.synchro.server</field>
@@ -162,7 +162,6 @@
             </field>
         </record>
 
-        <!--Form View of base.synchro.server -->
         <record id="view_base_synchro_server_form" model="ir.ui.view">
             <field name="name">base.synchro.server.form</field>
             <field name="model">base.synchro.server</field>
@@ -190,6 +189,7 @@
         </record>
 
         <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id" parent="base_synchro.synch_config"/>
+<!--view_base_synchro_server end -->
 
     </data>
 </openerp>
