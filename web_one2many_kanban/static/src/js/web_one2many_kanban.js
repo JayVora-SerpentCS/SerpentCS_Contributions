@@ -438,7 +438,6 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                        framework.unblockUI();
                    });
             });
-            return def.promise();
         },
        render_grouped: function (fragment) {
             var self = this;
@@ -590,7 +589,6 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
                     });
                 });
             });
-               return def.promise();
         }
 
      });
