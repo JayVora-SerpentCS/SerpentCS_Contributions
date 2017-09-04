@@ -17,6 +17,7 @@
     'sequence': 1,
     'data': ['views/project_kanban_view.xml'],
     'images': ['static/description/ProjectKanban.png'],
+    'sequence': 1,
     'installable': True,
     'auto_install': False,
 }
