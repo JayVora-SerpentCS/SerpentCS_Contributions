@@ -4,7 +4,6 @@ from odoo.tests import common
 
 
 class ProjectProjectTestCase(common.TransactionCase):
-
     def setup(self):
         super(ProjectProjectTestCase, self).setup()
 
