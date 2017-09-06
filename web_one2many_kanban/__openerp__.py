@@ -3,7 +3,7 @@
 
 {
     'name': 'Web one2many Kanban',
-    'version': '1.0',
+    'version': '9.0.0.2.0',
     'sequence': 6,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'description': """
@@ -19,6 +19,5 @@
     'data': [
             'view/templates.xml',
      ],
-    'depends': ['web'],
     'auto_install': False,
 }
