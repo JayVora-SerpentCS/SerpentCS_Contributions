@@ -119,9 +119,8 @@ class TrainingClass(models.Model):
                         datetime.timedelta(days=rec.course_id.duration - 1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'week':
-                    end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                               relativedelta(weeks=rec.course_id.duration,
-                                             days=-1)
+                    end_date = datetime.datetime.strptime(tr_st_dt, DF) +\
+                        relativedelta(weeks=rec.course_id.duration, days=-1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'month':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
@@ -219,13 +218,14 @@ class ListOfAttendees(models.Model):
     comments = fields.Text('Comments')
     attachment_ids = fields.One2many('ir.attachment', 'attendees_id',
                                      string='Attachments')
-    state = fields.Selection([
-                      ('draft', 'Draft'),
-                      ('awaiting_training_start', 'Awaiting Training Start'),
-                      ('in_training', 'In Training'),
-                      ('train_completed', 'Training Completed'),
-                      ('in_complete', 'Training Incomplete')], string='State',
-                      default='draft')
+    state = fields.Selection([('draft', 'Draft'),
+                              ('awaiting_training_start',
+                               'Awaiting Training Start'),
+                              ('in_training', 'In Training'),
+                              ('train_completed', 'Training Completed'),
+                              ('in_complete', 'Training Incomplete')],
+                             string='State',
+                             default='draft')
 
     @api.onchange('class_id')
     def onchange_start_date(self):

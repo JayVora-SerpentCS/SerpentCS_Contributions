@@ -189,14 +189,17 @@ class EmployeeRelative(models.Model):
     _description = "Employee Relatives"
     _rec_name = 'name'
 
-    relative_type = fields.Selection([
-                      ('Aunty', 'Aunty'), ('Brother', 'Brother'),
-                      ('Daughter', 'Daughter'), ('Father', 'Father'),
-                      ('Husband', 'Husband'), ('Mother', 'Mother'),
-                      ('Sister', 'Sister'), ('Son', 'Son'),
-                      ('Uncle', 'Uncle'),
-                      ('Wife', 'Wife'), ('Other', 'Other')],
-                      string='Relative Type', required=True)
+    relative_type = fields.Selection(
+                                     [('Aunty', 'Aunty'),
+                                      ('Brother', 'Brother'),
+                                      ('Daughter', 'Daughter'),
+                                      ('Father', 'Father'),
+                                      ('Husband', 'Husband'),
+                                      ('Mother', 'Mother'),
+                                      ('Sister', 'Sister'), ('Son', 'Son'),
+                                      ('Uncle', 'Uncle'),
+                                      ('Wife', 'Wife'), ('Other', 'Other')],
+                                     string='Relative Type', required=True)
     name = fields.Char(string='Name', size=128, required=True)
     birthday = fields.Date(string='Date of Birth')
     place_of_birth = fields.Char(string='Place of Birth', size=128)
@@ -230,8 +233,7 @@ class EmployeeRelative(models.Model):
         if self.employee_id and not self.relative_type:
             warning = {
                        'title': _('Warning!'),
-                       'message': _('Please select Relative Type!'),
-                }
+                       'message': _('Please select Relative Type!'), }
             return {'gender': False, 'warning': warning}
 
     @api.model
@@ -304,11 +306,9 @@ class EmployeeEducation(models.Model):
             self.to_date = False
             return {'warning': warning}
         if self.from_date and self.to_date and self.from_date > self.to_date:
-            warning = {
-                       'title': _('User Alert !'),
+            warning = {'title': _('User Alert !'),
                        'message': _('To Date %s must be greater \
-                           than From Date %s !') % (self.to_date,
-                                                    self.from_date)}
+                       than From Date %s !') % (self.to_date, self.from_date)}
             self.to_date = False
             return {'warning': warning}
 
@@ -344,10 +344,9 @@ class EmployeePreviousTravel(models.Model):
             self.to_date = False
             return {'warning': warning}
         if self.from_date and self.to_date and self.from_date > self.to_date:
-            warning = {
-                       'title': _('User Alert !'),
+            warning = {'title': _('User Alert !'),
                        'message': _('To Date %s must be greater than \
-                           From Date %s !') % (self.to_date, self.from_date)}
+                       From Date %s !') % (self.to_date, self.from_date)}
             self.to_date = False
             return {'warning': warning}
 
@@ -377,10 +376,10 @@ class EmployeeLanguage(models.Model):
     @api.constrains('mother_tongue')
     def _check_mother_tongue(self):
         if self.mother_tongue and self.employee_id:
-            language_rec = self.search([
-                            ('employee_id', '=', self.employee_id.id),
-                            ('mother_tongue', '=', True),
-                            ('id', '!=', self.id)], limit=1)
+            language_rec = self.search([('employee_id', '=',
+                                         self.employee_id.id),
+                                        ('mother_tongue', '=', True),
+                                        ('id', '!=', self.id)], limit=1)
             if language_rec:
                 raise ValidationError(_("If you want to set '%s' as a mother \
                             tongue, first you have to uncheck mother tongue \

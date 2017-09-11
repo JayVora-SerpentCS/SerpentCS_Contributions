@@ -101,8 +101,9 @@ class Applicant(models.Model):
                                                      view_type=view_type,
                                                      toolbar=toolbar,
                                                      submenu=submenu)
-        reports = ir_actions_report.search(
-                  [('report_name', '=', 'hr_applicant.applicant_profile')])
+        reports = ir_actions_report.search([('report_name', '=',
+                                             'hr_applicant.applicant_profile')
+                                            ])
         if reports and view_type != 'form':
             new_reports = []
             for rec in res.get('toolbar', {}).get('print', []):
@@ -124,7 +125,7 @@ class Applicant(models.Model):
         if res.get('res_id', False):
             for applicant in self:
                 for medical_detail in applicant_med_obj.search(
-                    [('applicant_id', '=', applicant.id)]):
+                                        [('applicant_id', '=', applicant.id)]):
                     val = {'medical_examination': medical_detail and
                            medical_detail.medical_examination,
                            'vital_sign': medical_detail.vital_sign,
@@ -166,31 +167,32 @@ class Applicant(models.Model):
                            'blood_name': medical_detail.blood_name,
                            'blood_type': medical_detail.blood_type}
                     medical_id = emp_med_obj.create(val)
-                    medical_attach = attch_obj.search([
-                                     ('res_model', '=',
-                                      'hr.applicant.medical.details'),
-                                     ('res_id', '=', medical_detail.id)])
+                    medical_attach =\
+                    attch_obj.search([
+                                      ('res_model', '=',
+                                       'hr.applicant.medical.details'),
+                                      ('res_id', '=', medical_detail.id)])
                     for medical_attachment in medical_attach:
                         emp_medical_attachment = medical_attachment.copy()
                         emp_medical_attachment.write({
                             'res_model': 'hr.employee.medical.details',
                             'res_id': medical_id.id})
                 for prev_occupation in occupation_obj.search([
-                    ('applicant_id', '=', applicant.id)]):
+                                        ('applicant_id', '=', applicant.id)]):
                     occupation_id = emp_occupation_obj.create({
                                     'from_date': prev_occupation.from_date,
                                     'to_date': prev_occupation.to_date,
                                     'position': prev_occupation.position,
                                     'organization': prev_occupation and
-                                    prev_occupation.organization,
+                                     prev_occupation.organization,
                                     'ref_name': prev_occupation.ref_name,
                                     'ref_position': prev_occupation and
-                                    prev_occupation.ref_position,
+                                     prev_occupation.ref_position,
                                     'ref_phone': prev_occupation.ref_phone,
                                     'employee_id': res.get('res_id', False),
-                                     'email': prev_occupation.email})
-                    occupation_attachments = attch_obj.search([
-                                          ('res_model', '=',
+                                    'email': prev_occupation.email})
+                    occupation_attachments = \
+                        attch_obj.search([('res_model', '=',
                                            'applicant.previous.occupation'),
                                           ('res_id', '=', prev_occupation.id)])
                     for occupation_attachment in occupation_attachments:
@@ -200,16 +202,15 @@ class Applicant(models.Model):
                             'res_model': 'employee.previous.occupation',
                             'res_id': occupation_id.id})
                 for relative in self.env['applicant.relative'].search([
-                    ('applicant_id', '=', applicant.id)]):
+                                       ('applicant_id', '=', applicant.id)]):
                     relative_id = self.env['employee.relative'].create({
                                    'relative_type': relative.relative_type,
-                                    'name': relative.name,
-                                    'birthday': relative.birthday,
-                                    'place_of_birth': relative.place_of_birth,
-                                    'occupation': relative.occupation,
-                                    'gender': relative.gender,
-                                    'employee_id': res.get('res_id', False)
-                                    })
+                                   'name': relative.name,
+                                   'birthday': relative.birthday,
+                                   'place_of_birth': relative.place_of_birth,
+                                   'occupation': relative.occupation,
+                                   'gender': relative.gender,
+                                   'employee_id': res.get('res_id', False)})
                     relative_attachments = attch_obj.search([
                                            ('res_model', '=',
                                            'applicant.relative'),
@@ -219,25 +220,24 @@ class Applicant(models.Model):
                         emp_relative_attachment.write({
                             'res_model': 'employee.relative',
                             'res_id': relative_id.id})
-                for education in self.env['applicant.education'].search([
-                    ('applicant_id', '=', applicant.id)]):
+                for education in self.env['applicant.education'].search(
+                                        [('applicant_id', '=', applicant.id)]):
                     education_id = self.env['employee.education'].create({
-                                    'from_date': education.from_date,
-                                    'to_date': education.to_date,
-                                    'education_rank': education and
-                                    education.education_rank,
-                                    'school_name': education.school_name,
-                                    'grade': education.grade,
-                                    'field': education.field,
-                                    'illiterate': education.illiterate,
-                                    'edu_type': education.edu_type,
-                                    'country_id': education.country_id and
-                                    education.country_id.id,
-                                    'state_id': education.state_id and
-                                    education.state_id.id,
-                                    'province': education.province,
-                                    'employee_id': res.get('res_id', False)
-                        })
+                                   'from_date': education.from_date,
+                                   'to_date': education.to_date,
+                                   'education_rank': education and
+                                   education.education_rank,
+                                   'school_name': education.school_name,
+                                   'grade': education.grade,
+                                   'field': education.field,
+                                   'illiterate': education.illiterate,
+                                   'edu_type': education.edu_type,
+                                   'country_id': education.country_id and
+                                   education.country_id.id,
+                                   'state_id': education.state_id and
+                                   education.state_id.id,
+                                   'province': education.province,
+                                   'employee_id': res.get('res_id', False)})
                     education_attachments = attch_obj.search([
                                             ('res_model', '=',
                                             'applicant.education'),
@@ -276,15 +276,17 @@ class Applicant(models.Model):
                                     'mother_tongue': language.mother_tongue,
                                     'employee_id': res.get('res_id', False)
                                     })
-                    language_attachments = attch_obj.search([
-                                            ('res_model', '=',
-                                            'applicant.language'),
-                                            ('res_id', '=', language.id)])
+                    language_attachments = attch_obj.search(
+                                                        [('res_model', '=',
+                                                         'applicant.language'),
+                                                         ('res_id', '=',
+                                                          language.id)])
                     for language_attachment in language_attachments:
                         emp_language_attachment = language_attachment.copy()
-                        emp_language_attachment.write({
-                           'res_model': 'employee.language',
-                           'res_id': language_id.id})
+                        emp_language_attachment.write({'res_model':
+                                                       'employee.language',
+                                                       'res_id':
+                                                       language_id.id})
         return res
 
 
@@ -443,8 +445,7 @@ class ApplicantRelative(models.Model):
                 self.gender = ''
         if self.applicant_id and not self.relative_type:
             warning = {'title': _('Warning!'),
-                       'message': _('Please select Relative Type!'),
-                }
+                       'message': _('Please select Relative Type!'), }
             return {'gender': False, 'warning': warning}
 
     @api.model
@@ -517,7 +518,8 @@ class ApplicantEducation(models.Model):
             return {'warning': warning}
         if self.from_date and self.to_date and self.from_date > self.to_date:
             warning = {'title': _('User Alert !'),
-                       'message': _('To Date must be greater than From Date !')}
+                       'message': _('To Date must be greater than\
+                        From Date !')}
             self.to_date = False
             return {'warning': warning}
 
@@ -581,10 +583,10 @@ class ApplicantLanguage(models.Model):
     @api.constrains('mother_tongue')
     def _check_mother_tongue(self):
         if self.mother_tongue and self.applicant_id:
-            language_rec = self.search([
-                            ('applicant_id', '=', self.applicant_id.id),
-                            ('mother_tongue', '=', True),
-                            ('id', '!=', self.id)], limit=1)
+            language_rec = self.search([('applicant_id', '=',
+                                         self.applicant_id.id),
+                                        ('mother_tongue', '=', True),
+                                        ('id', '!=', self.id)], limit=1)
             if language_rec:
                 raise ValidationError(_("If you want to set '%s' as a mother \
                             tongue, first you have to uncheck mother tongue \
