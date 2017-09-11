@@ -116,7 +116,8 @@ class TrainingClass(models.Model):
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                    datetime.timedelta(days=rec.course_id.duration - 1)
+                               datetime.timedelta(
+                               days=rec.course_id.duration - 1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'week':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
@@ -225,7 +226,7 @@ class ListOfAttendees(models.Model):
                       ('in_training', 'In Training'),
                       ('train_completed', 'Training Completed'),
                       ('in_complete', 'Training Incomplete')], string='State',
-                     default='draft')
+                      default='draft')
 
     @api.onchange('class_id')
     def onchange_start_date(self):

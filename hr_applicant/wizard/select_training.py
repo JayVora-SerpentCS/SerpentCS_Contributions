@@ -33,7 +33,7 @@ class SelectTraining(models.TransientModel):
     @api.multi
     def action_done(self):
         applicant = self.env['hr.applicant'].search([
-                                 ('id', '=', self._context.get('active_id'))])
+                            ('id', '=', self._context.get('active_id'))])
         employee_dict = applicant.create_employee_from_applicant()
         course_obj = self.env['training.courses']
         class_obj = self.env['training.class']
@@ -41,7 +41,7 @@ class SelectTraining(models.TransientModel):
         for rec in self:
             if rec.is_triaing_needed:
                 course = course_obj.search([
-                                    ('job_id', '=', applicant.job_id.id)])
+                         ('job_id', '=', applicant.job_id.id)])
                 if not course:
                     t_nam = 'Training Course for ' + str(applicant.job_id.name)
                     course = course_obj.create({'name': t_nam,
@@ -49,25 +49,25 @@ class SelectTraining(models.TransientModel):
                                                 'duration': 1,
                                                 'duration_type': 'month'})
                 training_class = class_obj.search([
-                                               ('course_id', '=', course.id)])
+                                  ('course_id', '=', course.id)])
                 if not training_class:
                     dt_now = datetime.date.today()
                     tri_class_val = {
-                       'course_id': course.id,
-                       'training_attendees': 1,
-                       'training_start_date': dt_now + datetime.timedelta(
+                        'course_id': course.id,
+                        'training_attendees': 1,
+                        'training_start_date': dt_now + datetime.timedelta(
                                                                       days=1),
-                       'training_end_date': dt_now + datetime.timedelta(
-                                            days=1) + relativedelta(months=1,
+                        'training_end_date': dt_now + datetime.timedelta(
+                                             days=1) + relativedelta(months=1,
                                                                     days=-1),
                        'state': 'approved'}
                     training_class = class_obj.create(tri_class_val)
                 st_dt = training_class.training_start_date
                 attendee_obj.create({
-                         'class_id': training_class.id,
-                         'employee_id': employee_dict.get('res_id', False),
-                         'training_start_date': st_dt,
-                         'training_end_date': training_class.training_end_date,
-                         'date_of_arrival': st_dt,
-                         'state': 'in_training'})
+                    'class_id': training_class.id,
+                    'employee_id': employee_dict.get('res_id', False),
+                    'training_start_date': st_dt,
+                    'training_end_date': training_class.training_end_date,
+                    'date_of_arrival': st_dt,
+                    'state': 'in_training'})
         return True

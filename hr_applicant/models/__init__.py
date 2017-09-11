@@ -18,6 +18,6 @@
 #
 #############################################################################
 
-import hr_recruitment
-import hr_recruitment_employee
-import training
+from . import hr_recruitment
+from . import hr_recruitment_employee
+from . import training

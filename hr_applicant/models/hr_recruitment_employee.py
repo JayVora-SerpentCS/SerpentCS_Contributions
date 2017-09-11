@@ -190,13 +190,13 @@ class EmployeeRelative(models.Model):
     _rec_name = 'name'
 
     relative_type = fields.Selection([
-                              ('Aunty', 'Aunty'), ('Brother', 'Brother'),
-                              ('Daughter', 'Daughter'), ('Father', 'Father'),
-                              ('Husband', 'Husband'), ('Mother', 'Mother'),
-                              ('Sister', 'Sister'), ('Son', 'Son'),
-                              ('Uncle', 'Uncle'),
-                              ('Wife', 'Wife'), ('Other', 'Other')],
-                              string='Relative Type', required=True)
+                      ('Aunty', 'Aunty'), ('Brother', 'Brother'),
+                      ('Daughter', 'Daughter'), ('Father', 'Father'),
+                      ('Husband', 'Husband'), ('Mother', 'Mother'),
+                      ('Sister', 'Sister'), ('Son', 'Son'),
+                      ('Uncle', 'Uncle'),
+                      ('Wife', 'Wife'), ('Other', 'Other')],
+                      string='Relative Type', required=True)
     name = fields.Char(string='Name', size=128, required=True)
     birthday = fields.Date(string='Date of Birth')
     place_of_birth = fields.Char(string='Place of Birth', size=128)
@@ -229,8 +229,8 @@ class EmployeeRelative(models.Model):
                 self.gender = ''
         if self.employee_id and not self.relative_type:
             warning = {
-                        'title': _('Warning!'),
-                        'message': _('Please select Relative Type!'),
+                       'title': _('Warning!'),
+                       'message': _('Please select Relative Type!'),
                 }
             return {'gender': False, 'warning': warning}
 
@@ -305,8 +305,8 @@ class EmployeeEducation(models.Model):
             return {'warning': warning}
         if self.from_date and self.to_date and self.from_date > self.to_date:
             warning = {
-               'title': _('User Alert !'),
-               'message': _('To Date %s must be greater \
+                       'title': _('User Alert !'),
+                       'message': _('To Date %s must be greater \
                            than From Date %s !') % (self.to_date,
                                                     self.from_date)}
             self.to_date = False
@@ -345,8 +345,8 @@ class EmployeePreviousTravel(models.Model):
             return {'warning': warning}
         if self.from_date and self.to_date and self.from_date > self.to_date:
             warning = {
-               'title': _('User Alert !'),
-               'message': _('To Date %s must be greater than \
+                       'title': _('User Alert !'),
+                       'message': _('To Date %s must be greater than \
                            From Date %s !') % (self.to_date, self.from_date)}
             self.to_date = False
             return {'warning': warning}
@@ -378,9 +378,9 @@ class EmployeeLanguage(models.Model):
     def _check_mother_tongue(self):
         if self.mother_tongue and self.employee_id:
             language_rec = self.search([
-                                ('employee_id', '=', self.employee_id.id),
-                                ('mother_tongue', '=', True),
-                                ('id', '!=', self.id)], limit=1)
+                            ('employee_id', '=', self.employee_id.id),
+                            ('mother_tongue', '=', True),
+                            ('id', '!=', self.id)], limit=1)
             if language_rec:
                 raise ValidationError(_("If you want to set '%s' as a mother \
                             tongue, first you have to uncheck mother tongue \
