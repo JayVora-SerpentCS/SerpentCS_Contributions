@@ -115,9 +115,8 @@ class TrainingClass(models.Model):
                 end_date = False
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
-                    end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                               datetime.timedelta(
-                               days=rec.course_id.duration - 1)
+                    end_date = datetime.datetime.strptime(tr_st_dt, DF) +\
+                        datetime.timedelta(days=rec.course_id.duration - 1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'week':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
