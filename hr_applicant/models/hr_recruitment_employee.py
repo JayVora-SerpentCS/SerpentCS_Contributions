@@ -189,8 +189,7 @@ class EmployeeRelative(models.Model):
     _description = "Employee Relatives"
     _rec_name = 'name'
 
-    relative_type = fields.Selection(
-                                     [('Aunty', 'Aunty'),
+    relative_type = fields.Selection([('Aunty', 'Aunty'),
                                       ('Brother', 'Brother'),
                                       ('Daughter', 'Daughter'),
                                       ('Father', 'Father'),
@@ -231,8 +230,7 @@ class EmployeeRelative(models.Model):
             else:
                 self.gender = ''
         if self.employee_id and not self.relative_type:
-            warning = {
-                       'title': _('Warning!'),
+            warning = {'title': _('Warning!'),
                        'message': _('Please select Relative Type!'), }
             return {'gender': False, 'warning': warning}
 

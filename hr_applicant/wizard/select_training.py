@@ -32,24 +32,24 @@ class SelectTraining(models.TransientModel):
 
     @api.multi
     def action_done(self):
-        applicant = self.env['hr.applicant'].search([
-                    ('id', '=', self._context.get('active_id'))])
+        act_id = self._context.get('active_id')
+        applicant = self.env['hr.applicant'].search([('id', '=', act_id)])
         employee_dict = applicant.create_employee_from_applicant()
         course_obj = self.env['training.courses']
         class_obj = self.env['training.class']
         attendee_obj = self.env['list.of.attendees']
         for rec in self:
             if rec.is_triaing_needed:
-                course = course_obj.search([
-                         ('job_id', '=', applicant.job_id.id)])
+                course = course_obj.search([('job_id', '=',
+                                             applicant.job_id.id)])
                 if not course:
                     t_nam = 'Training Course for ' + str(applicant.job_id.name)
                     course = course_obj.create({'name': t_nam,
                                                 'job_id': applicant.job_id.id,
                                                 'duration': 1,
                                                 'duration_type': 'month'})
-                training_class = class_obj.search([
-                                 ('course_id', '=', course.id)])
+                training_class = class_obj.search([('course_id', '=',
+                                                    course.id)])
                 if not training_class:
                     dt_now = datetime.date.today()
                     tri_class_val = {
@@ -57,7 +57,7 @@ class SelectTraining(models.TransientModel):
                         'training_attendees': 1,
                         'training_start_date': dt_now + datetime.timedelta(
                                                days=1),
-                        'training_end_date': dt_now +\
+                        'training_end_date': dt_now +
                         datetime.timedelta(days=1) + relativedelta(months=1,
                                                                    days=-1),
                         'state': 'approved'}

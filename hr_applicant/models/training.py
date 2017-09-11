@@ -123,8 +123,8 @@ class TrainingClass(models.Model):
                         relativedelta(weeks=rec.course_id.duration, days=-1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'month':
-                    end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                               relativedelta(months=rec.course_id.duration,
+                    end_date = datetime.datetime.strptime(tr_st_dt, DF) +\
+                    relativedelta(months=rec.course_id.duration,
                                              days=-1)
                 rec.training_end_date = end_date
 
@@ -213,8 +213,8 @@ class ListOfAttendees(models.Model):
     date_of_arrival = fields.Date('Date of Arrival in Training Location',
                                   readonly=True,
                                   states={'draft': [('readonly', False)],
-                                          'awaiting_training_start': [
-                                                      ('readonly', False)]})
+                                          'awaiting_training_start':
+                                          [('readonly', False)]})
     comments = fields.Text('Comments')
     attachment_ids = fields.One2many('ir.attachment', 'attendees_id',
                                      string='Attachments')
