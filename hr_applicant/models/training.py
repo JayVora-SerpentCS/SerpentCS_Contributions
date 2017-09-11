@@ -116,18 +116,17 @@ class TrainingClass(models.Model):
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                               datetime.timedelta(
-                                              days=rec.course_id.duration - 1)
+                    datetime.timedelta(days=rec.course_id.duration - 1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'week':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                                relativedelta(
-                                      weeks=rec.course_id.duration, days=-1)
+                               relativedelta(weeks=rec.course_id.duration,
+                                             days=-1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'month':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) + \
-                                relativedelta(months=rec.course_id.duration,
-                                              days=-1)
+                               relativedelta(months=rec.course_id.duration,
+                                             days=-1)
                 rec.training_end_date = end_date
 
     @api.multi
@@ -245,7 +244,7 @@ class ListOfAttendees(models.Model):
         for rec in self:
             if not rec.date_of_arrival:
                 raise ValidationError(_("Please add Date of arrival!"))
-            rec.write({'state': 'train_completed'})
+        self.state = 'train_completed'
         return True
 
     @api.multi
