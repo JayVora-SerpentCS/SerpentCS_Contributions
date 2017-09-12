@@ -27,7 +27,7 @@ except (ImportError, AssertionError):
                       python package.')
 
 
-class report_dynamic_label(report_sxw.rml_parse):
+class ReportDynamicLabel(report_sxw.rml_parse):
 
     def get_data(self, row, columns, ids, model, number_of_copy):
         active_model_obj = self.pool.get(model)
@@ -153,7 +153,7 @@ class report_dynamic_label(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
 
-        super(report_dynamic_label, self).__init__(cr, uid, name,
+        super(ReportDynamicLabel, self).__init__(cr, uid, name,
                                                    context=context)
         self.context = context
         self.rec_no = 0
@@ -162,8 +162,8 @@ class report_dynamic_label(report_sxw.rml_parse):
         })
 
 
-class report_employee(osv.AbstractModel):
+class ReportEmployee(osv.AbstractModel):
     _name = 'report.label.report_label'
     _inherit = 'report.abstract_report'
     _template = 'label.report_label'
-    _wrapped_report_class = report_dynamic_label
+    _wrapped_report_class = ReportDynamicLabel
