@@ -28,10 +28,10 @@ class RPCProxyOne(object):
     def __getattr__(self, name):
         RPCProxy(self.server)
         return lambda cr, uid, *args, **kwargs: self.rpc.execute(
-                self.server.server_db,
-                self.uid,
-                self.server.password,
-                self.ressource, name, *args)
+            self.server.server_db,
+            self.uid,
+            self.server.password,
+            self.ressource, name, *args)
 
 
 class RPCProxy(object):

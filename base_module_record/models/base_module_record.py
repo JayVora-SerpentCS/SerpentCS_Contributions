@@ -158,8 +158,8 @@ class base_module_record(models.Model):
                         self.blank_dict[(fields[key]['relation'],
                                         valitem[1])] = newid
                         childrecord, update = self._create_record(doc,
-                            fields[key]['relation'],
-                            valitem[2], newid)
+                                             fields[key]['relation'],
+                                             valitem[2], newid)
                         noupdate = noupdate or update
                         record_list += childrecord
                     else:
@@ -179,7 +179,7 @@ class base_module_record(models.Model):
                         field.setAttribute("name", key)
                         field.setAttribute("eval", "[(6,0,[" + ','.join(
                             map(lambda x: "ref('%s')" % (x,),
-                                                res)) + '])]')
+                                res)) + '])]')
                         record.appendChild(field)
             else:
                 field = doc_createXElement(doc, 'field')
@@ -508,7 +508,7 @@ class base_module_record(models.Model):
                                            record['model']) + '''\n'''
                     yml_object = yaml.load(
                         unicode('''\n !workflow %s \n''' % record,
-                                           'iso-8859-1'))
+                                'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n\n'''
                 elif self.mode == 'osv_memory_action':
                     osv_action = self._generate_function_yaml(rec[1])
@@ -517,7 +517,7 @@ class base_module_record(models.Model):
                                           osv_action['model']) + '''\n'''
                     osv_action = yaml.load(
                         unicode('''\n !python %s \n''' % osv_action,
-                                           'iso-8859-1'))
+                                'iso-8859-1'))
                     yaml_file += str(osv_action) + '''\n'''
                     attrs = yaml.dump(osv_action.attrs,
                                       default_flow_style=False)
@@ -534,7 +534,7 @@ class base_module_record(models.Model):
                             record['model']) + '''\n'''
                     yml_object = yaml.load(
                         unicode('''\n !record %s \n''' % record,
-                                               'iso-8859-1'))
+                                'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n'''
                     attrs = yaml.dump(yml_object.attrs,
                                       default_flow_style=False)

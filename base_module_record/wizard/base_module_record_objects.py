@@ -25,7 +25,7 @@ class base_module_record(models.TransientModel):
 
     check_date = fields.Datetime('Record from Date', required=True,
                                  default=lambda *a: time.strftime(
-                                 '%Y-%m-%d %H:%M:%S'))
+                                     '%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_object_rel',
                                'objects',
                                'model_id', 'Objects',
@@ -33,9 +33,8 @@ class base_module_record(models.TransientModel):
     filter_cond = fields.Selection([('created', 'Created'),
                                     ('modified', 'Modified'),
                                     ('created_modified', 'Created & Modified')
-                                    ],
-                                   'Records only', required=True,
-                                default='created')
+                                    ], 'Records only', required=True,
+                                   default='created')
     info_yaml = fields.Boolean('YAML')
 
     @api.multi

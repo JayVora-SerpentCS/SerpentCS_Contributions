@@ -16,8 +16,6 @@
     """,
     'installable': True,
     'application': True,
-    'data': [
-            'view/templates.xml',
-            ],
+    'data': ['view/templates.xml'],
     'auto_install': False,
 }

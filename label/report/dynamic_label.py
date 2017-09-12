@@ -34,7 +34,7 @@ class report_dynamic_label(report_sxw.rml_parse):
         label_print_obj = self.pool.get('label.print')
         label_print_data = label_print_obj.browse(self.cr, self.uid,
                                                   self.context.get(
-                                                  'label_print'))
+                                                      'label_print'))
         result = []
         value_vals = []
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
