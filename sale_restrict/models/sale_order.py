@@ -2,10 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from openerp import models, api, _
-from openerp.exceptions import Warning
+from openerp.exceptions import Warning as UserError
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.multi
@@ -18,5 +18,5 @@ class sale_order(models.Model):
             message = _("Please specify unit price for \
                         the following products:") + '\n'
             message += '\n'.join(map(str, zero_price))
-            raise Warning(message.rstrip())
-        return super(sale_order, self).action_confirm()
+            raise UserError(message.rstrip())
+        return super(SaleOrder, self).action_confirm()

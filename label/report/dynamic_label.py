@@ -154,7 +154,7 @@ class ReportDynamicLabel(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
 
         super(ReportDynamicLabel, self).__init__(cr, uid, name,
-                                                   context=context)
+                                                 context=context)
         self.context = context
         self.rec_no = 0
         self.localcontext.update({

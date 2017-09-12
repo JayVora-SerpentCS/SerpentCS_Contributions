@@ -5,7 +5,7 @@
 from openerp import models, fields
 
 
-class label_main(models.Model):
+class LabelMain(models.Model):
 
     _name = 'label.brand'
     _rec_name = 'brand_name'
@@ -15,7 +15,7 @@ class label_main(models.Model):
                                        'Label Config')
 
 
-class label_config(models.Model):
+class LabelConfig(models.Model):
 
     _name = 'label.config'
 

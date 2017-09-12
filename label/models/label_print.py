@@ -5,7 +5,7 @@
 from openerp import models, fields, api, _
 
 
-class label_print(models.Model):
+class LabelPrint(models.Model):
     _name = "label.print"
 
     name = fields.Char("Name", size=64, required=True, select=1)
@@ -86,7 +86,7 @@ class label_print(models.Model):
         return True
 
 
-class label_print_field(models.Model):
+class LabelPrintField(models.Model):
     _name = "label.print.field"
     _rec_name = "sequence"
     _order = "sequence"
@@ -107,7 +107,7 @@ class label_print_field(models.Model):
     newline = fields.Boolean(string='New Line', deafult=True)
 
 
-class ir_model_fields(models.Model):
+class IrModelFields(models.Model):
 
     _inherit = 'ir.model.fields'
 
@@ -116,7 +116,7 @@ class ir_model_fields(models.Model):
 
         data = self._context['model_list']
         args.append(('model', 'in', eval(data)))
-        ret_vat = super(ir_model_fields, self).name_search(name=name,
+        ret_vat = super(IrModelFields, self).name_search(name=name,
                                                            args=args,
                                                            operator=operator,
                                                            limit=limit)

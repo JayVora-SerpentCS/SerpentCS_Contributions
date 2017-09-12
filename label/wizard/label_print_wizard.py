@@ -9,7 +9,7 @@ from openerp import fields, models, api
 from openerp.tools import misc
 
 
-class label_print_wizard(models.TransientModel):
+class LabelPrintWizard(models.TransientModel):
 
     _name = 'label.print.wizard'
 
@@ -17,7 +17,7 @@ class label_print_wizard(models.TransientModel):
     def default_get(self, fields):
         if self._context is None:
             self._context = {}
-        result = super(label_print_wizard, self).default_get(fields)
+        result = super(LabelPrintWizard, self).default_get(fields)
         if self._context.get('label_print'):
             label_print_obj = self.env['label.print']
             label_print_data = label_print_obj.browse(self._context.get
