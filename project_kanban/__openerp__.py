@@ -13,8 +13,8 @@
     'category': 'Project Management',
     'sequence': 1,
     'data': [
-             'views/project_kanban_view.xml',
-        ],
+        'views/project_kanban_view.xml',
+             ],
     'installable': True,
     'auto_install': False,
 }

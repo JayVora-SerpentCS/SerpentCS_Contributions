@@ -129,9 +129,9 @@ class base_module_save(models.TransientModel):
         if len(recording_data):
             if data['info_yaml']:
                 res = _create_yaml(self, data)
-                model_data_ids = mod_obj.search([
-                                         ('model', '=', 'ir.ui.view'),
-                                         ('name', '=', 'yml_save_form_view')])
+                model_data_ids =\
+                    mod_obj.search([('model', '=', 'ir.ui.view'),
+                                    ('name', '=', 'yml_save_form_view')])
                 resource_id = mod_obj.read(self._cr, self.user_id.id,
                                            model_data_ids,
                                            fields=['res_id'])[0]['res_id']
@@ -148,9 +148,9 @@ class base_module_save(models.TransientModel):
                     'target': 'new',
                 }
             else:
-                model_data_ids = mod_obj.search([
-                                     ('model', '=', 'ir.ui.view'),
-                                     ('name', '=', 'info_start_form_view')])
+                model_data_ids =\
+                    mod_obj.search([('model', '=', 'ir.ui.view'),
+                                    ('name', '=', 'info_start_form_view')])
                 resource_id = mod_obj.read(self._cr, self.user_id.id,
                                            model_data_ids,
                                            fields=['res_id'])[0]['res_id']
@@ -164,9 +164,9 @@ class base_module_save(models.TransientModel):
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
-        model_data_ids = mod_obj.search([
-                             ('model', '=', 'ir.ui.view'),
-                             ('name', '=', 'module_recording_message_view')])
+        model_data_ids =\
+            mod_obj.search([('model', '=', 'ir.ui.view'),
+                            ('name', '=', 'module_recording_message_view')])
         resource_id = mod_obj.read(model_data_ids,
                                    fields=['res_id'])[0]['res_id']
         return {

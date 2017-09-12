@@ -28,10 +28,10 @@ class RPCProxyOne(object):
     def __getattr__(self, name):
         RPCProxy(self.server)
         return lambda cr, uid, *args, **kwargs: self.rpc.execute(
-                                                 self.server.server_db,
-                                                 self.uid,
-                                                 self.server.password,
-                                                 self.ressource, name, *args)
+                self.server.server_db,
+                self.uid,
+                self.server.password,
+                self.ressource, name, *args)
 
 
 class RPCProxy(object):
@@ -69,19 +69,19 @@ class base_synchro(models.TransientModel):
         pool2 = pool
         if object.action in ('d', 'b'):
             ids = pool1.get('base.synchro.obj').get_ids(
-                                                    self._cr, self.user_id,
-                                                    object.model_id.model,
-                                                    object.synchronize_date,
-                                                    eval(object.domain),
-                                                    {'action': 'd'})
+                self._cr, self.user_id,
+                object.model_id.model,
+                object.synchronize_date,
+                eval(object.domain),
+                {'action': 'd'})
 
         if object.action in ('u', 'b'):
             ids += pool2.get('base.synchro.obj').get_ids(
-                                                     self._cr, self.user_id.id,
-                                                     object.model_id.model,
-                                                     object.synchronize_date,
-                                                     eval(object.domain),
-                                                     {'action': 'u'})
+                self._cr, self.user_id.id,
+                object.model_id.model,
+                object.synchronize_date,
+                eval(object.domain),
+                {'action': 'u'})
         ids.sort()
         iii = 0
         for dt, id, action in ids:
@@ -126,9 +126,9 @@ class base_synchro(models.TransientModel):
                 self.report_write += 1
             else:
                 idnew = pool_dest.get(object.model_id.model).create(
-                                                            self._cr,
-                                                            self.user_id.id,
-                                                            value)
+                    self._cr,
+                    self.user_id.id,
+                    value)
                 self.env['base.synchro.obj.line'].create({
                     'obj_id': object.id,
                     'local_id': (action == 'u') and id or idnew,
@@ -219,9 +219,9 @@ class base_synchro(models.TransientModel):
                     del data[f]
             elif ftype == 'many2many':
                 res = map(lambda x: self.relation_transform(
-                                                    pool_src, pool_dest,
-                                                    fields[f]['relation'],
-                                                    x, action), data[f])
+                    pool_src, pool_dest,
+                    fields[f]['relation'],
+                    x, action), data[f])
                 data[f] = [(6, 0, [x for x in res if x])]
         del data['id']
         return data

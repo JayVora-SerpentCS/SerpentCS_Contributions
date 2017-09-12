@@ -11,16 +11,16 @@
     """,
     'depends': ['report_webkit'],
     'data': [
-             'data/report_paperformat.xml',
-             'security/label.brand.csv',
-             'security/label.config.csv',
-             'views/label_config_view.xml',
-             'views/label_print_view.xml',
-             'views/label_size_data.xml',
-             'wizard/label_print_wizard_view.xml',
-             'views/label_report.xml',
-             'report/dynamic_label.xml'
-    ],
+        'data/report_paperformat.xml',
+        'security/label.brand.csv',
+        'security/label.config.csv',
+        'views/label_config_view.xml',
+        'views/label_print_view.xml',
+        'views/label_size_data.xml',
+        'wizard/label_print_wizard_view.xml',
+        'views/label_report.xml',
+        'report/dynamic_label.xml'
+             ],
     'installable': True,
     'auto_install': False,
 }

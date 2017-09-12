@@ -18,6 +18,6 @@
     'application': True,
     'data': [
             'view/templates.xml',
-     ],
+            ],
     'auto_install': False,
 }

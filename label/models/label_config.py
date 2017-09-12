@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of openerp
-from openerp import models, fields, api
+from openerp import models, fields
 
 
 class label_main(models.Model):

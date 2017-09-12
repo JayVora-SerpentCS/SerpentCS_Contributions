@@ -21,7 +21,7 @@ class base_module_data(models.TransientModel):
         return self.env['ir.model'].search([('model', 'in', names)])
     check_date = fields.Datetime('Record from Date', required=True,
                                  default=lambda *a: time.strftime(
-                                                          '%Y-%m-%d %H:%M:%S'))
+                                 '%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
                                'objects',
                                'model_id', 'Objects',
@@ -85,9 +85,9 @@ class base_module_data(models.TransientModel):
                 res = self._create_yaml(data)
             else:
                 res = self._create_xml(data)
-            model_data_ids = mod_obj.search([
-                                     ('model', '=', 'ir.ui.view'),
-                                     ('name', '=', 'module_create_xml_view')])
+            model_data_ids =\
+                mod_obj.search([('model', '=', 'ir.ui.view'),
+                                ('name', '=', 'module_create_xml_view')])
             print "model_data_ids::::::::::::::::::", model_data_ids
             resource_id = model_data_ids.read(['res_id'])[0]['res_id']
             return {
@@ -100,9 +100,9 @@ class base_module_data(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'target': 'new',
             }
-        model_data_ids = mod_obj.search([
-                             ('model', '=', 'ir.ui.view'),
-                             ('name', '=', 'module_recording_message_view')])
+        model_data_ids =\
+            mod_obj.search([('model', '=', 'ir.ui.view'),
+                            ('name', '=', 'module_recording_message_view')])
         resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),

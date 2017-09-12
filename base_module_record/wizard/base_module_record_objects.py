@@ -25,16 +25,16 @@ class base_module_record(models.TransientModel):
 
     check_date = fields.Datetime('Record from Date', required=True,
                                  default=lambda *a: time.strftime(
-                                                          '%Y-%m-%d %H:%M:%S'))
+                                 '%Y-%m-%d %H:%M:%S'))
     objects = fields.Many2many('ir.model', 'base_module_record_object_rel',
                                'objects',
                                'model_id', 'Objects',
                                default=_get_default_objects)
-    filter_cond = fields.Selection([
-                                ('created', 'Created'),
-                                ('modified', 'Modified'),
-                                ('created_modified', 'Created & Modified')],
-                                'Records only', required=True,
+    filter_cond = fields.Selection([('created', 'Created'),
+                                    ('modified', 'Modified'),
+                                    ('created_modified', 'Created & Modified')
+                                    ],
+                                   'Records only', required=True,
                                 default='created')
     info_yaml = fields.Boolean('YAML')
 
@@ -75,9 +75,9 @@ class base_module_record(models.TransientModel):
         if len(recording_data):
             if data['info_yaml']:
                 res = base_module_save._create_yaml(self, data)
-                model_data_ids = mod_obj.search([
-                                         ('model', '=', 'ir.ui.view'),
-                                         ('name', '=', 'yml_save_form_view')])
+                model_data_ids =\
+                    mod_obj.search([('model', '=', 'ir.ui.view'),
+                                    ('name', '=', 'yml_save_form_view')])
                 resource_id = model_data_ids.read(['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
@@ -93,9 +93,9 @@ class base_module_record(models.TransientModel):
                     'target': 'new',
                 }
             else:
-                model_data_ids = mod_obj.search([
-                                     ('model', '=', 'ir.ui.view'),
-                                     ('name', '=', 'info_start_form_view')])
+                model_data_ids =\
+                    mod_obj.search([('model', '=', 'ir.ui.view'),
+                                    ('name', '=', 'info_start_form_view')])
                 resource_id = model_data_ids.read(['res_id'])[0]['res_id']
                 return {
                     'name': _('Module Recording'),
@@ -107,9 +107,9 @@ class base_module_record(models.TransientModel):
                     'type': 'ir.actions.act_window',
                     'target': 'new',
                 }
-        model_data_ids = mod_obj.search([
-                             ('model', '=', 'ir.ui.view'),
-                             ('name', '=', 'module_recording_message_view')])
+        model_data_ids =\
+            mod_obj.search([('model', '=', 'ir.ui.view'),
+                            ('name', '=', 'module_recording_message_view')])
         resource_id = model_data_ids.read(['res_id'])[0]['res_id']
         return {
             'name': _('Module Recording'),
@@ -136,9 +136,9 @@ class base_module_record_objects(models.TransientModel):
         res = base_module_save._create_module(self, self._cr, self.env.user.id,
                                               data, context=context)
         mod_obj = self.env['ir.model.data']
-        model_data_ids = mod_obj.search([
-                                     ('model', '=', 'ir.ui.view'),
-                                     ('name', '=', 'module_create_form_view')])
+        model_data_ids =\
+            mod_obj.search([('model', '=', 'ir.ui.view'),
+                            ('name', '=', 'module_create_form_view')])
         resource_id = model_data_ids.read(fields=['res_id'])[0]['res_id']
         context.update(res)
 #        module_rec = self.env['base.module.record.objects'].create({
@@ -146,16 +146,15 @@ class base_module_record_objects(models.TransientModel):
 #                     'module_file': ustr(res['module_file'])})
 
         res_id = self.create({
-                      'module_filename': ustr(res['module_filename']),
-                      'module_file': ustr(res['module_file']),
-                      'name': ustr(res['name']),
-                      'directory_name': ustr(res['directory_name']),
-                      'version': ustr(res['version']),
-                      'author': ustr(res['author']),
-                      'website': ustr(res['website']),
-                      'category': ustr(res['category']),
-                      'description': ustr(res['description']),
-                      })
+            'module_filename': ustr(res['module_filename']),
+            'module_file': ustr(res['module_file']),
+            'name': ustr(res['name']),
+            'directory_name': ustr(res['directory_name']),
+            'version': ustr(res['version']),
+            'author': ustr(res['author']),
+            'website': ustr(res['website']),
+            'category': ustr(res['category']),
+            'description': ustr(res['description']), })
         return {
             'name': _('Module Recording'),
             'view_type': 'form',

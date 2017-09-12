@@ -148,19 +148,18 @@ class base_module_record(models.Model):
                             valitem[1] = newid
                         else:
                             newid, update = self._get_id(
-                                                     fields[key]['relation'],
-                                                     valitem[1])
+                                fields[key]['relation'],
+                                valitem[1])
                             if not newid:
                                 newid = self._create_id(
-                                                    fields[key]['relation'],
-                                                    valitem[2])
+                                    fields[key]['relation'],
+                                    valitem[2])
                                 valitem[1] = newid
                         self.blank_dict[(fields[key]['relation'],
                                         valitem[1])] = newid
-                        childrecord, update = self._create_record(
-                                                      doc,
-                                                      fields[key]['relation'],
-                                                      valitem[2], newid)
+                        childrecord, update = self._create_record(doc,
+                            fields[key]['relation'],
+                            valitem[2], newid)
                         noupdate = noupdate or update
                         record_list += childrecord
                     else:
@@ -179,7 +178,7 @@ class base_module_record(models.Model):
                         field = doc.createElement('field')
                         field.setAttribute("name", key)
                         field.setAttribute("eval", "[(6,0,[" + ','.join(
-                                            map(lambda x: "ref('%s')" % (x,),
+                            map(lambda x: "ref('%s')" % (x,),
                                                 res)) + '])]')
                         record.appendChild(field)
             else:
@@ -243,8 +242,8 @@ class base_module_record(models.Model):
                         #  delete parent_field from child's fields list
                         del valitem[2][fname]
                         childrecord = self._create_yaml_record(
-                                                   fields[key]['relation'],
-                                                   valitem[2], None)
+                            fields[key]['relation'],
+                            valitem[2], None)
                         items[0].append(childrecord['attrs'])
                 attrs[key] = items
             elif fields[key]['type'] in ('many2many',):
@@ -508,7 +507,7 @@ class base_module_record(models.Model):
                      %s on module %s""" % (record['action'],
                                            record['model']) + '''\n'''
                     yml_object = yaml.load(
-                                   unicode('''\n !workflow %s \n''' % record,
+                        unicode('''\n !workflow %s \n''' % record,
                                            'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n\n'''
                 elif self.mode == 'osv_memory_action':
@@ -517,7 +516,7 @@ class base_module_record(models.Model):
                     %s on module %s""" % (osv_action['action'],
                                           osv_action['model']) + '''\n'''
                     osv_action = yaml.load(
-                                   unicode('''\n !python %s \n''' % osv_action,
+                        unicode('''\n !python %s \n''' % osv_action,
                                            'iso-8859-1'))
                     yaml_file += str(osv_action) + '''\n'''
                     attrs = yaml.dump(osv_action.attrs,
@@ -532,9 +531,9 @@ class base_module_record(models.Model):
                         record""" % (record['model']) + '''\n'''
                     else:
                         yaml_file += "!comment Modifying a %s record" % (
-                                                 record['model']) + '''\n'''
+                            record['model']) + '''\n'''
                     yml_object = yaml.load(
-                                       unicode('''\n !record %s \n''' % record,
+                        unicode('''\n !record %s \n''' % record,
                                                'iso-8859-1'))
                     yaml_file += str(yml_object) + '''\n'''
                     attrs = yaml.dump(yml_object.attrs,

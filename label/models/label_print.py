@@ -3,7 +3,6 @@
 
 # 1:  imports of openerp
 from openerp import models, fields, api, _
-from openerp.exceptions import except_orm, Warning, RedirectWarning
 
 
 class label_print(models.Model):
@@ -48,23 +47,21 @@ class label_print(models.Model):
             src_obj = data.model_id.model
             button_name = _('Label (%s)') % data.name
             vals['ref_ir_act_report'] = action_obj.create({
-                 'name': button_name,
-                 'type': 'ir.actions.act_window',
-                 'res_model': 'label.print.wizard',
-                 'src_model': src_obj,
-                 'view_type': 'form',
-                 'context': "{'label_print' : %d}" % (data.id),
-                 'view_mode': 'form,tree',
-                 'target': 'new',
-            })
+                'name': button_name,
+                'type': 'ir.actions.act_window',
+                'res_model': 'label.print.wizard',
+                'src_model': src_obj,
+                'view_type': 'form',
+                'context': "{'label_print' : %d}" % (data.id),
+                'view_mode': 'form,tree',
+                'target': 'new', })
             id_temp = vals['ref_ir_act_report'].id
             vals['ref_ir_value'] = self.env['ir.values'].create({
-                 'name': button_name,
-                 'model': src_obj,
-                 'key2': 'client_action_multi',
-                 'value': "ir.actions.act_window," + str(id_temp),
-                 'object': True,
-             })
+                'name': button_name,
+                'model': src_obj,
+                'key2': 'client_action_multi',
+                'value': "ir.actions.act_window," + str(id_temp),
+                'object': True, })
         self.write({
             'ref_ir_act_report': vals.get('ref_ir_act_report', False).id,
             'ref_ir_value': vals.get('ref_ir_value', False).id,
@@ -80,11 +77,11 @@ class label_print(models.Model):
         for template in self:
                 if template.ref_ir_act_report.id:
                     act_window_obj_search = act_window_obj.browse(
-                                              template.ref_ir_act_report.id)
+                        template.ref_ir_act_report.id)
                     act_window_obj_search.unlink()
                 if template.ref_ir_value.id:
                     ir_values_obj_search = ir_values_obj.browse(
-                                              template.ref_ir_value.id)
+                        template.ref_ir_value.id)
                     ir_values_obj_search.unlink()
         return True
 
