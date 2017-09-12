@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE xml>
 <odoo>
     <data>
         <record model="ir.ui.view" id="view_hr_applicant_medical_details_form">
