@@ -116,8 +116,7 @@ class IrModelFields(models.Model):
 
         data = self._context['model_list']
         args.append(('model', 'in', eval(data)))
-        ret_vat = super(IrModelFields, self).name_search(name=name,
-                                                           args=args,
-                                                           operator=operator,
-                                                           limit=limit)
+        ret_vat = super(IrModelFields, self).name_search(name=name, args=args,
+                                                         operator=operator,
+                                                         limit=limit)
         return ret_vat
