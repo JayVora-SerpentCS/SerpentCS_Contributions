@@ -14,11 +14,11 @@
     'complexity': 'normal',
     'website': 'http://www.camptocamp.com',
     'summary': 'Add sale cancellation reason',
-    'description': '''
+    'description': """
         Sale Cancel Reason
         ==================
         When a sale order is canceled, a reason must be given,
-        it is chosen from a configured list. ''',
+        it is chosen from a configured list. """,
     'depends': ['sale'],
     'data': [
             'wizard/cancel_reason_view.xml',

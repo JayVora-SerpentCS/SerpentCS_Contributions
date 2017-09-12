@@ -45,7 +45,6 @@ class Trainingcourses(models.Model):
 
     _name = 'training.courses'
 
-    @api.one
     @api.constrains('duration')
     def _check_duration(self):
         if len(str(self.duration)) > 3:
@@ -71,7 +70,6 @@ class TrainingClass(models.Model):
     _name = "training.class"
     _rec_name = "course_id"
 
-    @api.one
     @api.constrains('training_start_date', 'training_end_date')
     def _check_training_dup(self):
         if self.training_start_date < \
@@ -178,7 +176,6 @@ class ListOfAttendees(models.Model):
     _name = "list.of.attendees"
     _rec_name = "class_id"
 
-    @api.one
     @api.constrains('class_id', 'training_start_date', 'training_end_date',
                     'date_of_arrival')
     def _check_training_dup(self):

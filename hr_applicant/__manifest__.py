@@ -35,6 +35,7 @@ Also allows you to manage training after employment if needed.
 """,
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
+    'license': 'AGPL-3',
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     'depends': ['hr_recruitment', 'document'],
     'data': ['wizard/select_training_view.xml',

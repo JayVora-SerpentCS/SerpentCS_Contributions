@@ -10,7 +10,7 @@
     'website': 'http://www.serpentcs.com',
     'version': '10.0.1.0.0',
     'license': 'AGPL-3',
-    'description': '',
+    'description': """ Web Lead Funnel Chart """,
     'depends': [
         'crm'
     ],
