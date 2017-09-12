@@ -43,7 +43,7 @@ class RPCProxy(object):
         return RPCProxyOne(self.server, ressource)
 
 
-class base_synchro(models.TransientModel):
+class BaseSynchro(models.TransientModel):
     """Base Synchronization """
     _name = 'base.synchro'
 

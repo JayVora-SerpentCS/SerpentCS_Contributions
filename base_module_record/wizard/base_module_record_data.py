@@ -8,7 +8,7 @@ from openerp.tools.translate import _
 from openerp import models, fields, api
 
 
-class base_module_data(models.TransientModel):
+class BaseModuleData(models.TransientModel):
     _name = "base.module.data"
     _description = "Base Module Data"
 
@@ -115,7 +115,7 @@ class base_module_data(models.TransientModel):
         }
 
 
-class base_module_record_data(models.TransientModel):
+class BaseModuleRecordData(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
 

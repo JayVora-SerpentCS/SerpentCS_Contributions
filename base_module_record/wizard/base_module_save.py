@@ -81,7 +81,7 @@ def _create_module(self, cr, uid, ids, context=None):
     }
 
 
-class base_module_save(models.TransientModel):
+class BaseModuleSave(models.TransientModel):
     _name = 'base.module.save'
     _description = "Base Module Save"
 
@@ -93,7 +93,7 @@ class base_module_save(models.TransientModel):
         context = dict(context)
         recording_data = context.get('recording_data')
         info = "Details of " + str(len(recording_data)) + " Operation(s):\n\n"
-        res = super(base_module_save, self).default_get(fields)
+        res = super(BaseModuleSave, self).default_get(fields)
         for line in recording_data:
             result.setdefault(line[0], {})
             result[line[0]].setdefault(line[1][3], {})

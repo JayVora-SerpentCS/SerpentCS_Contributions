@@ -5,7 +5,7 @@ import time
 from openerp import models, fields, api
 
 
-class base_synchro_server(models.Model):
+class BaseSynchroServer(models.Model):
     '''Class to store the information regarding server'''
     _name = "base.synchro.server"
     _description = "Synchronized server"
@@ -20,7 +20,7 @@ class base_synchro_server(models.Model):
                               ondelete='cascade')
 
 
-class base_synchro_obj(models.Model):
+class BaseSynchroObj(models.Model):
     '''Class to store the operations done by wizard'''
     _name = "base.synchro.obj"
     _description = "Register Class"
@@ -68,7 +68,7 @@ class base_synchro_obj(models.Model):
         return result
 
 
-class base_synchro_obj_avoid(models.Model):
+class BaseSynchroObjAvoid(models.Model):
     _name = "base.synchro.obj.avoid"
     _description = "Fields to not synchronize"
 
@@ -77,7 +77,7 @@ class base_synchro_obj_avoid(models.Model):
                              required=True, ondelete='cascade')
 
 
-class base_synchro_obj_line(models.Model):
+class BaseSynchroObjLine(models.Model):
     '''Class to store the operations done by wizard'''
     _name = "base.synchro.obj.line"
     _description = "Synchronized instances"
