@@ -225,16 +225,16 @@ class Applicant(models.Model):
                         'from_date': education.from_date,
                         'to_date': education.to_date,
                         'education_rank': education and
-                            education.education_rank,
+                        education.education_rank,
                         'school_name': education.school_name,
                         'grade': education.grade,
                         'field': education.field,
                         'illiterate': education.illiterate,
                         'edu_type': education.edu_type,
                         'country_id': education.country_id and
-                            education.country_id.id,
+                        education.country_id.id,
                         'state_id': education.state_id and
-                            education.state_id.id,
+                        education.state_id.id,
                         'province': education.province,
                         'employee_id': res.get('res_id', False)})
                     education_attachments =\
@@ -247,7 +247,7 @@ class Applicant(models.Model):
                             'res_model': 'employee.education',
                             'res_id': education_id.id})
                 for prev_travel in applicant_trav_obj.search([
-                            ('applicant_id', '=', applicant.id)]):
+                        ('applicant_id', '=', applicant.id)]):
                     prev_travel_id = emp_trav_obj.create({
                         'from_date': prev_travel.from_date,
                         'to_date': prev_travel.to_date,
