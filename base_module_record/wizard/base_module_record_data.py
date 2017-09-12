@@ -88,7 +88,6 @@ class base_module_data(models.TransientModel):
             model_data_ids =\
                 mod_obj.search([('model', '=', 'ir.ui.view'),
                                 ('name', '=', 'module_create_xml_view')])
-            print "model_data_ids::::::::::::::::::", model_data_ids
             resource_id = model_data_ids.read(['res_id'])[0]['res_id']
             return {
                 'name': _('Data Recording'),

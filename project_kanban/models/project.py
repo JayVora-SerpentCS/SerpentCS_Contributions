@@ -8,7 +8,6 @@ class Project(models.Model):
 
     _inherit = 'project.project'
 
-    @api.one
     @api.depends('message_ids')
     def _compute_get_recent_date(self):
         date_lst = [x.date for x in self.message_ids]

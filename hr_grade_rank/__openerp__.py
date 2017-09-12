@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'HR-Grade Rank',
-    'version': '1.0',
+    'version': '9.0.0.1.0',
     'description': """
 HR-Grade Rank
 =============
@@ -34,5 +34,3 @@ This module is used to add grade of employees.
         'views/hr_grade_rank_view.xml',
     ],
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

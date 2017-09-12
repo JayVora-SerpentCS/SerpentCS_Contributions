@@ -3,7 +3,7 @@
 
 {
     "name": "Multi-DB Synchronization",
-    "version": "1.1",
+    "version": "9.0.0.1.1",
     "category": "Tools",
     "description": """
 Synchronization with all objects.
