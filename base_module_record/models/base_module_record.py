@@ -7,7 +7,7 @@ from openerp import models, api
 from openerp.tools import ustr, frozendict
 from openerp.osv.fields import function as function_field
 import yaml
-from openerp.tools import yaml_tag
+#from openerp.tools import yaml_tag
 # This import is not unused! Do not remove!
 # Please do not override yaml_tag here:
 # modify it in server bin/tools/yaml_tag.py
@@ -157,9 +157,9 @@ class base_module_record(models.Model):
                                 valitem[1] = newid
                         self.blank_dict[(fields[key]['relation'],
                                         valitem[1])] = newid
-                        childrecord, update = self._create_record(doc,
-                                             fields[key]['relation'],
-                                             valitem[2], newid)
+                        childrecord, update = \
+                            self._create_record(doc, fields[key]['relation'],
+                                                valitem[2], newid)
                         noupdate = noupdate or update
                         record_list += childrecord
                     else:
