@@ -125,7 +125,7 @@ class Applicant(models.Model):
         if res.get('res_id', False):
             for applicant in self:
                 for medical_detail in applicant_med_obj.search(
-                                        [('applicant_id', '=', applicant.id)]):
+                                    [('applicant_id', '=', applicant.id)]):
                     val = {'medical_examination': medical_detail and
                            medical_detail.medical_examination,
                            'vital_sign': medical_detail.vital_sign,
@@ -168,28 +168,28 @@ class Applicant(models.Model):
                            'blood_type': medical_detail.blood_type}
                     medical_id = emp_med_obj.create(val)
                     medical_attach =\
-                    attch_obj.search([('res_model', '=',
+                        attch_obj.search([('res_model', '=',
                                        'hr.applicant.medical.details'),
-                                      ('res_id', '=', medical_detail.id)])
+                                          ('res_id', '=', medical_detail.id)])
                     for medical_attachment in medical_attach:
                         emp_medical_attachment = medical_attachment.copy()
                         emp_medical_attachment.write({
                             'res_model': 'hr.employee.medical.details',
                             'res_id': medical_id.id})
                 for prev_occupation in occupation_obj.search([
-                                        ('applicant_id', '=', applicant.id)]):
+                                    ('applicant_id', '=', applicant.id)]):
                     occupation_id = emp_occupation_obj.create({
-                                    'from_date': prev_occupation.from_date,
-                                    'to_date': prev_occupation.to_date,
-                                    'position': prev_occupation.position,
-                                    'organization': prev_occupation and
-                                    prev_occupation.organization,
-                                    'ref_name': prev_occupation.ref_name,
-                                    'ref_position': prev_occupation and
-                                    prev_occupation.ref_position,
-                                    'ref_phone': prev_occupation.ref_phone,
-                                    'employee_id': res.get('res_id', False),
-                                    'email': prev_occupation.email})
+                                     'from_date': prev_occupation.from_date,
+                                     'to_date': prev_occupation.to_date,
+                                     'position': prev_occupation.position,
+                                     'organization': prev_occupation and
+                                     prev_occupation.organization,
+                                     'ref_name': prev_occupation.ref_name,
+                                     'ref_position': prev_occupation and
+                                     prev_occupation.ref_position,
+                                     'ref_phone': prev_occupation.ref_phone,
+                                     'employee_id': res.get('res_id', False),
+                                     'email': prev_occupation.email})
                     occupation_attachments = \
                         attch_obj.search([('res_model', '=',
                                            'applicant.previous.occupation'),
@@ -201,42 +201,42 @@ class Applicant(models.Model):
                             'res_model': 'employee.previous.occupation',
                             'res_id': occupation_id.id})
                 for relative in self.env['applicant.relative'].search([
-                                       ('applicant_id', '=', applicant.id)]):
+                                ('applicant_id', '=', applicant.id)]):
                     relative_id = self.env['employee.relative'].create({
-                                  'relative_type': relative.relative_type,
-                                  'name': relative.name,
-                                  'birthday': relative.birthday,
-                                  'place_of_birth': relative.place_of_birth,
-                                  'occupation': relative.occupation,
-                                  'gender': relative.gender,
-                                  'employee_id': res.get('res_id', False)})
+                                   'relative_type': relative.relative_type,
+                                   'name': relative.name,
+                                   'birthday': relative.birthday,
+                                   'place_of_birth': relative.place_of_birth,
+                                   'occupation': relative.occupation,
+                                   'gender': relative.gender,
+                                   'employee_id': res.get('res_id', False)})
                     relative_attachments =\
-                     attch_obj.search([('res_model', '=',
+                        attch_obj.search([('res_model', '=',
                                         'applicant.relative'),
-                                        ('res_id', '=', relative.id)])
+                                          ('res_id', '=', relative.id)])
                     for relative_attachment in relative_attachments:
                         emp_relative_attachment = relative_attachment.copy()
                         emp_relative_attachment.write({
                             'res_model': 'employee.relative',
                             'res_id': relative_id.id})
                 for education in self.env['applicant.education'].search(
-                                    [('applicant_id', '=', applicant.id)]):
+                                [('applicant_id', '=', applicant.id)]):
                     education_id = self.env['employee.education'].create({
-                                  'from_date': education.from_date,
-                                  'to_date': education.to_date,
-                                  'education_rank': education and
-                                  education.education_rank,
-                                  'school_name': education.school_name,
-                                  'grade': education.grade,
-                                  'field': education.field,
-                                  'illiterate': education.illiterate,
-                                  'edu_type': education.edu_type,
-                                  'country_id': education.country_id and
-                                  education.country_id.id,
-                                  'state_id': education.state_id and
-                                  education.state_id.id,
-                                  'province': education.province,
-                                  'employee_id': res.get('res_id', False)})
+                                   'from_date': education.from_date,
+                                   'to_date': education.to_date,
+                                   'education_rank': education and
+                                   education.education_rank,
+                                   'school_name': education.school_name,
+                                   'grade': education.grade,
+                                   'field': education.field,
+                                   'illiterate': education.illiterate,
+                                   'edu_type': education.edu_type,
+                                   'country_id': education.country_id and
+                                   education.country_id.id,
+                                   'state_id': education.state_id and
+                                   education.state_id.id,
+                                   'province': education.province,
+                                   'employee_id': res.get('res_id', False)})
                     education_attachments =\
                      attch_obj.search([('res_model', '=',
                                         'applicant.education'),
@@ -255,24 +255,24 @@ class Applicant(models.Model):
                                     'reason': prev_travel.reason,
                                     'employee_id': res.get('res_id', False)})
                     prev_travel_attach =\
-                    attch_obj.search([('res_model', '=',
+                        attch_obj.search([('res_model', '=',
                                        'applicant.previous.travel'),
                                       ('res_id', '=', prev_travel.id)])
                     for prev_travel_attachment in prev_travel_attach:
                         emp_prev_travel_attachment =\
-                        prev_travel_attachment.copy()
+                            prev_travel_attachment.copy()
                         emp_prev_travel_attachment.write({
-                                  'res_model': 'employee.previous.travel',
-                                  'res_id': prev_travel_id.id})
+                        'res_model': 'employee.previous.travel',
+                        'res_id': prev_travel_id.id})
                 for language in self.env['applicant.language'].search([
-                                    ('applicant_id', '=', applicant.id)]):
+                                ('applicant_id', '=', applicant.id)]):
                     language_id = self.env['employee.language'].create({
-                                 'language': language.language,
-                                 'read_lang': language.read_lang,
-                                 'write_lang': language.write_lang,
-                                 'speak_lang': language.speak_lang,
-                                 'mother_tongue': language.mother_tongue,
-                                 'employee_id': res.get('res_id', False)})
+                                  'language': language.language,
+                                  'read_lang': language.read_lang,
+                                  'write_lang': language.write_lang,
+                                  'speak_lang': language.speak_lang,
+                                  'mother_tongue': language.mother_tongue,
+                                  'employee_id': res.get('res_id', False)})
                     language_attachments = \
                         attch_obj.search([('res_model', '=',
                                            'applicant.language'),

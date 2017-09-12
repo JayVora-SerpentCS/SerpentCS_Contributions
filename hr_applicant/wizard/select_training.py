@@ -55,9 +55,9 @@ class SelectTraining(models.TransientModel):
                     tri_class_val = {
                         'course_id': course.id,
                         'training_attendees': 1,
-                        'training_start_date': dt_now + datetime.timedelta(
-                                               days=1),
-                        'training_end_date': dt_now +
+                        'training_start_date': dt_now +\
+                        datetime.timedelta(days=1),
+                        'training_end_date': dt_now +\
                         datetime.timedelta(days=1) + relativedelta(months=1,
                                                                    days=-1),
                         'state': 'approved'}

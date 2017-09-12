@@ -124,8 +124,7 @@ class TrainingClass(models.Model):
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'month':
                     end_date = datetime.datetime.strptime(tr_st_dt, DF) +\
-                    relativedelta(months=rec.course_id.duration,
-                                             days=-1)
+                        relativedelta(months=rec.course_id.duration, days=-1)
                 rec.training_end_date = end_date
 
     @api.multi
