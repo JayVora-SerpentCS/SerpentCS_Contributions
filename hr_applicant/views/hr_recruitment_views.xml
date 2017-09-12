@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <odoo>
     <data>
+    
         <record model="ir.ui.view" id="view_hr_applicant_medical_details_form">
             <field name="name">view.hr.applicant.medical.details.form</field>
             <field name="model">hr.applicant.medical.details</field>
