@@ -6,8 +6,8 @@ Sale Cancel Reason
 
 Description
 -----------
-*When a sale order is canceled, a reason must be given,
- it is chosen from a configured list.
+When a sale order is canceled, a reason must be given,
+it is chosen from a configured list.
 
 Bug Tracker
 ===========
