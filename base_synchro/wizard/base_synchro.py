@@ -184,7 +184,10 @@ class BaseSynchro(models.TransientModel):
                 result = res[0][0]
             else:
                 # LOG this in the report, better message.
-                print self.report.append('''WARNING: Record "%s" on
+#                print self.report.append('''WARNING: Record "%s" on
+#                relation %s not found, set to null.''' % (names, obj_model))
+#               Removed print when travis test
+                self.report.append('''WARNING: Record "%s" on
                 relation %s not found, set to null.''' % (names, obj_model))
         return result
 

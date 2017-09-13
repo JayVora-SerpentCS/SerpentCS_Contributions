@@ -44,15 +44,19 @@ class BaseSynchroObj(models.Model):
                                 'Fields Not Sync.')
 
     @api.model
-    def get_ids(self, obj, dt, domain=[], action=None):
+    def get_ids(self, obj, dt, domain=None, action=None):
         if action is None:
             action = {}
+        if domain is None:
+            domain = []
         return self._get_ids(obj, dt, domain, action=action)
 
     @api.model
-    def _get_ids(self, obj, dt, domain=[], action=None):
+    def _get_ids(self, obj, dt, domain=None, action=None):
         if action is None:
             action = {}
+        if domain is None:
+            domain = []
         POOL = self.env[obj]
         result = []
         if dt:
