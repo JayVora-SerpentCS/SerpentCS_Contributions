@@ -20,11 +20,6 @@
 {
     'name': 'HR-Grade Rank',
     'version': '9.0.0.1.0',
-    'description': """
-HR-Grade Rank
-=============
-This module is used to add grade of employees.
-        """,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Human Resources',
     'website': 'https://www.serpentcs.com',
