@@ -2,8 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import time
-# import base_module_save
-from odoo.addons.base_module_record import base_module_save
+from . import base_module_save
 from openerp.tools import frozendict, ustr
 from openerp.tools.translate import _
 from openerp import models, fields, api
