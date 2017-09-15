@@ -13,7 +13,7 @@ import yaml
 # modify it in server bin/tools/yaml_tag.py
 
 
-class xElement(minidom.Element):
+class XElement(minidom.Element):
     """dom.Element with compact print
     The Element in minidom has a problem: if printed, adds whitespace
     around the text nodes. The standard will not ignore that whitespace.
@@ -29,7 +29,7 @@ class xElement(minidom.Element):
 
 
 def doc_createXElement(xdoc, tagName):
-        e = xElement(tagName)
+        e = XElement(tagName)
         e.ownerDocument = xdoc
         return e
 
