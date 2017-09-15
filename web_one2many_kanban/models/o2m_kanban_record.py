@@ -2,9 +2,10 @@
 
 from openerp import api, models
 
+
 class O2mKanbanRecord(models.Model):
     _name = "kanban.record"
-    
+
     @api.model
     def getKanbanRecord(self, records, o2m_dataset):
         updated_record = []

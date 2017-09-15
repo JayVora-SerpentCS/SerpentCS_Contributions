@@ -2,23 +2,23 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of openerp
-from openerp import models,fields,api
+from openerp import models, fields
 
 
-class label_main(models.Model):
-    
+class LabelMain(models.Model):
+
     _name = 'label.brand'
     _rec_name = 'brand_name'
-    
+
     brand_name = fields.Char("Name", size=64, select=1)
     label_config_ids = fields.One2many('label.config', 'label_main_id',
                                        'Label Config')
 
 
-class label_config(models.Model):
-    
+class LabelConfig(models.Model):
+
     _name = 'label.config'
-    
+
     name = fields.Char("Name", size=64, required=True, select=1)
     height = fields.Float("Height (in mm)", required=True)
     width = fields.Float("Width (in mm)", required=True)
