@@ -24,17 +24,9 @@
     'category': 'Human Resources',
     'sequence': 90,
     'summary': 'Applicant and Employee Subsections, Training',
-    'description': """
-Extend features of recruitment process and Manage Training
-==========================================================
-
-This application allows you to keep description for details of Applicant and Employee like Education, Language, Previous Occupation, 
-Previous Travel, Medical Details and Relatives in form of Subsections.
-
-Also allows you to manage training after employment if needed.
-""",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
-    "website" : "http://www.serpentcs.com",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "website": "http://www.serpentcs.com",
+    'license': 'AGPL-3',
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     'depends': ['hr_recruitment', 'document'],
     'data': ['wizard/select_training_view.xml',

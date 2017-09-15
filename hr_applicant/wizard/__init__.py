@@ -18,4 +18,4 @@
 #
 #############################################################################
 
-import select_training
+from . import select_training
