@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
-    <data>
+<odoo>
 
         <report id="applicant_profile_form_report"
                model="hr.applicant"
@@ -28,5 +27,4 @@
             <field name="paperformat_id" ref="hr_applicant.applicant_profile_report_paperformat"/>
         </record>
 
-    </data>
-</openerp>
+</odoo>
