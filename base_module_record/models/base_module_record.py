@@ -47,8 +47,9 @@ class BaseModuleRecord(models.Model):
         id_indx = 0
         while True:
             try:
-                name = filter(lambda x: x in string.letters,
-                              (data.get('name', '') or '').lower())
+                name = list(filter(lambda x: x in string.ascii_letters,
+                                   (data.get('name', '') or '').lower()))
+                name = ''.join(name)
             except:
                 name = ''
             val = model.replace('.', '_') + '_' + name + str(id_indx)
