@@ -2,13 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import zipfile
-import StringIO
+from io import StringIO
 import base64
 
-from openerp.tools import ustr
-from openerp.exceptions import except_orm
-from openerp.tools.translate import _
-from openerp import models, fields, api
+from odoo.tools import ustr
+from odoo.exceptions import except_orm
+from odoo import api, fields, models, _
 
 
 @api.model
@@ -16,7 +15,7 @@ def _create_yaml(self, data):
     mod = self.env['ir.module.record']
     try:
         res_xml = mod.generate_yaml()
-    except Exception, e:
+    except Exception as e:
         raise except_orm(_('Error'), _(str(e)))
     return {
         'yaml_file': base64.encodestring(res_xml),
