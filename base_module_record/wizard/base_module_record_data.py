@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from openerp.tools import frozendict, ustr
-from openerp.tools.translate import _
-from openerp import models, fields, api
+from odoo.tools import frozendict, ustr
+from odoo import api, fields, models, _
 
 
 class BaseModuleData(models.TransientModel):
@@ -29,18 +28,11 @@ class BaseModuleData(models.TransientModel):
                                     ('created_modified', 'Created & Modified')
                                     ], 'Records only',
                                    required=True, default='created')
-    info_yaml = fields.Boolean('YAML')
 
     @api.model
     def _create_xml(self, data):
         mod = self.env['ir.module.record']
         res_xml = mod.generate_xml()
-        return {'res_text': res_xml}
-
-    @api.model
-    def _create_yaml(self, data):
-        mod = self.env['ir.module.record']
-        res_xml = mod.generate_yaml()
         return {'res_text': res_xml}
 
     @api.multi
@@ -78,10 +70,7 @@ class BaseModuleData(models.TransientModel):
                 recording_data.append(('query', args, {}, s_id.id))
         mod_obj = self.env['ir.model.data']
         if len(recording_data):
-            if data['info_yaml']:
-                res = self._create_yaml(data)
-            else:
-                res = self._create_xml(data)
+            res = self._create_xml(data)
             model_data_ids = mod_obj.\
                 search([('model', '=', 'ir.ui.view'),
                         ('name', '=', 'module_create_xml_view')])
