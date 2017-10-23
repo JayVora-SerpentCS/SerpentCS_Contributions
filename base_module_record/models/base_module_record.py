@@ -6,11 +6,6 @@ from xml.dom import minidom
 from odoo import api, models
 from odoo.tools import ustr, frozendict
 
-import yaml
-# from odoo.tools import yaml_tag  # This import is not unused! Do not remove!
-
-# Please don't override yaml_tag here:modify it in server bin/tools/yaml_tag.py
-
 
 class XElement(minidom.Element):
     """dom.Element with compact print
@@ -185,89 +180,6 @@ class BaseModuleRecord(models.Model):
         return record_list, noupdate
 
     @api.model
-    def _create_yaml_record(self, model, data, record_id):
-        record = {'model': model, 'id': str(record_id)}
-        model_pool = self.env[model]
-        data_pool = self.env['ir.model.data']
-        lids = data_pool.search([('model', '=', model)])
-        res = lids[:1].read(['module'])
-        attrs = {}
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'depends': {}})
-        depends = context.get('depends')
-        self.env.args = cr, uid, frozendict(context)
-        if res:
-            depends[res[0]['module']] = True
-        fields = model_pool.fields_get()
-        defaults = {}
-        try:
-            defaults[model] = model_pool.default_get(data)
-        except:
-            defaults[model] = {}
-        for key, val in data.items():
-            if (((key in defaults[model]) and (
-                val == defaults[model][key])) and not (
-                    fields[key].get('required', False))):
-                continue
-            if fields[key]['type'] in ('integer', 'float'):
-                if not val:
-                    val = 0.0
-                attrs[key] = val
-            elif not (val or (fields[key]['type'] == 'function')):
-                continue
-            elif fields[key]['type'] in ('boolean',):
-                if not val:
-                    continue
-                attrs[key] = val
-            elif fields[key]['type'] in ('many2one',):
-                if type(val) in (type(''), type(u'')):
-                    id = val
-                else:
-                    id, update = self._get_id(fields[key]['relation'], val)
-                attrs[key] = str(id)
-            elif fields[key]['type'] in ('one2many',):
-                items = [[]]
-                for valitem in (val or []):
-                    if valitem[0] in (0, 1):
-                        if key in model_pool._fields:
-                            fname = model_pool._fields[key].inverse_name
-                        else:
-                            fname = model_pool.\
-                                _inherit_fields[key][2].inverse_name
-                        # delete parent_field from child's fields list
-                        del valitem[2][fname]
-                        childrecord = self.\
-                            _create_yaml_record(fields[key]['relation'],
-                                                valitem[2], None)
-                        items[0].append(childrecord['attrs'])
-                attrs[key] = items
-            elif fields[key]['type'] in ('many2many',):
-                if ((key in defaults[model]) and (
-                        val[0][2] == defaults[model][key])):
-                    continue
-                res = []
-                for valitem in (val or []):
-                    if valitem[0] == 6:
-                        for id2 in valitem[2]:
-                            id, update = self.\
-                                _get_id(fields[key]['relation'], id2)
-                            self.blank_dict[(fields[key]['relation'],
-                                             id2)] = id
-                            res.append(str(id))
-                        m2m = [res]
-                if m2m[0]:
-                    attrs[key] = m2m
-            else:
-                try:
-                    attrs[key] = str(val)
-                except:
-                    attrs[key] = ustr(val)
-                attrs[key] = attrs[key].replace('"', '\'')
-        record['attrs'] = attrs
-        return record
-
-    @api.model
     def get_copy_data(self, model, id, result):
         res = []
         obj = self.env[model]
@@ -371,65 +283,6 @@ class BaseModuleRecord(models.Model):
         return record_list, noupdate
 
     @api.model
-    def _generate_object_yaml(self, rec, result=None):
-        cr, uid, context = self.env.args
-        context = dict(context)
-        recording_data = context.get('recording_data')
-        if self.mode == "create":
-            yml_id = self._create_id(rec[2], rec[4])
-            self.blank_dict[(rec[2], result)] = yml_id
-            record = self._create_yaml_record(rec[2], rec[4], yml_id)
-            return record
-        if self.mode == "workflow":
-            id, update = self._get_id(rec[2], rec[4])
-            data = {}
-            data['model'] = rec[2]
-            data['action'] = rec[3]
-            data['ref'] = id
-            return data
-        if self.mode == "write":
-            id, update = self._get_id(rec[2], rec[4][0])
-            record = self._create_yaml_record(rec[2], rec[5], id)
-            return record
-        data = self.get_copy_data(rec[2], rec[4], rec[5])
-        copy_rec = (rec[0], rec[1], rec[2], rec[3], rec[4], data, rec[5])
-        rec = copy_rec
-        rec_data = [(recording_data[0][0], rec, recording_data[0][2],
-                     recording_data[0][3])]
-        recording_data = rec_data
-        id = self._create_id(rec[2], rec[5])
-        record = self._create_yaml_record(str(rec[2]), rec[5], id)
-        self.blank_dict[(rec[2], result)] = id
-        return record
-
-    @api.model
-    def _generate_function_yaml(self, args):
-        db, uid, model, action, ids, context = args
-        temp_context = context.copy()
-        active_id = temp_context['active_id']
-        active_model = temp_context['active_model']
-        active_id, update = self._get_id(active_model, active_id)
-        if not active_id:
-            active_id = 1
-        rec_id, noupdate = self._get_id(model, ids[0])
-        temp_context['active_id'] = "ref('%s')" % unicode(active_id)
-        temp_context['active_ids'][0] = "ref('%s')" % str(active_id)
-        function = {}
-        function['model'] = model
-        function['action'] = action
-        attrs = "self.%s(cr, uid, [ref('%s')], {" % (action, rec_id,)
-        for k, v in temp_context.iteritems():
-            if isinstance(v, str):
-                f = "'" + k + "': " + "'%s'" % v + ", "
-            else:
-                v = str(v).replace('"', '')
-                f = "'" + k + "': " + "%s" % v + ", "
-            attrs = attrs + f
-        attrs = str(attrs) + '})'
-        function['attrs'] = attrs
-        return function
-
-    @api.model
     def _generate_assert_xml(self, rec, doc):
         pass
 
@@ -470,79 +323,3 @@ class BaseModuleRecord(models.Model):
                 elif rec[0] == 'assert':
                     pass
             return doc.toprettyxml(indent="\t").encode('utf-8')
-
-    @api.model
-    def generate_yaml(self):
-        self.blank_dict = {}
-        cr, uid, context = self.env.args
-        context = dict(context)
-        recording_data = context.get('recording_data')
-        if len(recording_data):
-            yaml_file = '''\n'''
-            for rec in recording_data:
-                if rec[1][3] == 'create':
-                    self.mode = "create"
-                elif rec[1][3] == 'write':
-                    self.mode = "write"
-                elif rec[1][3] == 'copy':
-                    self.mode = "copy"
-                elif rec[0] == 'workflow':
-                    self.mode = "workflow"
-                elif rec[0] == 'osv_memory_action':
-                    self.mode = "osv_memory_action"
-                else:
-                    continue
-                if self.mode == "workflow":
-                    record = self._generate_object_yaml(rec[1], rec[0])
-                    yaml_file += """!comment Performing a workflow action
-                     %s on module %s""" % (record['action'],
-                                           record['model']) + '''\n'''
-                    yml_object = yaml.\
-                        load(unicode('''\n !workflow %s \n''' % record,
-                                     'iso-8859-1'))
-                    yaml_file += str(yml_object) + '''\n\n'''
-                elif self.mode == 'osv_memory_action':
-                    osv_action = self._generate_function_yaml(rec[1])
-                    yaml_file += """!comment Performing an osv_memory action
-                    %s on module %s""" % (osv_action['action'],
-                                          osv_action['model']) + '''\n'''
-                    osv_action = yaml.\
-                        load(unicode('''\n !python %s \n''' % osv_action,
-                                     'iso-8859-1'))
-                    yaml_file += str(osv_action) + '''\n'''
-                    attrs = yaml.dump(osv_action.attrs,
-                                      default_flow_style=False)
-                    attrs = attrs.replace("''", '"')
-                    attrs = attrs.replace("'", '')
-                    yaml_file += attrs + '''\n\n'''
-                else:
-                    record = self._generate_object_yaml(rec[1], rec[3])
-                    if self.mode == "create" or self.mode == "copy":
-                        yaml_file += """!comment Creating a %s
-                        record""" % (record['model']) + '''\n'''
-                    else:
-                        yaml_file += "!comment Modifying \
-                            a %s record" % (record['model']) + '''\n'''
-                    yml_object = yaml.\
-                        load(unicode('''\n !record %s \n''' % record,
-                                     'iso-8859-1'))
-                    yaml_file += str(yml_object) + '''\n'''
-                    attrs = yaml.dump(yml_object.attrs,
-                                      default_flow_style=False)
-                    yaml_file += attrs + '''\n\n'''
-        yaml_result = ''''''
-        for line in yaml_file.split('\n'):
-            line = line.replace("''", "'")
-            if ((line.find('!record') == 0) or (
-                    line.find('!workflow') == 0)or (
-                    line.find('!python') == 0)):
-                line = "- \n" + "  " + line
-            elif line.find('!comment') == 0:
-                line = line.replace('!comment', '- \n ')
-            elif line.find('- -') != -1:
-                line = line.replace('- -', '  -')
-                line = "    " + line
-            else:
-                line = "    " + line
-            yaml_result += line + '''\n'''
-        return yaml_result
