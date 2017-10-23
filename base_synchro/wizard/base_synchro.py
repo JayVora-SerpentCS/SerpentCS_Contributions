@@ -246,7 +246,7 @@ class BaseSynchro(models.TransientModel):
             if obj_rec.action == 'b':
                 time.sleep(1)
                 dt = time.strftime('%Y-%m-%d %H:%M:%S')
-            self.env['base.synchro.obj'].write({'synchronize_date': dt})
+            obj_rec.write({'synchronize_date': dt})
         end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
 #        return {}
         if syn_obj.user_id:
