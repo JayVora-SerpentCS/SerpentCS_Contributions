@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
+import time
 import logging
 import threading
-import time
-import xmlrpclib
+from xmlrpc.client import ServerProxy
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 from odoo.exceptions import Warning
 from odoo.tools.translate import _
 
@@ -19,11 +19,11 @@ class RPCProxyOne(object):
         self.server = server
         local_url = 'http://%s:%d/xmlrpc/common' % (server.server_url,
                                                     server.server_port)
-        rpc = xmlrpclib.ServerProxy(local_url)
+        rpc = ServerProxy(local_url)
         self.uid = rpc.login(server.server_db, server.login, server.password)
         local_url = 'http://%s:%d/xmlrpc/object' % (server.server_url,
                                                     server.server_port)
-        self.rpc = xmlrpclib.ServerProxy(local_url)
+        self.rpc = ServerProxy(local_url)
         self.ressource = ressource
 
     def __getattr__(self, name):
@@ -114,8 +114,8 @@ class BaseSynchro(models.TransientModel):
                 del value['create_date']
             if 'write_date' in value:
                 del value['write_date']
-            for key, val in value.iteritems():
-                if type(val) == tuple:
+            for key, val in value.items():
+                if isinstance(val, tuple):
                     value.update({key: val[0]})
             value = self.data_transform(pool_src, pool_dest,
                                         object.model_id.model, value, action,
@@ -300,10 +300,7 @@ Exceptions:
         threaded_synchronization = \
             threading.Thread(target=self.upload_download())
         threaded_synchronization.run()
-        data_obj = self.env['ir.model.data']
-        id2 = data_obj._get_id('base_synchro', 'view_base_synchro_finish')
-        if id2:
-            id2 = data_obj.browse(id2).res_id
+        id2 = self.env.ref('base_synchro.view_base_synchro_finish').id
         return {
             'view_type': 'form',
             'view_mode': 'form',

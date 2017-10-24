@@ -3,7 +3,7 @@
 
 {
     "name": "Multi-DB Synchronization",
-    "version": "10.0.1.0.0",
+    "version": "11.0.1.0.0",
     "category": "Tools",
     "license": "AGPL-3",
     "summary": "Multi-DB Synchronization",
@@ -12,9 +12,13 @@
      This module will let you synchronize two Odoo Databases!
     """,
     "author": "OpenERP SA, Serpent Consulting Services Pvt. Ltd.",
-    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'images': ['static/description/Synchro.png'],
-    "depends": ["base"],
+    "maintainer": "Serpent Consulting Services Pvt. Ltd.",
+    "images": [
+        "static/description/Synchro.png",
+    ],
+    "depends": [
+        "base",
+    ],
     "website": "http://www.serpentcs.com",
     "data": [
         "security/ir.model.access.csv",
@@ -23,5 +27,4 @@
         "views/res_request_view.xml",
     ],
     "installable": True,
-    "auto_install": False
 }
