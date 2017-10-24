@@ -3,7 +3,7 @@
 
 from . import base_module_save
 
-from odoo.tools import frozendict, ustr
+from odoo.tools import ustr
 from odoo.tools.translate import _
 from odoo import models, fields, api
 
@@ -40,11 +40,7 @@ class BaseModuleRecord(models.TransientModel):
         check_date = data['check_date']
         filter_cond = data['filter_cond']
         mod_obj = self.env['ir.model']
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'recording_data': []})
-        recording_data = context.get('recording_data')
-        self.env.args = cr, uid, frozendict(context)
+        recording_data = []
         for obj_id in data['objects']:
             obj_name = (mod_obj.browse(obj_id)).model
             obj_pool = self.env[obj_name]
@@ -64,36 +60,31 @@ class BaseModuleRecord(models.TransientModel):
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name,
-                        'copy', s_id.id, {})
+                args = (dbname, self.env.user.id, obj_name, 'copy',
+                        s_id.id, {})
                 recording_data.append(('query', args, {}, s_id.id))
-        mod_obj = self.env['ir.model.data']
         if len(recording_data):
-            model_data_ids = mod_obj.\
-                search([('model', '=', 'ir.ui.view'),
-                        ('name', '=', 'info_start_form_view')])
-            resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+            res_id = self.env.ref('base_module_record.info_start_form_view').id
+            self = self.with_context({'recording_data': recording_data})
             return {
                 'name': _('Module Recording'),
-                'context': context,
+                'context': self._context,
                 'view_type': 'form',
                 'view_mode': 'form',
                 'res_model': 'base.module.record.objects',
-                'views': [(resource_id, 'form')],
+                'views': [(res_id, 'form')],
                 'type': 'ir.actions.act_window',
                 'target': 'new',
             }
-        model_data_ids = mod_obj.\
-            search([('model', '=', 'ir.ui.view'),
-                    ('name', '=', 'module_recording_message_view')])
-        resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+        res_id = self.env.ref(
+            'base_module_record.module_recording_message_view').id
         return {
             'name': _('Module Recording'),
-            'context': self.env.context,
+            'context': self._context,
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'base.module.record.objects',
-            'views': [(resource_id, 'form')],
+            'views': [(res_id, 'form')],
             'type': 'ir.actions.act_window',
             'target': 'new',
         }
@@ -105,19 +96,11 @@ class BaseModuleRecordObjects(models.TransientModel):
 
     @api.model
     def inter_call(self, data):
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'depends': {}})
-        self.env.args = cr, uid, frozendict(context)
-        res = base_module_save._create_module(self, data)
-        mod_obj = self.env['ir.model.data']
-        model_data_ids = mod_obj.\
-            search([('model', '=', 'ir.ui.view'),
-                    ('name', '=', 'module_create_form_view')])
-        resource_id = model_data_ids.read(fields=['res_id'])[0]['res_id']
-        context.update(res)
-
-        res_id = self.create({
+        ctx = dict(self._context)
+        ctx.update(({'depends': {}}))
+        res = base_module_save._create_module(self.with_context(ctx), data)
+        res_id = self.env.ref('base_module_record.module_create_form_view').id
+        rec_id = self.create({
             'module_filename': ustr(res['module_filename']),
             'module_file': ustr(res['module_file']),
             'name': ustr(res['name']),
@@ -127,14 +110,14 @@ class BaseModuleRecordObjects(models.TransientModel):
             'website': ustr(res['website']),
             'category': ustr(res['category']),
             'description': ustr(res['description']),
-        })
+        }).id
         return {
             'name': _('Module Recording'),
             'view_type': 'form',
             'view_mode': 'form',
-            'res_id': res_id.id,
+            'res_id': rec_id,
             'res_model': 'base.module.record.objects',
-            'views': [(resource_id, 'form')],
+            'views': [(res_id, 'form')],
             'type': 'ir.actions.act_window',
             'target': 'new',
         }
