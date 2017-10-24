@@ -4,7 +4,7 @@
 import string
 from xml.dom import minidom
 from odoo import api, models
-from odoo.tools import ustr, frozendict
+from odoo.tools import ustr
 
 
 class XElement(minidom.Element):
@@ -65,10 +65,7 @@ class BaseModuleRecord(models.Model):
         if not obj:
             return False, None
         obj = obj[0]
-        cr, uid, context = self.env.args
-        context = dict(context)
-        self.env.args = cr, uid, frozendict(context)
-        depends = context.get('depends')
+        depends = self._context.get('depends', {})
         depends[obj.module] = True
         return obj.module + '.' + obj.name, obj.noupdate
 
@@ -83,11 +80,11 @@ class BaseModuleRecord(models.Model):
         lids = data_pool.search([('model', '=', model)])
         lids = lids[:1]
         res = lids.read(['module'])
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'depends': {}})
-        depends = context.get('depends')
-        self.env.args = cr, uid, frozendict(context)
+        blank_dict = self.blank_dict
+        depends = {}
+        self = self.with_context({'depends': {}})
+        # Add blank_dict to new self object
+        self.blank_dict = blank_dict
         if res:
             depends[res[0]['module']] = True
         fields = model_pool.fields_get()
@@ -240,9 +237,7 @@ class BaseModuleRecord(models.Model):
     def _generate_object_xml(self, rec, recv, doc, result=None):
         record_list = []
         noupdate = False
-        cr, uid, context = self.env.args
-        context = dict(context)
-        recording_data = context.get('recording_data')
+        recording_data = self._context.get('recording_data', [])
         if rec[3] == 'write':
             for id in rec[4]:
                 id, update = self._get_id(rec[2], id)
@@ -288,9 +283,7 @@ class BaseModuleRecord(models.Model):
 
     @api.model
     def generate_xml(self):
-        cr, uid, context = self.env.args
-        context = dict(context)
-        recording_data = context.get('recording_data')
+        recording_data = self._context.get('recording_data', [])
         if len(recording_data):
             self.blank_dict = {}
             doc = minidom.Document()

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tools import frozendict, ustr
+from odoo.tools import ustr
 from odoo import api, fields, models, _
 
 
@@ -31,8 +31,7 @@ class BaseModuleData(models.TransientModel):
 
     @api.model
     def _create_xml(self, data):
-        mod = self.env['ir.module.record']
-        res_xml = mod.generate_xml()
+        res_xml = self.env['ir.module.record'].generate_xml()
         return {'res_text': res_xml}
 
     @api.multi
@@ -41,11 +40,8 @@ class BaseModuleData(models.TransientModel):
         check_date = data['check_date']
         filter_cond = data['filter_cond']
         mod_obj = self.env['ir.model']
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'recording_data': []})
-        recording_data = context.get('recording_data')
-        self.env.args = cr, uid, frozendict(context)
+        recording_data = []
+        self = self.with_context({'recording_data': recording_data})
         for o_id in data['objects']:
             obj_name = (mod_obj.browse(o_id)).model
             obj_pool = self.env[obj_name]
@@ -68,34 +64,29 @@ class BaseModuleData(models.TransientModel):
                 args = (dbname, self.env.user.id, obj_name,
                         'copy', s_id.id, {})
                 recording_data.append(('query', args, {}, s_id.id))
-        mod_obj = self.env['ir.model.data']
         if len(recording_data):
             res = self._create_xml(data)
-            model_data_ids = mod_obj.\
-                search([('model', '=', 'ir.ui.view'),
-                        ('name', '=', 'module_create_xml_view')])
-            resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+            res_id = self.env.ref(
+                'base_module_record.module_create_xml_view').id
             return {
                 'name': _('Data Recording'),
                 'context': {'default_res_text': ustr(res['res_text'])},
                 'view_type': 'form',
                 'view_mode': 'form',
                 'res_model': 'base.module.record.data',
-                'views': [(resource_id, 'form')],
+                'views': [(res_id, 'form')],
                 'type': 'ir.actions.act_window',
                 'target': 'new',
             }
-        model_data_ids = mod_obj.\
-            search([('model', '=', 'ir.ui.view'),
-                    ('name', '=', 'module_recording_message_view')])
-        resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+        res_id = self.env.ref(
+            'base_module_record.module_recording_message_view').id
         return {
             'name': _('Module Recording'),
             'context': {},
             'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'base.module.record.objects',
-            'views': [(resource_id, 'form')],
+            'views': [(res_id, 'form')],
             'type': 'ir.actions.act_window',
             'target': 'new',
         }

@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-from odoo.tools import ustr
-from odoo.exceptions import except_orm
-from odoo import api, fields, models, _
-
 import base64
 import zipfile
 from io import BytesIO
+
+from odoo import api
 
 
 @api.model
@@ -25,9 +22,7 @@ def _create_module(self, ids):
         data['demo_name'] = '"%(directory_name)s_data.xml"' % data
     else:
         data['update_name'] = '"%(directory_name)s_data.xml"' % data
-    cr, uid, context = self.env.args
-    context = dict(context)
-    depends = context.get('depends')
+    depends = self._context.get('depends', {})
     data['depends'] = ','.join(map(lambda x: '"' + x + '"', depends.keys()))
     _manifest = """{
         "name": "%(name)s",
@@ -66,80 +61,3 @@ def _create_module(self, ids):
         'description': data['description'],
         'directory_name': data['directory_name'],
     }
-
-
-class BaseModuleSave(models.TransientModel):
-    _name = 'base.module.save'
-    _description = "Base Module Save"
-
-    @api.model
-    def default_get(self, fields):
-        mod = self.env['ir.module.record']
-        result = {}
-        cr, uid, context = self.env.args
-        context = dict(context)
-        recording_data = context.get('recording_data')
-        info = "Details of " + str(len(recording_data)) + " Operation(s):\n\n"
-        res = super(BaseModuleSave, self).default_get(fields)
-        for line in recording_data:
-            result.setdefault(line[0], {})
-            result[line[0]].setdefault(line[1][3], {})
-            result[line[0]][line[1][3]].setdefault(line[1][3], 0)
-            result[line[0]][line[1][3]][line[1][3]] += 1
-        for key1, val1 in result.items():
-            info += key1 + "\n"
-            for key2, val2 in val1.items():
-                info += "\t" + key2 + "\n"
-                for key3, val3 in val2.items():
-                    info += "\t\t" + key3 + " : " + str(val3) + "\n"
-        if 'info_text' in fields:
-            res.update({'info_text': info})
-        if 'info_status' in fields:
-            info_status = mod.recording and 'record' or 'no'
-            res.update({'info_status': info_status})
-        return res
-
-    info_text = fields.Text('Information', readonly=True)
-    info_status = fields.Selection([('no', 'Not Recording'),
-                                    ('record', 'Recording')],
-                                   'Status', readonly=True)
-
-    @api.multi
-    def record_save(self):
-        data = self.read(self._cr, self.user_id.id, self._ids, [])[0]
-        mod_obj = self.env['ir.model.data']
-        cr, uid, context = self.env.args
-        context = dict(context)
-        recording_data = context.get('recording_data')
-        if len(recording_data):
-            model_data_ids = mod_obj.\
-                search([('model', '=', 'ir.ui.view'),
-                        ('name', '=', 'info_start_form_view')])
-            resource_id = mod_obj.read(self._cr,
-                                       self.user_id.id, model_data_ids,
-                                       fields=['res_id'])[0]['res_id']
-            return {
-                'name': _('Module Recording'),
-                'context': context,
-                'view_type': 'form',
-                'view_mode': 'form',
-                'res_model': 'base.module.record.objects',
-                'views': [(resource_id, 'form')],
-                'type': 'ir.actions.act_window',
-                'target': 'new',
-            }
-        model_data_ids = mod_obj.\
-            search([('model', '=', 'ir.ui.view'),
-                    ('name', '=', 'module_recording_message_view')])
-        resource_id = mod_obj.read(model_data_ids,
-                                   fields=['res_id'])[0]['res_id']
-        return {
-            'name': _('Module Recording'),
-            'context': context,
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'base.module.record.objects',
-            'views': [(resource_id, 'form')],
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-        }
