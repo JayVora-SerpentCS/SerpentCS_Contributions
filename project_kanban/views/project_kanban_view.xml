@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <!--INHERITED PROJECT FORM-->
-    <record id="project_kanaban_view_form" model="ir.ui.view">
-        <field name="name">project.kanban.view.form</field>
+    <record id="view_project_kanaban_form" model="ir.ui.view">
+        <field name="name">project.kanban.form</field>
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <newline/>
                 <field name="write_date" readonly="1"/>
-                <newline/>
                 <field name="recent_date"/>
+                <field name="__last_update"/>
             </field>
         </field>
     </record>
 
-    <!--INHERITED PROJECT KANBAN-->
-    <record id="project_kanaban_view_kanban" model="ir.ui.view">
-        <field name="name">project.kanban.view.kanban</field>
+    <record id="view_project_kanaban_kanban" model="ir.ui.view">
+        <field name="name">project.kanban.kanban</field>
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.view_project_kanban"/>
         <field name="arch" type="xml">
@@ -26,22 +23,21 @@
                 <field name="write_date"/>
                 <field name="recent_date"/>
             </field>
-            <xpath expr="//div[contains(@class, 'o_kanban_primary_left')]"
-                   position="after">
+            <div class="o_kanban_primary_left"
+                 position="after">
                 <a style="font-size: 10px;">
                     Last updated on:
                     <field name="write_date"/>
                 </a>
-            </xpath>
-            <xpath expr="//div[contains(@class, 'o_kanban_primary_left')]"
-                   position="after">
                 <div style="font-size: 10px;">
                     <a>
                         Recent Log Date:
                         <field name="recent_date" string="Recent Date"/>
+                        <field name="__last_update"/>
                     </a>
                 </div>
-            </xpath>
+            </div>
         </field>
     </record>
+
 </odoo>
