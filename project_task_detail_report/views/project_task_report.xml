@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <!-- TEMPLATE FOR PROJECT DETAIL -->
     <template id="project_task_qweb_report">
         <t>
             <t t-foreach="docs" t-as="e">
@@ -17,8 +17,7 @@
                                                     <span t-field="e.name"/>
                                                     <t t-if="e.stage_id">
                                                         (&amp;nbsp;
-                                                        <span
-                                                                t-field="e.stage_id"/>
+                                                        <span t-field="e.stage_id"/>
                                                         &amp;nbsp;)
                                                     </t>
                                                 </b>
