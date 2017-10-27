@@ -1,11 +1,11 @@
-alt: License: AGPL-3
+.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+   :target: https://www.gnu.org/licenses/agpl
+   :alt: License: AGPL-3
 
-==================================
+=============
 Sale Restrict
-==================================
+=============
 
-Description
------------
 * This module restricts a user from confirming a Sale Order/Quotation
         if it contains products having sale price zero.
 
@@ -19,7 +19,8 @@ Contributors
 ------------
 
 * Jay Vora <jay.vora@serpentcs.com>
-* Meet Dholakia <m.dholakia.serpentcs@gmail.com>.
+* Meet Dholakia <m.dholakia.serpentcs@gmail.com>
+* Sudhir Arya <sudhir.arya@serpentcs.com>.
 
 Maintainer
 ----------
