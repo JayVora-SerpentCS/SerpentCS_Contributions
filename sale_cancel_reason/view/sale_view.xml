@@ -6,14 +6,18 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_cancel']" position="before">
-                <button name="%(action_sale_order_cancel)d" states="draft,sent,sale" string="Cancel Order" type="action" groups="base.group_user"/>
-            </xpath>
+            <button name="action_cancel" position="before">
+                <button name="%(action_sale_order_cancel)d" states="draft,sent,sale"
+                        string="Cancel Order" type="action" groups="base.group_user"/>
+            </button>
+            <button name="action_cancel" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
             <xpath expr="/form/sheet/div/h1[1]" position="after">
                 <h2 attrs="{'invisible': [('state', '!=', 'cancel')]}">
                     <label for="cancel_reason_id" string="Cancellation reason:"/>
                     <field name="cancel_reason_id" class="oe_inline"
-                      options='{"no_open": True}' />
+                           options='{"no_open": True}'/>
                 </h2>
             </xpath>
         </field>
@@ -24,7 +28,9 @@
         <field name="model">sale.order.cancel.reason</field>
         <field name="arch" type="xml">
             <form string="Sale Order Cancel Reasons">
-                <field name="name"/>
+                <group>
+                    <field name="name"/>
+                </group>
             </form>
         </field>
     </record>
@@ -47,10 +53,10 @@
     </record>
 
     <menuitem id="menu_sale_order_cancel_reason"
-      parent= "sales_team.menu_sale_config"
-      name="Sale Order Cancel Reasons"
-      action="action_sale_order_cancel_reason"
-      sequence="150"
-      groups="sales_team.group_sale_manager"/>
+              parent= "sale.menu_sale_config"
+              name="Sale Order Cancel Reasons"
+              action="action_sale_order_cancel_reason"
+              sequence="150"
+              groups="sales_team.group_sale_manager"/>
 
 </odoo>

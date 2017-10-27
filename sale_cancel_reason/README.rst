@@ -1,12 +1,12 @@
 alt: License: AGPL-3
 
-==================================
+==================
 Sale Cancel Reason
-==================================
+==================
 
 Description
 -----------
-*When a sale order is canceled, a reason must be given,
+* When a sale order is canceled, a reason must be given,
         it is chosen from a configured list.
 
 Bug Tracker
@@ -19,7 +19,8 @@ Contributors
 ------------
 
 * Jay Vora <jay.vora@serpentcs.com>
-* Meet Dholakia <m.dholakia.serpentcs@gmail.com>.
+* Meet Dholakia <m.dholakia.serpentcs@gmail.com>
+* Sudhir Arya <sudhir.arya@serpentcs.com>
 
 Maintainer
 ----------
