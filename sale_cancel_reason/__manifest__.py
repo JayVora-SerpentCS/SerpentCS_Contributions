@@ -7,7 +7,7 @@
 
 {
     'name': 'Sale Cancel Reason',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'author': 'Camptocamp, Odoo Community Association (OCA)',
     'category': 'Sale',
     'license': 'AGPL-3',
@@ -19,14 +19,17 @@
         ==================
         When a sale order is canceled, a reason must be given,
         it is chosen from a configured list. ''',
-    'depends': ['sale'],
+    'depends': [
+        'sale',
+    ],
     'data': [
-            'wizard/cancel_reason_view.xml',
-            'view/sale_view.xml',
-            'security/ir.model.access.csv',
-            'data/sale_order_cancel_reason.xml',
-        ],
-    'images': ['static/description/SaleCancelReason.png'],
-    'auto_install': False,
+        'wizard/cancel_reason_view.xml',
+        'view/sale_view.xml',
+        'security/ir.model.access.csv',
+        'data/sale_order_cancel_reason.xml',
+    ],
+    'images': [
+        'static/description/SaleCancelReason.png',
+    ],
     'installable': True,
 }
