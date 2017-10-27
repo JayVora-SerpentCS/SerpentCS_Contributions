@@ -21,7 +21,7 @@
 
 {
     'name': 'Project Task Report',
-    'version': '10.0',
+    'version': '11.0.1.0.0',
     'category': 'Project Management',
     'description': """
       This module used to print report of project task details.""",
@@ -30,13 +30,12 @@
     'summary': """
       Print task details with all worklog entries and task hours summary""",
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'depends': ['hr_timesheet'],
+    'depends': [
+        'hr_timesheet',
+    ],
     'data': [
         'views/project_task_report.xml',
         'report/project_task_qweb_report.xml'
     ],
-    'sequence': 1,
     'installable': True,
-    'application': False,
-    'auto_install': False,
 }
