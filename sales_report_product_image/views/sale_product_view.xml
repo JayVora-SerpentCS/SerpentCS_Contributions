@@ -7,11 +7,14 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="before">
+                <!-- FIXME: Added the widget in field attribute once OCA web_tree_image module is migrated in v11 -->
                 <field name="image_small" widget="image"/>
+<!--                 <field name="image_small"/> -->
             </xpath>
-            <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before">
-                <field name="image_small" widget="image"/>
-            </xpath>
+<!--             <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="before"> -->
+            <!-- FIXME: Added the widget in field attribute once OCA web_tree_image module is migrated in v11 -->
+<!--                 <field name="image_small" widget="image"/> -->
+<!--             </xpath> -->
             <field name="client_order_ref" position="after">
                 <field name="print_image"/>
                 <field name="image_sizes"/>
