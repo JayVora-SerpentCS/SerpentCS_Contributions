@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class ResRequest(models.Model):

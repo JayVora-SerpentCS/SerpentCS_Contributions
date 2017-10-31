@@ -3,12 +3,11 @@
 
 import time
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class BaseSynchroServer(models.Model):
     """Class to store the information regarding server."""
-
     _name = "base.synchro.server"
     _description = "Synchronized server"
 
@@ -18,26 +17,25 @@ class BaseSynchroServer(models.Model):
     server_db = fields.Char('Server Database', required=True)
     login = fields.Char('User Name', required=True)
     password = fields.Char('Password', required=True)
-    obj_ids = fields.One2many('base.synchro.obj', 'server_id', string='Models',
+    obj_ids = fields.One2many('base.synchro.obj', 'server_id', 'Models',
                               ondelete='cascade')
 
 
 class BaseSynchroObj(models.Model):
     """Class to store the operations done by wizard."""
-
     _name = "base.synchro.obj"
     _description = "Register Class"
     _order = 'sequence'
 
-    name = fields.Char('Name', select=1, required=True)
-    domain = fields.Char('Domain', select=1, required=True, default='[]')
+    name = fields.Char('Name', required=True)
+    domain = fields.Char('Domain', required=True, default='[]')
     server_id = fields.Many2one('base.synchro.server', 'Server',
-                                ondelete='cascade', select=1, required=True)
+                                ondelete='cascade', required=True)
     model_id = fields.Many2one('ir.model', string='Object to synchronize',
                                required=True)
-    action = fields.Selection([('d', 'Download'), ('u', 'Upload'), ('b',
-                                                                    'Both')],
-                              'Synchronization direction', required=True,
+    action = fields.Selection([('d', 'Download'), ('u', 'Upload'),
+                               ('b', 'Both')], 'Synchronization direction',
+                              required=True,
                               default='d')
     sequence = fields.Integer('Sequence')
     active = fields.Boolean('Active', default=True)
@@ -74,26 +72,23 @@ class BaseSynchroObj(models.Model):
 
 
 class BaseSynchroObjAvoid(models.Model):
-    """Class to avoid the base syncro object."""
-
+    """Class to avoid the base synchro object."""
     _name = "base.synchro.obj.avoid"
     _description = "Fields to not synchronize"
 
-    name = fields.Char('Field Name', select=1, required=True)
+    name = fields.Char('Field Name', required=True)
     obj_id = fields.Many2one('base.synchro.obj', 'Object', required=True,
                              ondelete='cascade')
 
 
 class BaseSynchroObjLine(models.Model):
-    """Class to store object line in base syncro."""
-
+    """Class to store object line in base synchro."""
     _name = "base.synchro.obj.line"
     _description = "Synchronized instances"
 
     name = fields.Datetime('Date', required=True,
                            default=lambda *args:
                            time.strftime('%Y-%m-%d %H:%M:%S'))
-    obj_id = fields.Many2one('base.synchro.obj', 'Object', ondelete='cascade',
-                             select=1)
+    obj_id = fields.Many2one('base.synchro.obj', 'Object', ondelete='cascade')
     local_id = fields.Integer('Local ID', readonly=True)
     remote_id = fields.Integer('Remote ID', readonly=True)
