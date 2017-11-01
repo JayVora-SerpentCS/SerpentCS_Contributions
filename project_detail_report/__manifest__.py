@@ -1,27 +1,9 @@
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2017 Serpent Consulting Services Pvt. Ltd.
-#    Copyright (C) 2017 OpenERP SA (<http://www.serpentcs.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Project Report',
-    'version': '10.0',
+    'version': '11.0.1.0.0',
     'category': 'Project Management',
     'description': """
       This module used to print report of project details.""",
@@ -30,13 +12,12 @@
     'summary': """
       Print Project Detail report with task list and task details.""",
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'depends': ['hr_timesheet'],
+    'depends': [
+        'hr_timesheet',
+    ],
     'data': [
         'views/project_report.xml',
         'report/project_qweb_report.xml',
     ],
-    'sequence': 1,
     'installable': True,
-    'application': False,
-    'auto_install': False,
 }
