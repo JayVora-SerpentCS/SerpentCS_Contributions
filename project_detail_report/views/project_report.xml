@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- TEMPLATE FOR PROJECT DETAIL -->
+
     <template id="project_detail_qweb_report">
         <t>
             <t t-foreach="docs" t-as="e">
@@ -147,4 +148,5 @@
             </t>
         </t>
     </template>
+
 </odoo>
