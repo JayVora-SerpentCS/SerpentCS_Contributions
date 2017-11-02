@@ -5,7 +5,7 @@
 # (http://www.serpentcs.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 QUOTATION_STATES = ['draft', 'sent', 'sale']
@@ -31,11 +31,8 @@ class SaleOrderCancel(models.TransientModel):
         assert len(sale_ids) == 1, "Only 1 sale ID expected"
         sale = self.env['sale.order'].browse(sale_ids)
         sale.cancel_reason_id = self.reason_id.id
-        # in the official addons, they call the signal on quotations
-        # but directly call action_cancel on sales orders
-        if sale.state in QUOTATION_STATES:
-            sale.action_cancel()
-        else:
+        if sale.state not in QUOTATION_STATES:
             raise UserError(_('You cannot cancel the Quotation/Order in the '
                               'current state!'))
+        sale.action_cancel()
         return act_close
