@@ -25,6 +25,7 @@
         'views/label_report.xml',
         'report/dynamic_label.xml'
     ],
+    'uninstall_hook': 'uninstall_hook',
     'images': ['static/description/Label.png'],
     'installable': True,
     'auto_install': False,
