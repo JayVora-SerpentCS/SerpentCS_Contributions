@@ -6,5 +6,6 @@
         <field name="probability">10</field>
         <field name="on_change">1</field>
         <field name="sequence">80</field>
+        <field name='active'>0</field>
     </record>
 </odoo>
