@@ -3,8 +3,7 @@
 
     <template id="report_sale_document_inherits" inherit_id="sale.report_saleorder_document">
         <!-- Discount fields hides from sale quotation report if show and hide price from Quotation -->
-
-        <xpath expr="//table[@class='table table-condensed']/tbody/t/t[2]/tr/td[4]" position="replace">
+        <td t-if="display_discount" position="replace">
             <t t-if="doc.show_discount">
                 <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
                     <span t-field="l.discount" />
@@ -13,8 +12,8 @@
             <t t-if="not doc.show_discount">
                 <td class="text-right" groups="sale.group_discount_per_so_line">-N.A.-</td>
             </t>
-        </xpath>
-        <xpath expr="//table[@class='table table-condensed']/tbody/t/t[2]/tr/td[3]" position="replace">
+        </td>
+        <xpath expr="//table[hasclass('table-condensed')]/tbody/t/t[2]/tr/td[3]" position="replace">
             <t t-if="doc.show_price">
                 <td class="text-right">
                     <span t-field="l.price_unit" />
@@ -24,20 +23,22 @@
                 <td class="text-right">-N.A.-</td>
             </t>
         </xpath>
-        <xpath expr="//table[@class='table table-condensed']/tbody/t/t[2]/tr/td[last()-1]" position="replace">
+        <xpath expr="//table[hasclass('table-condensed')]/tbody/t/t[2]/tr/td[last()-1]" position="replace">
             <t t-if="doc.show_price">
                 <td class="text-right" groups="sale.group_show_price_subtotal">
-                    <span t-field="l.price_subtotal" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                    <span t-field="l.price_subtotal"
+                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
                 </td>
             </t>
             <t t-if="not doc.show_price">
                 <td class="text-right" groups="sale.group_show_price_subtotal">-N.A.-</td>
             </t>
         </xpath>
-        <xpath expr="//table[@class='table table-condensed']/tbody/t/t[2]/tr/td[last()]" position="replace">
+        <xpath expr="//table[hasclass('table-condensed')]/tbody/t/t[2]/tr/td[last()]" position="replace">
             <t t-if="doc.show_price">
                 <td class="text-right" groups="sale.group_show_price_total">
-                    <span t-field="l.price_total" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                    <span t-field="l.price_total"
+                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                 </td>
             </t>
             <t t-if="not doc.show_price">
@@ -49,11 +50,11 @@
                 <div class="col-xs-4 pull-right">
                     <table class="table table-condensed">
                         <tr class="border-black">
-                            <td><strong>Total Without Taxes</strong>
-                            </td>
+                            <td><strong>Total Without Taxes</strong></td>
                             <t t-if="doc.show_price">
                                 <td class="text-right">
-                                    <span t-field="doc.amount_untaxed" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                                    <span t-field="doc.amount_untaxed"
+                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                 </td>
                             </t>
                             <t t-if="not doc.show_price">
@@ -62,11 +63,11 @@
                         </tr>
                         <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
                             <tr>
-                                <td><span t-esc="amount_by_group[0] or 'Taxes'" />
-                                </td>
+                                <td><span t-esc="amount_by_group[0] or 'Taxes'"/></td>
                                 <t t-if="doc.show_price">
                                     <td class="text-right">
-                                        <span t-esc="amount_by_group[1]" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                                        <span t-esc="amount_by_group[1]"
+                                              t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
                                     </td>
                                 </t>
                                 <t t-if="not doc.show_price">
@@ -75,11 +76,11 @@
                             </tr>
                         </t>
                         <tr class="border-black">
-                            <td><strong>Total</strong>
-                            </td>
+                            <td><strong>Total</strong></td>
                             <t t-if="doc.show_price">
                                 <td class="text-right">
-                                    <span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
+                                    <span t-field="doc.amount_total"
+                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
                                 </td>
                             </t>
                             <t t-if="not doc.show_price">
