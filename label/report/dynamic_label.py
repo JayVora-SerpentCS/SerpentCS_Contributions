@@ -17,6 +17,7 @@ class ReportDynamicLabel(models.AbstractModel):
             browse(self.env.context.get('label_print'))
         result = []
         value_vals = []
+        diff = 0
         for datas in active_model_obj.browse(ids):
             for i in range(0, number_of_copy):
                 vals = []
@@ -72,7 +73,7 @@ class ReportDynamicLabel(models.AbstractModel):
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals[0]['value'] not in value_vals:
+                if vals and vals[0]['value'] not in value_vals:
                     value_vals.append(vals[0]['value'])
                 result.append(vals)
                 temp = vals
@@ -81,7 +82,7 @@ class ReportDynamicLabel(models.AbstractModel):
         new_list = []
         result1 = []
         list_newdata = []
-        for row in range(0, len(result) / (columns + 1)):
+        for row in range(0, len(result) / (columns) + 1):
             val = result[row * columns: row * columns + columns]
             if val:
                 new_list.append(val)
@@ -110,22 +111,23 @@ class ReportDynamicLabel(models.AbstractModel):
                 for add_data in range(0, number_of_copy):
                     remain_data.append(data_value_vals)
 
-        diff = 0
-        if newlist_len < number_of_copy:
+        if newlist_len <= number_of_copy:
             diff = number_of_copy - newlist_len
 
         if len(ids) == 1:
             for new_result in range(0, diff):
                 result1.append(temp)
 
-        if len(ids) > 1:
-            for remain_data_value in remain_data:
-                temp[0]['value'] = remain_data_value
-                result1.append([temp[0].copy()])
+        # Duplicates the data and raise the issue with the label format.
+#         if len(ids) > 1:
+#             for remain_data_value in remain_data:
+#                 temp[0]['value'] = remain_data_value
+#                 result1.append([temp[0].copy()])
+#
+#         for row in range(0, len(result1)):
+#             new_val = result1[row * columns: row * columns + columns]
+#             new_list.append(new_val)
 
-        for row in range(0, len(result1)):
-            new_val = result1[row * columns: row * columns + columns]
-            new_list.append(new_val)
         return new_list
 
     @api.model
