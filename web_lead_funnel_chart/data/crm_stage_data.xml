@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="crm.stage" id="stage_lead_archive">
+        <field name="name">Archive</field>
+        <field name="fold" eval="True"/>
+        <field name="probability">10</field>
+        <field name="on_change">1</field>
+        <field name="sequence">80</field>
+        <field name='active'>0</field>
+    </record>
+</odoo>
