@@ -37,6 +37,7 @@ class ReportDynamicLabel(report_sxw.rml_parse):
                                                       'label_print'))
         result = []
         value_vals = []
+        diff = 0
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
             for i in range(0, number_of_copy):
                 vals = []
@@ -94,7 +95,7 @@ class ReportDynamicLabel(report_sxw.rml_parse):
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals[0]['value'] not in value_vals:
+                if vals and vals[0]['value'] not in value_vals:
                     value_vals.append(vals[0]['value'])
                 result.append(vals)
                 temp = vals
@@ -103,7 +104,7 @@ class ReportDynamicLabel(report_sxw.rml_parse):
         new_list = []
         result1 = []
         list_newdata = []
-        for row in range(0, len(result) / (columns + 1)):
+        for row in range(0, len(result) / (columns) + 1):
             val = result[row * columns: row * columns + columns]
             if val:
                 new_list.append(val)
@@ -118,21 +119,21 @@ class ReportDynamicLabel(report_sxw.rml_parse):
         remain_data = []
         counter = 0
         for newlist_data in list_newdata:
-                if newlist_data in list_newdata:
-                    counter = counter + 1
-                if counter > number_of_copy:
-                    counter = 1
-                if counter < number_of_copy:
-                    remain_copy = number_of_copy - counter
-                    for xx in range(0, remain_copy):
-                        remain_data.append(newlist_data)
+            if newlist_data in list_newdata:
+                counter = counter + 1
+            if counter > number_of_copy:
+                counter = 1
+            if counter < number_of_copy:
+                remain_copy = number_of_copy - counter
+                for xx in range(0, remain_copy):
+                    remain_data.append(newlist_data)
 
         for data_value_vals in value_vals:
             if data_value_vals not in list_newdata:
                 for add_data in range(0, number_of_copy):
                     remain_data.append(data_value_vals)
 
-        if newlist_len < number_of_copy:
+        if newlist_len <= number_of_copy:
             diff = number_of_copy - newlist_len
 
         new_val = []
@@ -141,14 +142,16 @@ class ReportDynamicLabel(report_sxw.rml_parse):
             for new_result in range(0, diff):
                 result1.append(temp)
 
-        if len(ids) > 1:
-                for remain_data_value in remain_data:
-                    temp[0]['value'] = remain_data_value
-                    result1.append([temp[0].copy()])
+        # Duplicates the data and raise the issue in the label format.
+#         if len(ids) > 1:
+#             for remain_data_value in remain_data:
+#                 temp[0]['value'] = remain_data_value
+#                 result1.append([temp[0].copy()])
+#
+#         for row in range(0, len(result1)):
+#             new_val = result1[row * columns: row * columns + columns]
+#             new_list.append(new_val)
 
-        for row in range(0, len(result1)):
-                    new_val = result1[row * columns: row * columns + columns]
-                    new_list.append(new_val)
         return new_list
 
     def __init__(self, cr, uid, name, context):
