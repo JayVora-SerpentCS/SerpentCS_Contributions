@@ -8,7 +8,7 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sales Management',
     'website': 'http://www.serpentcs.com',
-    'version': '10.0.1.0.1',
+    'version': '11.0.1.0.1',
     'license': 'AGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'description': '''This module is to hide price/discount in Sale Order
@@ -17,10 +17,12 @@
         1. Show Price
         2. Show Discount Based on the choices on the fields, the relevant
         fields would be shown on the report.''',
-    'depends': ['sale'],
-    'data': ['views/sale_view.xml',
-             'views/report_saleorder.xml'
-             ],
+    'depends': [
+        'sale'
+    ],
+    'data': [
+        'views/sale_view.xml',
+        'views/report_saleorder.xml'
+    ],
     'installable': True,
-    'auto_install': False
 }
