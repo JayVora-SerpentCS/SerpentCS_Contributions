@@ -2,11 +2,14 @@
 <odoo>
 
         <!-- QWEB Report use paperformat -->
-        <report id="dynamic_label"
-                string="Label"
-                model="label.config"
-                name="label.report_label"
-                report_type="qweb-pdf"
-                paperformat="label.paperformat_euro"/>
+        <report 
+            id="dynamic_label"
+            model="label.config"
+            string="Label"
+            menu="False"
+            report_type="qweb-pdf"
+            name="label.report_label"
+            />
+
 
 </odoo>
