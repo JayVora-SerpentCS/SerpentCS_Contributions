@@ -2,10 +2,11 @@
 
         <!-- Qweb Report design -->
         <template id="report_label">
-            <t t-call="report.html_container">
-                <div class="page" style="margin-top:0px;">
+        	<t t-call="web.internal_layout">
+            <t t-call="web.html_container">
+                 <div class="page" style="margin-top:0px;">
                     <div class="ex2">
-                        <table t-att-style="'border-spacing:'+data['form']['cell_spacing']+';border-collapse: separate'">
+                        <table class="table table-condensed" t-att-style="'border-spacing:'+data['form']['cell_spacing']+';border-collapse: separate'">
                             <t t-foreach="get_data(data['form'].get('rows'),data['form'].get('columns'),data['form'].get('ids'),data ['form'].get('model'),data['form'].get('number_of_copy'))"
                                t-as="row">
                                 <tr t-att-height="data['form']['height']">
@@ -39,7 +40,8 @@
                             </t>
                         </table>
                     </div>
-                </div>
+                </div> 
+                </t>
             </t>
         </template>
 
