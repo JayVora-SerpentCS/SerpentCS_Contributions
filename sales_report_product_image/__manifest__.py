@@ -11,7 +11,8 @@
     'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': [
-        'sale', 'web_tree_image'
+        'sale',
+        # 'web_tree_image' Depends on OCA's v11 migration
     ],
     'data': [
         'views/sale_product_view.xml',
