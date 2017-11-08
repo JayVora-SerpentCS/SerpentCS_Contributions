@@ -11,4 +11,3 @@ def uninstall_hook(cr, registry):
                    (tuple(value_list),))
         cr.execute("delete from ir_actions where id in %s",
                    (tuple(value_list),))
-
