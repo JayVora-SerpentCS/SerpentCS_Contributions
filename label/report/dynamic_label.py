@@ -139,4 +139,3 @@ class ReportDynamicLabel(models.AbstractModel):
             'time': time,
             'get_data': self.get_data,
         }
-    
