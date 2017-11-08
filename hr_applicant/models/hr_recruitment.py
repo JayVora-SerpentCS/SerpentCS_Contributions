@@ -136,8 +136,6 @@ class Applicant(models.Model):
                                 'epilepsy': medical_detail.epilepsy,
                                 'history_drug_use':
                                 medical_detail.history_drug_use,
-                                'fit_for_full_duty':
-                                medical_detail.fit_for_full_duty,
                                 'employee_id': res.get('res_id', False),
                                 'blood_name': medical_detail.blood_name,
                                 'blood_type': medical_detail.blood_type})
