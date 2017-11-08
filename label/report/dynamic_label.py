@@ -130,8 +130,8 @@ class ReportDynamicLabel(models.AbstractModel):
 
         self.model = self.env.context.get('active_model')
         docs = self.env[self.model].\
-            browse(self.env.context.get('active_ids',[]))
-        return  {
+            browse(self.env.context.get('active_ids', []))
+        return {
             'doc_ids': docs.ids,
             'doc_model': self.model,
             'data': data,
