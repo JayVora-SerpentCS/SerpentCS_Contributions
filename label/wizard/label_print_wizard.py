@@ -83,4 +83,5 @@ class LabelPrintWizard(models.TransientModel):
             'model': 'label.config',
             'form': datas
         }
-        return self.env.ref('label.dynamic_label').with_context(context).report_action(self, data=data)
+        return self.env.ref('label.dynamic_label').\
+        with_context(context).report_action(self, data=data)
