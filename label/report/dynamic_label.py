@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of odoo
 import time
-from odoo import models, api
+from odoo import models, api, _
 from odoo.osv.orm import browse_record
 from odoo.exceptions import UserError
 
@@ -129,8 +129,8 @@ class ReportDynamicLabel(models.AbstractModel):
                         this report cannot be printed."))
 
         self.model = self.env.context.get('active_model')
-        docs = self.env[self.model].browse(self.env.context.get('active_ids',
-                                                        []))
+        docs = self.env[self.model].\
+            browse(self.env.context.get('active_ids',[]))
         return  {
             'doc_ids': docs.ids,
             'doc_model': self.model,
@@ -139,3 +139,4 @@ class ReportDynamicLabel(models.AbstractModel):
             'time': time,
             'get_data': self.get_data,
         }
+    
