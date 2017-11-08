@@ -11,9 +11,7 @@
     'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': [
-        'sale',
-# FIXME: Added the widget in field attribute once OCA web_tree_image module is migrated in v11
-#        'web_tree_image',
+        'sale', 'web_tree_image'
     ],
     'data': [
         'views/sale_product_view.xml',
