@@ -16,7 +16,6 @@
         'web',
     ],
     'data': [
-#        'views/template.xml',
         'views/project_team_view.xml',
     ],
     'images': [
