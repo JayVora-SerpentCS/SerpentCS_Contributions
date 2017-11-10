@@ -9,7 +9,7 @@
             <form string="Employees Grade">
                 <sheet>
                     <group>
-                        <field name="name" />
+                        <field name="name" required="1"/>
                     </group>
                     <notebook>
                         <page string="Ranks">
@@ -55,7 +55,7 @@
             <form string="Employees Rank">
                 <sheet>
                     <group>
-                        <field name="name" />
+                        <field name="name" required="1"/>
                     </group>
                     <group>
                         <field name="salary_range" />
