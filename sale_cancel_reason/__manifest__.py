@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # Author: Guewen Baconnier
 # Copyright 2013 Camptocamp SA
-# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
+# Copyright 2011 Serpent Consulting Services Pvt. Ltd.
 # (http://www.serpentcs.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Sale Cancel Reason',
-    'version': '10.0.1.0.0',
+    'version': '11.0.1.0.0',
     'author': 'Camptocamp, Odoo Community Association (OCA)',
     'category': 'Sale',
     'license': 'AGPL-3',
@@ -19,7 +19,7 @@
         ==================
         When a sale order is canceled, a reason must be given,
         it is chosen from a configured list. ''',
-    'depends': ['sale'],
+    'depends': ['sale_management'],
     'data': [
             'wizard/cancel_reason_view.xml',
             'view/sale_view.xml',
