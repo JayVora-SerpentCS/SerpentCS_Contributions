@@ -1,46 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="base_module_record_objects_view" model="ir.ui.view">
-        <field name="name">base_module_record_objects</field>
-        <field name="model">base.module.record</field>
-        <field name="arch" type="xml">
-            <form string="Objects Recording">
-                <group col="4">
-                    <field name="check_date"/>
-                    <field name="filter_cond"/>
-                </group>
-                <separator string="Choose objects to record" colspan="4"/>
-                <field name="objects" colspan="4" nolabel="1"/>
-                <footer>
-                    <button name="record_objects" string="Record"
-                            type="object" class="oe_highlight"/>
-                    or
-                    <button string="Cancel" class="oe_link" special="cancel"/>
-                </footer>
-            </form>
-        </field>
-    </record>
+        <record id="base_module_record_objects_view" model="ir.ui.view">
+            <field name="name">base_module_record_objects</field>
+            <field name="model">base.module.record</field>
+            <field name="arch" type="xml">
+                <form string="Objects Recording">
+                    <group col="4">
+                        <field name="check_date"/>
+                        <field name="filter_cond"/>
+                    </group>
+                    <separator string="Choose objects to record" colspan="4"/>
+                    <field name="objects" colspan="4" nolabel="1"/>
+                    <group>
+                        <field name="info_yaml"/>
+                    </group>
+                    <footer>
+                        <button name="record_objects" string="Record" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
 
-    <record id="action_base_module_record_objects" model="ir.actions.act_window">
-        <field name="name">Export Customizations as a Module</field>
-        <field name="res_model">base.module.record</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="view_id" ref="base_module_record_objects_view"/>
-    </record>
+        <record id="action_base_module_record_objects" model="ir.actions.act_window">
+            <field name="name">Export Customizations as a Module</field>
+            <field name="res_model">base.module.record</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="base_module_record_objects_view"/>
+        </record>
 
-    <menuitem parent="base.menu_custom"
-              name="Module Creation"
-              id="menu_wizard_base_mod_rec"/>
+        <menuitem
+                parent="base.menu_custom"
+                name="Module Creation"
+                id="menu_wizard_base_mod_rec"/>
 
-    <menuitem parent="menu_wizard_base_mod_rec"
-              name="Export Customizations As a Module"
-              action="action_base_module_record_objects"
-              id="menu_wizard_base_module_record_objects"/>
+        <menuitem
+                parent="menu_wizard_base_mod_rec"
+                name="Export Customizations As a Module"
+                action="action_base_module_record_objects"
+                id="menu_wizard_base_module_record_objects"/>
 
-    <act_window id="act_base_module_record_objects"
+        <act_window
+                id="act_base_module_record_objects"
                 name="Export Customizations As a Module"
                 res_model="base.module.record"
                 src_model="ir.module.module"
@@ -49,88 +54,104 @@
                 multi="True"
                 key2="client_action_multi"/>
 
-    <record id="module_create_form_view" model="ir.ui.view">
-        <field name="name">module.create.form</field>
-        <field name="model">base.module.record.objects</field>
-        <field name="arch" type="xml">
-            <form string="Module Recording">
-                <group>
-                    <separator string="Module successfully created !" colspan="4"/>
-                    <field name="module_filename" invisible="1"/>
-                    <newline/>
-                </group>
-                <group>
-                    <field name="module_file" filename="module_filename" readonly="1"/>
-                </group>
-                <separator string="Information" colspan="4"/>
-                <label string="If you think your module could interest other people, we'd like you to publish it on
-                    https://www.odoo.com, in the 'Modules' section. You can do it through the website or using features of
-                    the 'base_module_publish' module."/>
-                <br/>
-                <label string="Thanks in advance for your contribution."/>
-                <separator colspan="4"/>
-                <footer>
-                    <button string="Close" class="oe_link" special="cancel"/>
-                </footer>
-            </form>
-        </field>
-    </record>
-
-    <record id="action_module_created" model="ir.actions.act_window">
-        <field name="name">Module Recording</field>
-        <field name="res_model">base.module.record.objects</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="view_id" ref="module_create_form_view"/>
-    </record>
-
-    <record id="info_start_form_view" model="ir.ui.view">
-        <field name="name">info.start.form.view</field>
-        <field name="model">base.module.record.objects</field>
-        <field name="arch" type="xml">
-            <form string="Module Recording">
-                <separator string="Module Information"/>
-                <group col="4">
-                    <field name="name" required="1"/>
-                    <field name="directory_name" required="1"/>
-                    <field name="version" required="1"/>
-                    <field name="author"/>
-                </group>
-                <group>
-                    <field name="website"/>
-                    <field name="category"/>
-                </group>
-                <group>
+        <record id="module_create_form_view" model="ir.ui.view">
+            <field name="name">module.create.form</field>
+            <field name="model">base.module.record.objects</field>
+            <field name="arch" type="xml">
+                <form string="Module Recording">
                     <group>
-                        <field name="data_kind"/>
+                        <separator string="Module successfully created !" colspan="4"/>
+                        <field name="module_filename" invisible="1"/>
+                        <newline/>
                     </group>
-                    <group></group>
-                </group>
-                <group>
-                    <field name="description" required="1"/>
-                </group>
-                <footer>
-                    <button name="inter_call" string="Continue"
-                            type="object" class="oe_highlight"/>
-                    or
-                    <button string="Cancel" class="oe_link" special="cancel"/>
-                </footer>
-            </form>
-        </field>
-    </record>
+                    <group>
+                        <field name="module_file" filename="module_filename" readonly="1"/>
+                    </group>
+                    <separator string="Information" colspan="4"/>
+                    <label string="If you think your module could interest other people, we'd like you to publish it on
+                        http://www.openerp.com, in the 'Modules' section. You can do it through the website or using features of
+                        the 'base_module_publish' module."/>
+                    <br/>
+                    <label string="Thanks in advance for your contribution."/>
+                    <separator colspan="4"/>
+                    <footer>
+                        <button string="Close" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
 
-    <record id="module_recording_message_view" model="ir.ui.view">
-        <field name="name">module_recording_message</field>
-        <field name="model">base.module.record.objects</field>
-        <field name="arch" type="xml">
-            <form string="Module Recording">
-                <label string="Thanks For using Module Recorder"/>
-                <footer>
-                    <button string="Close" class="oe_link" special="cancel"/>
-                </footer>
-            </form>
-        </field>
-    </record>
+        <record id="action_module_created" model="ir.actions.act_window">
+            <field name="name">Module Recording</field>
+            <field name="res_model">base.module.record.objects</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="module_create_form_view"/>
+        </record>
+
+        <record id="info_start_form_view" model="ir.ui.view">
+            <field name="name">info.start.form.view</field>
+            <field name="model">base.module.record.objects</field>
+            <field name="arch" type="xml">
+                <form string="Module Recording">
+                    <separator string="Module Information"/>
+                    <group col="4">
+                        <field name="name" required="1"/>
+                        <field name="directory_name" required="1"/>
+                        <field name="version" required="1"/>
+                        <field name="author"/>
+                    </group>
+                    <group>
+                        <field name="website"/>
+                        <field name="category"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="data_kind"/>
+                        </group>
+                        <group></group>
+                    </group>
+                    <group>
+                        <field name="description" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="inter_call" string="Continue" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="module_recording_message_view" model="ir.ui.view">
+            <field name="name">module_recording_message</field>
+            <field name="model">base.module.record.objects</field>
+            <field name="arch" type="xml">
+                <form string="Module Recording">
+                    <label string="Thanks For using Module Recorder"/>
+                    <footer>
+                        <button string="Close" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="yml_save_form_view" model="ir.ui.view">
+            <field name="name">yml.save.form</field>
+            <field name="model">base.module.record.objects</field>
+            <field name="arch" type="xml">
+                <form string="Module Recording">
+                    <separator string="YAML file successfully created !" colspan="4"/>
+                    <group>
+                        <field name="module_filename" invisible="1"/>
+                        <field string="YAML File" name="yaml_file" filename="module_filename" readonly="1"/>
+                    </group>
+                    <footer>
+                        <button string="Close" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
 
 </odoo>
