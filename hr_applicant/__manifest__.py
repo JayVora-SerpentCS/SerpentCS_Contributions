@@ -6,6 +6,7 @@
     'version': '11.0.0.1.0',
     'category': 'Human Resources',
     'sequence': 90,
+    'license': "AGPL-3",
     'summary': 'Applicant and Employee Subsections, Training',
     'description': """
 Extend features of recruitment process and Manage Training
