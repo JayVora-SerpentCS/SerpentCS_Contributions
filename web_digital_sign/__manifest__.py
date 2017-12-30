@@ -5,8 +5,6 @@
     'version': '11.0.1.0.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'category': '',
-    'license': 'AGPL-3',
     'complexity': 'easy',
     'depends': ['web'],
     'summary': 'Digital signature control',
