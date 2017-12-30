@@ -15,6 +15,7 @@
     'depends': [
         'hr_timesheet',
     ],
+    "license": "AGPL-3",
     'data': [
         'views/project_report.xml',
         'report/project_qweb_report.xml',
