@@ -23,6 +23,7 @@
     'name': 'Project Task Report',
     'version': '11.0.1.0.0',
     'category': 'Project Management',
+    "license": "AGPL-3",
     'description': """
       This module used to print report of project task details.""",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
