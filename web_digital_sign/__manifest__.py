@@ -7,6 +7,7 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'complexity': 'easy',
     'depends': ['web'],
+    "license": "AGPL-3",
     'summary': 'Digital signature control',
     'description': '''
      This module provides the functionality to store digital signature
