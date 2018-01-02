@@ -11,11 +11,16 @@ class SecurityDialog(models.Model):
 
     @api.multi
     def check_security(self, vals):
+        print ("vals---->>", vals, type(vals.get('password')))
         fields = vals.get('field').encode('ascii', 'ignore')
+        print ("fields====>>", fields)
+        fields = fields.decode('utf-8')
         result = self.search_read(
             [('id', '=', vals.get('companyId'))],
             [fields])
+        print ("hjgj==", result)
         for record in result:
+            print ("field==,", record, record.get(fields))
             if(record and record.get(fields or '') == vals.get('password')):
                 return True
             else:

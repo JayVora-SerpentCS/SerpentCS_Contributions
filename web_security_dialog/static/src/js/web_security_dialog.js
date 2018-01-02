@@ -2,101 +2,106 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
     "use strict";
 
     var core = require('web.core');
-    var FromWidget = require('web.form_widgets');
+    var FormController = require('web.FormController')
     var Dialog = require('web.Dialog');
-    var Model = require('web.DataModel');
+    var rpc = require('web.rpc');
+    var session = require('web.session');
     var framework = require('web.framework');
 
     var QWeb = core.qweb;
     var _t = core._t;
+    
 
-    FromWidget.WidgetButton.include({
-        init : function(field_manager, node) {
-            this._super(field_manager, node);
-            if(this.node.attrs.options) {
-                this.options = JSON.parse(this.node.attrs.options)
-                    ? JSON.parse(this.node.attrs.options)
-                            : false;
-                if(this.options) {
-                    this.is_dialog_security = this.options.security
-                    ? this.options.security
-                            : false;
-                }else{
-                    this.is_dialog_security = false;
-                }
-            }
-        },
-        execute_action: function() {
+    FormController.include({
+        _onButtonClicked: function (event) {
+            // stop the event's propagation as a form controller might have other
+            // form controllers in its descendants (e.g. in a FormViewDialog)
+            event.stopPropagation();
             var self = this;
-            var exec_action = function() {
-            if (self.node.attrs.confirm && self.is_dialog_security){
-                Dialog.confirm(self, self.node.attrs.confirm, {
-                    buttons: [
-                              {
-                                  text: _t("Ok"),
-                                  classes: 'btn-primary',
-                                  click: function(){
-                                      this.close();
-                                      self.open_pincode_dialog();
-                                  }
-                              },
-                              {
-                                  text:_t('Cancel'),
-                                  close:true
-                              }]
+            var def;
+
+            this._disableButtons();
+
+            var attrs = event.data.attrs;
+            this.is_dialog_security = false
+            if(attrs.options) {
+                this.is_dialog_security = attrs.options.security ? attrs.options.security : false;
+            }
+            function openmodel_dialog(event){
+                return $.when(self.open_pincode_dialog()).done(function(dialog){
+                    dialog.$footer.find('.validate_pincode').click(function(){
+                        var password = dialog.$el.find("#pincode").val();
+                        if (password) {
+                            framework.blockUI();
+                            var callback = self.validate_pincode(self.is_dialog_security,password);
+                            callback.done(function(result) {
+                                framework.unblockUI();
+                                if (result) {
+                                    dialog.close();
+                                    saveAndExecuteAction(event)
+                                }else {
+                                    Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
+                                    return;
+                                }
+                            }).fail(function(error) {
+                                framework.unblockUI();
+                                Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
+                                return;
+                            });
+                        }else {
+                            Dialog.alert(self, _t("Please Enter the Password."));
+                            return;
+                        }
+                    })
+                })
+            }
+            function saveAndExecuteAction () {
+                return self.saveRecord(self.handle, {
+                    stayInEdit: true,
+                }).then(function () {
+                    // we need to reget the record to make sure we have changes made
+                    // by the basic model, such as the new res_id, if the record is
+                    // new.
+                    var record = self.model.get(event.data.record.id);
+                    return self._callButtonAction(attrs, record);
                 });
-            }else if (self.node.attrs.confirm) {
-                    var def = $.Deferred();
-                    Dialog.confirm(self, self.node.attrs.confirm, { confirm_callback: self.on_confirmed }).
-                        on("closed", null, function() {
-                              def.resolve();
-                              });
-                    return def.promise();
-                } else {
-                    return self.on_confirmed();
-                }
-            };
-            if (!this.node.attrs.special) {
-                return this.view.recursive_save().then(exec_action);
-            } else {
-                return exec_action();
             }
+            if ((attrs.confirm) && self.is_dialog_security ){
+                var d = $.Deferred();
+                Dialog.confirm(this, attrs.confirm, {
+                    confirm_callback: openmodel_dialog,
+                }).on("closed", null, function () {
+                    d.resolve();
+                });
+                def = d.promise();
+            }
+            else if (attrs.confirm && !self.is_dialog_security) {
+                var d = $.Deferred();
+                Dialog.confirm(this, attrs.confirm, {
+                    confirm_callback: saveAndExecuteAction,
+                }).on("closed", null, function () {
+                    d.resolve();
+                });
+                def = d.promise();
+            } else if (attrs.special === 'cancel') {
+                def = this._callButtonAction(attrs, event.data.record);
+            } else if (!attrs.special || attrs.special === 'save') {
+                // save the record but don't switch to readonly mode
+                def = saveAndExecuteAction();
+            }
+
+            def.always(this._enableButtons.bind(this));
         },
-        open_pincode_dialog : function(){
+        open_pincode_dialog : function(event){
             var self = this;
-            new Dialog(self,{
+            return new Dialog(self,{
                 title: _t('Security'),
                 size : "small",
                 $content: QWeb.render('DialogSecurity'),
                 buttons: [
                             {
                                 text: _t("Ok"),
-                                classes: 'btn-primary',
-                                click: function(){
-                                   var curr_obj = this;
-                                   var password = this.$el.find("#pincode").val();
-                                   if (password) {
-                                       framework.blockUI();
-                                       var callback = self.validate_pincode(self.is_dialog_security,password);
-                                       callback.done(function(result) {
-                                           framework.unblockUI();
-                                           if (result) {
-                                               curr_obj.close();
-                                              self.on_confirmed();
-                                           }else {
-                                               Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
-                                               return;
-                                           }
-                                       }).fail(function(error) {
-                                           framework.unblockUI();
-                                           Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
-                                           return;
-                                       });
-                                   }else {
-                                       Dialog.alert(self, _t("Please Enter the Password."));
-                                       return;
-                                   }
-                                }
+                                classes: 'btn-primary validate_pincode',
                             },
                             {
                                 text:_t('Cancel'),
@@ -107,12 +112,20 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
         },
         validate_pincode : function(field,value) {
             var self = this;
+            var data = false;
             var data_vals = {
                     "field" : field,
                     "password"  : value,
-                    "companyId" : self.session.company_id
+                    "companyId" : session.company_id
                 };
-          return new Model("res.company").call("check_security",[[],data_vals]);
+           var data_value = rpc.query({
+                model: 'res.company',
+                method: 'check_security',
+                args: [[],data_vals]
+            }).then(function (result) {
+                    return result
+            });
+            return data_value;
         }
     });
 
