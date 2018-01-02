@@ -17,7 +17,6 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             // form controllers in its descendants (e.g. in a FormViewDialog)
             event.stopPropagation();
             var self = this;
-            var def;
 
             this._disableButtons();
 
@@ -25,7 +24,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             this.is_dialog_security = false
             if(attrs.options){
                 this.is_dialog_security = attrs.options.security ? attrs.options.security : false;
-            }
+            };
             function saveAndExecuteAction () {
                 return self.saveRecord(self.handle, {
                     stayInEdit: true,
@@ -36,7 +35,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                     var record = self.model.get(event.data.record.id);
                     return self._callButtonAction(attrs, record);
                 });
-            }
+            };
             function openmodel_dialog(event){
                 return $.when(self.open_pincode_dialog()).done(function(dialog){
                     dialog.$footer.find('.validate_pincode').click(function(){
@@ -62,31 +61,31 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                             Dialog.alert(self, _t("Please Enter the Password."));
                             return;
                         }
-                    })
+                    });
                 });
             }
-            if ((attrs.confirm) && self.is_dialog_security){
+            if ((attrs.confirm) && (self.is_dialog_security)){
                 var d = $.Deferred();
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
                 }).on("closed", null, function () {
                     d.resolve();
                 });
-                def = d.promise();
+                var def = d.promise();
             }
-            else if (attrs.confirm && !self.is_dialog_security) {
+            else if ((attrs.confirm) && (!self.is_dialog_security)) {
                 var d = $.Deferred();
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: saveAndExecuteAction,
                 }).on("closed", null, function () {
                     d.resolve();
                 });
-                def = d.promise();
+                var def = d.promise();
             } else if (attrs.special === 'cancel') {
-                def = this._callButtonAction(attrs, event.data.record);
+                var def = this._callButtonAction(attrs, event.data.record);
             } else if (!attrs.special || attrs.special === 'save') {
                 // save the record but don't switch to readonly mode
-                def = saveAndExecuteAction();
+                var def = saveAndExecuteAction();
             }
 
             def.always(this._enableButtons.bind(this));

@@ -13,7 +13,8 @@
                 </xpath>
             </field>
         </record>
-        <record id="res_users_form_view_inherit" model="ir.ui.view">
+
+        <record id="inherited_res_users_form_view" model="ir.ui.view">
             <field name="name">res.users.form.extend</field>
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form" />
