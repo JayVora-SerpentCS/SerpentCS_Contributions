@@ -2,7 +2,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
     "use strict";
 
     var core = require('web.core');
-    var FormController = require('web.FormController')
+    var FormController = require('web.FormController');
     var Dialog = require('web.Dialog');
     var rpc = require('web.rpc');
     var session = require('web.session');
@@ -10,7 +10,6 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
 
     var QWeb = core.qweb;
     var _t = core._t;
-    
 
     FormController.include({
         _onButtonClicked: function (event) {
@@ -24,8 +23,19 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
 
             var attrs = event.data.attrs;
             this.is_dialog_security = false
-            if(attrs.options) {
+            if(attrs.options){
                 this.is_dialog_security = attrs.options.security ? attrs.options.security : false;
+            }
+            function saveAndExecuteAction () {
+                return self.saveRecord(self.handle, {
+                    stayInEdit: true,
+                }).then(function () {
+                    // we need to reget the record to make sure we have changes made
+                    // by the basic model, such as the new res_id, if the record is
+                    // new.
+                    var record = self.model.get(event.data.record.id);
+                    return self._callButtonAction(attrs, record);
+                });
             }
             function openmodel_dialog(event){
                 return $.when(self.open_pincode_dialog()).done(function(dialog){
@@ -39,7 +49,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                 if (result) {
                                     dialog.close();
                                     saveAndExecuteAction(event)
-                                }else {
+                                }else{
                                     Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                     return;
                                 }
@@ -53,20 +63,9 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                             return;
                         }
                     })
-                })
-            }
-            function saveAndExecuteAction () {
-                return self.saveRecord(self.handle, {
-                    stayInEdit: true,
-                }).then(function () {
-                    // we need to reget the record to make sure we have changes made
-                    // by the basic model, such as the new res_id, if the record is
-                    // new.
-                    var record = self.model.get(event.data.record.id);
-                    return self._callButtonAction(attrs, record);
                 });
             }
-            if ((attrs.confirm) && self.is_dialog_security ){
+            if ((attrs.confirm) && self.is_dialog_security){
                 var d = $.Deferred();
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
@@ -123,7 +122,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 method: 'check_security',
                 args: [[],data_vals]
             }).then(function (result) {
-                    return result
+                    return result;
             });
             return data_value;
         }
