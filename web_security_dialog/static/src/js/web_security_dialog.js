@@ -17,14 +17,18 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             // form controllers in its descendants (e.g. in a FormViewDialog)
             event.stopPropagation();
             var self = this;
+            var def;
 
             this._disableButtons();
 
             var attrs = event.data.attrs;
-            this.is_dialog_security = false
+            this.is_dialog_security = false;
             if(attrs.options){
-                this.is_dialog_security = attrs.options.security ? attrs.options.security : false;
-            };
+                this.is_dialog_security = attrs.options.security ?
+                        attrs.options.security :
+                        false;
+            }
+
             function saveAndExecuteAction () {
                 return self.saveRecord(self.handle, {
                     stayInEdit: true,
@@ -35,29 +39,30 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                     var record = self.model.get(event.data.record.id);
                     return self._callButtonAction(attrs, record);
                 });
-            };
-            function openmodel_dialog(event){
+            }
+
+            function openmodel_dialog(){
                 return $.when(self.open_pincode_dialog()).done(function(dialog){
                     dialog.$footer.find('.validate_pincode').click(function(){
                         var password = dialog.$el.find("#pincode").val();
                         if (password) {
                             framework.blockUI();
                             var callback = self.validate_pincode(self.is_dialog_security,password);
-                            callback.done(function(result) {
+                            callback.done(function(result){
                                 framework.unblockUI();
-                                if (result) {
+                                if (result){
                                     dialog.close();
-                                    saveAndExecuteAction(event)
+                                    saveAndExecuteAction(event);
                                 }else{
                                     Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                     return;
                                 }
-                            }).fail(function(error) {
+                            }).fail(function(error){
                                 framework.unblockUI();
                                 Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
                                 return;
                             });
-                        }else {
+                        }else{
                             Dialog.alert(self, _t("Please Enter the Password."));
                             return;
                         }
@@ -68,7 +73,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 var d = $.Deferred();
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
-                }).on("closed", null, function () {
+                }).on("closed", null, function (){
                     d.resolve();
                 });
                 var def = d.promise();
