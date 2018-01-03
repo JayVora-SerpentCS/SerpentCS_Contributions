@@ -44,16 +44,19 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 return $.when(self.open_pincode_dialog()).done(function(dialog){
                     dialog.$footer.find('.validate_pincode').click(function(){
                         var password = dialog.$el.find("#pincode").val();
-                        if (password) {
+                        if (password)
+                        {
                             framework.blockUI();
                             var callback = self.validate_pincode(self.is_dialog_security,password);
                             callback.done(function(result){
                                 framework.unblockUI();
-                                if (result){
+                                if (result)
+                                {
                                     dialog.close();
                                     saveAndExecuteAction(event);
                                 }
-                                else{
+                                else
+                                {
                                     Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                     return;
                                 }
@@ -63,7 +66,8 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                 return;
                             });
                         }
-                        else{
+                        else
+                        {
                             Dialog.alert(self, _t("Please Enter the Password."));
                             return;
                         }
@@ -72,14 +76,16 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             }
             var d = $.Deferred();
             var def = d.promise();
-            if ((attrs.confirm) && (self.is_dialog_security)){
+            if (attrs.confirm && self.is_dialog_security)
+            {
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
                 }).on("closed", null, function (){
                     d.resolve();
                 });
             }
-            else if ((attrs.confirm) && (!self.is_dialog_security)){
+            else if (attrs.confirm && !self.is_dialog_security)
+            {
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: saveAndExecuteAction,
                 }).on("closed", null, function () {
@@ -87,10 +93,12 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 });
                 def = d.promise();
             }
-            else if (attrs.special === 'cancel'){
+            else if (attrs.special === 'cancel')
+            {
                 def = this._callButtonAction(attrs, event.data.record);
             }
-            else if (!attrs.special || attrs.special === 'save'){
+            else if (!attrs.special || attrs.special === 'save')
+            {
                 // save the record but don't switch to readonly mode
                 def = saveAndExecuteAction();
             }
