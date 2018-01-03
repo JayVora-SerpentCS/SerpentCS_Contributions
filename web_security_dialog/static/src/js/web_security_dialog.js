@@ -44,19 +44,15 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 return $.when(self.open_pincode_dialog()).done(function(dialog){
                     dialog.$footer.find('.validate_pincode').click(function(){
                         var password = dialog.$el.find("#pincode").val();
-                        if (password)
-                        {
+                        if (password) {
                             framework.blockUI();
                             var callback = self.validate_pincode(self.is_dialog_security,password);
                             callback.done(function(result){
                                 framework.unblockUI();
-                                if (result)
-                                {
+                                if (result) {
                                     dialog.close();
                                     saveAndExecuteAction(event);
-                                }
-                                else
-                                {
+                                } else {
                                     Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                     return;
                                 }
@@ -65,9 +61,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                 Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
                                 return;
                             });
-                        }
-                        else
-                        {
+                        } else {
                             Dialog.alert(self, _t("Please Enter the Password."));
                             return;
                         }
