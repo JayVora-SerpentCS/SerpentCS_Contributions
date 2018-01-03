@@ -70,29 +70,22 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             }
             var d = $.Deferred();
             var def = d.promise();
-            if (attrs.confirm && self.is_dialog_security)
-            {
+            if (attrs.confirm && self.is_dialog_security) {
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
                 }).on("closed", null, function (){
                     d.resolve();
                 });
-            }
-            else if (attrs.confirm && !self.is_dialog_security)
-            {
+            } else if (attrs.confirm && !self.is_dialog_security) {
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: saveAndExecuteAction,
                 }).on("closed", null, function () {
                     d.resolve();
                 });
                 def = d.promise();
-            }
-            else if (attrs.special === 'cancel')
-            {
+            } else if (attrs.special === 'cancel') {
                 def = this._callButtonAction(attrs, event.data.record);
-            }
-            else if (!attrs.special || attrs.special === 'save')
-            {
+            } else if (!attrs.special || attrs.special === 'save') {
                 // save the record but don't switch to readonly mode
                 def = saveAndExecuteAction();
             }
