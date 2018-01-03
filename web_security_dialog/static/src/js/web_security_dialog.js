@@ -17,16 +17,15 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             // form controllers in its descendants (e.g. in a FormViewDialog)
             event.stopPropagation();
             var self = this;
-            var def;
 
             this._disableButtons();
 
             var attrs = event.data.attrs;
             this.is_dialog_security = false;
             if(attrs.options){
-                this.is_dialog_security = attrs.options.security ?
-                        attrs.options.security :
-                        false;
+                this.is_dialog_security = attrs.options.security
+                        ? attrs.options.security
+                        : false;
             }
 
             function saveAndExecuteAction () {
@@ -53,7 +52,8 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                 if (result){
                                     dialog.close();
                                     saveAndExecuteAction(event);
-                                }else{
+                                }
+                                else{
                                     Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                     return;
                                 }
@@ -62,35 +62,37 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                 Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
                                 return;
                             });
-                        }else{
+                        }
+                        else{
                             Dialog.alert(self, _t("Please Enter the Password."));
                             return;
                         }
                     });
                 });
             }
+            var d = $.Deferred();
+            var def = d.promise();
             if ((attrs.confirm) && (self.is_dialog_security)){
-                var d = $.Deferred();
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
                 }).on("closed", null, function (){
                     d.resolve();
                 });
-                var def = d.promise();
             }
-            else if ((attrs.confirm) && (!self.is_dialog_security)) {
-                var d = $.Deferred();
+            else if ((attrs.confirm) && (!self.is_dialog_security)){
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: saveAndExecuteAction,
                 }).on("closed", null, function () {
                     d.resolve();
                 });
-                var def = d.promise();
-            } else if (attrs.special === 'cancel') {
-                var def = this._callButtonAction(attrs, event.data.record);
-            } else if (!attrs.special || attrs.special === 'save') {
+                def = d.promise();
+            }
+            else if (attrs.special === 'cancel'){
+                def = this._callButtonAction(attrs, event.data.record);
+            }
+            else if (!attrs.special || attrs.special === 'save'){
                 // save the record but don't switch to readonly mode
-                var def = saveAndExecuteAction();
+                def = saveAndExecuteAction();
             }
 
             def.always(this._enableButtons.bind(this));
