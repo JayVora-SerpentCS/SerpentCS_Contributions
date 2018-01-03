@@ -18,6 +18,7 @@ def _create_yaml(self, data):
         res_xml = mod.generate_yaml()
     except Exception, e:
         raise except_orm(_('Error'), _(str(e)))
+    
     return {
         'yaml_file': base64.encodestring(res_xml),
     }
