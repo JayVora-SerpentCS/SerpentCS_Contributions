@@ -19,10 +19,12 @@
             <field name="model">res.users</field>
             <field name="inherit_id" ref="base.view_users_form" />
             <field name="arch" type="xml">
-                <xpath expr="//form/sheet/div[@class='oe_button_box']/button[@name='toggle_active']" position="replace">
-                    <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-check" confirm="Do you want to active/inactive user?" options='{"security":"security_key"}'>
-                        <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
-                    </button>
+                <xpath expr="//form/sheet/div[@class='oe_button_box']/button[@name='toggle_active']" position="attributes">
+                    <attribute name="confirm">Do you want to active/inactive user?</attribute>
+                    <attribute name="options">{"security":"security_key"}</attribute>
+<!--                     <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-check" confirm="Do you want to active/inactive user?" options='{"security":"security_key"}'> -->
+<!--                         <field name="active" widget="boolean_button" options='{"terminology": "active"}'/> -->
+<!--                     </button> -->
                 </xpath>
             </field>
        </record>
