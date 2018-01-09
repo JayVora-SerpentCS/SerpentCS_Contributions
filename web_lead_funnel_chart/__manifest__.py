@@ -14,6 +14,7 @@
         'crm'
     ],
     'data': [
+        "data/crm_stage_data.xml",
         "views/templates.xml",
         "views/web_lead_funnel_chart_view.xml"
     ],

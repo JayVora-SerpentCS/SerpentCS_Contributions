@@ -70,6 +70,9 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                                 result.filter = true;
                                 result.target = 'current';
                                 result.context = {'default_user_id': Session.uid};
+                                if (crm_stage === 'Archive'){
+                                	result.domain = [['stage_id.name', '=', _t(crm_stage)], ['active', '=', false]];
+                            	}
                                 return WebClient.action_manager.do_action(result);
                             }
                         }
