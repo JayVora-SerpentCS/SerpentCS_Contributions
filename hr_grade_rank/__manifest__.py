@@ -20,7 +20,7 @@
         'views/hr_grade_rank_view.xml',
     ],
     'images': ['static/description/HRGradeRank.png'],
-    'licence': 1,
+    'licence': 'AGPL-3',
     'sequence': 1,
     'installable': True,
     'auto_install': False,
