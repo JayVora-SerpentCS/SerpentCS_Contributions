@@ -6,7 +6,7 @@ import StringIO
 import base64
 
 from openerp.tools import ustr
-from openerp.exceptions import except_orm
+from openerp.exceptions import UserError
 from openerp.tools.translate import _
 from openerp import models, fields, api
 
@@ -14,12 +14,13 @@ from openerp import models, fields, api
 @api.model
 def _create_yaml(self, data):
     mod = self.env['ir.module.record']
-    res_xml = ''
     try:
         res_xml = mod.generate_yaml()
     except Exception, e:
-        raise except_orm(_('Error'),(str(e)))
-    return {'yaml_file': base64.encodestring(res_xml)}
+        raise UserError(e)
+    else:
+        return {'yaml_file': base64.encodestring(res_xml)}
+
 
 @api.model
 def _create_module(self, ids):
