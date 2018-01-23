@@ -16,10 +16,9 @@ def _create_yaml(self, data):
     mod = self.env['ir.module.record']
     try:
         res_xml = mod.generate_yaml()
+        return {'yaml_file': base64.encodestring(res_xml)}
     except Exception, e:
         raise UserError(e)
-    else:
-        return {'yaml_file': base64.encodestring(res_xml)}
 
 
 @api.model
