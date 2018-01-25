@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
 
+<odoo>
     <report id="applicant_profile_form_report"
            model="hr.applicant"
            string="Resume"
@@ -24,5 +24,4 @@
         <field name="report_ids" eval="[(4, ref('hr_applicant.applicant_profile_form_report'))]">
         </field>
     </record>
-
 </odoo>
