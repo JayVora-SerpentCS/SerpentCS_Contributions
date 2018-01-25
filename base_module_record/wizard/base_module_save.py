@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
+
 
 import zipfile
 import StringIO
 import base64
 
-from openerp.tools import ustr
-from openerp.exceptions import UserError
-from openerp.tools.translate import _
-from openerp import models, fields, api
+from odoo.tools import ustr
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
+from odoo import models, fields, api
 
 
 @api.model
@@ -17,7 +17,7 @@ def _create_yaml(self, data):
     try:
         res_xml = mod.generate_yaml()
         return {'yaml_file': base64.encodestring(res_xml)}
-    except Exception, e:
+    except Exception as e:
         raise UserError(e)
 
 
