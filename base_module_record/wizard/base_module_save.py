@@ -2,9 +2,9 @@
 # See LICENSE file for full copyright and licensing details.
 
 import zipfile
-import StringIO
+# import StringIO
 import base64
-
+from io import StringIO
 from odoo.tools import ustr
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
@@ -27,7 +27,7 @@ def _create_module(self, ids):
     res_xml = mod.generate_xml()
     ids = self.search([('id', 'in', ids)])
     data = ids.read([])[0]
-    s = StringIO.StringIO()
+    s = StringIO()
     zip_file = zipfile.ZipFile(s, 'w')
     dname = data['directory_name']
     data['update_name'] = ''
