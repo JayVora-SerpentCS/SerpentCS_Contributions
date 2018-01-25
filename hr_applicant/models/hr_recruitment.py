@@ -550,9 +550,9 @@ class ApplicantLanguage(models.Model):
         'hr.applicant', 'Applicant Ref', ondelete='cascade')
     mother_tongue = fields.Boolean('Mother Tongue')
 
-    @api.one
     @api.constrains('mother_tongue')
     def _check_mother_tongue(self):
+        self.ensure_one()
         if self.mother_tongue and self.applicant_id:
             language_rec = self.search([
                 ('applicant_id', '=', self.applicant_id.id),
