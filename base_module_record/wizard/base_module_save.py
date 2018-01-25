@@ -21,6 +21,7 @@ def _create_yaml(self, data):
     except Exception as e:
         raise UserError(e)
 
+
 @api.model
 def _create_module(self, ids):
     mod = self.env['ir.module.record']

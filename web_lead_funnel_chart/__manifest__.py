@@ -12,7 +12,7 @@
     'license': 'AGPL-3',
     'description': '',
     'depends': [
-        'crm'
+        'crm', 'sale'
     ],
     'data': [
         "views/templates.xml",
