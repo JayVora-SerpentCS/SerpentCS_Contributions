@@ -4,7 +4,8 @@
 import zipfile
 # import StringIO
 import base64
-from io import StringIO
+import io
+# from io import StringIO
 from odoo.tools import ustr
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
@@ -20,14 +21,13 @@ def _create_yaml(self, data):
     except Exception as e:
         raise UserError(e)
 
-
 @api.model
 def _create_module(self, ids):
     mod = self.env['ir.module.record']
     res_xml = mod.generate_xml()
     ids = self.search([('id', 'in', ids)])
     data = ids.read([])[0]
-    s = StringIO.StringIO()
+    s = io.StringIO('')
     zip_file = zipfile.ZipFile(s, 'w')
     dname = data['directory_name']
     data['update_name'] = ''

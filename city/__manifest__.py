@@ -14,7 +14,7 @@
         state and country fields are replaced with a location
         field in partner and partner contact forms.
         This module helps to keep homogeneous address data in the database.""",
-    "depends": ["sales_team"],
+    "depends": ["sales_team", "crm"],
     "data": [
         "views/city_view.xml",
         "security/ir.model.access.csv",
