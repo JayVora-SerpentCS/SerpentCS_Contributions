@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odoo>
 
+<odoo>
     <record id="project_paperformat_qweb" model="report.paperformat">
         <field name="name">Project Details Paper Format</field>
         <field name="default" eval="True"/>
@@ -23,5 +23,4 @@
             name="project_detail_report.project_detail_qweb_report"
             paperformat="project_detail_report.project_paperformat_qweb"
             report_type="qweb-pdf"/>
-
 </odoo>

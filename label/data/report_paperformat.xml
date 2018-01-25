@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
         <!-- This view use for page design -->
-        <record id="paperformat_euro" model="report.paperformat">
+        <record id="paperformat_euro_lable" model="report.paperformat">
             <field name="name">European A4</field>
             <field name="default" eval="True"/>
             <field name="format">A4</field>

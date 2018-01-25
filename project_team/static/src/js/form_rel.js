@@ -4,7 +4,6 @@ odoo.define('project_team.form_rel', function (require) {
 var Form_Relation = require('web.form_relational');
 var core = require('web.core');
 var common = require('web.form_common');
-var _t = core._t;
 
 var COMMANDS = common.commands;
 
@@ -15,7 +14,6 @@ get_value: function() {
             not_delete = this.options.not_delete,
             starting_ids = this.starting_ids.slice(),
             replace_with_ids = [],
-            add_ids = [],
             command_list = [],
             index = 0;
 

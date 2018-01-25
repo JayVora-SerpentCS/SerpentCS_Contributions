@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# Copyright 2016-TODAY Serpent Consulting Services Pvt. Ltd.
 # See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
@@ -22,7 +20,6 @@ class SaleOrder(models.Model):
              ('account_id.user_type_id.name', 'in', ['Receivable', 'Payable']),
              ('full_reconcile_id', '=', False)]
         )
-
         debit, credit = 0.0, 0.0
         today_dt = datetime.strftime(datetime.now().date(), DF)
         for line in movelines:

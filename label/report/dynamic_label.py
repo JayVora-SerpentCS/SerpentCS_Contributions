@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of odoo
-from odoo import models, api
+import time
+from odoo import models, api, _
 from odoo.osv.orm import browse_record
+from odoo.exceptions import UserError
 
 
 class ReportDynamicLabel(models.AbstractModel):
@@ -17,6 +18,7 @@ class ReportDynamicLabel(models.AbstractModel):
             browse(self.env.context.get('label_print'))
         result = []
         value_vals = []
+        diff = 0
         for datas in active_model_obj.browse(ids):
             for i in range(0, number_of_copy):
                 vals = []
@@ -72,7 +74,7 @@ class ReportDynamicLabel(models.AbstractModel):
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals[0]['value'] not in value_vals:
+                if vals and vals[0]['value'] not in value_vals:
                     value_vals.append(vals[0]['value'])
                 result.append(vals)
                 temp = vals
@@ -81,7 +83,7 @@ class ReportDynamicLabel(models.AbstractModel):
         new_list = []
         result1 = []
         list_newdata = []
-        for row in range(0, len(result) / (columns + 1)):
+        for row in range(0, len(result) / (columns) + 1):
             val = result[row * columns: row * columns + columns]
             if val:
                 new_list.append(val)
@@ -110,36 +112,29 @@ class ReportDynamicLabel(models.AbstractModel):
                 for add_data in range(0, number_of_copy):
                     remain_data.append(data_value_vals)
 
-        diff = 0
-        if newlist_len < number_of_copy:
+        if newlist_len <= number_of_copy:
             diff = number_of_copy - newlist_len
 
         if len(ids) == 1:
             for new_result in range(0, diff):
                 result1.append(temp)
 
-        if len(ids) > 1:
-            for remain_data_value in remain_data:
-                temp[0]['value'] = remain_data_value
-                result1.append([temp[0].copy()])
-
-        for row in range(0, len(result1)):
-            new_val = result1[row * columns: row * columns + columns]
-            new_list.append(new_val)
         return new_list
 
-    @api.model
-    def render_html(self, docids, data):
-        report = self.env['report']
-        lab_report = report._get_report_from_name('label.report_label')
-        if data is None:
-            data = {}
-        if not docids:
-            docids = data.get('docids')
-        docargs = {
-            'doc_ids': docids,
-            'doc_model': lab_report.model,
+    @api.multi
+    def get_report_values(self, docids, data=None):
+        if not data.get('form') or not self.env.context.get('active_model'):
+            raise UserError(_("Form content is missing, \
+                        this report cannot be printed."))
+
+        self.model = self.env.context.get('active_model')
+        docs = self.env[self.model].\
+            browse(self.env.context.get('active_ids', []))
+        return {
+            'doc_ids': docs.ids,
+            'doc_model': self.model,
             'data': data,
+            'docs': docs,
+            'time': time,
             'get_data': self.get_data,
         }
-        return report.render('label.report_label', docargs)

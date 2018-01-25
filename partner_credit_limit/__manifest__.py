@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
@@ -9,17 +8,17 @@
     'author': 'Tiny, Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'summary': 'Set credit limit warning',
-    'description': '''Partner Credit Limit'
-        Checks for all over due payment and already paid amount
-        if the difference is positive and acceptable then Salesman
-        able to confirm SO
-    ''',
+    'summary': '''Set credit limit warning.Checks for all
+                  over due payment and already paid amount
+                  if the difference is positive and
+                  acceptable then Salesman
+                  able to confirm SO''',
     'depends': [
-        'sale',
+        'sale_management',
     ],
     'data': [
         'views/partner_view.xml',
     ],
     'installable': True,
+    'auto_install': False,
 }

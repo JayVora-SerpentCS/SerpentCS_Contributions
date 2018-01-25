@@ -11,7 +11,6 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
         template: "FunnelChart",
         start: function() {
             var self = this;
-            var emp_child = [];
             self.crm_lead_dataset = new dataset.DataSetSearch(self, "crm.lead", {}, []);
             self.crm_lead_dataset.call("get_lead_stage_data", [
                 []

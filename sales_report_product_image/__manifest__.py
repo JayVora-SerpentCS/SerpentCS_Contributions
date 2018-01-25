@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
@@ -12,8 +11,7 @@
     'website': 'http://www.serpentcs.com',
     'depends': [
         'sale',
-# FIXME: Added the widget in field attribute once OCA web_tree_image module is migrated in v11
-#        'web_tree_image',
+        # 'web_tree_image' Depends on OCA's v11 migration
     ],
     'data': [
         'views/sale_product_view.xml',
