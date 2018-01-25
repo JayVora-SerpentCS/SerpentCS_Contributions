@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 {
     "name": "Mass Label Reporting",
@@ -7,8 +8,10 @@
     "category": "Tools",
     "license": "AGPL-3",
     "website": "http://www.serpentcs.com",
-    "summary": '''Generate customised labels of any document.
-                  Video: https://www.youtube.com/watch?v=Fps5FWfcLwo''',
+    "summary": "Generate customised labels of any document",
+    "description": """
+    The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
+    """,
     'depends': ['base'],
     'data': [
         'data/report_paperformat.xml',
