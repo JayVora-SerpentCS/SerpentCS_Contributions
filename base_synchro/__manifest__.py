@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
@@ -6,6 +7,10 @@
     "category": "Tools",
     "license": "AGPL-3",
     "summary": "Multi-DB Synchronization",
+    "description": """ Synchronization with all objects
+     Configure servers and trigger synchronization with its database objects.
+     This module will let you synchronize two Odoo Databases!
+    """,
     "author": "OpenERP SA, Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "images": [

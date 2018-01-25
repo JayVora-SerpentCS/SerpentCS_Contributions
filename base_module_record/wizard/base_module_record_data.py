@@ -1,9 +1,9 @@
+# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
-
-from odoo.tools import frozendict, ustr
-from odoo.tools.translate import _
-from odoo import models, fields, api
+from openerp.tools import frozendict, ustr
+from openerp.tools.translate import _
+from openerp import models, fields, api
 
 
 class BaseModuleData(models.TransientModel):
