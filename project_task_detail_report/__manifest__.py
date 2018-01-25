@@ -24,12 +24,11 @@
     'version': '11.0.1.0.0',
     'category': 'Project Management',
     "license": "AGPL-3",
-    'description': """
-      This module used to print report of project task details.""",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'summary': """
-      Print task details with all worklog entries and task hours summary""",
+      Print task details with all worklog entries and task hours summary.
+      This module used to print report of project task details.""",
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'depends': [
         'hr_timesheet',
