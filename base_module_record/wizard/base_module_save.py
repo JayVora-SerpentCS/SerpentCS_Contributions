@@ -27,7 +27,7 @@ def _create_module(self, ids):
     res_xml = mod.generate_xml()
     ids = self.search([('id', 'in', ids)])
     data = ids.read([])[0]
-    s = StringIO()
+    s = StringIO.StringIO()
     zip_file = zipfile.ZipFile(s, 'w')
     dname = data['directory_name']
     data['update_name'] = ''
