@@ -1,3 +1,4 @@
+
 odoo.define('web_digital_sign.web_digital_sign', function(require) {
     "use strict";
 
@@ -32,7 +33,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 'height': '150',
                 'width': '550'
             };
-            this.empty_sign = []
+            this.empty_sign = [];
         },
         start: function() {
             var self = this;
@@ -45,7 +46,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             self._render();
         },
         _on_clear_sign: function() {
-            var self = this;
+//            var self = this;
             this.$(".signature > canvas").remove();
             this.$('> img').remove();
             this.$(".signature").attr("tabindex", "0");
