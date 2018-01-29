@@ -26,5 +26,5 @@ class SaleOrderTest(common.TransactionCase):
                 (0, 0, {'name': p.name, 'product_id': p.id,
                         'product_uom_qty': 2, 'product_uom': p.uom_id.id,
                         'price_unit': p.list_price
-                        })for (_, p) in self.products.iteritems()],
+                        })for (_, p) in self.products.items()],
         })
