@@ -83,7 +83,7 @@ odoo.define('web.MultiImage', function(require) {
             this._super.apply(this, arguments);
         },
         load_views: function() {
-        	var self = this;
+            var self = this;
             var view_types = this.node.attrs.mode;
             view_types = !!view_types ? view_types.split(",") : [this.default_view];
             var views = [];
@@ -97,9 +97,10 @@ odoo.define('web.MultiImage', function(require) {
                     fields_view: self.field.views && self.field.views[view_type],
                     options: {},
                 };
+                // to avoid 'Save' and 'Discard' buttons to appear in X2M fields
                 if(view.view_type === "list") {
                    _.extend(view.options, {
-                      action_buttons: false, // to avoid 'Save' and 'Discard' buttons to appear in X2M fields
+                      action_buttons: false,
                       addable: null,
                       selectable: self.multi_selection,
                       multi_image: (self.node.attrs.widget
@@ -193,10 +194,11 @@ odoo.define('web.MultiImage', function(require) {
                 self.images_list = [];
                 self.image_dataset = new dataset.DataSetSearch(self, self.model, {}, []);
                 if(self.dataset.ids.length != 0){
-                    if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
-                        return alert("Please Save the record when you are adding an image for the first time !!")
+                    if (_.every(self.dataset.ids, function(i) {
+                        return _.isString(i)})){
+                        return alert("Please Save the record when you are adding an image for the first time !!");
                     }else{
-                        _.each(self.dataset.ids, function(i) { 
+                        _.each(self.dataset.ids, function(i) {
                             if (_.isNumber(i)){
                                 saved_images.push(i)
                             }
@@ -248,12 +250,13 @@ odoo.define('web.MultiImage', function(require) {
                 var saved_images = [];
                 self.image_dataset = new dataset.DataSetSearch(self, self.model, {}, []);
                 if(self.dataset.ids.length != 0){
-                    if (_.every(self.dataset.ids, function(i) { return _.isString(i)})){
-                        return alert("Please Save the record when you are adding an image for the first time !!")
+                    if (_.every(self.dataset.ids, function(i)
+                            {return _.isString(i)})){
+                        return alert("Please Save the record when you are adding an image for the first time !!");
                     }else{
-                        _.each(self.dataset.ids, function(i) { 
+                        _.each(self.dataset.ids, function(i) {
                             if (_.isNumber(i)){
-                            	saved_images.push(i)
+                                saved_images.push(i);
                             }
                         })
                         self.image_dataset.read_slice([], {
@@ -284,7 +287,7 @@ odoo.define('web.MultiImage', function(require) {
                         });
                     }
                 }else{
-                     return alert("There are no image to display !!")
+                     return alert("There are no image to display !!");
                 }
             });
             return result;
