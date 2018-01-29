@@ -12,6 +12,7 @@
     'summary': 'Multiple web images widget',
     'description': ''' Web widget to load and swap multiple images.''',
     'data': [
+        'security/ir.model.access.csv',
         'view/templates.xml',
         'view/product_view.xml',
     ],
