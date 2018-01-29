@@ -268,10 +268,7 @@
                 // $("#lightboxImage").attr("style", "line-height:" + line_height)
                 $("#imageContainer").attr("style", "line-height:" + "");
                 $("#lightboxImage").attr("style", "line-height:" + "");
-                $('#lightboxImage').
-                attr('src', opts.imageArray[opts.activeImage][0]).
-                width(newWidth).
-                height(newHeight);
+                $('#lightboxImage').attr('src', opts.imageArray[opts.activeImage][0]).width(newWidth).height(newHeight);
 
                 resizeImageContainer(newWidth, newHeight);
             };

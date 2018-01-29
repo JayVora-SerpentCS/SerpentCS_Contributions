@@ -8,7 +8,7 @@ odoo.define('website_multi_image_zoom.website_sale', function(require) {
             var oe_website_sale = this;
 
             function price_to_str(prices) {
-            	var price = prices;
+                var price = prices;
                 price = Math.round(price * 100) / 100;
                 var dec = Math.round((price % 1) * 100);
                 return price +

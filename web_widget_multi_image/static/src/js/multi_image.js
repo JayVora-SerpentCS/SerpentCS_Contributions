@@ -4,7 +4,7 @@ odoo.define('web.MultiImage', function(require) {
 
     var core = require('web.core');
     var utils = require('web.utils');
-    var Widget = require('web.Widget');
+//    var Widget = require('web.Widget');
     var ViewManager = require('web.ViewManager');
     var ControlPanel = require('web.ControlPanel');
     var ListView = require('web.ListView');
