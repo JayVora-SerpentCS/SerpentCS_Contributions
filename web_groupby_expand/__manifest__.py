@@ -9,7 +9,7 @@
     "category": "Web",
     "license": "AGPL-3",
     'summary': 'Expand all groups on single click',
-    "description": "Adds Expand button to expand all groups on a list view.",
+#    "description": "Adds Expand button to expand all groups on a list view.",
     "depends": [
         "web",
     ],

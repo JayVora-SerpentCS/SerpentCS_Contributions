@@ -9,7 +9,7 @@
     'depends': ['product'],
     'license': 'AGPL-3',
     'summary': 'Multiple web images widget',
-    'description': ''' Web widget to load and swap multiple images.''',
+#    'description': ''' Web widget to load and swap multiple images.''',
     'data': [
         'security/ir.model.access.csv',
         'view/templates.xml',

@@ -400,7 +400,7 @@
 
         /*
         # Resize the sexy overlay to fit the constraints of your current viewing environment
-        # 
+        #
         # This should now happen whenever a window is resized, so you should always see a full overlay
         */
         function resizeOverlayToFitWindow() {
@@ -414,7 +414,7 @@
             if (opts.imageArray.length > 1) {
                 $('#hoverNav').show();
 
-                // if loopImages is true, always show next and prev image buttons 
+                // if loopImages is true, always show next and prev image buttons
                 if (opts.loopImages) {
                     $('#prevLink,#prevLinkText').show().click(function() {
                         changeImage((opts.activeImage === 0)
