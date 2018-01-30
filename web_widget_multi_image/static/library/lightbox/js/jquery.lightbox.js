@@ -462,7 +462,7 @@
             if ((key === 'x') || (key === 'o') || (key === 'c') || (keycode === escapeKey)) {
                 end();
 
-                // display previous image	
+            // display previous image
             } else if ((key === 'p') || (keycode === 37)) {
                 if (o.loopImages) {
                     disableKeyboardNav();
@@ -474,7 +474,7 @@
                     changeImage(o.activeImage - 1);
                 }
 
-                // display next image
+            // display next image
             } else if ((key === 'n') || (keycode === 39)) {
                 if (opts.loopImages) {
                     disableKeyboardNav();
