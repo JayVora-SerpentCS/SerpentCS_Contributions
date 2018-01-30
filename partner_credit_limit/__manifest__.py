@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
@@ -10,11 +9,6 @@
     'website': 'http://www.serpentcs.com',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Set credit limit warning',
-    'description': '''Partner Credit Limit'
-        Checks for all over due payment and already paid amount
-        if the difference is positive and acceptable then Salesman
-        able to confirm SO
-    ''',
     'depends': [
         'sale_management',
     ],

@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 import time
 import logging
 import threading
 from xmlrpc.client import ServerProxy
-
+# from xmlrpclib import ServerProxy
 from odoo import api, fields, models
 from odoo.exceptions import Warning
 from odoo.tools.translate import _

@@ -6,7 +6,8 @@ Web Groupby Expand
 
 Description
 -----------
-*Adds Expand button to expand all groups on a list view.
+
+* Adds Expand button to expand all groups on a list view.
 
 Bug Tracker
 ===========

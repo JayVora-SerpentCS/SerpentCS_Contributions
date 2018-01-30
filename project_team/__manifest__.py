@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
@@ -17,6 +16,7 @@
     ],
     'data': [
         'views/project_team_view.xml',
+        'views/template.xml',
     ],
     'images': [
         'static/description/ProjectTeam.png',
