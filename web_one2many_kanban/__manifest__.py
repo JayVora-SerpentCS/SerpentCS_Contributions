@@ -10,15 +10,6 @@
     "website": "http://www.serpentcs.com",
     "license": "AGPL-3",
     'summary': 'Display one2many widget as kanban',
-#    "description": """
-#        You need to define o2m field in kanban view definition and use
-#        for loop to display fields like:
-#
-#        <t t-foreach="record.o2mfield.raw_value" t-as="o">
-#            <t t-esc="o.name"/>
-#            <t t-esc="o.m2o_field[1]"/>
-#        </t>
-#    """,
     "depends": [
         "web",
     ],

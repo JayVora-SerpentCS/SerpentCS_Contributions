@@ -6,10 +6,6 @@
     'category': 'Sales Management',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Restrict sales on 0 value.',
-#    'description': """
-#        This module restricts a user from confirming a Sale Order/Quotation
-#        if it contains products having sale price zero.
-#    """,
     'license': 'AGPL-3',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
