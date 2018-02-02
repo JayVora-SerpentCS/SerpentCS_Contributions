@@ -2,7 +2,10 @@
 # See LICENSE file for full copyright and licensing details.
 
 import zipfile
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import base64
 
 from openerp.tools import ustr
