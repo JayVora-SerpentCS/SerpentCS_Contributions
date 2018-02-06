@@ -2,10 +2,7 @@
 # See LICENSE file for full copyright and licensing details.
 
 import zipfile
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+import io
 import base64
 
 from openerp.tools import ustr
@@ -30,7 +27,7 @@ def _create_module(self, ids):
     res_xml = mod.generate_xml()
     ids = self.search([('id', 'in', ids)])
     data = ids.read([])[0]
-    s = StringIO.StringIO()
+    s = io.BytesIO()
     zip_file = zipfile.ZipFile(s, 'w')
     dname = data['directory_name']
     data['update_name'] = ''
