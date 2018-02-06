@@ -15,6 +15,6 @@
         "security/ir.model.access.csv",
         "views/product_brand.xml",
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
 }
