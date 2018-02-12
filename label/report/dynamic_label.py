@@ -83,7 +83,7 @@ class ReportDynamicLabel(models.AbstractModel):
         new_list = []
         result1 = []
         list_newdata = []
-        for row in range(0, len(result) / (columns) + 1):
+        for row in range(0, len(result) // (columns) + 1):
             val = result[row * columns: row * columns + columns]
             if val:
                 new_list.append(val)
