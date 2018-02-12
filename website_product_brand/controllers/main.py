@@ -3,7 +3,7 @@ import werkzeug
 from odoo import http
 from odoo.http import request
 import odoo.addons.website_sale.controllers.main
-from odoo.addons.website.models.website import slug
+from odoo.addons.http_routing.models.ir_http import slug
 from odoo.addons.website_sale.controllers.main import TableCompute, QueryURL
 
 PPG = 20
