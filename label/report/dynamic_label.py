@@ -4,7 +4,6 @@
 # 1:  imports of odoo
 import time
 from odoo import models, api, _
-from odoo.osv.orm import browse_record
 from odoo.exceptions import UserError
 
 
@@ -39,10 +38,8 @@ class ReportDynamicLabel(models.AbstractModel):
                     if not value:
                         continue
 
-                    if isinstance(value, browse_record):
-                        model_obj = self.pool.get(value._name)
-                        value = eval("obj." + model_obj._rec_name,
-                                     {'obj': value})
+                    if isinstance(value, bytes):
+                        value = value.decode("utf-8")
 
                     if not value:
                         value = ''
