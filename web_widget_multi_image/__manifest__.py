@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 {
     'name': 'Web Widget Multiple Image V10',
@@ -10,7 +9,6 @@
     'depends': ['product'],
     'license': 'AGPL-3',
     'summary': 'Multiple web images widget',
-    'description': ''' Web widget to load and swap multiple images.''',
     'data': [
         'view/templates.xml',
         'view/product_view.xml',

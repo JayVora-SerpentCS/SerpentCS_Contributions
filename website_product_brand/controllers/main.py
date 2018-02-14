@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# See LICENSE file for full copyright and licensing details.
 import werkzeug
 from odoo import http
 from odoo.http import request
