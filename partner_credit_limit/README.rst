@@ -1,12 +1,19 @@
-==================================
+====================
 Partner Credit Limit
-==================================
+====================
 
-Description
------------
+* Checks for all over due payment and already paid amount if the difference is positive and acceptable then Salesman able to confirm SO
 
-* In this module when approving sale order amount of sale order and credit limit of partner is checked.
-* If credit limit of partner is less than amount of sale order validation is raised
+* The credit the Partner has to paid.
+
+* The amount of Sale Orders approved but not yet invoiced.
+
+* The amount of the Sale Order to be approved, and compares it with the credit limit of the partner. If the credit limit is less it does not allow to approve the Sale Order
+
+* If the Allow Over Credit is Checked then the System will not check for the credit limits, and it will allow that partner to override the limit.
+
+Usage
+=====
 
 Bug Tracker
 ===========
@@ -17,19 +24,4 @@ Credits
 Contributors
 ------------
 
-* Jay Vora <jay.vora@serpentcs.com>
-
-Maintainer
-----------
-
-.. image:: http://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: http://odoo-community.org
-
-This module is maintained by the OCA.
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-To contribute to this module, please visit http://odoo-community.org.
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
