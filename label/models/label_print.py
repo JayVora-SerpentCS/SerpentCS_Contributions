@@ -2,6 +2,7 @@
 
 # 1:  imports of odoo
 from odoo import models, fields, api, _
+from odoo.tools.safe_eval import safe_eval as eval
 
 
 class LabelPrint(models.Model):
