@@ -119,8 +119,8 @@ msgid "Thanks in advance for your contribution."
 msgstr "Ευχαριστούμε εκ των προτέρων για τη συνεισφορά σας."
 
 #. module: base_module_record
-#: help:base_module_record.module_record_data,init,objects:0
-#: help:base_module_record.module_record_objects,init,objects:0
+#: help:base_module_record.module_record_data,init
+#: help:base_module_record.module_record_objects,init
 msgid "List of objects to be recorded"
 msgstr "Λίστα αντικειμένων προς εγγραφή"
 

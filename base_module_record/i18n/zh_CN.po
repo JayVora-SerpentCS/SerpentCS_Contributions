@@ -117,8 +117,8 @@ msgid "Thanks in advance for your contribution."
 msgstr "感谢你的贡献"
 
 #. module: base_module_record
-#: help:base_module_record.module_record_data,init,objects:0
-#: help:base_module_record.module_record_objects,init,objects:0
+#: help:base_module_record.module_record_data,init
+#: help:base_module_record.module_record_objects,init
 msgid "List of objects to be recorded"
 msgstr "要记录的对象列表"
 

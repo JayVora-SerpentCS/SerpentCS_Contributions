@@ -113,8 +113,8 @@ msgid "Thanks in advance for your contribution."
 msgstr ""
 
 #. module: base_module_record
-#: help:base_module_record.module_record_data,init,objects:0
-#: help:base_module_record.module_record_objects,init,objects:0
+#: help:base_module_record.module_record_data,init
+#: help:base_module_record.module_record_objects,init
 msgid "List of objects to be recorded"
 msgstr ""
 
@@ -129,8 +129,8 @@ msgid "Module Name"
 msgstr ""
 
 #. module: base_module_record
-#: wizard_field:base_module_record.module_record_data,init,objects:0
-#: wizard_field:base_module_record.module_record_objects,init,objects:0
+#: wizard_field:base_module_record.module_record_data,init
+#: wizard_field:base_module_record.module_record_objects,init
 msgid "Objects"
 msgstr ""
 

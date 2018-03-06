@@ -118,8 +118,8 @@ msgid "Thanks in advance for your contribution."
 msgstr "Előre is köszönjük a hozzájárulást."
 
 #. module: base_module_record
-#: help:base_module_record.module_record_data,init,objects:0
-#: help:base_module_record.module_record_objects,init,objects:0
+#: help:base_module_record.module_record_data,init
+#: help:base_module_record.module_record_objects,init
 msgid "List of objects to be recorded"
 msgstr "Objektumok listája, melyeket fel kell venni."
 
