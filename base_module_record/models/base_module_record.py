@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 import string
@@ -45,7 +44,7 @@ class BaseModuleRecord(models.Model):
                 name = list(filter(lambda x: x in string.ascii_letters,
                                    (data.get('name', '') or '').lower()))
                 name = ''.join(name)
-            except:
+            except Exception as e:
                 name = ''
             val = model.replace('.', '_') + '_' + name + str(id_indx)
             if val not in self.blank_dict.values():

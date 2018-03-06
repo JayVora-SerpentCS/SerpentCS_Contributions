@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
@@ -350,7 +349,6 @@ class EmployeeLanguage(models.Model):
         'hr.employee', 'Employee Ref', ondelete='cascade')
     mother_tongue = fields.Boolean('Mother Tongue')
 
-    @api.one
     @api.constrains('mother_tongue')
     def _check_mother_tongue(self):
         if self.mother_tongue and self.employee_id:

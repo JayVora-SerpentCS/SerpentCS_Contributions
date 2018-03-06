@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of odoo
 import time
 from odoo import models, api, _
-from odoo.osv.orm import browse_record
 from odoo.exceptions import UserError
+from odoo.tools.safe_eval import safe_eval as eval
 
 
 class ReportDynamicLabel(models.AbstractModel):
@@ -39,10 +38,8 @@ class ReportDynamicLabel(models.AbstractModel):
                     if not value:
                         continue
 
-                    if isinstance(value, browse_record):
-                        model_obj = self.pool.get(value._name)
-                        value = eval("obj." + model_obj._rec_name,
-                                     {'obj': value})
+                    if isinstance(value, bytes):
+                        value = value.decode("utf-8")
 
                     if not value:
                         value = ''

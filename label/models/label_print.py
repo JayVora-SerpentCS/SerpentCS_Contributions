@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 # 1:  imports of odoo
 from odoo import models, fields, api, _
+from odoo.tools.safe_eval import safe_eval as eval
 
 
 class LabelPrint(models.Model):
