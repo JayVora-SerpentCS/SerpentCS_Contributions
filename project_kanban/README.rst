@@ -1,11 +1,15 @@
-==================================
+===============
 Project Kanban
-==================================
+===============
 
-Description
------------
+* Get to know your current Project status by activities.
 
-* This Module provide functionality when project was last updated and recently updated
+* This module helps the project management team know the idle projects by the last updated date on the project and recent updated date for  the Project communication.
+
+* Last update date shows the last update date and time of particular project.
+
+Usage
+=====
 
 Bug Tracker
 ===========
@@ -16,19 +20,5 @@ Credits
 Contributors
 ------------
 
-* Jay Vora <jay.vora@serpentcs.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 
-Maintainer
-----------
-
-.. image:: http://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: http://odoo-community.org
-
-This module is maintained by the OCA.
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-To contribute to this module, please visit http://odoo-community.org.

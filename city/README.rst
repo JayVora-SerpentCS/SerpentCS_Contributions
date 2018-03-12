@@ -1,11 +1,21 @@
-==================================
+==================
 City
-==================================
+==================
 
-Description
------------
+* This module helps to keep homogeneous address data in the database
 
-* keeps Homogeneous address data in the Database
+* Creates a model for storing cities Zip code, city, state and country fields are replaced with a location
+        field in partner and partner contact forms
+
+Usage
+=====
+How to use it:
+
+* Start server in terminal install module City and click on the menu 'city' and Fill up the all information related to the city
+
+* Fed.States helps you to store information of state
+
+* In customer form you can select in address fields configured city and state information.
 
 Bug Tracker
 ===========
@@ -16,19 +26,5 @@ Credits
 Contributors
 ------------
 
-* Jay Vora <jay.vora@serpentcs.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 
-Maintainer
-----------
-
-.. image:: http://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: http://odoo-community.org
-
-This module is maintained by the OCA.
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-To contribute to this module, please visit http://odoo-community.org.

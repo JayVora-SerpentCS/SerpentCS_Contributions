@@ -1,17 +1,17 @@
-==================================
+=========================
 Sale Report Product Image
-==================================
+=========================
 
-Description
------------
+* Product images for sale order/quotation and report.
 
-* Module provides functionality of adding product image in the Quotation/Order report in sales.
+* This module is developed to see the product images in tree view and report. Make sure to install the
+web_tree_image Module from OCA.
 
-Requirments
------------
+* To display images of product in report, you need to tick print image and image size you want to display in report.
 
-* User will have to install the web_tree_image Module from OCA.
- 
+Usage
+=====
+
 Bug Tracker
 ===========
 
@@ -21,19 +21,5 @@ Credits
 Contributors
 ------------
 
-* Jay Vora <jay.vora@serpentcs.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 
-Maintainer
-----------
-
-.. image:: http://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: http://odoo-community.org
-
-This module is maintained by the OCA.
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-To contribute to this module, please visit http://odoo-community.org.

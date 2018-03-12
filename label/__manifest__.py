@@ -1,14 +1,13 @@
 # See LICENSE file for full copyright and licensing details.
-
 {
     "name": "Mass Label Reporting",
     "version": "11.0.1.0.0",
-    "author": 'Serpent Consulting Services Pvt. Ltd.',
-    'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     "category": "Tools",
     "license": "AGPL-3",
-    "website": "http://www.serpentcs.com",
     "summary": "Generate customised labels of any document",
+    "author": 'Serpent Consulting Services Pvt. Ltd.',
+    "website": "http://www.serpentcs.com",
+    "maintainer": 'Serpent Consulting Services Pvt. Ltd.',
     'depends': ['base'],
     'data': [
         'data/report_paperformat.xml',

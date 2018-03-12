@@ -1,14 +1,13 @@
 # See LICENSE file for full copyright and licensing details.
 
 import zipfile
-# import StringIO
-import base64
 import io
-# from io import StringIO
-from odoo.tools import ustr
-from odoo.exceptions import UserError
-from odoo.tools.translate import _
-from odoo import models, fields, api
+import base64
+
+from openerp.tools import ustr
+from openerp.exceptions import UserError
+from openerp.tools.translate import _
+from openerp import models, fields, api
 
 
 @api.model
@@ -27,7 +26,6 @@ def _create_module(self, ids):
     res_xml = mod.generate_xml()
     ids = self.search([('id', 'in', ids)])
     data = ids.read([])[0]
-#    s = io.StringIO('')
     s = io.BytesIO()
     zip_file = zipfile.ZipFile(s, 'w')
     dname = data['directory_name']
@@ -176,4 +174,4 @@ class BaseModuleSave(models.TransientModel):
             'views': [(resource_id, 'form')],
             'type': 'ir.actions.act_window',
             'target': 'new',
-        }
+}
