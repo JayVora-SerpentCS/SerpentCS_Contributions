@@ -28,6 +28,7 @@ class Trainingcourses(models.Model):
 
     @api.constrains('duration')
     def _check_duration(self):
+        self.ensure_one()
         if len(str(self.duration)) > 3:
             raise ValidationError(
                 _("You can not enter duration more than three digits!"))
@@ -54,6 +55,7 @@ class TrainingClass(models.Model):
 
     @api.constrains('training_start_date', 'training_end_date')
     def _check_training_dup(self):
+        self.ensure_one()
         if self.training_start_date < datetime.datetime.now().\
                 strftime(DEFAULT_SERVER_DATE_FORMAT):
             raise ValidationError(_("You can't create past training!"))
@@ -173,6 +175,7 @@ class ListOfAttendees(models.Model):
     @api.constrains('class_id', 'training_start_date', 'training_end_date',
                     'date_of_arrival')
     def _check_training_dup(self):
+        self.ensure_one()
         if self.training_start_date < datetime.datetime.now().strftime(
                 DEFAULT_SERVER_DATE_FORMAT):
             raise ValidationError(_("You can't create past training!"))

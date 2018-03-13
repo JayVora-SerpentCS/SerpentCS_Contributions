@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
@@ -8,7 +7,7 @@
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
-    'version': '10.0.1.0.1',
+    'version': '11.0.1.0.1',
     'license': 'AGPL-3',
     'depends': [
         'website_sale',

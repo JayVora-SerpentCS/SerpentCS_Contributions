@@ -268,10 +268,7 @@
                 // $("#lightboxImage").attr("style", "line-height:" + line_height)
                 $("#imageContainer").attr("style", "line-height:" + "");
                 $("#lightboxImage").attr("style", "line-height:" + "");
-                $('#lightboxImage').
-                attr('src', opts.imageArray[opts.activeImage][0]).
-                width(newWidth).
-                height(newHeight);
+                $('#lightboxImage').attr('src', opts.imageArray[opts.activeImage][0]).width(newWidth).height(newHeight);
 
                 resizeImageContainer(newWidth, newHeight);
             };
@@ -403,7 +400,7 @@
 
         /*
         # Resize the sexy overlay to fit the constraints of your current viewing environment
-        # 
+        #
         # This should now happen whenever a window is resized, so you should always see a full overlay
         */
         function resizeOverlayToFitWindow() {
@@ -417,7 +414,7 @@
             if (opts.imageArray.length > 1) {
                 $('#hoverNav').show();
 
-                // if loopImages is true, always show next and prev image buttons 
+                // if loopImages is true, always show next and prev image buttons
                 if (opts.loopImages) {
                     $('#prevLink,#prevLinkText').show().click(function() {
                         changeImage((opts.activeImage === 0)
@@ -465,7 +462,7 @@
             if ((key === 'x') || (key === 'o') || (key === 'c') || (keycode === escapeKey)) {
                 end();
 
-                // display previous image	
+            // display previous image
             } else if ((key === 'p') || (keycode === 37)) {
                 if (o.loopImages) {
                     disableKeyboardNav();
@@ -477,7 +474,7 @@
                     changeImage(o.activeImage - 1);
                 }
 
-                // display next image
+            // display next image
             } else if ((key === 'n') || (keycode === 39)) {
                 if (opts.loopImages) {
                     disableKeyboardNav();

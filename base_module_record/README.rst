@@ -14,8 +14,7 @@ Base Module Record
 
 * It also support workflows and demo/update data.
 
-* This should help you to easily create reusable and publishable modules
-for custom configurations and demo/testing data.
+* This should help you to easily create reusable and publishable modules for custom configurations and demo/testing data.
 
 Usage
 =====

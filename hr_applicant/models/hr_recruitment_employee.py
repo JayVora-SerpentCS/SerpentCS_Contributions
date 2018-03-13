@@ -351,6 +351,7 @@ class EmployeeLanguage(models.Model):
 
     @api.constrains('mother_tongue')
     def _check_mother_tongue(self):
+        self.ensure_one()
         if self.mother_tongue and self.employee_id:
             language_rec = self.search([
                 ('employee_id', '=', self.employee_id.id),

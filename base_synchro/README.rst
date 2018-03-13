@@ -1,7 +1,3 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-   :target: https://www.gnu.org/licenses/agpl
-   :alt: License: AGPL-3
-
 ==================
 Base Synchro
 ==================
@@ -30,9 +26,4 @@ Bug Tracker
 
 Credits
 =======
-
-Contributors
-------------
-
-* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 

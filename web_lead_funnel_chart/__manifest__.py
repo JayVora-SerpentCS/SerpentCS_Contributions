@@ -10,7 +10,7 @@
     'version': '11.0.1.0.0',
     'license': 'AGPL-3',
     'depends': [
-        'crm'
+        'crm', 'sale'
     ],
     'data': [
         "views/templates.xml",

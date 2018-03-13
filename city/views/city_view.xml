@@ -89,7 +89,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Cities" groups="base.group_system" action="action_city" parent="sales_team.menu_localisation" id="menu_city_partner"/>
+    <menuitem name="Cities" groups="base.group_system" action="action_city" parent="crm.crm_menu_config" id="menu_city_partner"/>
 
 
     <!-- City Area-->
@@ -129,5 +129,5 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Areas" groups="base.group_system" action="action_area" parent="sales_team.menu_localisation" id="menu_area_city_partner"/>
+    <menuitem name="Areas" groups="base.group_system" action="action_area" parent="crm.crm_menu_config" id="menu_area_city_partner"/>
 </odoo>
