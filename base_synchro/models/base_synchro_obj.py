@@ -44,14 +44,6 @@ class BaseSynchroObj(models.Model):
     avoid_ids = fields.One2many('base.synchro.obj.avoid', 'obj_id',
                                 'Fields Not Sync.')
 
-#    @api.model
-#    def get_ids(self, obj, dt, domain=None, action=None):
-#        """Method to get ids."""
-#        if action is None:
-#            action = {}
-#        return self._get_ids(obj, dt, domain, action=action)
-
-#    def _get_ids(self, obj, dt, domain=None, action=None):
     @api.model
     def get_ids(self, obj, dt, domain=None, action=None):
         if action is None:

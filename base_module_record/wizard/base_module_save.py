@@ -174,4 +174,4 @@ class BaseModuleSave(models.TransientModel):
             'views': [(resource_id, 'form')],
             'type': 'ir.actions.act_window',
             'target': 'new',
-}
+            }

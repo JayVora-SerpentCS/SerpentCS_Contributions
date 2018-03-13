@@ -4,7 +4,6 @@ import time
 import logging
 import threading
 from xmlrpc.client import ServerProxy
-# from xmlrpclib import ServerProxy
 from odoo import api, fields, models
 from odoo.exceptions import Warning
 from odoo.tools.translate import _
@@ -57,14 +56,9 @@ class BaseSynchro(models.TransientModel):
     report_create = 0
     report_write = 0
 
-#    @api.model
-#    def input(self, ids, value):
-#        return value
-
     @api.model
     def synchronize(self, server, object):
         pool = self
-#        self.meta = {}
         sync_ids = []
         pool1 = RPCProxy(server)
         pool2 = pool
@@ -87,12 +81,8 @@ class BaseSynchro(models.TransientModel):
                           object.synchronize_date, object.domain)
             sync_ids += pool2.env['base.synchro.obj'].\
                 get_ids(model_obj, dt, eval(object.domain), {'action': 'u'})
-#        sync_ids.sort()
         sorted(sync_ids, key=lambda x: str(x[0]))
-#        iii = 0
-
         for dt, id, action in sync_ids:
-#            iii += 1
             destination_inverted = False
             if action == 'd':
                 pool_src = pool1
@@ -121,9 +111,6 @@ class BaseSynchro(models.TransientModel):
                                         object.model_id.model, value, action,
                                         destination_inverted)
             id2 = self.get_id(object.id, id, action)
-
-#            if not (iii % 50):
-#                pass
 
             # Filter fields to not sync
             for field in object.avoid_ids:
@@ -154,7 +141,6 @@ class BaseSynchro(models.TransientModel):
                 })
                 self.report_total += 1
                 self.report_create += 1
-#            self.meta = {}
         return True
 
     @api.model
@@ -220,9 +206,6 @@ class BaseSynchro(models.TransientModel):
             fields = pool_src.env[obj].fields_get()
         _logger.debug("Transforming data")
         for f in fields:
-           
-#            if f not in data:
-#                continue
             ftype = fields[f]['type']
             if ftype in ('function', 'one2many', 'one2one'):
                 _logger.debug("Field %s of type %s, discarded.", f, ftype)
