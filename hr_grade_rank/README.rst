@@ -2,7 +2,7 @@
 HR-Grade Rank
 ==================
 
-* This module is used to add grade of employees
+* This module is used to add grade of employees.
 
 * Module provides facility to manage organization hierarchy in box system.
 
@@ -10,7 +10,7 @@ HR-Grade Rank
 	
 * Group employees based on Grade and Rank to categorise employees in each vertical and grades under each department. 
 
-*Each grade contains multiple Ranks and each Rank has its salary range and list of job positions with job descriptions.
+* Each grade contains multiple Ranks and each Rank has its salary range and list of job positions with job descriptions.
  
 Usage
 =====
