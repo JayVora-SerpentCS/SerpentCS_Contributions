@@ -320,7 +320,7 @@ Exceptions:
                 'type': 'ir.actions.act_window',
                 'target': 'new',
             }
-        except:
-            raise Warning(_('''Synchronization cannot be done because
-            in destination database model is not found or reference is not
-            correctly set!'''))
+        except Exception, e:
+            error_msg = str(e)
+            _logger.warning('''Synchronize will be skipped because of
+            error %s''', error_msg)
