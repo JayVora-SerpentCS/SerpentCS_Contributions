@@ -140,10 +140,10 @@ class BaseSynchro(models.TransientModel):
                         pool_dest.get(object.model_id.model).write([id2],
                                                                    value)
                     except:
-                        raise Warning(_('''Synchronization is not be possible
-                        because some related records are either deleted or
-                        missing from destination database or from source
-                        database!'''))
+                        _logger.warning('''The synchronization will be skipped
+                        for the record %s,due to the relevant record is not
+                        available in either of the
+                        DBs''', object.model_id.model)
                 self.report_total += 1
                 self.report_write += 1
             else:
