@@ -20,7 +20,7 @@ class Crmleadextended(models.Model):
                 crm_lst.append((stage.name, int(leads and leads[0] or 0)))
         return crm_lst
 
-    #This method is overridden for archiving stage of funnel chart
+    # This method is overridden for archiving stage of funnel chart
     @api.multi
     def write(self, vals):
         active = vals.get('active', False)
