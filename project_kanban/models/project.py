@@ -17,5 +17,4 @@ class Project(models.Model):
 
     recent_date = fields.Datetime(compute="_compute_get_recent_date",
                                   string="Recent date",
-                                  help="This will allow you to add \
-                                  Recent Date")
+                                  help="This will be auto set")
