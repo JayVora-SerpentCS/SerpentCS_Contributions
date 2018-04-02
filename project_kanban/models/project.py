@@ -16,4 +16,6 @@ class Project(models.Model):
             project.recent_date = date_lst and max(date_lst) or False
 
     recent_date = fields.Datetime(compute="_compute_get_recent_date",
-                                  string="Recent date")
+                                  string="Recent date",
+                                  help="This will allow you to add \
+                                  Recent Date")
