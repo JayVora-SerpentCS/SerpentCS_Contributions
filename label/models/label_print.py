@@ -105,8 +105,9 @@ class IrModelFields(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=None):
-        data = self._context['model_list']
-        args.append(('model', 'in', eval(data)))
+        if 'model_list' in self._context.keys():
+            data = self._context['model_list']
+            args.append(('model', 'in', eval(data)))
         ret_vat = super(IrModelFields, self).name_search(name=name,
                                                          args=args,
                                                          operator=operator,
