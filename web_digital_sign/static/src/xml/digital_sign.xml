@@ -2,7 +2,7 @@
 <templates id="template" xml:space="preserve">
    <t t-name="FieldSignature">
         <div class="panel panel-default mt16 mb0 " id="drawsign">
-            <div class="panel-heading oe_edit_only">
+            <div class="panel-heading oe_edit_only digital_pennal">
                 <div class="pull-right">
                     <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
                     <a class="oe_edit_only save_sign"></a>

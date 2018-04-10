@@ -80,6 +80,12 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     $img.attr('src', self.placeholder);
                     self.do_warn(_t("Image"), _t("Could not display the selected image."));
                 });
+                if(this.field.__attrs.readonly == true){
+                	this.$el.find(".digital_pennal").css({'display':'none'})
+                }
+                else if(this.field.readonly == true){
+                	this.$el.find(".digital_pennal").css({'display':'none'})
+                }
             } else if (this.view.get("actual_mode") === 'edit') {
                 this.$el.find('> img').remove();
                 if (this.get('value')) {
