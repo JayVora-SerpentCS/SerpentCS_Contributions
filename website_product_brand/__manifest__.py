@@ -11,6 +11,7 @@
     'summary': 'Product Brand based filters',
     'version': '10.0.0.0.1',
     'depends': ['product_brand', 'website_sale'],
+    'images': ['static/description/icon.png'],
     'data': [
         "security/ir.model.access.csv",
         "views/product_brand.xml",
