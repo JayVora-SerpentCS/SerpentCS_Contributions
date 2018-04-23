@@ -10,6 +10,7 @@
     'complexity': 'easy',
     'depends': ['web'],
     'summary': 'Digital signature control',
+    'images': ['static/description/Digital_Signature.jpg'],
     'description': '''
      This module provides the functionality to store digital signature
      for a record.
