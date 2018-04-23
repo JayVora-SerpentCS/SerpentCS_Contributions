@@ -27,7 +27,6 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
            },
            
 			image_preview : function(){
-				console.log("this:::::::::::::::::", this)
 			   if(this.view.type === "list" && this.attrs.widget == 'image_multi') {
 			   	   var self = this
 				   var saved_images = [];
