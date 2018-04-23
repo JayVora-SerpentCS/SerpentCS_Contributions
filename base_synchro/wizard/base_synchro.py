@@ -136,7 +136,14 @@ class BaseSynchro(models.TransientModel):
                     pool = pool_dest.env[object.model_id.model]
                     pool.browse([id2]).write(value)
                 else:
-                    pool_dest.get(object.model_id.model).write([id2], value)
+                    try:
+                        pool_dest.get(object.model_id.model).write([id2],
+                                                                   value)
+                    except:
+                        _logger.warning('''The synchronization will be skipped
+                        for the record %s,due to the relevant record is not
+                        available in either of the
+                        DBs''', object.model_id.model)
                 self.report_total += 1
                 self.report_write += 1
             else:
@@ -212,7 +219,6 @@ class BaseSynchro(models.TransientModel):
     @api.model
     def data_transform(self, pool_src, pool_dest, obj, data, action=None,
                        destination_inverted=False):
-
         if action is None:
             action = {}
         if not destination_inverted:
@@ -297,19 +303,24 @@ Exceptions:
 
     @api.multi
     def upload_download_multi_thread(self):
-        threaded_synchronization = \
-            threading.Thread(target=self.upload_download())
-        threaded_synchronization.run()
-        data_obj = self.env['ir.model.data']
-        id2 = data_obj._get_id('base_synchro', 'view_base_synchro_finish')
-        if id2:
-            id2 = data_obj.browse(id2).res_id
-        return {
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'base.synchro',
-            'views': [(id2, 'form')],
-            'view_id': False,
-            'type': 'ir.actions.act_window',
-            'target': 'new',
-        }
+        try:
+            threaded_synchronization = \
+                threading.Thread(target=self.upload_download())
+            threaded_synchronization.run()
+            data_obj = self.env['ir.model.data']
+            id2 = data_obj._get_id('base_synchro', 'view_base_synchro_finish')
+            if id2:
+                id2 = data_obj.browse(id2).res_id
+            return {
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'base.synchro',
+                'views': [(id2, 'form')],
+                'view_id': False,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+            }
+        except Exception, e:
+            error_msg = str(e)
+            _logger.warning('''Synchronize will be skipped because of
+            error %s''', error_msg)

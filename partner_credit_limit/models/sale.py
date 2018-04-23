@@ -11,14 +11,16 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.one
+    @api.multi
     def check_limit(self):
+        """Check if credit limit for partner was exceeded."""
+        self.ensure_one()
         partner = self.partner_id
         moveline_obj = self.env['account.move.line']
         movelines = moveline_obj.\
             search([('partner_id', '=', partner.id),
-                    ('account_id.user_type_id.name', 'in',
-                    ['Receivable', 'Payable']),
+                    ('account_id.user_type_id.type', 'in',
+                    ['receivable', 'payable']),
                     ('full_reconcile_id', '=', False)])
 
         debit, credit = 0.0, 0.0
@@ -29,21 +31,24 @@ class SaleOrder(models.Model):
                 debit += line.credit
 
         if (credit - debit + self.amount_total) > partner.credit_limit:
-            if not partner.over_credit:
-                msg = 'Can not confirm Sale Order,Total mature due Amount ' \
-                      '%s as on %s !\nCheck Partner Accounts or Credit ' \
-                      'Limits !' % (credit - debit, today_dt)
-                raise UserError(_('Credit Over Limits !\n' + msg))
-            else:
+            # Consider partners who are under a company.
+            if partner.over_credit or (partner.parent_id
+                                       and partner.parent_id.over_credit):
                 partner.write({
                     'credit_limit': credit - debit + self.amount_total})
                 return True
+            else:
+                msg = '''%s Cannot confirm Sale Order,Total mature due Amount
+                 %s as on %s !\nCheck Partner Accounts or Credit
+                 Limits !''' % (partner.over_credit,
+                                credit - debit, today_dt)
+                raise UserError(_('Credit Over Limits !\n' + msg))
         else:
             return True
 
     @api.multi
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+        """Extend to check credit limit before confirming sale order."""
         for order in self:
             order.check_limit()
-        return res
+        return super(SaleOrder, self).action_confirm()

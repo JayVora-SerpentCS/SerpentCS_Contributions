@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 {
     "name": "Mass Label Reporting",
     "version": "10.0.1.0.0",
@@ -8,7 +8,7 @@
     "category": "Tools",
     "license": "AGPL-3",
     "website": "http://www.serpentcs.com",
-    "summary":"Generate customised labels of any document",
+    "summary": "Generate customised labels of any document",
     "description": """
     The video : https://www.youtube.com/watch?v=Fps5FWfcLwo
     """,
@@ -25,6 +25,7 @@
         'views/label_report.xml',
         'report/dynamic_label.xml'
     ],
+    'uninstall_hook': 'uninstall_hook',
     'images': ['static/description/Label.png'],
     'installable': True,
     'auto_install': False,
