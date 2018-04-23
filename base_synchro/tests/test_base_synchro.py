@@ -26,7 +26,7 @@ class BaseSynchroObjTestCase(common.TransactionCase):
             'action': 'd',
         })
         basesyncro_obj.get_ids('res.partner', '', [], {'action': 'u'})
-        basesyncro_obj._get_ids('res.partner', '', [], {'action': 'u'})
+        basesyncro_obj.get_ids('res.partner', '', [], {'action': 'u'})
 
     def test_basesynchro(self):
         self.env['base.synchro'].create({
