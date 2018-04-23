@@ -11,6 +11,7 @@
     'depends': [
         'base',
     ],
+    'images': ['static/description/record_banner.png'],
     'data': [
         'security/ir.model.access.csv',
         'wizard/base_module_record_object_view.xml',
