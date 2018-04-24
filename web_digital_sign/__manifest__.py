@@ -9,6 +9,7 @@
     'depends': ['web'],
     "license": "AGPL-3",
     'summary': 'Digital signature control',
+    'images': ['static/description/Digital_Signature.jpg'],
     'data': [
         'views/we_digital_sign_view.xml',
         'views/users_view.xml'],
