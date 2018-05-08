@@ -13,6 +13,7 @@
     'depends': [
         'sale'
     ],
+    'images': ['static/description/icon.png'],
     'data': [
         'views/sale_view.xml',
         'views/report_saleorder.xml'
