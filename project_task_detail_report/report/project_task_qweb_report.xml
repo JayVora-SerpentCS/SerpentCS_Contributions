@@ -1,0 +1,10 @@
+<odoo>
+
+    <!-- REGISTER QWEB REPORT TO CREATE PROJECT TASK DETAIL REPORT -->
+    <report
+            id="report_project_task_detail"
+            string="Task Details"
+            model="project.task"
+            name="project_task_detail_report.project_task_qweb_report"
+            report_type="qweb-pdf"/>
+</odoo>
