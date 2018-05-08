@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import models, fields, api
 
 
 class CrmTeamInherit(models.Model):
@@ -32,5 +32,5 @@ class ProjectProject(models.Model):
     def get_team_members(self):
         self.members = False
         if self.team_id:
-            self.members = \
-                [(6, 0, [rec.id for rec in self.team_id.team_members])]
+            self.members = [(6, 0, [rec.id for rec in self.team_id.team_members
+                                    ])]

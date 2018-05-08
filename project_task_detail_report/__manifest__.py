@@ -32,11 +32,11 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'depends': ['hr_timesheet'],
     'data': [
-        'views/project_task_report.xml',
-        'report/project_task_qweb_report.xml'
+        'reports/project_task_qweb_report.xml',
     ],
-    'sequence': 1,
     'installable': True,
     'application': False,
     'auto_install': False,
 }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
