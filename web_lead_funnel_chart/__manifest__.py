@@ -16,7 +16,7 @@
         "views/templates.xml",
         "views/web_lead_funnel_chart_view.xml"
     ],
-    'images': ['static/description/funnel.jpg'],
+    'images': ['static/description/FunnelChart.png'],
     'installable': True,
     'auto_install': False,
 }
