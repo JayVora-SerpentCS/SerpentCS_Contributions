@@ -21,7 +21,7 @@
     'qweb': [
         'static/src/xml/*.xml',
     ],
-    'images': ['static/description/funnel.jpg'],
+    'images': ['static/description/FunnelChart.png'],
     'installable': True,
     'auto_install': False,
 }
