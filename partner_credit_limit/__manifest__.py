@@ -19,6 +19,7 @@
     'data': [
         'views/partner_view.xml',
     ],
+    'images':['static/description/img/icon.png'],
     'installable': True,
     'auto_install': False,
 }
