@@ -28,6 +28,7 @@
     'description': 'This Module Adds a report for invoices alongwith its \
 payment details.',
     'depends': ['account'],
+    'images':['static/description/img/icon.png'],
     'data': [
         'wizard/invoice_report_wizard.xml',
         'reports/invoice_report_template.xml',
