@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-# Author: Guewen Baconnier
-# Copyright 2013 Camptocamp SA
-# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
-# (http://www.serpentcs.com)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
-from odoo import models, fields, api, _
-from odoo.exceptions import UserError
-
-QUOTATION_STATES = ['draft', 'sent', 'sale']
+# © 2013 Guewen Baconnier, Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo import models, fields, api
 
 
 class SaleOrderCancel(models.TransientModel):
@@ -21,9 +14,11 @@ class SaleOrderCancel(models.TransientModel):
         'sale.order.cancel.reason',
         string='Reason',
         required=True)
+    description = fields.Text(string='Description', size=12)
 
     @api.multi
     def confirm_cancel(self):
+        self.ensure_one()
         act_close = {'type': 'ir.actions.act_window_close'}
         sale_ids = self._context.get('active_ids')
         if sale_ids is None:
@@ -31,11 +26,6 @@ class SaleOrderCancel(models.TransientModel):
         assert len(sale_ids) == 1, "Only 1 sale ID expected"
         sale = self.env['sale.order'].browse(sale_ids)
         sale.cancel_reason_id = self.reason_id.id
-        # in the official addons, they call the signal on quotations
-        # but directly call action_cancel on sales orders
-        if sale.state in QUOTATION_STATES:
-            sale.action_cancel()
-        else:
-            raise UserError(_('You cannot cancel the Quotation/Order in the '
-                              'current state!'))
+        sale.description = self.description
+        sale.action_cancel()
         return act_close
