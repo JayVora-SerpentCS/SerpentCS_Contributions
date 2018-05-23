@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<!--  Added smart button for Invoice qty and amt count -->
+	<record model="ir.ui.view" id="product_template_form_view_invoice_qty_button">
+		<field name="name">product.template.invoice.qty.button</field>
+		<field name="model">product.template</field>
+		<field name="inherit_id" ref="product.product_template_only_form_view"/>
+		<field name="arch" type="xml">
+			<div name="button_box" position="inside">
+				<button class="oe_stat_button" name="action_view_invoice_qty"
+					type="object" icon="fa-cart-plus">
+					<field string="Invoice Qty" name="invoice_count" widget="statinfo" />
+				</button>
+				<button type="object" class="oe_stat_button" icon="fa-money" name="action_view_invoice_qty">
+					<div class="o_form_field o_stat_info">
+						<span class="o_stat_value">
+							<field name="invoice_amt" />
+						</span>
+						<span class="o_stat_text">Invoice Amt</span>
+					</div>
+				</button>
+			</div>
+		</field>
+	</record>
+
+</odoo>
