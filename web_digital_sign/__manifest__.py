@@ -8,7 +8,18 @@
     'complexity': 'easy',
     'depends': ['web'],
     "license": "AGPL-3",
-    'summary': 'Digital signature control',
+     'category': 'Tools',
+    'description': """
+        Digital signature control
+        ==========================
+        Digital signature,
+        signature
+    """,
+    'summary': """Digital signature control
+    ==============================
+    Digital signature
+    signature
+    """,
     'images': ['static/description/Digital_Signature.jpg'],
     'data': [
         'views/we_digital_sign_view.xml',
