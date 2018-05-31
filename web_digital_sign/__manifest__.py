@@ -5,7 +5,7 @@
     'version': '10.0.1.0.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'category': '',
+    'category': 'Tools',
     'license': 'AGPL-3',
     'complexity': 'easy',
     'depends': ['web'],
