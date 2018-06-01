@@ -22,7 +22,7 @@
 
 {
     "name": "Web Digital Signature",
-    "version": "1.0",
+    "version": "8.0.0.0.1",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "category": 'Tools',
     'complexity': "easy",
