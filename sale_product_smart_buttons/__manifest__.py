@@ -7,7 +7,7 @@
     'sequence': 1,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'website': 'https://www.serpentcs.com',
+    'website': 'http://www.serpentcs.com',
     'description': """ Module will add Smart button to show
         Sale amount for particular product
         Smart button on Product
