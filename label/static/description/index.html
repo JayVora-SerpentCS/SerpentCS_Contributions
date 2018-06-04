@@ -1,73 +1,126 @@
+<section style="padding-bottom:10px;background:#dcdcdc;padding-top:2px;padding-left: 0px;padding-right: 0px;">
 
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan oe_span10">This module provides functionality of mass label printing.
-        Install these libs:
-        sudo pip install pyBarcode
-        sudo pip install utils
-        sudo pip install cairosvg</h2>
+<section class="oe_container" style="font-family:Times New Roman">
+    <div class="oe_spaced">
+        <h2 class="oe_slogan" style="font-family:Times New Roman;font-size:25px;" >This module provides 
+        functionality of mass label printing
+        </h2>
+        <p class='oe_mt32 text-justify' style="margin-left: 20px;font-family:Times New Roman;
+        font-size:18px;">
+            Install these libs:
+        </p>
+        <ul><li style="margin-left: 50px;font-family:Times New Roman;
+        font-size:18px;">sudo pip install pyBarcode</li></ul>
+        <ul><li style="margin-left: 50px;font-family:Times New Roman;
+        font-size:18px;">sudo pip install utils</li></ul>
+        <ul><li style="margin-left: 50px;font-family:Times New Roman;
+        font-size:18px;">sudo pip install cairosvg</li></ul>
     </div>
 </section>
 
- <section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <h3 class="oe_slogan oe_span10">Label Configuration</h3>
-        <div class="oe_span6 text-justify" style="font-size: 15px;">
+<section class="oe_container">
+    <section class="s_features">
+          <div class="container">
+            <div class="row mt12 mb12">
+            <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                <a style="color:#7c7bad" href="https://www.youtube.com/watch?v=Fps5FWfcLwo" 
+                class="fa fa-youtube-play fa-3x" target="_blank"> </a>
+                <a href ="https://www.youtube.com/watch?v=Fps5FWfcLwo">
+                <h3 style="color:gray;font-family:Times New Roman;" 
+                class="mt8 mb0 o_default_snippet_text">Watch Video</h3></a>
+              </div>
+              <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                <a href ="#config_label"><span class="fa fa-cogs fa-3x" 
+                style="color:#7c7bad"/></a>
+                <a href ="#config_label"><h3 style="color:gray;font-family:Times New Roman;" class="mt8 mb0 o_default_snippet_text">Configure Label</h3></a>
+              </div>
+              <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                <a href="#advance"><i class="fa fa-plus-square fa-3x" style="color:#7c7bad"></i></a>
+                <a href="#advance"><h3 style="color:gray;font-family:Times New Roman;" class="mt8 mb0 o_default_snippet_text">Create Action</h3></a>
+              </div>
+              <div class="col-md-3 col-sm-3 col-xs-3 text-center">
+                <a href="#print_report"><i class="fa fa-print fa-3x" style="color:#7c7bad"></i>
+                <h3 style="color:gray;font-family:Times New Roman;" class="mt8 mb0 o_default_snippet_text">Print Label</h3></a>
+              </div>
+            </div>
+          </div>
+        </section>
+</section>
+
+ <section class="oe_container" style="font-family:Times New Roman" id="config_label">
+    <div class="oe_spaced">
+        <h4 class="oe_slogan" style="font-family:Times New Roman;">
+            <span class="label fa fa-cogs" style="background:#875A7B;">
+                Label Configuration
+            </span>
+        </h4>
+        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
             <p>
                 As you can see in the image which is displayed below. You will have list of famous
-                stationary vendors. Once you click on any of them, you will have list of demo data for the label printing.
+                stationary vendors. 
+            </p>
+            <p>
+                Once you click on any of them, you will have list of demo data for the label printing.
             </p>
         </div>
-        <div class="oe_span6">
-            <img class="oe_picture oe_screenshot" src="v10_label_1.png" width="74%">
+        <div class="oe_spaced">
+            <img class="img img-responsive center-block" src="img/label_config.png">
         </div>
     </div>
 </section>
 
 <section class="oe_container">
     <div class="oe_row oe_spaced">
-        <div class="oe_span6">
-            <img class="oe_picture oe_screenshot" src="v10_label_2.png">
-        </div>
-        <div class="oe_span6 text-justify" style="font-size: 15px;">
+        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman">
             <p>
                 Now when you click on any off the above given stationary vendors, you will have list of
                 demo data which are nothing but a type of various types of label.
             </p>
+        </div>
+        <div class="oe_spaced">
+            <img class="img img-responsive center-block" src="img/label_config_details.png">
         </div>
     </div>
 </section>
 
 <section class="oe_container oe_dark">
     <div class="oe_row oe_spaced">
-        <h3 class="oe_slogan oe_span10">Label Printing</h3>
-        <div class="oe_span6 text-justify" style="font-size: 15px;">
+         <h4 class="oe_slogan" style="font-family:Times New Roman;">
+            <span class="label fa fa-print" style="background:#875A7B;">
+                Label Printing
+            </span>
+        </h4>
+        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
             <p>
                 In this screen you will be able see the details like name of label,
                 object of the model will be selected for the printing of that particular
                 label and reset of the information shall be selected which type of name
                 and fields you would like to display on the label.
             </p>
-            <p>
+            <div class="oe_spaced">
+                <img class="img img-responsive center-block" src="img/label_print.png">
+            </div>
+            <p style="font-size: 18px;font-family:Times New Roman;">
                 You can also maintain the sequence of each selected fields.
             </p>
-            <p>
+            <p style="font-size: 18px;font-family:Times New Roman;" id="advance">
                 Now if you go onto Advance tab, you will have one sidebar button,which would add the particular action on the product and with the help of it you will be able to print
                 the label by going into products - more - there you would have the option of printing the label.
             </p>
         </div>
-        <div class="oe_span6">
-            <img class="oe_picture oe_screenshot" src="v10_label_3.png">
+        <div class="oe_spaced" id="advance">
+            <img class="img img-responsive center-block" src="img/sidebar_menu.png">
+        </div>
+        
+        <div class="oe_spaced" id="advance">
+            <img class="img img-responsive center-block" src="img/menus.png">
         </div>
     </div>
 </section>
 
 <section class="oe_container">
     <div class="oe_row oe_spaced">
-        <div class="oe_span6">
-            <img class="oe_picture oe_screenshot" src="v10_label_4.png"/>
-        </div>
-        <div class="oe_span6 text-justify" style="font-size: 15px;">
+        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
             <p>
                 In order to add the items for the label printing menu, you
                 must have to fill some necessary details which are mentioned
@@ -83,38 +136,54 @@
                 <li>Fields would allow you to select the fields to display on the label.</li>
             </ul>
         </div>
+        <div class="oe_spaced">
+             <img class="img img-responsive center-block" src="img/label_details.png">
+         </div>
     </div>
 </section>
 
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <h3 class="oe_slogan oe_span10">Label In Sidebar</h3>
-        <div class="oe_span6 text-justify" style="font-size: 15px;">
-            <p>
+<section class="oe_container" id="print_report">
+    <div class="oe_spaced">
+        <h4 class="oe_slogan" style="font-family:Times New Roman;">
+            <span class="fa fa-bars label" style="background:#875A7B;">
+                Label In Sidebar
+            </span>
+        </h4>
+        <div class="oe_span12 text-justify" style="font-size: 15px;">
+            <p style="font-size: 18px;font-family:Times New Roman;">
                 Once the sidebar button / action is added, you will be able to see the label print option in the more
                 which we have highlighted. Once you click on it you will have one wizard.
             </p>
         </div>
-        <div class="oe_span6">
-            <img class="oe_picture oe_screenshot" src="v10_label_5.png">
+        <div class="oe_spaced">
+            <img class="img img-responsive center-block" src="img/product_label.png">
         </div>
     </div>
 </section>
 
-<section class="oe_container oe_dark">
+<section class="oe_container oe_dark" id="print_report">
     <div class="oe_row oe_spaced">
-        <h3 class="oe_slogan oe_span10">Print Report</h3>
-        <div class="oe_span6">
-            <img class="oe_picture oe_screenshot" src="v10_label_6.png">
-        </div>
-        <div class="oe_span6 text-justify" style="font-size: 15px;">
+        <h4 class="oe_slogan" style="font-family:Times New Roman;">
+            <span class="fa fa-print label" style="background:#875A7B;">
+                Print Report
+            </span>
+        </h4>
+        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
             <p>
                 Once you click on the print button you would have this wizard in which you have to fill up the necessary
                 informations such as Brand name, Label size, Number of copy, Hight -Width of Image and
                 Barcode Hight-Width information will be selected here.
             </p>
         </div>
+        <div class="oe_spaced" id="print_report">
+            <img class="img img-responsive center-block" src="img/wizard.png">
+        </div>
+        
+        <div class="oe_spaced" id="print_report">
+            <img class="img img-responsive center-block" src="img/label_report.png">
+        </div>
     </div>
+</section>
 </section>
 
 <!-- LEFT::LEFT PHOTO - MEDIUM -->
@@ -311,3 +380,4 @@ style="color:#697582; text-decoration:none;">www.odooqa.com</a></span></td>
         </tr>
     </tbody>
 </table>
+
