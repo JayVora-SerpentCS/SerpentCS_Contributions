@@ -23,13 +23,19 @@
 {
     'name': 'Project Dates on Kanban',
     'version': '8.0.1.0.1',
-    'author' : 'Serpent Consulting Services Pvt. Ltd.',
-    'website' : 'http://www.serpentcs.com',
-    'summary': """Find your Idle projects - Displays last updated date and recent updated
-                date for the Project.""",
+    'license': 'AGPL-3',
+    'author': 'Serpent Consulting Services Pvt. Ltd.',
+    'website': 'http://www.serpentcs.com',
+    'summary': """Find your Idle projects - Displays last updated date and
+                recent updated date for the Project.""",
     'depends': ['project'],
     'category': 'Project Management',
-    'sequence':1,
+    'sequence': 1,
+    'images': [
+        'static/description/project-dates-kanban.png'],
+    'summary': """Find your Idle projects - Displays last
+                    updated date and recent updated date
+                    for the Project.""",
     'data': [
              'views/project_kanban_view.xml',
         ],
