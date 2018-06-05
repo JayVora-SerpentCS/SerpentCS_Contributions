@@ -27,9 +27,13 @@
               "Odoo Community Association (OCA)",
     'website': 'http://www.serpentcs.com',
     'version': '8.0.1.0.0',
+    'license': 'AGPL-3',
     'depends': [
         'website_sale'
     ],
+    'images': ['static/description/MultiImageZoom.png'],
+    'summary': 'MultiImage Zoom For Product In WebSite',
+    'description': 'MultiImage Zoom For Product In WebSite',
     'data': [
         "security/ir.model.access.csv",
         "views/product_images.xml",
