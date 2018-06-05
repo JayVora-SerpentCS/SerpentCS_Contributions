@@ -6,12 +6,15 @@
     "website": "http://www.serpentcs.com",
     "category": "Web",
     "description": "Adds Expand button to expand all groups on a list view.",
+    "license": "AGPL-3",
+    'summary': 'Expand all groups on single click',
     "depends": [
         "web",
     ],
     "data": [
         "views/templates.xml",
     ],
+    "images": ["static/description/web-group-expand-banner.png"],
     "qweb": [
         "static/src/xml/web_groups_expand.xml",
     ],
