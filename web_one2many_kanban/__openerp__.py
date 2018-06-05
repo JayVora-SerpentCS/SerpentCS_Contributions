@@ -23,20 +23,23 @@
 
 {
     'name': 'Web one2many Kanban',
-    'version': '1.0.1',
+    'version': '8.0.0.0.1',
     'sequence': 6,
+    'website': 'http://www.serpentcs.com',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'description' : """
+    "maintainer": "Serpent Consulting Services Pvt. Ltd.",
+    'description': """
         You need to define o2m field in kanban view definition and use
         for loop to display fields like:
-
         <t t-foreach="record.o2mfield.raw_value" t-as='o'>
             <t t-esc="o.name">
         </t>
     """,
+    'summary': 'Display one2many widget as kanban',
     'installable': True,
     'application': True,
-    'data':[
+    "images": ["static/description/web-one-kanban-banner.png"],
+    'data': [
             'view/templates.xml',
             ],
     'depends': ['web'],
