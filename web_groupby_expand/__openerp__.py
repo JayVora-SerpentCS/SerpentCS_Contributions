@@ -22,15 +22,19 @@
 
 {
     "name": "Web GroupBy Expand",
-    "version": "1.2",
+    "version": "8.0.0.0.1",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
-    'category' : 'Web',
+    'category': 'Web',
+    "license": "AGPL-3",
+    "images": ["static/description/web-group-expand-banner.png"],
     "description": "Adds Expand button to expand all groups on a list view.",
+    'summary': 'Expand all groups on single click',
     "depends": ["web"],
     'data': [
         'views/templates.xml',
     ],
-    "qweb": [ "static/src/xml/web_groups_expand.xml" ],
+    "qweb": ["static/src/xml/web_groups_expand.xml"],
+    'installable': True,
     "auto_install": False,
 }
