@@ -4,6 +4,7 @@
 {
     'name': 'Project Dates on Kanban',
     'version': '9.0.1.0.1',
+    'license': 'AGPL-3',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'summary': """
@@ -12,6 +13,8 @@
     'depends': ['project'],
     'category': 'Project Management',
     'sequence': 1,
+    'images': [
+        'static/description/project-dates-kanban.png'],
     'data': ['views/project_kanban_view.xml'],
     'installable': True,
     'auto_install': False,
