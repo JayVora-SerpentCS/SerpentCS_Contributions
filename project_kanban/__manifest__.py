@@ -19,4 +19,6 @@
     'images': ['static/description/ProjectKanban.png'],
     'installable': True,
     'auto_install': False,
+    'price': 5,
+    'currency': 'EUR',
 }
