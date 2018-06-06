@@ -17,12 +17,12 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
         },
 
         image_preview : function(){
-            if(this.view.type === "list" && this.attrs.widget == 'image_multi') {
+            if(this.view.type === "list" && this.attrs.widget === 'image_multi') {
                 var self = this
                 var saved_images = [];
-                var images_list = [];
+                var self.images_list = [];
                 var url_list = [];
-                var mydataset;
+                var self.mydataset;
                 var model = self.field.relation;
                 var res_ids = self.value.res_ids
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
@@ -73,29 +73,29 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                         });
                     }
                 }else{
-                    return alert("There are no image for showing in preview !!")
+                    return alert("There are no image for showing in preview !!");
                 }
             }
         },
 
         image_list_view : function(){
-            if(this.view.type === "list" && this.attrs.widget == 'image_multi'){
-                var self = this
-                var images_list = [];
+            if(this.view.type === "list" && this.attrs.widget === 'image_multi'){
+                var self = this;
+                var self.images_list = [];
                 var saved_images = [];
-                var mydataset;
+                var self.mydataset;
                 var model = self.field.relation;
-                var res_ids = self.value.res_ids
+                var res_ids = self.value.res_ids;
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
-                if (res_ids.length != 0){
+                if (res_ids.length > 0){
                     if (_.every(res_ids, function(i) { return _.isString(i)})){
                         return alert("Please Save the record when you are adding an image for the first time !!")
                     }else{
-                        _.each(res_ids, function(i) { 
+                        _.each(res_ids, function(i) {
                             if (_.isNumber(i)){
-                                saved_images.push(i)
+                                saved_images.push(i);
                             }
-                        })
+                        });
                         self.mydataset.read_slice([], {
                             'domain': [['id', 'in', saved_images]]
                         }).then(function(records) {
@@ -128,7 +128,7 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                         });
                     }
                 }else{
-                    return alert("There are no image for showing in preview !!")
+                    return alert("There are no image for showing in preview !!");
                 }
             }
         },
@@ -177,21 +177,20 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                 'readonly': self.isReadonly,
             }));
             self.image_list_dialog.$el.find(".oe-remove-image").click(function() {
-                self.do_remove_image(this, true);
+                self.do_remove_image(this);
             });
         },
 
-        do_remove_image: function(curr_id, dialog) {
+        do_remove_image: function(curr_id) {
             var self = this;
             var model = self.field.relation;
-//               self.do_hide([parseInt($(curr_id)[0].id, 10)]);
             self._rpc({
                 model: model,
                 method: 'unlink',
                 args: [parseInt($(curr_id)[0].id, 10)],
-            })
+            });
             $(curr_id).closest('table.hoverbox').parent().remove();
-        }, 
+        },
 
     });
     return MultiImage;
