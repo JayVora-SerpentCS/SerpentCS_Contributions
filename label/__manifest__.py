@@ -37,4 +37,6 @@
     'images': ['static/description/Label.png'],
     'installable': True,
     'auto_install': False,
+    'price': 25,
+    'currency': 'EUR',
 }
