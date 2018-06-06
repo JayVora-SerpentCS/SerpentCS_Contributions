@@ -24,8 +24,11 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                 var res_ids = self.value.res_ids;
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
                 if (res_ids.length > 0){
-                    if (_.every(res_ids, function(i) { return _.isString(i)})){
-                        return alert("Please Save the record when you are adding an image for the first time !!");
+                    if (_.every(res_ids, function(i){
+                        return _.isString(i);
+                        })){
+                            Dialog.alert(self, _t("Please Save the record when you are adding an image for the first time !!"));
+                            return;
                     }else{
                         _.each(res_ids, function(i) {
                             if (_.isNumber(i)){
@@ -68,7 +71,8 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                         });
                     }
                 }else{
-                    return alert("There are no image for showing in preview !!");
+                    Dialog.alert(self, _t("There are no image for showing in preview !!"));
+                    return;
                 }
             }
         },
@@ -81,8 +85,11 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                 var res_ids = self.value.res_ids;
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
                 if (res_ids.length > 0){
-                    if (_.every(res_ids, function(i) { return _.isString(i)})){
-                        return alert("Please Save the record when you are adding an image for the first time !!");
+                    if (_.every(res_ids, function(i) {
+                        return _.isString(i);
+                    })){
+                        Dialog.alert(self, _t("Please Save the record when you are adding an image for the first time !!"));
+                        return;
                     }else{
                         _.each(res_ids, function(i) {
                             if (_.isNumber(i)){
@@ -121,7 +128,8 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                         });
                     }
                 }else{
-                    return alert("There are no image for showing in preview !!");
+                    Dialog.alert(self, _t("There are no image for showing in preview !!"));
+                    return;
                 }
             }
         },
