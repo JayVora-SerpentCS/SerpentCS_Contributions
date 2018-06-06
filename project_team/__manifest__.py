@@ -18,5 +18,7 @@
     ],
     'images': ['static/description/ProjectTeam.png'],
     'installable': True,
-    'auto_install': False
+    'auto_install': False,
+    'price': 5,
+    'currency': 'EUR',
 }
