@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Web Widget Multiple Image V10',
-    'version': '11.0.0.0.1',
+    'name': 'Web Widget Multiple Image V11',
+    'version': '11.0.0.1.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Image',

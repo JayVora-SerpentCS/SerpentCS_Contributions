@@ -27,12 +27,9 @@
         </table>
     </t>
 
-    <t t-extend="ListView">
-        <t t-jquery="thead > tr:first">
-            this.removeAttr('t-if');
-        </t>
-        <t t-jquery=".o_list_view thead" t-operation="prepend">
-            <t t-if="options.multi_image"> 
+    <t t-extend="X2ManyControlPanel">
+        <t t-jquery=".o_cp_buttons" t-operation="before">
+            <table>
                 <tr style="background:white;">
                     <td style="padding: 10px 150px 15px 132px;">
                         <button class="fa fa-search oe-image-preview btn btn-sm oe_form_binary btn-primary" type="button" title="Preview">
@@ -45,7 +42,7 @@
                         </button>
                     </td>
                 </tr>
-            </t>
+            </table>
         </t>
     </t>
 </templates>
