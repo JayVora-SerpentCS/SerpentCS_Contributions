@@ -1,4 +1,3 @@
-/*global common*/
 odoo.define('web_widget_multi_image.MultiImage', function(require) {
     "use strict";
 
@@ -18,21 +17,21 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
 
         image_preview : function(){
             if(this.view.type === "list" && this.attrs.widget === 'image_multi') {
-                var self = this
+                var self = this;
                 var saved_images = [];
                 var url_list = [];
                 var model = self.field.relation;
-                var res_ids = self.value.res_ids
+                var res_ids = self.value.res_ids;
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
                 if (res_ids.length > 0){
                     if (_.every(res_ids, function(i) { return _.isString(i)})){
-                        return alert("Please Save the record when you are adding an image for the first time !!")
+                        return alert("Please Save the record when you are adding an image for the first time !!");
                     }else{
                         _.each(res_ids, function(i) {
                             if (_.isNumber(i)){
-                                saved_images.push(i)
+                                saved_images.push(i);
                             }
-                        })
+                        });
                         self.mydataset.read_slice([], {
                             'domain': [['id', 'in', saved_images]]
                         }).done(function(records) {
@@ -83,7 +82,7 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
                 if (res_ids.length > 0){
                     if (_.every(res_ids, function(i) { return _.isString(i)})){
-                        return alert("Please Save the record when you are adding an image for the first time !!")
+                        return alert("Please Save the record when you are adding an image for the first time !!");
                     }else{
                         _.each(res_ids, function(i) {
                             if (_.isNumber(i)){
