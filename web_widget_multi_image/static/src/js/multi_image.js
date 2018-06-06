@@ -20,17 +20,15 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
             if(this.view.type === "list" && this.attrs.widget === 'image_multi') {
                 var self = this
                 var saved_images = [];
-                var self.images_list = [];
                 var url_list = [];
-                var self.mydataset;
                 var model = self.field.relation;
                 var res_ids = self.value.res_ids
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
-                if (res_ids.length != 0){
+                if (res_ids.length > 0){
                     if (_.every(res_ids, function(i) { return _.isString(i)})){
                         return alert("Please Save the record when you are adding an image for the first time !!")
                     }else{
-                        _.each(res_ids, function(i) { 
+                        _.each(res_ids, function(i) {
                             if (_.isNumber(i)){
                                 saved_images.push(i)
                             }
@@ -38,10 +36,8 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                         self.mydataset.read_slice([], {
                             'domain': [['id', 'in', saved_images]]
                         }).done(function(records) {
-                            self.images_list = records;
-                            var images_list = self.images_list;
-                            if (images_list && !_.isEmpty(images_list)) {
-                                _.each(images_list, function(img) {
+                            if (records && !_.isEmpty(records)) {
+                                _.each(records, function(img) {
                                     if (img) {
                                         var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
                                             if (img.image) {
@@ -81,9 +77,7 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
         image_list_view : function(){
             if(this.view.type === "list" && this.attrs.widget === 'image_multi'){
                 var self = this;
-                var self.images_list = [];
                 var saved_images = [];
-                var self.mydataset;
                 var model = self.field.relation;
                 var res_ids = self.value.res_ids;
                 self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
