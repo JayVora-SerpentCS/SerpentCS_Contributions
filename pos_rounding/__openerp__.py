@@ -34,7 +34,7 @@ Point Of Sale Rounding
     It also provides Customize pos receipt.
     """,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'website': ' http://www.serpentcs.com',
+    'website': 'http://www.serpentcs.com',
     'depends': ['point_of_sale'],
     'data': [
         'views/templates.xml',
