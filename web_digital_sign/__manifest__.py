@@ -8,7 +8,7 @@
     'complexity': 'easy',
     'depends': ['web'],
     "license": "AGPL-3",
-     'category': 'Tools',
+    'category': 'Tools',
     'description': '''
      This module provides the functionality to store digital signature
      Example can be seen into the User's form view where we have
