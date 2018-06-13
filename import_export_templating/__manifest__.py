@@ -4,6 +4,7 @@
 {
     'name': 'Import / Export Templating',
     'version': '11.0.1.0.0',
+    'license': 'AGPL-3',
     'category': 'Base',
     'description': """
         This module features to export blank template based on ir.model fields.
