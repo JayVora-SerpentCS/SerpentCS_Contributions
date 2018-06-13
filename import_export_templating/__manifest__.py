@@ -13,7 +13,7 @@
     Standard import export template
     USer friendly templates to upload download bulk data
     Manage easy import export for non-technical users of ERP
-    """
+    """,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
