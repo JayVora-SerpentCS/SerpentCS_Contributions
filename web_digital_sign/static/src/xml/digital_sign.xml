@@ -2,13 +2,20 @@
 <templates id="template" xml:space="preserve">
    <t t-name="FieldSignature">
         <div class="panel panel-default mt16 mb0 " id="drawsign">
-            <div class="panel-heading oe_edit_only">
-                <div class="pull-right">
-                    <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
-                    <a class="oe_edit_only save_sign"></a>
+            <t t-if="widget.__getterSetterInternalMap.readonly == true ">
+                <div class="panel-heading oe_edit_only">
+                    <strong>Draw signature</strong>
                 </div>
-                <strong>Draw your signature</strong>
-            </div>
+            </t>
+            <t t-if="widget.__getterSetterInternalMap.readonly == false">
+                <div class="panel-heading oe_edit_only">
+                    <div class="pull-right">
+                        <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
+                        <a class="oe_edit_only save_sign"></a>
+                    </div>
+                    <strong>Draw your signature</strong>
+                </div>
+            </t>
             <div class="signature panel-body"></div>
         </div>
     </t>
