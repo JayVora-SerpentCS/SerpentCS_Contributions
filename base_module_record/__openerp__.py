@@ -21,7 +21,7 @@
 ##############################################################################
 {
     'name': 'Record and Create Modules',
-    'version': '1.0',
+    'version': '8.0.0.1.0',
     'category': 'Tools',
     'description': """
 This module allows you to create a new module without any development.
@@ -58,7 +58,5 @@ module.
     'demo': [],
     'installable': True,
     'auto_install': False,
-    'images': ['images/base_module_record1.jpeg',
-               'images/base_module_record2.jpeg',
-               'images/base_module_record3.jpeg']
+    'images': ['static/description/record_banner.png'],
 }
