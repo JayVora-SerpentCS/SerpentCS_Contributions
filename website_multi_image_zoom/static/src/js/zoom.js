@@ -28,7 +28,9 @@ $(window).load(function() {
 
 //Method to change Main product image when click on thumbnail image
 function pro_img_click(proimg) {
-	$('#ex1').children().children().attr("src", $(proimg).data('image-full') || proimg.src);
+	$('#ex1').children().children()
+        .attr("src", $(proimg).data('image-full') || proimg.src)
+        .attr("style", null);
 	var wi = $(window).width();
 	if (wi >= 980) {
 		$('#ex1').children().children().attr("id", "image2"); // Give Id to image
