@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from openerp import fields, models
+from openerp import api, fields, models, tools
 
 
 class ProductImage(models.Model):
@@ -31,12 +31,19 @@ class ProductImage(models.Model):
     description = fields.Text(string='Description')
     image_alt = fields.Text(string='Image Label')
     image = fields.Binary(string='Image')
-    image_small = fields.Binary(string='Small Image')
+    image_small = fields.Binary(
+        string='Small Image', compute='_compute_image_small', store=True,
+    )
     image_url = fields.Char(string='Image URL')
     product_tmpl_id = fields.Many2one('product.template', 'Product',
                                       copy=False)
     product_variant_id = fields.Many2one('product.product', 'Product Variant',
                                          copy=False)
+
+    @api.depends('image')
+    def _compute_image_small(self):
+        for this in self:
+            this.image_small = tools.image_resize_image_small(this.image)
 
 
 class ProductProduct(models.Model):

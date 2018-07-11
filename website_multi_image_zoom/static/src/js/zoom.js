@@ -17,11 +17,18 @@ $(window).load(function() {
     }else{
         $('#ex1').children().children().removeAttr( "id" ); // remove all attributes
     }
+    $('#thumb_img_add img[data-image-full]').each(function() {
+        $(document.head).append($('<link/>').attr({
+            rel: 'preload',
+            href: $(this).data('image-full'),
+            as: 'image',
+        }));
+    });
 });
 
 //Method to change Main product image when click on thumbnail image
 function pro_img_click(proimg) {
-	$('#ex1').children().children().attr("src", proimg.src);
+	$('#ex1').children().children().attr("src", $(proimg).data('image-full') || proimg.src);
 	var wi = $(window).width();
 	if (wi >= 980) {
 		$('#ex1').children().children().attr("id", "image2"); // Give Id to image
