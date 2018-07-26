@@ -1,0 +1,52 @@
+<openerp>
+    <data>
+        <record id="business_category_view" model="ir.ui.view">
+            <field name="name">business.category.form</field>
+            <field name="model">business.category</field>
+            <field name="arch" type="xml">
+                <form string="Business Category">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- action for business category -->
+	    <record id="action_buissness_category" model="ir.actions.act_window">
+	        <field name="name">Business Category</field>
+	        <field name="res_model">business.category</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_type">form</field>
+	    </record>
+	    
+	    <menuitem id="menu_buissness_category" action="action_buissness_category" parent="hr.menu_human_resources_configuration"/>
+	    
+        <record id="relation_view" model="ir.ui.view">
+            <field name="name">relation.relation.form</field>
+            <field name="model">relation.relation</field>
+            <field name="arch" type="xml">
+                <form string="Relation">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <!-- action for relation -->
+        <record id="action_relation" model="ir.actions.act_window">
+            <field name="name">Relation</field>
+            <field name="res_model">relation.relation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+        
+        <menuitem id="menu_relation" action="action_relation" parent="hr.menu_human_resources_configuration"/>
+        
+    </data>
+</openerp>
