@@ -25,8 +25,8 @@ class website_ipushp(http.Controller):
         if category_id == -1:
                 if kwargs.get('category_name'):
                     vals = {
-                            'name': kwargs.get('category_name'),
-                            }
+                        'name': kwargs.get('category_name'),
+                    }
                     category_id = request.env['business.category'
                                               ].sudo().create(vals)
                     category_id = category_id.id
@@ -34,12 +34,12 @@ class website_ipushp(http.Controller):
             employee = hr_emp_obj.sudo().search([('user_id', '=',
                                                   int(kwargs.get('user_id')))])
             contact_details = {
-                               'name': kwargs.get('name'),
-                               'phone': kwargs.get('phone'),
-                               'email': kwargs.get('email'),
-                               'description': kwargs.get('description'),
-                               'relation': kwargs.get('relation_id'),
-                               'category_id': category_id,
-                               }
+                'name': kwargs.get('name'),
+                'phone': kwargs.get('phone'),
+                'email': kwargs.get('email'),
+                'description': kwargs.get('description'),
+                'relation': kwargs.get('relation_id'),
+                'category_id': category_id,
+            }
             employee.sudo().write({'ipushp_ids': [(0, 0, contact_details)]})
         return request.render('ipushp.ipushp_thanks', {})
