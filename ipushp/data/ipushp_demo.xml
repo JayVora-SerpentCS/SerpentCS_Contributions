@@ -1,0 +1,49 @@
+<odoo>
+
+    <record id="event_category_demo" model="business.category">
+        <field name="name">Event Management</field>
+    </record>
+
+    <record id="photographer_category_demo" model="business.category">
+        <field name="name">Photographer</field>
+    </record>
+
+    <record id="friend_relation_demo" model="relation.relation">
+        <field name="name">Friend</field>
+    </record>
+
+    <record id="brother_relation_demo" model="relation.relation">
+        <field name="name">Brother</field>
+    </record>
+
+    <record id="ipushp_demo_morne" model="business.line">
+        <field name="employee_id" ref="hr.employee_root"/>
+        <field name="name">Morne Morkel</field>
+        <field name="phone">+3281813700</field>
+        <field name="email">morne@serpentcs.com</field>
+        <field name="relation" ref="ipushp.friend_relation_demo" />
+        <field name="category_id" ref="ipushp.event_category_demo" />
+        <field name="description"></field>
+    </record>
+
+    <record id="ipushp_demo_tom" model="business.line">
+        <field name="employee_id" ref="hr.employee_root"/>
+        <field name="name">Tom Jecson</field>
+        <field name="phone">+32486571630</field>
+        <field name="email">tom@serpentcs.com</field>
+        <field name="relation" ref="ipushp.brother_relation_demo" />
+        <field name="category_id" ref="ipushp.photographer_category_demo" />
+        <field name="description"></field>
+    </record>
+
+    <record id="ipushp_demo_al" model="business.line">
+        <field name="employee_id" ref="hr.employee_al"/>
+        <field name="name">Eoin Morgan</field>
+        <field name="phone">+3281813700</field>
+        <field name="email">eoin@serpentcs.com</field>
+        <field name="relation" ref="ipushp.brother_relation_demo" />
+        <field name="category_id" ref="ipushp.photographer_category_demo" />
+        <field name="description"></field>
+    </record>
+
+</odoo>
