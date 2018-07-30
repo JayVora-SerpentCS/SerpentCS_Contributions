@@ -9,16 +9,16 @@ class BusinessLine(models.Model):
     _name = 'business.line'
     _description = 'Business Line'
 
-    name = fields.Char('Name',required=True)
-    category_id = fields.Many2one('business.category','Business Category')
-    phone = fields.Char('Phone no',required=True)
+    name = fields.Char('Name', required=True)
+    category_id = fields.Many2one('business.category', 'Business Category')
+    phone = fields.Char('Phone no', required=True)
     email = fields.Char('Email')
-    relation = fields.Many2one('relation.relation','Relation')
+    relation = fields.Many2one('relation.relation', 'Relation')
     description = fields.Text('Description')
-    employee_id = fields.Many2one('hr.employee','Employee')
+    employee_id = fields.Many2one('hr.employee', 'Employee')
     active = fields.Boolean(default=True)
     state = fields.Selection(
-        [('draft','Draft'),
+        [('draft', 'Draft'),
          ('validate', 'Approved'),
          ('cancel', 'Cancelled')],
         string='State',
@@ -41,4 +41,4 @@ class BusinessLine(models.Model):
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    ipushp_ids = fields.One2many('business.line','employee_id','iPushp')
+    ipushp_ids = fields.One2many('business.line', 'employee_id', 'iPushp')
