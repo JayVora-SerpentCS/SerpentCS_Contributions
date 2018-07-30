@@ -9,7 +9,7 @@
     'version': '10.0.1.0.0',
     'license': 'AGPL-3',
     'description': "iPushp - Employee Business Directory",
-    'depends': ['hr','website'],
+    'depends': ['hr', 'website'],
     'demo': [
         'data/ipushp_demo.xml',
     ],
