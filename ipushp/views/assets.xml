@@ -1,4 +1,5 @@
 <odoo>
+
     <template id="assets_frontend_ipushp" name="website assets frontend ipushp" inherit_id="website.assets_frontend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" href="/ipushp/static/src/css/fix_bg_snippet.css" />
@@ -6,4 +7,5 @@
             <script type="text/javascript" src="/ipushp/static/src/js/custom.js"></script>
         </xpath>
     </template>
+
 </odoo>

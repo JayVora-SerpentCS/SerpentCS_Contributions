@@ -10,6 +10,9 @@
     'license': 'AGPL-3',
     'description': "iPushp - Employee Business Directory",
     'depends': ['hr','website'],
+    'demo': [
+        'data/ipushp_demo.xml',
+    ],
     'data': [
         'security/ipushp_security.xml',
         'security/ir.model.access.csv',

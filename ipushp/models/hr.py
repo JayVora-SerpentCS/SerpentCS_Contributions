@@ -42,4 +42,3 @@ class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     ipushp_ids = fields.One2many('business.line','employee_id','iPushp')
-
