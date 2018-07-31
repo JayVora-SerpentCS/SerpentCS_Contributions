@@ -1,12 +1,13 @@
 # See LICENSE file for full copyright and licensing details.
 
-# 1:  imports of odoo
 from odoo import models, fields
 
 
 class LabelMain(models.Model):
     _name = 'label.brand'
     _rec_name = 'brand_name'
+
+    _description = 'Configured Label Brands'
 
     brand_name = fields.Char('Name', size=64, index=True)
     label_config_ids = fields.One2many('label.config', 'label_main_id',
@@ -15,6 +16,8 @@ class LabelMain(models.Model):
 
 class LabelConfig(models.Model):
     _name = 'label.config'
+
+    _description = 'Configuration for label'
 
     name = fields.Char("Name", size=64, required=True, index=True)
     height = fields.Float("Height (in mm)", required=True)
