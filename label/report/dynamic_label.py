@@ -40,7 +40,7 @@ class ReportDynamicLabel(models.AbstractModel):
                         continue
 
                     if isinstance(value, browse_record):
-                        model_obj = self.pool.get(value._name)
+                        model_obj = self.env[value._name]
                         value = eval("obj." + model_obj._rec_name,
                                      {'obj': value})
 
