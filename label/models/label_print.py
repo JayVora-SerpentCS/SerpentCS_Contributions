@@ -1,12 +1,13 @@
 # See LICENSE file for full copyright and licensing details.
 
-# 1:  imports of odoo
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 from odoo.tools.safe_eval import safe_eval as eval
 
 
 class LabelPrint(models.Model):
     _name = "label.print"
+
+    _description = 'Label Print'
 
     name = fields.Char("Name", size=64, required=True, index=True)
     model_id = fields.Many2one('ir.model', 'Model', required=True, index=True)
