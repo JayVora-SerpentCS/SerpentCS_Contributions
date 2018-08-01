@@ -16,7 +16,6 @@
         'security/ir.model.access.csv',
         'wizard/base_module_record_object_view.xml',
         'wizard/base_module_record_data_view.xml',
-        'wizard/base_module_save_view.xml',
     ],
     'installable': True,
 }
