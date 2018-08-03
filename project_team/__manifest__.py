@@ -16,7 +16,6 @@
     ],
     'data': [
         'views/project_team_view.xml',
-        'views/template.xml',
     ],
     'images': [
         'static/description/ProjectTeam.png',
