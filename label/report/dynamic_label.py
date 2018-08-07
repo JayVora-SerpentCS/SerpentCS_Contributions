@@ -5,6 +5,7 @@ import time
 from odoo import models, api, _
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval as eval
+from odoo.osv.orm import browse_record
 
 
 class ReportDynamicLabel(models.AbstractModel):
@@ -38,8 +39,10 @@ class ReportDynamicLabel(models.AbstractModel):
                     if not value:
                         continue
 
-                    if isinstance(value, bytes):
-                        value = value.decode("utf-8")
+                    if isinstance(value, browse_record):
+                        model_obj = self.env[value._name]
+                        value = eval("obj." + model_obj._rec_name,
+                                     {'obj': value})
 
                     if not value:
                         value = ''
