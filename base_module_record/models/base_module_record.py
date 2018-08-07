@@ -5,6 +5,9 @@ from xml.dom import minidom
 from odoo import api, models
 from odoo.tools import ustr
 
+DEFAULT_FIELDS = ['create_date', 'create_uid', 'display_name', 'id',
+                  '__last_update', 'write_date', 'write_uid']
+
 
 class XElement(minidom.Element):
     """dom.Element with compact print
@@ -127,7 +130,8 @@ class BaseModuleRecord(models.Model):
                 record.appendChild(field)
             elif fields[key]['type'] in ('one2many',):
                 for valitem in (val or []):
-                    if valitem[0] in (0, 1):
+                    if valitem[0] in (0, 1) and valitem[2].get(
+                            'name') not in DEFAULT_FIELDS:
                         if valitem[0] == 0:
                             newid = self._create_id(fields[key]['relation'],
                                                     valitem[2])
@@ -260,6 +264,7 @@ class BaseModuleRecord(models.Model):
         elif rec[3] == 'create':
             id = self._create_id(rec[2], rec[4])
             record, noupdate = self._create_record(doc, rec[2], rec[4], id)
+
             self.blank_dict[(rec[2], result)] = id
             record_list += record
 
