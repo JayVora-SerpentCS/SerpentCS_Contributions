@@ -35,6 +35,22 @@
                             for loop(same way we use in qweb) to display fields in kanban view.
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            Example:<br/>
+                            <span>&lt;</span><span>t</span>
+                            <span>t-foreach="record.one2manyfield.raw_value" t-as="o"><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span>&lt;</span><span>t</span>
+                                t-esc="o.name"/><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span>&lt;</span><span>t</span>
+                                t-esc="o.many2onefield[1]"/>
+                            </span><br/>
+                            <span>&lt;</span><span>/t></span>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
