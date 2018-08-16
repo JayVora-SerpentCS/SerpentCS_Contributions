@@ -15,7 +15,16 @@ KanbanRecord.include({
     _render: function () {
         var def = $.Deferred();
         var self = this;
-        _.each(this.qweb_context.record, function (record){
+        var field_mode = '';
+        var field_name = '';
+        _.each(this.fieldsInfo, function (field_info, field_nm){
+            if(field_info.mode === 'list'){
+                field_mode = field_info.mode;
+                field_name = field_nm
+            }
+        })
+        if( field_mode === 'list'){
+            var record = this.qweb_context.record[field_name]
             if(record.type === 'one2many'){
                 var field_record = [];
                 def = rpc.query({
@@ -28,12 +37,11 @@ KanbanRecord.include({
                         })
                         record.raw_value = field_record;
                     })
-
             }
-            else{
-                def.resolve();
-            }
-        })
+        }
+        else{
+            def.resolve();
+        }
         def.done(function (){
             self.replaceElement(self.qweb.render('kanban-box', self.qweb_context));
             self.$el.addClass('o_kanban_record');
