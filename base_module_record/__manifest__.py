@@ -9,9 +9,6 @@
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
-    'depends': [
-        'base',
-    ],
     'images': ['static/description/record_banner.png'],
     'data': [
         'security/ir.model.access.csv',

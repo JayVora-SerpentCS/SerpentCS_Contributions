@@ -105,7 +105,6 @@
                     <group>
                         <field name="data_kind"/>
                     </group>
-                    <group></group>
                 </group>
                 <group>
                     <field name="description" required="1"/>
