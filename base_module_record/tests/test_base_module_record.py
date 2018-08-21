@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
+
 from odoo.tests import common
 from datetime import datetime, timedelta
 
@@ -30,7 +31,7 @@ class BaseModuleRecordTestCase(common.TransactionCase):
                     'version': '1.0',
                     'author': 'Serpentcs',
                     'category': 'Vertical Modules/Parametrization',
-                    'website': 'http://www.openerp.com',
+                    'website': 'https://www.odoo.com',
                     'description': 'Module Recording',
                     'data_kind': 'demo'})
         self.base_mod_rec_obj.inter_call([self.base_mod_rec_obj_id.id])

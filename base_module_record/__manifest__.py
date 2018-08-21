@@ -9,13 +9,14 @@
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
-    'depends': ['base'],
+    'depends': [
+        'base',
+    ],
+    'images': ['static/description/record_banner.png'],
     'data': [
         'security/ir.model.access.csv',
         'wizard/base_module_record_object_view.xml',
         'wizard/base_module_record_data_view.xml',
     ],
     'installable': True,
-    'auto_install': False,
-    'images': ['static/description/record_banner.png'],
 }
