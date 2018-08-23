@@ -1241,19 +1241,31 @@ var GlobalJSignatureObjectInitializer = function(window){
         // This could be a way to "import" old signatures stored as images
         // This could also be a way to import extra decor into signature area.
         
-        var img = new Image()
-        // this = Canvas DOM elem. Not jQuery object. Not Canvas's parent div.
-        , c = this
+//        var img = new Image()
+//        // this = Canvas DOM elem. Not jQuery object. Not Canvas's parent div.
+//        , c = this
+//
+//        img.onload = function() {
+//            var ctx = c.getContext("2d").drawImage(
+//                img, 0, 0
+//                , ( img.width < c.width) ? img.width : c.width
+//                , ( img.height < c.height) ? img.height : c.height
+//            )
+//        }
+//
+//        img.src = 'data:' + formattype + ',' + data
 
-        img.onload = function() {
-            var ctx = c.getContext("2d").drawImage( 
-                img, 0, 0
-                , ( img.width < c.width) ? img.width : c.width
-                , ( img.height < c.height) ? img.height : c.height
-            )
-        }
-
-        img.src = 'data:' + formattype + ',' + data
+        var c = new Image,
+            e = this;
+        c.onload = function() {
+            var a = e.getContext("2d"),
+                b = a.shadowColor;
+            a.shadowColor = "transparent";
+            a.drawImage(c, 0, 0, c.width < e.width ? c.width : e.width, c.height <
+                e.height ? c.height : e.height);
+            a.shadowColor = b
+        };
+        c.src = "data:" + formattype + "," + data
     }
 
     var importplugins = {
