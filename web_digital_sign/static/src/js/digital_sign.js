@@ -1,21 +1,20 @@
-
 odoo.define('web_digital_sign.web_digital_sign', function(require) {
     "use strict";
 
     var core = require('web.core');
+    var BasicFields= require('web.basic_fields');
     var FormController = require('web.FormController');
+    var Registry = require('web.field_registry');
     var utils = require('web.utils');
     var session = require('web.session');
-    var fieldRegistry = require('web.field_registry');
-    var registry = require('web.field_registry');
     var field_utils = require('web.field_utils');
 
     var _t = core._t;
     var QWeb = core.qweb;
 
-    var FieldSignature = fieldRegistry.map.image.extend({
+    var FieldSignature = BasicFields.FieldBinaryImage.extend({
         template: 'FieldSignature',
-        events: _.extend({}, fieldRegistry.map.image.prototype.events, {
+        events: _.extend({}, BasicFields.FieldBinaryImage.prototype.events, {
             'click .save_sign': '_on_save_sign',
             'click #sign_clean': '_on_clear_sign'
         }),
@@ -23,7 +22,6 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         placeholder: "/web/static/src/img/placeholder.png",
         init: function() {
             this._super.apply(this, arguments);
-//            var self = this;
             this.$('> img').remove();
             this.$('.signature > canvas').remove();
             this.sign_options = {
@@ -46,7 +44,6 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             self._render();
         },
         _on_clear_sign: function() {
-//            var self = this;
             this.$(".signature > canvas").remove();
             this.$('> img').remove();
             this.$(".signature").attr("tabindex", "0");
@@ -153,7 +150,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         }
     });
 
-    registry.add('signature', FieldSignature);
+    Registry.add('signature', FieldSignature);
 
 
 });
