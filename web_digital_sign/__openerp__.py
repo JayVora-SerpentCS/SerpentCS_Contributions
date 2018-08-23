@@ -32,10 +32,18 @@
         The example can be seen into the User's form view where we have added a test field under signature.
     """,
     'data': [
-        'views/we_digital_sign_view.xml',
         'users_view.xml'
     ],
     'website': 'http://www.serpentcs.com',
+    'css': [
+        'static/src/css/digital.css',
+        'static/src/css/jquery.signature.css',
+    ],
+    'js': [
+        'static/lib/excanvas.js',
+        'static/lib/jquery.signature.js',
+        'static/src/js/digital_sign.js',
+    ],
     'qweb': ['static/src/xml/digital_sign.xml'],
     'installable': True,
     'auto_install': False,
