@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-   <t t-name="FieldSignature">
-       <t t-if="!widget.get('effective_readonly')">
-           <div class="panel panel-default mt16 mb0 oe_edit_only" id="drawsign">
-               <div class="panel-heading">
-                   <div class="pull-right">
-                       <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
-                       <a class="oe_edit_only save_sign"></a>
-                   </div>
-                   <strong>Draw your signature</strong>
-               </div>
-               <div class="signature"></div>
-           </div>
-       </t>
-       <t t-if="widget.get('effective_readonly')">
-           <div class="panel panel-default mt16 mb0 " id="drawsign">
-               <div class="signature"></div>
-           </div>
-       </t>
-   </t>
+    <t t-name="FieldSignature">
+        <t t-if="!widget.get('effective_readonly')">
+            <div class="panel panel-default mt16 mb0 oe_edit_only" id="drawsign">
+                <div class="panel-heading">
+                    <div class="pull-right">
+                        <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
+                        <a class="oe_edit_only save_sign"></a>
+                    </div>
+                    <div id="hide" style="float:right;">
+                        <label class="hand-cursor">
+                            <input type="file" id="sign_upload" accept="image/*" />
+                            <span class="fa fa-camera"></span>
+                        </label>
+                    </div>
+                    <strong>Draw your signature</strong>
+                </div>
+                <div class="signature"></div>
+            </div>
+        </t>
+        <t t-if="widget.get('effective_readonly')">
+            <div class="panel panel-default mt16 mb0 " id="drawsign">
+                <div class="signature"></div>
+             </div>
+        </t>
+    </t>
    <t t-name="FieldBinaryImage-extend">
        <img t-att-src='url'
             t-att-border="widget.readonly ? 0 : 1"

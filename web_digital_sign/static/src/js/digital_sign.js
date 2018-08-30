@@ -23,6 +23,23 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             this.empty_sign = this.$el.find(".signature").jSignature("getData",'image');
             this.$el.find('#sign_clean').click(this.on_clear_sign);
             this.$el.find('.save_sign').click(this.on_save_sign);
+            this.$el.find('#sign_upload').change(this.upload_sign_file);
+        },
+        upload_sign_file: function() {
+            var file = $(this)[0].files[0];
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function(aImg) { return function(e) {
+                aImg.src = e.target.result;
+                $(".signature").jSignature("reset");
+                $(".signature").jSignature("setData", e.target.result);
+                };
+            })(img);
+            if (file){
+                reader.readAsDataURL(file);
+            }
         },
         on_clear_sign: function() {
             var self = this;
