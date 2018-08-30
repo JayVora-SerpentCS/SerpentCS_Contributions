@@ -1,4 +1,4 @@
-odoo.define('web_digital_sign.web_digital_sign', function(require) {
+odoo.define('web_digital_sign.web_digital_sign', function (require) {
     "use strict";
 
     var core = require('web.core');
@@ -16,11 +16,12 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         template: 'FieldSignature',
         events: _.extend({}, BasicFields.FieldBinaryImage.prototype.events, {
             'click .save_sign': '_on_save_sign',
-            'click #sign_clean': '_on_clear_sign'
+            'click #sign_clean': '_on_clear_sign',
+            'change #sign_upload': '_upload_sign_file',
         }),
         jsLibs: ['/web_digital_sign/static/lib/jSignature/jSignatureCustom.js'],
         placeholder: "/web/static/src/img/placeholder.png",
-        init: function() {
+        init: function () {
             this._super.apply(this, arguments);
             this.$('> img').remove();
             this.$('.signature > canvas').remove();
@@ -29,21 +30,38 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 'color': '#000',
                 'background-color': '#fff',
                 'height': '150',
-                'width': '550'
+                'width': '550',
             };
             this.empty_sign = [];
         },
-        start: function() {
+        start: function () {
             var self = this;
             this.$(".signature").jSignature("init", this.sign_options);
             this.$(".signature").attr({
                 "tabindex": "0",
-                'height': "100"
+                'height': "100",
             });
             this.empty_sign = this.$(".signature").jSignature("getData", 'image');
             self._render();
         },
-        _on_clear_sign: function() {
+        _upload_sign_file: function (event) {
+            var file = event.currentTarget.files[0];
+            var img = document.createElement("img");
+            img.classList.add("obj");
+            img.file = file;
+            var reader = new FileReader();
+            reader.onload = (function (aImg) {
+                return function(e) {
+                    aImg.src = e.target.result;
+                    $(".signature").jSignature("reset");
+                    $(".signature").jSignature("setData", e.target.result);
+                };
+            })(img);
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        },
+        _on_clear_sign: function () {
             this.$(".signature > canvas").remove();
             this.$('> img').remove();
             this.$(".signature").attr("tabindex", "0");
@@ -53,24 +71,25 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                 'background-color': '#fff',
                 'height': '150',
                 'width': '550',
-                'clear': true
+                'clear': true,
             };
             this.$(".signature").jSignature(sign_options);
             this.$(".signature").focus();
             this._setValue(false);
         },
-        _on_save_sign: function(value_) {
+        _on_save_sign: function () {
             var self = this;
             this.$('> img').remove();
-            var signature = this.$(".signature").jSignature("getData", 'image');
-            var is_empty = signature ?
-                self.empty_sign[1] === signature[1] :
-                false;
-            if (!is_empty && typeof signature !== "undefined" && signature[1]) {
-                this._setValue(signature[1]);
+            var signature = this.$(".signature").jSignature("getData",
+                'image');
+            var is_empty = signature
+                ? self.empty_sign[1] === signature[1] : false;
+            if (!is_empty && typeof signature !== "undefined"
+                && signature[1]) {
+                    this._setValue(signature[1]);
             }
         },
-        _render: function() {
+        _render: function () {
             var self = this;
             var url = this.placeholder;
             if (this.value && !utils.is_bin_size(this.value)) {
@@ -88,12 +107,12 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
             if (this.mode === "readonly") {
                 var $img = $(QWeb.render("FieldBinaryImage-img", {
                     widget: self,
-                    url: url
+                    url: url,
                 }));
                 this.$('> img').remove();
                 this.$(".signature").hide();
                 this.$el.prepend($img);
-                $img.on('error', function() {
+                $img.on('error', function () {
                     self.on_clear();
                     $img.attr('src', self.placeholder);
                     self.do_warn(_t("Image"), _t("Could not display the selected image."));
@@ -107,8 +126,8 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                     self._rpc({
                         model: this.model,
                         method: 'read',
-                        args: [this.res_id, [field_name]]
-                    }).done(function(data) {
+                        args: [this.res_id, [field_name]],
+                    }).done(function (data) {
                         if (data) {
                             var field_desc = _.values(_.pick(data[0], field_name));
                             self.$(".signature").jSignature("clear");
@@ -123,7 +142,7 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                         'color': '#000',
                         'background-color': '#fff',
                         'height': '150',
-                        'width': '550'
+                        'width': '550',
                     };
                     this.$(".signature").jSignature("init", sign_options);
                 }
@@ -136,18 +155,18 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
                         'color': '#000',
                         'background-color': '#fff',
                         'height': '150',
-                        'width': '550'
+                        'width': '550',
                     });
                 }
             }
-        }
+        },
     });
 
     FormController.include({
-        saveRecord: function() {
+        saveRecord: function () {
             this.$('.save_sign').click();
             return this._super.apply(this, arguments);
-        }
+        },
     });
 
     Registry.add('signature', FieldSignature);

@@ -8,6 +8,12 @@
                         <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
                         <a class="oe_edit_only save_sign"></a>
                     </div>
+                    <div id="hide" style="float:right;">
+                        <label class="hand-cursor">
+                            <input type="file" id="sign_upload" accept="image/*" />
+                            <span class="fa fa-camera"></span>
+                        </label>
+                    </div>
                     <strong>Draw your signature</strong>
                 </div>
                 <div class="signature"></div>

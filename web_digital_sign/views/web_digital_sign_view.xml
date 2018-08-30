@@ -2,6 +2,7 @@
 <odoo>
     <template id="web_digital_sign_backend" name="web_digital_sign assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/web_digital_sign/static/src/css/digital_sign.css" type="text/css"/>
             <script type="text/javascript"
                     src="/web_digital_sign/static/src/js/digital_sign.js"></script>
         </xpath>
