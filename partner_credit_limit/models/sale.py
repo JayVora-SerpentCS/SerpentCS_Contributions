@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
         debit, credit = 0.0, 0.0
         today_dt = datetime.strftime(datetime.now().date(), DF)
         for line in movelines:
-            if line.date_maturity < today_dt:
+            if datetime.strftime(line.date_maturity, DF) < today_dt:
                 credit += line.debit
                 debit += line.credit
 
