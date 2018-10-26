@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/JayVora-SerpentCS/SerpentCS_Contributions.svg?branch=10.0)](https://travis-ci.org/JayVora-SerpentCS/SerpentCS_Contributions)
+[![Build Status](https://travis-ci.org/JayVora-SerpentCS/SerpentCS_Contributions.svg?branch=12.0)](https://travis-ci.org/JayVora-SerpentCS/SerpentCS_Contributions)
 
 SerpentCS Contributions
 ============================
