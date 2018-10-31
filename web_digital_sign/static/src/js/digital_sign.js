@@ -20,10 +20,8 @@ odoo.define('web_digital_sign.web_digital_sign', function(require) {
         }),
         jsLibs: ['/web_digital_sign/static/lib/jSignature/jSignatureCustom.js'],
         placeholder: "/web/static/src/img/placeholder.png",
-        init: function() {
+        init: function(parent, name, record) {
             this._super.apply(this, arguments);
-            this.$('> img').remove();
-            this.$('.signature > canvas').remove();
             this.sign_options = {
                 'decor-color': '#D1D0CE',
                 'color': '#000',
