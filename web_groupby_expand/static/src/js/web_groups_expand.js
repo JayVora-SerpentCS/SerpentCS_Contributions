@@ -16,8 +16,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             var self = this;
             var $el = $('<tbody>');
             this.elements = [$el[0]];
-
-            this.datagroup.list(
+            return this.datagroup.list(
                 _(this.view.visible_columns).chain().filter(function(column) {
                     return column.tag === 'field';
                 }).pluck('name').value(),
@@ -32,7 +31,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                     }
                 },
                 function(dataset) {
-                    self.render_dataset(dataset).done(function(list) {
+                    return self.render_dataset(dataset).done(function(list) {
                         self.children.null = list;
                         self.elements = [list.$current.replaceAll($el)[0]];
                         self.setup_resequence_rows(list, dataset);
@@ -43,9 +42,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                         self.view.trigger('view_list_rendered');
                     });
                 });
-            return $el;
         },
-
         render_groups: function(datagroups) {
             var self = this;
             var placeholder = this.make_fragment();
