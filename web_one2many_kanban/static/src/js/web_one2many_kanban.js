@@ -43,7 +43,7 @@ KanbanRecord.include({
             def.resolve();
         }
         def.done(function (){
-            self.replaceElement(self.qweb.render('kanban-box', self.qweb_context));
+            self._replaceElement(self.qweb.render('kanban-box', self.qweb_context));
             self.$el.addClass('o_kanban_record');
             self.$el.data('record', self);
             if (self.$el.hasClass('oe_kanban_global_click') ||
