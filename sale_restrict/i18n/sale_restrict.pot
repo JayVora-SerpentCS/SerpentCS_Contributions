@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* so_product_price_check
+#	* sale_restrict
 #
 msgid ""
 msgstr ""
@@ -15,8 +15,8 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: so_product_price_check
-#: code:addons/so_product_price_check/sale_order.py:15
+#. module: sale_restrict
+#: code:addons/sale_restrict/sale_order.py:15
 #, python-format
 msgid "Please specify unit price for the following products:"
 msgstr ""
