@@ -3,7 +3,7 @@
 from odoo import api, models
 
 
-class Crmleadextended(models.Model):
+class Lead(models.Model):
     _inherit = 'crm.lead'
 
     @api.multi

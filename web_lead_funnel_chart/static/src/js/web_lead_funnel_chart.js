@@ -7,10 +7,11 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
     var ajax = require('web.ajax');
     var WebClient = require('web.web_client');
     var Session = require('web.session');
+    var AbstractAction = require('web.AbstractAction');
 
     var _t = core._t;
 
-    var web_lead_funnel_chart = Widget.extend({
+    var web_lead_funnel_chart = AbstractAction.extend({
         template: "FunnelChart",
         xmlDependencies: ['web_lead_funnel_chart/static/src/xml/web_funnel_chart.xml'],
         start: function() {
@@ -86,7 +87,8 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
 
         },
     });
-    
+
     core.action_registry.add("web_lead_funnel_chart.funnel", web_lead_funnel_chart);
+    return web_lead_funnel_chart;
 
 });

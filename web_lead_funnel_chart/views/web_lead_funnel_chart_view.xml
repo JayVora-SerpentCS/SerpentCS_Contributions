@@ -1,4 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <odoo>
+
     <!-- Action for Funnel Chart -->
     <record id="action_funnel_chart" model="ir.actions.client">
         <field name="name">Lead Funnel Chart</field>
@@ -7,4 +10,5 @@
 
    <menuitem id="FunnelChart" name="Funnel Chart" parent="crm.crm_menu_root"
         action="action_funnel_chart"  sequence="2"/>
+
 </odoo>
