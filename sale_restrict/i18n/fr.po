@@ -17,8 +17,8 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-08-15 06:57+0000\n"
 "X-Generator: Launchpad (build 17156)\n"
 
-#. module: so_product_price_check
-#: code:addons/so_product_price_check/sale_order.py:15
+#. module: sale_restrict
+#: code:addons/sale_restrict/sale_order.py:15
 #, python-format
 msgid "Please specify unit price for the following products:"
 msgstr "S'il vous plaît indiquer le prix unitaire pour les produits suivants"
