@@ -62,8 +62,15 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                     action_id: "crm.crm_lead_opportunities_tree_view",
                 }}).done(function(result){
                     funnel_container.onclick = function (event) {
-                        if(event.path[0].point !== undefined) {
-                            var crm_stage = event.path[0].point.name;
+                    	var path;
+                    	if(event.target){
+                    		path = event.target;
+                    	}
+                    	else{
+                    		path = event.path[0]
+                    	}
+                        if(path.point !== undefined) {
+                            var crm_stage = path.point.name;
                             result.display_name = _t(crm_stage);
                             result.view_type = "list";
                             result.view_mode = "list";
