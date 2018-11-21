@@ -3,14 +3,13 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
     "use strict";
 
     var core = require("web.core");
-    var Widget = require("web.Widget");
+    var AbstractAction = require("web.AbstractAction");
     var ajax = require('web.ajax');
-    var WebClient = require('web.web_client');
     var Session = require('web.session');
 
     var _t = core._t;
 
-    var web_lead_funnel_chart = Widget.extend({
+    var web_lead_funnel_chart = AbstractAction.extend({
         template: "FunnelChart",
         xmlDependencies: ['web_lead_funnel_chart/static/src/xml/web_funnel_chart.xml'],
         start: function() {
@@ -61,8 +60,8 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                     action_id: "crm.crm_lead_opportunities_tree_view",
                 }}).done(function(result){
                     funnel_container.onclick = function (event) {
-                        if(event.path[0].point !== undefined) {
-                            var crm_stage = event.path[0].point.name;
+                        if(event.composedPath()[0].point !== undefined) {
+                            var crm_stage = event.composedPath()[0].point.name;
                             result.display_name = _t(crm_stage);
                             result.view_type = "list";
                             result.view_mode = "list";
@@ -78,7 +77,11 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                             result.filter = true;
                             result.target = 'current';
                             result.context = {'default_user_id': Session.uid};
-                            return self.do_action(result);
+                            return self.do_action(result,{
+                                on_reverse_breadcrumb: function(){
+                                    self.start();
+                                }
+                            });
                         }
                     }
                 });
