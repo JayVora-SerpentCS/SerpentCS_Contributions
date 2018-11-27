@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <template id="assets_backend" name="import_export_templating assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript" src="/import_export_templating/static/src/js/wizard_action.js"></script>
         </xpath>
     </template>
+
 </odoo>
