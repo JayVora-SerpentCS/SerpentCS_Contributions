@@ -1,13 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<record id="wiz_download_template_form_view" model="ir.ui.view">
-		<field name="name">Import / Export Tool</field>
-		<field name="model">wiz.download.template</field>
-		<field name="arch" type="xml">
-			<form>
-				<label for="type" string="Operation Type!"/>
-				<group>
-					<field name="type" widget="radio" options="{'horizontal': true}" nolabel="1"/>
-				</group>
+    <record id="wiz_download_template_form_view" model="ir.ui.view">
+        <field name="name">Import / Export Tool</field>
+        <field name="model">wiz.download.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <label for="type" string="Operation Type!"/>
+                <group>
+                    <field name="type" widget="radio" options="{'horizontal': true}" nolabel="1"/>
+                </group>
                 <p attrs="{'invisible':[('type', '!=', 'export')]}"><b>Export Template!</b></p>  
                 <p attrs="{'invisible':[('type', '!=', 'export')]}">
                     To import or update record, you must first download the template for importing! 
@@ -18,95 +19,94 @@
                     Update the template and save in .xls format before attaching! 
                 </p>
 
-				<label string="Select Type Of Document To Download" attrs="{'invisible':[('type', 'not in', ['export','import'])]}"/>
-				<br/>
-				<group attrs="{'invisible':[('type', '=', False)]}">
-					<group>
-						<field name="ir_model" nolabel="1" attrs="{'required':[('type', 'in', ['export','import'])]}"/>
-					</group>
-					<group></group>
-				</group>
+                <label string="Select Type Of Document To Download" for="ir_model" attrs="{'invisible':[('type', 'not in', ['export','import'])]}"/>
+                <br/>
+                <group attrs="{'invisible':[('type', '=', False)]}">
+                    <group>
+                        <field name="ir_model" nolabel="1" attrs="{'required':[('type', 'in', ['export','import'])]}"/>
+                    </group>
+                    <group></group>
+                </group>
 
-				<label string="Browse file!" attrs="{'invisible':[('type', '!=', 'import')]}"/>
-				<group attrs="{'invisible':[('type', '!=', 'import')]}">
-					<group>
-						<field name="upload_file" nolabel="1" filename="fname"/>
-						<field name="fname" invisible="1"/>
-					</group>
-					<group></group>
-				</group>
-				<separator string="Options" attrs="{'invisible':[('type', '!=', 'import')]}"/>
-				<!-- <group attrs="{'invisible':[('type', '!=', 'import')]}" colspan="2" col="8">
-					<field name="create_m2o"/>
-					<field name="create_m2m"/>
-					<field name="update_only"/>
-					<field name="create_only"/>
-				</group> -->
-				<group attrs="{'invisible':[('type', '!=', 'import')]}">
-					<field name="update_only"/>
-					<field name="create_only"/>
-				</group>
+                <label string="Browse file!" for="upload_file" attrs="{'invisible':[('type', '!=', 'import')]}"/>
+                <group attrs="{'invisible':[('type', '!=', 'import')]}">
+                    <group>
+                        <field name="upload_file" nolabel="1" filename="fname"/>
+                        <field name="fname" invisible="1"/>
+                    </group>
+                    <group></group>
+                </group>
+                <separator string="Options" attrs="{'invisible':[('type', '!=', 'import')]}"/>
+                <!-- <group attrs="{'invisible':[('type', '!=', 'import')]}" colspan="2" col="8">
+                    <field name="create_m2o"/>
+                    <field name="create_m2m"/>
+                    <field name="update_only"/>
+                    <field name="create_only"/>
+                </group> -->
+                <group attrs="{'invisible':[('type', '!=', 'import')]}">
+                    <field name="update_only"/>
+                    <field name="create_only"/>
+                </group>
 
 
-				<b attrs="{'invisible':[('type', '!=', 'export')]}">
-					Click on relevant buttons to choose fields of the document written above!</b>
-				<br/><br/>
+                <b attrs="{'invisible':[('type', '!=', 'export')]}">
+                    Click on relevant buttons to choose fields of the document written above!</b>
+                <br/><br/>
 
-				<div attrs="{'invisible':[('type', '!=', 'export')]}">
-		        	<button name="button_required" class="oe_button oe_form_button oe_highlight" string="Required" type="object"
-		        		icon="fa-asterisk" help="It helps to select all required fields of selected model!"/>
-		        	-
-		       		<button name="button_select_all" class="oe_button oe_form_button oe_highlight" string="Select All" type="object"
-		       			icon="fa-check" help="It helps to select all fields of selected model!"/>
-		       		-
-		        	<button name="button_uncheck" class="oe_button oe_form_button oe_highlight" string="Reset" type="object"
-		        		icon="fa-square-o" help="It helps to reset all selected fields!"/>
-		        		<br/><br/>
-	       		</div>
-				<notebook attrs="{'invisible':[('type', '!=', 'export')]}">
-					<page string="Fields">
+                <div attrs="{'invisible':[('type', '!=', 'export')]}">
+                    <button name="button_required" class="oe_button oe_form_button oe_highlight" string="Required" type="object"
+                        icon="fa-asterisk" help="It helps to select all required fields of selected model!"/>
+                    -
+                    <button name="button_select_all" class="oe_button oe_form_button oe_highlight" string="Select All" type="object"
+                        icon="fa-check" help="It helps to select all fields of selected model!"/>
+                    -
+                    <button name="button_uncheck" class="oe_button oe_form_button oe_highlight" string="Reset" type="object"
+                        icon="fa-square-o" help="It helps to reset all selected fields!"/>
+                        <br/><br/>
+                </div>
+                <notebook attrs="{'invisible':[('type', '!=', 'export')]}">
+                    <page string="Fields">
                         <field name="fields_list_ids" attrs="{'readonly':[('field_names_computed', '=', [])]}"/> 
                         <field name="field_names_computed" attrs="{'invisible':[('ir_model', '!=', True)]}"/>
                     </page>
                 </notebook>
-				<footer>
-					<button name="download_template" class="oe_button oe_form_button oe_highlight" string="Download Blank Template" type="object" attrs="{'invisible':[('type', '!=', 'export')]}" icon="fa-file-excel-o" help="It helps to download blank template based on fields selection!"/>
-					<button name="import_data" class="oe_button oe_form_button oe_highlight" string="Import" type="object" attrs="{'invisible':[('type', '!=', 'import')]}" icon="fa-file" help="It helps to import data to selection of model and downloaded template!"/>
-					<button special="cancel" context='{"close_previous_dialog": True}' string="Cancel" class="oe_button oe_form_button oe_link" icon="fa-window-close"/>
-				</footer>
-			</form>
-		</field>
-	</record>
-	
-	<record id="wiz_template_file_form_view" model="ir.ui.view">
-		<field name="name">wiz.template.file.form View</field>
-		<field name="model">wiz.template.file</field>
-		<field name="arch" type="xml">
-			<form>
-				<p><b>Download file!</b></p> 
-				<group name="file_group" colspan="4" col="2">
-					<field name="file" filename="name" readonly="1" nolabel="1" />
-					<field name="name" invisible="1"/>
-				</group>
-				<footer>
-					<button special="cancel" string="Cancel" class="oe_button oe_form_button oe_link" icon="fa-window-close"/>
-				</footer>
-			</form>
-		</field>
-	</record>
-	
-	<record id="action_wiz_download_template" model="ir.actions.act_window">
-		<field name="name">Import / Export Tool</field>
-		<field name="res_model">wiz.download.template</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form</field>
-		<field name="context">{'nodestroy': True}</field>
-		<field name="view_id" ref="wiz_download_template_form_view"/>
-		<field name="target">new</field>
-	</record>
+                <footer>
+                    <button name="download_template" class="oe_button oe_form_button oe_highlight" string="Download Blank Template" type="object" attrs="{'invisible':[('type', '!=', 'export')]}" icon="fa-file-excel-o" help="It helps to download blank template based on fields selection!"/>
+                    <button name="import_data" class="oe_button oe_form_button oe_highlight" string="Import" type="object" attrs="{'invisible':[('type', '!=', 'import')]}" icon="fa-file" help="It helps to import data to selection of model and downloaded template!"/>
+                    <button special="cancel" context='{"close_previous_dialog": True}' string="Cancel" class="oe_button oe_form_button oe_link" icon="fa-window-close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 
-	<menuitem id="wiz_download_template_menu" name="Import / Export" parent="base.menu_administration" sequence="150"/>
-	<menuitem id="wiz_download_template" action="action_wiz_download_template" sequence="3" parent="wiz_download_template_menu" />
+    <record id="wiz_template_file_form_view" model="ir.ui.view">
+        <field name="name">wiz.template.file.form View</field>
+        <field name="model">wiz.template.file</field>
+        <field name="arch" type="xml">
+            <form>
+                <p><b>Download file!</b></p> 
+                <group name="file_group" colspan="4" col="2">
+                    <field name="file" filename="name" readonly="1" nolabel="1" />
+                    <field name="name" invisible="1"/>
+                </group>
+                <footer>
+                    <button special="cancel" string="Cancel" class="oe_button oe_form_button oe_link" icon="fa-window-close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wiz_download_template" model="ir.actions.act_window">
+        <field name="name">Import / Export Tool</field>
+        <field name="res_model">wiz.download.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'nodestroy': True}</field>
+        <field name="view_id" ref="wiz_download_template_form_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="wiz_download_template_menu" name="Import / Export" parent="base.menu_administration" sequence="150"/>
+    <menuitem id="wiz_download_template" action="action_wiz_download_template" sequence="3" parent="wiz_download_template_menu" />
 
 </odoo>
-		
