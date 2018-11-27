@@ -1,18 +1,21 @@
-# -*- coding: utf-8 -*-
 # See LICENSE file for full copyright and licensing details.
 
 import xlwt
 from io import BytesIO
 import base64
+from xlrd import open_workbook
+import tempfile
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import misc
+from datetime import datetime
 
 
 class WizDownloadTemplate(models.TransientModel):
     _name = 'wiz.download.template'
     _rec_name = 'ir_model'
+    _description = 'Wiz Download Template'
 
     @api.depends('ir_model', 'ir_model.field_id', 'ir_model.field_id.model_id')
     def _get_names(self):
@@ -29,8 +32,10 @@ class WizDownloadTemplate(models.TransientModel):
     create_m2m = fields.Boolean(string="Create Many2many")
     update_only = fields.Boolean(string="Update records", default=True)
     create_only = fields.Boolean(string="Create records", default=True)
-    field_names_computed = fields.Many2many('ir.model.fields', compute='_get_names')
-    fields_list_ids = fields.Many2many('ir.model.fields', domain="[('model_id', '=', ir_model)]")
+    field_names_computed = fields.Many2many(
+        'ir.model.fields', compute='_get_names')
+    fields_list_ids = fields.Many2many(
+        'ir.model.fields', domain="[('model_id', '=', ir_model)]")
 
     @api.onchange('type')
     def _get_active_model(self):
@@ -55,29 +60,70 @@ class WizDownloadTemplate(models.TransientModel):
             lambda l: l.required).ids)
 
         self.fields_list_ids = manual_selected + required
-        return {"type": "ir.actions.do_nothing"}
+        ctx = dict(self._context)
+        ctx.update(({'nodestroy': False}))
+        return {
+            'context': ctx,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'wiz.download.template',
+            'res_id': self.id,
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
 
     @api.multi
     def button_select_all(self):
         self.fields_list_ids = [(6, 0, self.field_names_computed.filtered(
             lambda l: l.name != 'id').ids)]
-        return {"type": "ir.actions.do_nothing"}
+        ctx = dict(self._context)
+        ctx.update(({'nodestroy': False}))
+        return {
+            'context': ctx,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'wiz.download.template',
+            'res_id': self.id,
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
 
     @api.multi
     def button_uncheck(self):
         self.fields_list_ids = [(5, self.field_names_computed.ids)]
-        return {"type": "ir.actions.do_nothing"}
+        ctx = dict(self._context)
+        ctx.update(({'nodestroy': False}))
+        return {
+            'context': ctx,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'wiz.download.template',
+            'res_id': self.id,
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+        }
 
     @api.multi
-    def download_template(self, row_values=None, error_reason=None, error_value=None):
+    def download_template(self, row_values=None, error_reason=None,
+                          error_value=None):
+        """This method is used for export template."""
         fl = BytesIO()
         workbook = xlwt.Workbook()
         worksheet = workbook.add_sheet(self.ir_model.name)
         bold = xlwt.easyxf('font: bold 1;')
         main_header = xlwt.easyxf(
-            'font: bold 1, height 270; align: horiz center,vert center ,wrap 1;borders :top hair, bottom hair,left hair, right hair, bottom_color black,top_color black')
+            'font: bold 1, height 270;'
+            ' align: horiz center,vert center ,wrap 1;'
+            'borders :top hair, bottom hair,left hair, right hair,'
+            ' bottom_color black,top_color black')
         label_header = xlwt.easyxf(
-            'font: bold 1, height 230; align: horiz center,vert center ,wrap 1;borders :top hair, bottom hair,left hair, right hair, bottom_color black,top_color black')
+            'font: bold 1, height 230;'
+            ' align: horiz center,vert center ,wrap 1;'
+            'borders :top hair, bottom hair,left hair, right hair,'
+            ' bottom_color black,top_color black')
 
         if self.ir_model:
             col = 1
@@ -95,7 +141,8 @@ class WizDownloadTemplate(models.TransientModel):
             worksheet.col(2).width = 9500
             worksheet.col(3).width = 9500
             worksheet.col(4).width = 9500
-            worksheet.write_merge(0, 0, 0, 4, 'Data Import Template', main_header)
+            worksheet.write_merge(
+                0, 0, 0, 4, 'Data Import Template', main_header)
             worksheet.write_merge(1, 1, 0, 4, '')
             worksheet.write_merge(2, 2, 0, 4, '')
             worksheet.write_merge(3, 3, 0, 2, 'Notes:', bold)
@@ -104,21 +151,30 @@ class WizDownloadTemplate(models.TransientModel):
             worksheet.write_merge(
                 5, 5, 0, 2, 'First data column must be blank.')
             worksheet.write_merge(
-                6, 6, 0, 2, 'If you are uploading new records, "Naming Series" becomes mandatory, if present.')
+                6, 6, 0, 2, 'If you are uploading new records, "Naming Series"'
+                ' becomes mandatory, if present.')
             worksheet.write_merge(
-                7, 7, 0, 2, 'Only mandatory fields are necessary for new records. You can keep non-mandatory columns blank if you wish.')
+                7, 7, 0, 2, 'Only mandatory fields are necessary for new'
+                ' records. You can keep non-mandatory columns blank if you'
+                ' wish.')
             worksheet.write_merge(
-                8, 8, 0, 2, 'For updating, you can update only selective columns.')
+                8, 8, 0, 2, 'For updating, you can update only selective'
+                ' columns.')
             worksheet.write_merge(
-                9, 9, 0, 2, 'You can only upload upto 5000 records in one go. (may be less in some cases)')
+                9, 9, 0, 2, 'You can only upload upto 5000 records in one go.'
+                ' (may be less in some cases)')
 
             worksheet.write_merge(3, 3, 3, 4, 'Data Import Notes:', bold)
             worksheet.write_merge(4, 4, 3, 4, '')
             worksheet.write_merge(
-                5, 5, 3, 4, 'Many2one: You can enter "NAME" of the relational model!')
+                5, 5, 3, 4, 'Many2one: You can enter "NAME" of the relational'
+                ' model!')
             worksheet.write_merge(
-                6, 6, 3, 4, 'Many2many: You can enter "NAME" of the relational model Seprate by ";"')
-            worksheet.write_merge(7, 7, 3, 4, 'One2many: Let this blank! & Download Blank Template for displayed comodel to Import!')
+                6, 6, 3, 4, 'Many2many: You can enter "NAME" of the relational'
+                ' model Seprate by ";"')
+            worksheet.write_merge(
+                7, 7, 3, 4, 'One2many: Let this blank! & Download Blank'
+                ' Template for displayed comodel to Import!')
             worksheet.write_merge(8, 8, 3, 4, '')
             worksheet.write_merge(9, 9, 3, 4, '')
             worksheet.write_merge(10, 10, 3, 4, '')
@@ -146,14 +202,15 @@ class WizDownloadTemplate(models.TransientModel):
                     delegated = False
                     data = 'No'
                     if line.ttype == 'many2one' and line.relation in [
-                            x.model for x in self.ir_model.inherited_model_ids]\
-                            and not line.related or line.ttype == 'one2many':
+                        x.model for x in self.ir_model.inherited_model_ids
+                    ] and not line.related or line.ttype == 'one2many':
                         delegated = True
                     # Check for all fields and its required attribute!
                     if line.required and not delegated:
                         data = 'Yes'
                     worksheet.write(row_15, col, str(data))
-                    worksheet.write(row_16, col, line.field_description, label_header)
+                    worksheet.write(
+                        row_16, col, line.field_description, label_header)
                     col += 1
 
             elif row_values and error_value:
@@ -189,7 +246,9 @@ class WizDownloadTemplate(models.TransientModel):
                         for data in line:
                             worksheet.write(row_16, col, data, label_header)
                             col += 1
-                        worksheet.write(row_16, col, "REASONS: (NOT CREATED RECORD)", label_header)
+                        worksheet.write(
+                            row_16, col, "REASONS: (NOT CREATED RECORD)",
+                            label_header)
                         col += 1
                         col = 1
 
@@ -200,7 +259,14 @@ class WizDownloadTemplate(models.TransientModel):
                             for value in each_error:
                                 worksheet.write(row_17, col, str(value))
                                 col += 1
-                            worksheet.write(row_17, col, (str(reason) + ': Value not found in Database! Please create it first. once create value in database. remove (REASON) column for IMPORT!'))
+                            worksheet.write(row_17, col, (str(
+                                reason) + ': Value not found in Database!'
+                                ' Please create it'
+                                ' first. once create'
+                                ' value in database.'
+                                ' remove (REASON)'
+                                ' column for IMPORT!'
+                            ))
                             col += 1
                             row_17 += 1
                             col = 1
@@ -227,9 +293,239 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new'
         }
 
+    @api.multi
+    def import_data(self):
+        """This method is used for import data."""
+        for rec in self:
+            datafile = rec.upload_file
+            file_name = str(rec.fname)
+
+            # Checking for Suitable File
+            if not datafile or not file_name.lower().endswith(('.xls')):
+                raise UserError(
+                    _("""Please select an (Downloded Blank Template)
+                     .xls compatible file to Import"""))
+            xls_data = base64.decodestring(datafile)
+            temp_path = tempfile.gettempdir()
+
+            # writing a file to temp. location
+            fp = open(temp_path + '/xsl_file.xls', 'wb+')
+            fp.write(xls_data)
+            fp.close()
+
+            # opening a file form temp. location
+            wb = open_workbook(temp_path + '/xsl_file.xls')
+
+            header_list = []
+            data_list = []
+
+            field_type_dict = {}
+            headers_dict = {}
+            flag_dict = {}
+
+            row_values = []
+            for sheet in wb.sheets():
+                for rownum in range(sheet.nrows):
+                    row_values.append(sheet.row_values(rownum))
+                    # headers
+                    if rownum == 13:
+                        # converting unicode chars into string
+                        header_key = [x.strip().encode().decode('utf-8')
+                                      for x in sheet.row_values(rownum)]
+
+                    elif rownum == 14:
+                        # converting unicode chars into string
+                        field_type_list = [x.strip().encode().decode(
+                            'utf-8').split(" Relation: "
+                                           ) for x in sheet.row_values(rownum)]
+                        list1 = []
+                        list2 = []
+                        for x in field_type_list:
+                            list1.append(x[0])
+                            if len(x) == 1:
+                                list2.append(field_type_list.index(x))
+                            else:
+                                list2.append(x[1])
+                        field_type_dict = dict(
+                            zip(header_key, zip(list1, list2)))
+
+                    elif rownum == 15:
+                        # converting unicode chars into string
+                        flag_list = [x.strip().encode().decode('utf-8')
+                                     for x in sheet.row_values(rownum)]
+                        list1 = []
+                        for x in flag_list:
+                            list1.append(x)
+                        if header_key and list1:
+                            flag_dict = dict(zip(header_key, list1))
+
+                    elif rownum == 16:
+                        # converting unicode chars into string
+                        header_list = [x.strip().encode().decode('utf-8')
+                                       for x in sheet.row_values(rownum)]
+                        model_name = self.ir_model.name
+                        name_file = ''.join(map(str, file_name.split('.xls')))
+                        if model_name != name_file:
+                            raise UserError(
+                                _("""Selected document type not matched
+                                    with browsed file name!"""))
+
+                        index = []
+                        for x in header_list:
+                            index.append(header_list.index(x))
+                        if header_key and index:
+                            headers_dict = dict(zip(header_key, index))
+
+                    # rows data
+                    elif rownum >= 17:
+                        data_list.append(sheet.row_values(rownum))
+
+            # Data List
+            if data_list and headers_dict:
+                error_reason = []
+                error_value = []
+                for row in data_list:
+                    vals = {}
+                    for key in header_key:
+                        if row[headers_dict[str(key)]]:
+                            vals.update(
+                                {str(key): row[headers_dict[str(key)]]})
+                            if field_type_dict.get(str(key))[0] == 'date':
+                                try:
+                                    date = datetime.strptime(
+                                        row[headers_dict[str(key)]],
+                                        '%Y/%m/%d')
+                                    vals.update({str(key): date})
+                                except:
+                                    raise UserError(
+                                        _("""The Date format should
+                                            be: YY/mm/dd << %s >>""") % (
+                                            row[headers_dict[str(key)]]))
+
+                            elif field_type_dict.get(str(key)
+                                                     )[0] == 'datetime':
+                                try:
+                                    date = datetime.strptime(
+                                        row[headers_dict[str(key)]],
+                                        '%Y/%m/%d %H:%M:%S')
+                                    vals.update({str(key): date})
+                                except:
+                                    raise UserError(
+                                        _("""The DateTime format should
+                                            be: YY/mm/dd HH:MM:SS  << %s >> """
+                                          ) % (
+                                            row[headers_dict[str(key)]]))
+
+                            elif field_type_dict.get(str(key)
+                                                     )[0] == 'many2one':
+                                search_id = self.env["" + str(
+                                    field_type_dict.get(str(key))[1]
+                                ) + ""].search(
+                                    [('name', '=',
+                                        row[headers_dict[str(key)]])],
+                                    limit=1).id
+
+                                self.create_m2o = True
+                                if not search_id and self.create_m2o:
+                                    ir_model_search = self.env['ir.model'].\
+                                        search([('model', '=', str(
+                                            field_type_dict.get(str(key))[1])
+                                        )])
+                                    required_field = [
+                                        x.id for x in
+                                        ir_model_search.field_id.filtered(
+                                            lambda l: l.required)]
+                                    count = self.env['ir.model.fields'].\
+                                        search_count([('id', 'in',
+                                                       required_field)])
+                                    if (count > 1):
+                                        error_reason.append(
+                                            row[headers_dict[str(key)]])
+                                        error_value.append(row)
+                                        vals.clear()
+                                        break
+
+                                    create_id = self.env["" + str(
+                                        field_type_dict.get(str(key))[1]) + ""
+                                    ].create({'name': row[headers_dict[str(key
+                                                                           )]]}
+                                             )
+                                    vals.update(
+                                        {str(key): create_id and create_id.id})
+                                    search_id = create_id.id
+                                vals.update({str(key): search_id})
+
+                            elif field_type_dict.get(str(key)
+                                                     )[0] == 'many2many':
+                                ids = []
+                                for line in row[
+                                        headers_dict[str(key)]].split(';'):
+                                    search_id = self.env[
+                                        "" + str(field_type_dict.get(
+                                            str(key))[1]) + ""].search(
+                                        [('name', '=', line)])
+                                    self.create_m2m = True
+                                    if not search_id and self.create_m2m:
+                                        ir_model_search\
+                                            = self.env['ir.model'].search(
+                                                [('model', '=',
+                                                    str(field_type_dict.get(
+                                                        str(key))[1]))])
+                                        required_field = [
+                                            x.id for x in ir_model_search.
+                                            field_id.filtered(
+                                                lambda l: l.required)]
+                                        count = self.env['ir.model.fields'].\
+                                            search_count([('id', 'in',
+                                                           required_field)])
+                                        if (count > 1):
+                                            error_reason.append(
+                                                row[headers_dict[str(key)]])
+                                            error_value.append(row)
+                                            vals.clear()
+                                            break
+
+                                        create_id = self.env[
+                                            "" + str(field_type_dict.get(
+                                                str(key))[1]) + ""].create(
+                                            {'name': line})
+                                        ids.append(create_id and create_id.id)
+                                        vals.update({str(key): [(6, 0, ids)]})
+                                        search_id = create_id.id
+                                    ids.append(search_id and search_id.id)
+                                    vals.update({str(key): [(6, 0, ids)]})
+
+                            elif field_type_dict.get(str(key)
+                                                     )[0] == 'one2many':
+                                vals.update({str(key): False})
+                        else:
+                            if flag_dict.get(str(key)) == 'Yes' and \
+                                    field_type_dict.get(str(key)
+                                                        )[0] != 'one2many':
+                                raise UserError(
+                                    _('This field is required! << %s >>'
+                                      ) % (str(key)))
+                            vals.update({str(key): False})
+                        vals.pop('Column Name:', None)
+
+                    model_env = self.env["" + str(self.ir_model.model) + ""]
+                    if vals != {}:
+                        record_search_id = model_env.search(
+                            [('name', '=', str(vals.get('name')))])
+                        if record_search_id and self.update_only:
+                            record_search_id.write(vals)
+                        elif not record_search_id and self.create_only:
+                            model_env.create(vals)
+
+                if error_reason and error_value and row_values:
+                    return self.download_template(row_values, error_reason,
+                                                  error_value)
+        return {'context': {'close_previous_dialog': True}}
+
 
 class WizTemplateFile(models.TransientModel):
     _name = 'wiz.template.file'
+    _description = 'Wiz Template File'
 
     @api.model
     def default_get(self, fields):
