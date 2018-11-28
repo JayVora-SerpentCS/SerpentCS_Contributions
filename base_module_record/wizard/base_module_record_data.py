@@ -16,16 +16,16 @@ class BaseModuleData(models.TransientModel):
                  'ir.actions.server', 'ir.server.object.lines')
         return self.env['ir.model'].search([('model', 'in', names)])
 
-    check_date = fields.Datetime('Record from Date', required=True,
+    check_date = fields.Datetime(string='Record from Date', required=True,
                                  default=fields.Datetime.now)
     objects = fields.Many2many('ir.model', 'base_module_record_model_rel',
                                'objects',
-                               'model_id', 'Objects',
+                               'model_id', string='Objects',
                                default=_get_default_objects)
     filter_cond = fields.Selection([('created', 'Created'),
                                     ('modified', 'Modified'),
                                     ('created_modified', 'Created & Modified')
-                                    ], 'Records only',
+                                    ], string='Records only',
                                    required=True, default='created')
 
     @api.model
@@ -95,4 +95,4 @@ class BaseModuleRecordData(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
 
-    res_text = fields.Text('Result')
+    res_text = fields.Text(string='Result')
