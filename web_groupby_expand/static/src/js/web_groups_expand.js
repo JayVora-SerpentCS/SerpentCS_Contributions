@@ -19,12 +19,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             var self = this;
             _.each(self.state.data, function(group) {
                 if(group){
-                    if (!group.isOpen) {
-                        self.trigger_up('toggle_group', {group: group});
-                    }
-                    else{
-                        self.trigger_up('toggle_group', {group: group});
-                    }
+                    self.trigger_up('toggle_group', {group: group});
                 }
             })
 
