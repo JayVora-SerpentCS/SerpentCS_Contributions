@@ -65,9 +65,9 @@
                 <separator string="Information" colspan="4"/>
                 <label string="If you think your module could interest other people, we'd like you to publish it on
                     https://www.odoo.com, in the 'Modules' section. You can do it through the website or using features of
-                    the 'base_module_publish' module."/>
+                    the 'base_module_publish' module." for="module_file"/>
                 <br/>
-                <label string="Thanks in advance for your contribution."/>
+                <label string="Thanks in advance for your contribution." for="module_file"/>
                 <separator colspan="4"/>
                 <footer>
                     <button string="Close" class="oe_link" special="cancel"/>
@@ -125,7 +125,7 @@
         <field name="model">base.module.record.objects</field>
         <field name="arch" type="xml">
             <form string="Module Recording">
-                <label string="Thanks For using Module Recorder"/>
+                <separator string="Thanks For using Module Recorder"/>
                 <footer>
                     <button string="Close" class="oe_link" special="cancel"/>
                 </footer>
