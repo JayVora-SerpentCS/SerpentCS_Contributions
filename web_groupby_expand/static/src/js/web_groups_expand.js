@@ -115,16 +115,18 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
         switch_mode: function(view_type, view_options) {
             var self = this;
             var res = this._super.apply(this, arguments);
-            jQuery.grep(self.switch_buttons.$multi, function( a ) {
-                if($(a)[0].id == 'expand_icon'){
-                    if (view_type !== 'list') {
-                        $(a).hide();
+            if(self.switch_buttons){
+                jQuery.grep(self.switch_buttons.$multi, function( a ) {
+                    if($(a)[0].id == 'expand_icon'){
+                        if (view_type !== 'list') {
+                            $(a).hide();
+                        }
+                        else{
+                            $(a).css('display','block')
+                        }
                     }
-                    else{
-                        $(a).css('display','block')
-                    }
-                }
-            });
+                });
+            }
             return res;
         },
     });
