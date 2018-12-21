@@ -2,7 +2,7 @@
 
 {
     'name': 'Web Widget Multiple Image V11',
-    'version': '11.0.0.1.0',
+    'version': '12.0.0.1.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Image',
