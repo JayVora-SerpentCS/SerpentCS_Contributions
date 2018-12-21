@@ -1,7 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Web Widget Multiple Image V11',
+    'name': 'Web Widget Multiple Image V12',
     'version': '12.0.0.1.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',

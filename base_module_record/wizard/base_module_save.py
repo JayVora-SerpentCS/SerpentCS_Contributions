@@ -3,7 +3,6 @@
 import base64
 import zipfile
 from io import BytesIO
-
 from odoo import api
 
 

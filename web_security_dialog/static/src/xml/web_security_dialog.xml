@@ -5,7 +5,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label col-md-2" for="pincode" style="margin-left:-13px;">Password:</label>
-                    <input type="password" class="form-control" id="pincode" autofocus="autofocus"/>
+                    <input type="password" class="form-control" id="pincode" autofocus="autofocus" style="width: auto;"/>
                 </div>
             </div>
          </div>

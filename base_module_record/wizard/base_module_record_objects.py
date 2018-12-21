@@ -1,7 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
 from . import base_module_save
-
 from odoo.tools import ustr
 from odoo.tools.translate import _
 from odoo import models, fields, api
@@ -21,16 +20,16 @@ class BaseModuleRecord(models.TransientModel):
                  'ir.actions.server', 'ir.server.object.lines')
         return self.env['ir.model'].search([('model', 'in', names)])
 
-    check_date = fields.Datetime('Record from Date', required=True,
+    check_date = fields.Datetime(string='Record from Date', required=True,
                                  default=fields.Datetime.now)
     objects = fields.Many2many('ir.model', 'base_module_record_object_rel',
                                'objects',
-                               'model_id', 'Objects',
+                               'model_id', string='Objects',
                                default=_get_default_objects)
     filter_cond = fields.Selection([('created', 'Created'),
                                     ('modified', 'Modified'),
                                     ('created_modified', 'Created & Modified')
-                                    ], 'Records only', required=True,
+                                    ], string='Records only', required=True,
                                    default='created')
 
     @api.multi
@@ -121,19 +120,19 @@ class BaseModuleRecordObjects(models.TransientModel):
             'target': 'new',
         }
 
-    name = fields.Char('Module Name', size=64)
-    directory_name = fields.Char('Directory Name', size=32)
-    version = fields.Char('Version', default='11.0', size=16)
-    author = fields.Char('Author', size=64, required=True,
+    name = fields.Char(string='Module Name', size=64)
+    directory_name = fields.Char(string='Directory Name', size=32)
+    version = fields.Char(string='Version', default='11.0', size=16)
+    author = fields.Char(string='Author', size=64, required=True,
                          default='Odoo SA')
-    category = fields.Char('Category', size=64, required=True,
+    category = fields.Char(string='Category', size=64, required=True,
                            default='Vertical Modules/Parametrization')
-    website = fields.Char('Documentation URL', size=64, required=True,
+    website = fields.Char(string='Documentation URL', size=64, required=True,
                           default='https://www.odoo.com')
-    description = fields.Text('Full Description')
+    description = fields.Text(string='Full Description')
     data_kind = fields.Selection([('demo', 'Demo Data'),
                                   ('update', 'Normal Data')],
-                                 'Type of Data', required=True,
+                                 string='Type of Data', required=True,
                                  default='update')
     module_file = fields.Binary('Module .zip File', filename="module_filename")
     module_filename = fields.Char('Filename', size=64)
