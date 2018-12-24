@@ -1,5 +1,4 @@
-# © 2016 Serpent Consulting Services Pvt. Ltd. <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Hide Price and Discount in Quotation Report',
@@ -7,7 +6,7 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Sales Management',
     'website': 'http://www.serpentcs.com',
-    'version': '11.0.1.0.1',
+    'version': '12.0.1.0.1',
     'license': 'AGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'depends': [

@@ -1,5 +1,4 @@
-# © 2016 Serpent Consulting Services Pvt. Ltd. <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# See LICENSE file for full copyright and licensing details.
 
 from odoo.tests import common
 
