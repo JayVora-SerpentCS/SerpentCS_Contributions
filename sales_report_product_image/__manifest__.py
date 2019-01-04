@@ -11,7 +11,7 @@
     'website': 'http://www.serpentcs.com',
     'depends': [
         'sale',
-        # 'web_tree_image' Depends on OCA's v11 migration
+        'web_tree_image'
     ],
     'data': [
         'views/sale_product_view.xml',
