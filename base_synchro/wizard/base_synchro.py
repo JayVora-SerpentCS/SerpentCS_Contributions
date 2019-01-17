@@ -46,11 +46,19 @@ class BaseSynchro(models.TransientModel):
     """Base Synchronization."""
 
     _name = 'base.synchro'
+    _description = 'Base Synchronization'
 
-    server_url = fields.Many2one('base.synchro.server', "Server URL",
-                                 required=True)
-    user_id = fields.Many2one('res.users', "Send Result To",
-                              default=lambda self: self.env.user)
+    server_url = fields.Many2one(
+        'base.synchro.server',
+        string='Server URL',
+        required=True
+    )
+    user_id = fields.Many2one(
+        'res.users',
+        string='Send Result To',
+        default=lambda self: self.env.user
+    )
+
     report = []
     report_total = 0
     report_create = 0
