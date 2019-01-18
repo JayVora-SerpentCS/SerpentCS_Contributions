@@ -1,6 +1,14 @@
 /*=====================================================
 =            Product Image Set                        =
 =====================================================*/
+.image_bigsize .img_set
+{
+    width:auto!important;
+    height:auto!important;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
 
 /* Window desktop device */
 @media only screen and (max-width : 1280px) {
