@@ -5,11 +5,19 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
     var fieldRegistry = require('web.field_registry');
     var dataset = require('web.data');
     var Dialog = require('web.Dialog');
+    var ControlPanel = require('web.ControlPanel');
+    var Pager = require('web.Pager');
     var QWeb = core.qweb;
     var _t = core._t;
 
-    var MultiImage = fieldRegistry.map.one2many.include({
-
+    var MultiImage = fieldRegistry.map.one2many.extend({
+    	
+    	start: function(){
+            var self = this;
+            this._super.apply(this, arguments);
+            this.$el.find('.image_multi_button').css('display','block')
+        },
+    	
         events: {
             'click .oe-image-preview': 'image_preview',
             'click .oe_image_list': 'image_list_view',
@@ -194,5 +202,9 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
         },
 
     });
-    return MultiImage;
+    fieldRegistry
+    	.add('image_multi', MultiImage);
+    return {
+    	MultiImage: MultiImage
+    };
 });

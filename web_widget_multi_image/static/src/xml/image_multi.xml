@@ -27,9 +27,10 @@
         </table>
     </t>
 
-    <t t-extend="X2ManyControlPanel">
+     
+     <t t-extend="X2ManyControlPanel">
         <t t-jquery=".o_cp_buttons" t-operation="before">
-            <table>
+            <table style="display:none" class="image_multi_button">
                 <tr style="background:white;">
                     <td style="padding: 10px 150px 15px 132px;">
                         <button class="fa fa-search oe-image-preview btn btn-sm oe_form_binary btn-primary" type="button" title="Preview">
@@ -44,5 +45,5 @@
                 </tr>
             </table>
         </t>
-    </t>
+    </t> 
 </templates>
