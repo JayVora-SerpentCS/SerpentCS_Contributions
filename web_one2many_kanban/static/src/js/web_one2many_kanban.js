@@ -162,8 +162,9 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
         load_groups: function (option) {
             var self = this;
             var options = option;
+            
             var group_by_field = options.group_by_field || options.default_group_by;
-            this.fields_keys = _.uniq(this.fields_keys.concat(group_by_field));
+            var fields_keys = _.uniq(this.fields_keys.concat(group_by_field));
 
             var fields_def = '';
             if (typeof this.fields_view.fields[group_by_field] === "undefined") {
@@ -171,8 +172,11 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
                     self.fields = fields;
                 });
             }
-            var load_groups_def = new Model(this.model, this.search_context, this.search_domain).query(this.fields_keys).group_by([group_by_field]).then(function (groups) {
-                // Check in the arch the fields to fetch on the stage to get tooltips data.
+            var load_groups_def = new Model(this.model, options.search_context, options.search_domain)
+            .query(fields_keys)
+            .group_by([group_by_field])
+            .then(function (groups) {
+            	// Check in the arch the fields to fetch on the stage to get tooltips data.
                 // Fetching data is done in batch for all stages, to avoid doing multiple
                 // calls. The first naive implementation of group_by_tooltip made a call
                 // for each displayed stage and was quite limited.
