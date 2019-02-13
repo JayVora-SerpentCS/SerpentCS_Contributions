@@ -11,6 +11,8 @@
                     <group colspan="4" col="4">
                         <field name="name"/>
                         <field name="model_id"/>
+                        <field name="paperformat_id"/>
+                        <field name="single_page"/>
                         <field name="model_list" invisible="1"/>
                     </group>
                     <notebook colspan="4">
