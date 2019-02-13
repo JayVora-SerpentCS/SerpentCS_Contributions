@@ -245,10 +245,10 @@ class BaseSynchro(models.TransientModel):
 
     @api.multi
     def upload_download(self):
+        self.ensure_one()
         self.report = []
         start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
-        syn_obj = self.browse(self.ids)[0]
-        server = self.env['base.synchro.server'].browse(syn_obj.server_url.id)
+        server = self.server_url
         for obj_rec in server.obj_ids:
             _logger.debug("Start synchro of %s", obj_rec.name)
             dt = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -260,7 +260,7 @@ class BaseSynchro(models.TransientModel):
         end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
 
         # Creating res.request for summary results
-        if syn_obj.user_id:
+        if self.user_id:
             request = self.env['res.request']
             if not self.report:
                 self.report.append('No exception.')
@@ -279,9 +279,9 @@ Exceptions:
             summary += '\n'.join(self.report)
             request.create({
                 'name': "Synchronization report",
-                'act_from': self.user_id.id,
+                'act_from': self.env.user.id,
                 'date': time.strftime('%Y-%m-%d, %H:%M:%S'),
-                'act_to': syn_obj.user_id.id,
+                'act_to': self.user_id.id,
                 'body': summary,
             })
             return {}
