@@ -93,7 +93,7 @@ class LabelPrintField(models.Model):
                              ('image', 'Image')],
                             'Type', required=True, default='normal')
     python_expression = fields.Boolean('Python Expression')
-    python_field = fields.Char('Fields', size=32)
+    python_field = fields.Char('Fields')
     fontsize = fields.Float("Font Size", default=8.0)
     position = fields.Selection([('left', 'Left'), ('right', 'Right'),
                                  ('top', 'Top'), ('bottom', 'Bottom')],
