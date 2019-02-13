@@ -22,6 +22,8 @@ class LabelPrint(models.Model):
                                    help="Sidebar button to open the \
                                    sidebar action")
     model_list = fields.Char('Model List', size=256)
+    paperformat_id = fields.Many2one('report.paperformat', string='Paper Format')
+    single_page = fields.Boolean(string='Single page label')
 
     @api.onchange('model_id')
     def onchange_model(self):

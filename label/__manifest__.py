@@ -2,7 +2,7 @@
 # See LICENSE file for full copyright and licensing details.
 {
     "name": "Mass Label Reporting",
-    "version": "10.0.1.0.0",
+    "version": "10.0.2.0.0",
     "author": 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     "category": "Tools",

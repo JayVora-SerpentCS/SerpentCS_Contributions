@@ -21,6 +21,8 @@ class LabelPrintWizard(models.TransientModel):
             label_print_obj = self.env['label.print']
             label_print_data = label_print_obj.browse(
                 self._context.get('label_print'))
+            result['paperformat_id'] = label_print_data.paperformat_id.id or False
+            result['single_page'] = label_print_data.single_page
             for field in label_print_data.field_ids:
                 if field.type == 'image':
                     result['is_image'] = True
@@ -37,6 +39,8 @@ class LabelPrintWizard(models.TransientModel):
     is_barcode = fields.Boolean('Is Barcode?')
     is_image = fields.Boolean('Is Image?')
     brand_id = fields.Many2one('label.brand', 'Brand Name', required=True)
+    paperformat_id = fields.Many2one('report.paperformat', string='Paper Format')
+    single_page = fields.Boolean(string='Single page label')
 
     @api.multi
     def print_report(self):
@@ -46,12 +50,17 @@ class LabelPrintWizard(models.TransientModel):
                 self._context.get('active_ids'):
             return False
         total_record = len(self._context.get('active_ids', []))
+        paperformat_height = self.paperformat_id.page_height or 297
+        paperformat_width = self.paperformat_id.page_width or 210
         datas = {}
         for data in self.browse(self.ids):
-            column = float(210) / float(data.name.width or 1)
+            column = float(paperformat_width) / float(data.name.width or 1)
             total_row = math.ceil(float(total_record) / (column or 1))
-            no_row_per_page = int(297 / data.name.height)
-            height = 297 / (no_row_per_page or 1)
+            if self.single_page:
+                no_row_per_page = 1
+            else:
+                no_row_per_page = int(paperformat_height / data.name.height)
+            height = paperformat_height / (no_row_per_page or 1)
             datas = {
                 'rows': int(total_row),
                 'columns': int(column) == 0 and 1 or int(column),
@@ -83,5 +92,10 @@ class LabelPrintWizard(models.TransientModel):
             'model': 'label.config',
             'form': datas
         }
-        return self.env['report'].get_action(self, 'label.report_label',
+
+        action = self.env['report'].get_action(self, 'label.report_label',
                                              data=data)
+        if self.paperformat_id:
+            action['context']['paperformat_id'] = self.paperformat_id.id
+
+        return action
