@@ -60,16 +60,32 @@ class ReportDynamicLabel(models.AbstractModel):
                             bot_dict = {'string': string, 'value': value,
                                         'type': field.type,
                                         'newline': field.newline,
+                                        'class': '',
                                         'style': "font-size:" +
                                         str(field.fontsize) + "px;" + pos}
+
+                            if field.field_class:
+                                bot_dict['class'] += field.field_class
+                            if field.field_style:
+                                bot_dict['style'] += field.field_style
+                    elif field.type == 'normal':
+                        if field.position in ['left', 'right']:
+                            pos = 'float: ' + str(field.position) + ';'
+                            bot = False
                     else:
                         bot = False
                     if not bot:
                         vals_dict = {'string': string, 'value': value,
                                      'type': field.type,
                                      'newline': field.newline,
+                                     'class': '',
                                      'style': "font-size:" +
                                      str(field.fontsize) + "px;" + pos}
+                        if field.field_class:
+                            vals_dict['class'] += field.field_class
+                        if field.field_style:
+                            vals_dict['style'] += field.field_style
+
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)

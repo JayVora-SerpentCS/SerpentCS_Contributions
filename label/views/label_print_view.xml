@@ -23,7 +23,9 @@
                                         <field name="sequence"/>
                                         <field name="type"/>
                                         <field name="fontsize"/>
-                                        <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
+                                        <field name="field_class"/>
+                                        <field name="field_style"/>
+                                        <field name="position"/>
                                         <field name="newline"/>
                                         <field name="nolabel"/>
                                         <field name="python_expression"/>
