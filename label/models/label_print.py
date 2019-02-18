@@ -100,6 +100,8 @@ class LabelPrintField(models.Model):
                                 'Position')
     nolabel = fields.Boolean('No Label')
     newline = fields.Boolean('New Line', deafult=True)
+    field_class = fields.Char(string='HTML class')
+    field_style = fields.Char(string='HTML Style')
 
 
 class IrModelFields(models.Model):
