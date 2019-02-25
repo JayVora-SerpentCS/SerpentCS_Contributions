@@ -480,8 +480,11 @@ class ApplicantEducation(models.Model):
 
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
-        if self.to_date and datetime.strptime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+        #FIX issue 319 convert datetime.date to string
+        to_date = self.to_date and datetime.strftime(
+                self.to_date, DEFAULT_SERVER_DATE_FORMAT)        
+        if to_date and datetime.strptime(
+                to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today!')}
             self.to_date = False
