@@ -56,8 +56,7 @@ class TrainingClass(models.Model):
     @api.constrains('training_start_date', 'training_end_date')
     def _check_training_dup(self):
         self.ensure_one()
-        if self.training_start_date < datetime.datetime.now().\
-                strftime(DEFAULT_SERVER_DATE_FORMAT):
+        if self.training_start_date > fields.Date.context_today(self):
             raise ValidationError(_("You can't create past training!"))
         if self.training_start_date > self.training_end_date:
             raise ValidationError(
@@ -96,25 +95,31 @@ class TrainingClass(models.Model):
         for rec in self:
             if rec.training_start_date and rec.course_id:
                 end_date = False
+                training_start_date = rec.training_start_date and \
+                    datetime.datetime.strftime(rec.training_start_date, 
+                                      DEFAULT_SERVER_DATE_FORMAT)
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
                     end_date = \
                         datetime.datetime.strptime(
-                            rec.training_start_date,
+                            training_start_date,
                             DEFAULT_SERVER_DATE_FORMAT) + datetime.timedelta(
                             days=rec.course_id.duration - 1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'week':
                     end_date = datetime.datetime.strptime(
-                        rec.training_start_date,
+                        training_start_date,
                         DEFAULT_SERVER_DATE_FORMAT) + relativedelta(
                         weeks=rec.course_id.duration, days=-1)
                 elif rec.course_id.duration and \
                         rec.course_id.duration_type == 'month':
                     end_date = datetime.datetime.strptime(
-                        rec.training_start_date,
+                        training_start_date,
                         DEFAULT_SERVER_DATE_FORMAT) + relativedelta(
                         months=rec.course_id.duration, days=-1)
+                end_date = end_date and \
+                    datetime.datetime.strftime(end_date, 
+                                      DEFAULT_SERVER_DATE_FORMAT)                        
                 rec.training_end_date = end_date
 
     @api.multi
