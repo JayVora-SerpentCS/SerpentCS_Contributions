@@ -9,7 +9,9 @@
             <xpath expr="//page[1]" position="after">
                 <page string="Product Images">
                     <group col="4">
-                        <field name="variant_bool" string="Display All Varaint Images"/>
+                        <group>
+                            <field name="variant_bool" string="Display All Varaint Images"/>
+                        </group>
                     </group>
                     <field name="images" mode="tree" context="{'default_name': name}">
                         <kanban>
@@ -57,7 +59,7 @@
                                     <field name="image"/>
                                     <field name="image_url"/>
                                     <field name="image_alt"/>
-                                    <field name="product_variant_id" domain="[('product_tmpl_id','=', parent.id)]"/>
+                                    <field name="product_variant_id" widget="many2many_tags" domain="[('product_tmpl_id','=', parent.id)]" />
                                     <field name="description"/>
                                 </group>
                             </sheet>
@@ -68,7 +70,7 @@
                             <field name="image_alt"/>
                             <field name="image"/>
                             <field name="image_url"/>
-                            <field name="product_variant_id" domain="[('product_tmpl_id','=', parent.id)]"/>
+                            <field name="product_variant_id"  widget="many2many_tags" domain="[('product_tmpl_id','=', parent.id)]" />
                         </tree>
                     </field>
                 </page>

@@ -10,6 +10,6 @@ class WebsiteSale(main.WebsiteSale):
                 methods=['POST'])
     def get_variant_images(self, **post):
         variant_images = request.env['product.image'].sudo(). \
-            search([('product_variant_id', '=', int(post.get('product_id')))])
+            search([('product_variant_id', 'in', int(post.get('product_id')))])
         images = [img.id for img in variant_images]
         return {'product_rec': images}

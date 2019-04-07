@@ -17,7 +17,7 @@ class ProductImage(models.Model):
     image_url = fields.Char(string='Image URL')
     product_tmpl_id = fields.Many2one('product.template', 'Product',
                                       copy=False)
-    product_variant_id = fields.Many2one('product.product', 'Product Variant',
+    product_variant_id = fields.Many2many('product.product', string='Product Multi Variant',
                                          copy=False)
 
 
@@ -34,12 +34,18 @@ class ProductImage(models.Model):
                 raise UserError(e)
 
 
+    @api.model
+    def create(self, vals):
+        if not vals.get('product_multi_variant_id'):
+            records = self.env['product.product'].search([('product_tmpl_id', '=', vals['product_tmpl_id'])])
+            vals.update({'product_variant_id': [[6, 0, [x.id for x in records]]]})
+        return super(ProductImage, self).create(vals)
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    images_variant = fields.One2many('product.image', 'product_variant_id',
-                                     'Images')
+    images_variant = fields.Many2one('product.image', string='Images')
 
 
 class ProductTemplate(models.Model):
@@ -48,4 +54,4 @@ class ProductTemplate(models.Model):
     images = fields.One2many('product.image', 'product_tmpl_id', 'Images')
     variant_bool = fields.Boolean(string='Show Variant Wise Images',
                                   help='Check if you like to show variant wise'
-                                       ' images in WebSite', auto_join=True)
+                                       ' images in WebSite', auto_join=True, default=True)
