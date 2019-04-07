@@ -58,12 +58,12 @@
                             <li>
                                 <img onclick="pro_img_click(this)" itemprop="image"
                                      class="image_thumb img-responsive"
-                                     t-att-src="'data:image/jpeg;base64,%s' %product.image"/>
+                                     t-att-src="'data:image/jpeg;base64, %s' %product.image.decode('ascii')"/>
                             </li>
                             <t t-foreach="product.images" t-as="i">
                                 <li>
                                     <img onclick="pro_img_click(this)" class="image_thumb img-responsive"
-                                         t-att-src="'data:image/jpeg;base64,%s' %i.image"/>
+                                         t-att-src="'data:image/jpeg;base64, %s' %i.image.decode('ascii')"/>
                                 </li>
                             </t>
                         </ol>
