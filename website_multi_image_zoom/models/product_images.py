@@ -1,6 +1,8 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import fields, models, api
+from odoo.exceptions import UserError
+import requests, base64
 
 
 class ProductImage(models.Model):
@@ -17,6 +19,20 @@ class ProductImage(models.Model):
                                       copy=False)
     product_variant_id = fields.Many2one('product.product', 'Product Variant',
                                          copy=False)
+
+
+    @api.onchange('image_url')
+    def onchange_image_url(self):
+        if self.image_url:
+            try:
+                data = requests.get(self.image_url)
+                if data.status_code == 200:
+                    self.image = base64.b64encode(data.content)
+                else:
+                    raise UserError("Please enter a valid URL.")
+            except Exception as e:
+                raise UserError(e)
+
 
 
 class ProductProduct(models.Model):
