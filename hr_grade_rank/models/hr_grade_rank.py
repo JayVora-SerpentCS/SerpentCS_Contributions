@@ -1,6 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class RankRank(models.Model):
@@ -26,3 +26,13 @@ class HrEmployee(models.Model):
 
     grade_id = fields.Many2one('grade.grade', 'Grade')
     rank_id = fields.Many2one('rank.rank', 'Rank')
+
+    @api.onchange('grade_id')
+    def onchange_grade(self):
+        res = {}
+        if self.grade_id:
+            self.rank_id = False
+            res['domain'] = \
+                {'rank_id': [
+                    ('id', 'in', self.grade_id.rank_ids.ids)]}
+        return res
