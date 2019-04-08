@@ -32,6 +32,7 @@ class HrEmployee(models.Model):
         res = {}
         if self.grade_id:
             self.rank_id = False
-            res['domain'] = {'rank_id': [('id','in',self.grade_id.rank_ids.ids)]}
+            res['domain'] = \
+                {'rank_id': [
+                    ('id', 'in', self.grade_id.rank_ids.ids)]}
         return res
-
