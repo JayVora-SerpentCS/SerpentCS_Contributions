@@ -15,8 +15,9 @@
                         <page string="Ranks">
                             <field name="rank_ids">
                                 <tree string="Ranks">
-                                    <field name="name" />
-                                    <field name="salary_range" />
+                                    <field name="name"/>
+                                    <field name="salary_range"/>
+                                    <field name="description"/>
                                 </tree>
                             </field>
                         </page>
@@ -117,9 +118,11 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_filter" />
         <field name="arch" type="xml">
-            <filter context="{'group_by':'job_id'}" position="after">
-                <filter string="Grade" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'grade_id'}" />
-                <filter string="Rank" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'rank_id'}" />
+            <filter name="group_job" context="{'group_by':'job_id'}" position="after">
+                <filter string="Grade" icon="terp-gtk-select-all" domain="[]"
+                        name ='grade' context="{'group_by':'grade_id'}"/>
+                <filter string="Rank" icon="terp-gtk-select-all" domain="[]"
+                        name='rank' context="{'group_by':'rank_id'}"/>
             </filter>
         </field>
     </record>
@@ -133,7 +136,7 @@
                 <field name="grade_id" />
                 <field name="rank_id" />
             </xpath>
-            <xpath expr="//field[@name='work_email']" position="after">
+            <xpath expr="//field[@name='work_location']" position="after">
                 <li t-if="record.grade_id.raw_value">
                     <field name="grade_id" />
                 </li>
