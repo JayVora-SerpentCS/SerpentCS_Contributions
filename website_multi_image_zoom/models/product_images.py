@@ -17,7 +17,7 @@ class ProductImage(models.Model):
     image_url = fields.Char(string='Image URL')
     product_tmpl_id = fields.Many2one('product.template', 'Product',
                                       copy=False)
-    product_variant_id = fields.Many2many('product.product', string='Product Multi Variant',
+    product_variant_id = fields.Many2many('product.product', string='Product Variant(s)',
                                          copy=False)
 
 
