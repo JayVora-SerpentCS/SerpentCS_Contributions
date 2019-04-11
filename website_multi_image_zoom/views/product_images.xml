@@ -59,7 +59,7 @@
                                     <field name="image"/>
                                     <field name="image_url"/>
                                     <field name="image_alt"/>
-                                    <field name="product_variant_id" widget="many2many_tags" domain="[('product_tmpl_id','=', parent.id)]" />
+                                    <field name="product_variant_id" widget="many2many_tags" domain="[('product_tmpl_id','=', parent.id)]" class="product_image_variant" />
                                     <field name="description"/>
                                 </group>
                             </sheet>
@@ -70,7 +70,7 @@
                             <field name="image_alt"/>
                             <field name="image"/>
                             <field name="image_url"/>
-                            <field name="product_variant_id"  widget="many2many_tags" domain="[('product_tmpl_id','=', parent.id)]" />
+                            <field name="product_variant_id"  widget="many2many_tags" domain="[('product_tmpl_id','=', parent.id)]" class="product_image_variant" />
                         </tree>
                     </field>
                 </page>
