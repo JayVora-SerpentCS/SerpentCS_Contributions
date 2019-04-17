@@ -100,15 +100,8 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
         },
 
         _onRowClicked: function (event) {
-            // The special_click property explicitely allow events to bubble all
-            // the way up to bootstrap's level rather than being stopped earlier.
             this.expand = false;
-            if (!$(event.target).prop('special_click')) {
-                var id = $(event.currentTarget).data('id');
-                if (id) {
-                    this.trigger_up('open_record', {id:id, target: event.target});
-                }
-            }
+            return this._super(event)
         },
     });
 
