@@ -1,10 +1,8 @@
 # See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime
 
 from odoo import api, models, _
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class SaleOrder(models.Model):
@@ -17,22 +15,28 @@ class SaleOrder(models.Model):
         moveline_obj = self.env['account.move.line']
         movelines = moveline_obj.search(
             [('partner_id', '=', partner.id),
-             ('account_id.user_type_id.name', 'in', ['Receivable', 'Payable']),
-             ('full_reconcile_id', '=', False)]
+             ('account_id.user_type_id.name', 'in', ['Receivable', 'Payable'])]
         )
+        confirm_sale_order = self.search([('partner_id', '=', partner.id),
+                                          ('state', '=', 'sale')])
         debit, credit = 0.0, 0.0
-        today_dt = datetime.strftime(datetime.now().date(), DF)
+        amount_total = 0.0
+        for status in confirm_sale_order:
+            amount_total += status.amount_total
         for line in movelines:
-            if line.date_maturity < today_dt:
-                credit += line.debit
-                debit += line.credit
+            credit += line.credit
+            debit += line.debit
+        partner_credit_limit = (partner.credit_limit - debit) + credit
+        available_credit_limit = ((partner_credit_limit -
+                                   (amount_total - debit)) + self.amount_total)
 
-        if (credit - debit + self.amount_total) > partner.credit_limit:
+        if (amount_total - debit) > partner_credit_limit:
             if not partner.over_credit:
-                msg = 'Can not confirm Sale Order,Total mature due Amount ' \
-                      '%s as on %s !\nCheck Partner Accounts or Credit ' \
-                      'Limits !' % (credit - debit, today_dt)
-                raise UserError(_('Credit Over Limits !\n' + msg))
+                msg = 'Your available credit limit'\
+                      ' Amount = %s \nCheck "%s" Accounts or Credit ' \
+                      'Limits.' % (available_credit_limit,
+                                   self.partner_id.name)
+                raise UserError(_('You can not confirm Sale Order. \n' + msg))
             partner.write({'credit_limit': credit - debit + self.amount_total})
         return True
 
@@ -42,3 +46,8 @@ class SaleOrder(models.Model):
         for order in self:
             order.check_limit()
         return res
+
+    @api.constrains('amount_total')
+    def check_amount(self):
+        for order in self:
+            order.check_limit()
