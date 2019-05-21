@@ -31,13 +31,15 @@ class SaleOrder(models.Model):
         partner_credit_limit = (partner.credit_limit - debit) + credit
         available_credit_limit = ((partner_credit_limit -
                                    (amount_total - debit)) + self.amount_total)
+
         if (amount_total - debit) > partner_credit_limit:
             # Consider partners who are under a company.
             if not partner.over_credit:
-                msg = '''Cannot confirm Sale Order,Available credit limit 
-                Amount %s ! Check %s Accounts or Credit Limits !''' % (
-                    available_credit_limit, self.partner_id.name)
-                raise UserError(_('Credit Over Limits !\n' + msg))
+                msg = 'Your available credit limit'\
+                      ' Amount = %s \nCheck "%s" Accounts or Credit ' \
+                      'Limits.' % (available_credit_limit,
+                                   self.partner_id.name)
+                raise UserError(_('You can not confirm Sale Order. \n' + msg))
             partner.write({'credit_limit': debit + self.amount_total})
         return True
 
@@ -48,3 +50,8 @@ class SaleOrder(models.Model):
         for order in self:
             order.check_limit()
         return res
+
+    @api.constrains('amount_total')
+    def check_amount(self):
+        for order in self:
+            order.check_limit()
