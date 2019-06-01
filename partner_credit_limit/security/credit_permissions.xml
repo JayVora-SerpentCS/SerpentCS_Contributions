@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="credit_limit_permissions" model="res.groups">
+            <field name="name">Edit credit limit and over-credit value for partners</field>
+        </record>
+    </data>
+</odoo>

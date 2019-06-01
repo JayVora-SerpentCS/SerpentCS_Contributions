@@ -1,11 +1,11 @@
-# See LICENSE file for full copyright and licensing details.
-
+# # -*- coding: utf-8 -*-
+# See LICENSE file for full copyright and licensing details
 {
     'name': 'Partner Credit Limit',
     'version': '11.0.1.0.0',
     'category': 'Partner',
     'license': 'AGPL-3',
-    'author': 'Tiny, Serpent Consulting Services Pvt. Ltd.',
+    'author': 'Tiny, Serpent Consulting Services Pvt. Ltd., Blanco Martín & Asociados',
     'website': 'http://www.serpentcs.com',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Set credit limit warning',
@@ -13,8 +13,10 @@
         'sale_management',
     ],
     'data': [
+        'security/credit_permissions.xml',
         'views/partner_view.xml',
     ],
     'installable': True,
+    'application': False,
     'auto_install': False,
 }
