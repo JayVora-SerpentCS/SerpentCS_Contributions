@@ -8,7 +8,7 @@
     'website': 'http://www.serpentcs.com',
     'license': 'AGPL-3',
     'summary': 'Product Brand based filters',
-    'version': '11.0.0.0.1',
+    'version': '12.0.0.1.0',
     'depends': ['product_brand', 'website_sale'],
     'data': [
         "security/ir.model.access.csv",
