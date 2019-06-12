@@ -7,7 +7,7 @@
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
-    'version': '11.0.1.0.1',
+    'version': '12.0.1.0.1',
     'license': 'AGPL-3',
     'depends': [
         'website_sale',
