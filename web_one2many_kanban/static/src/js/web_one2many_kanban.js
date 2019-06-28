@@ -1,43 +1,37 @@
-/*global session*/
 odoo.define('web_one2many_kanban.web_one2many_kanban', function(require) {
 "use strict";
 
-var session = require('web.session');
-
+var ajax = require('web.ajax');
 var core = require('web.core');
 var KanbanRecord = require('web.KanbanRecord');
-var QWeb = require('web.QWeb');
-var rpc = require("web.rpc");
-var _t = core._t;
-
 
 KanbanRecord.include({
     _render: function () {
         var def = $.Deferred();
         var self = this;
-        var field_mode = '';
-        var field_name = '';
+        var o2x_field_names = [];
         _.each(this.fieldsInfo, function (field_info, field_nm){
             if(field_info.mode === 'list'){
-                field_mode = field_info.mode;
-                field_name = field_nm
+                o2x_field_names.push(field_nm);
             }
         })
-        if( field_mode === 'list'){
-            var record = this.qweb_context.record[field_name]
-            if(record.type === 'one2many'){
-                var field_record = [];
-                def = rpc.query({
-                        model: record.relation,
-                        method: 'search_read',
-                        args: [[['id', 'in', record.raw_value]]],
-                    }).then(function(field_records) {
-                        _.each(field_records , function (data){
-                            field_record.push(data)
-                        })
-                        record.raw_value = field_record;
-                    })
-            }
+        if( o2x_field_names.length > 0){
+            var o2x_records = [];
+            _.each(o2x_field_names,function(o2x_field_name){
+                var record = self.qweb_context.record[o2x_field_name];
+                if(record.type === 'one2many'){
+                    o2x_records.push(record);
+                }
+            });
+            def = ajax.jsonRpc(
+                        "/web/fetch_x2m_data",
+                        "call", 
+                        {'o2x_records': o2x_records}
+                  ).done(function(o2x_datas) {
+                      for(var i=0;i<o2x_datas.length;i++){
+                          o2x_records[i].raw_value = o2x_datas[i];
+                      }
+                  });
         }
         else{
             def.resolve();
@@ -55,7 +49,6 @@ KanbanRecord.include({
             self._setupColor();
             self._setupColorPicker();
             self._attachTooltip();
-
             // We use boostrap tooltips for better and faster display
             self.$('span.o_tag').tooltip({delay: {'show': 50}});
         });
