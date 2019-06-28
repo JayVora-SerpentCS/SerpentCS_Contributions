@@ -4,7 +4,7 @@ from odoo import http
 from odoo.http import request
 
 
-class PosDate(http.Controller):
+class WebFieldData(http.Controller):
 
     @http.route(['/web/fetch_x2m_data'], type='json', auth='public')
     def get_o2x_data(self, **kwargs):
