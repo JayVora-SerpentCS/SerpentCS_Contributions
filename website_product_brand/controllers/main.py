@@ -71,13 +71,13 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         if search:
             post['search'] = search
         if category:
-            category = request.env['product.public.category'].\
+            category = request.env['product.public.category']. \
                 browse(int(category))
             url = '/shop/category/%s' % slug(category)
-        pager = request.website.\
+        pager = request.website. \
             pager(url=url, total=product_count, page=page, step=PPG,
                   scope=7, url_args=post)
-        products = product_obj.\
+        products = product_obj. \
             search(domain, limit=PPG, offset=pager['offset'],
                    order='website_published desc, website_sequence desc')
         style_obj = request.env['product.style']
@@ -87,7 +87,7 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         categs = filter(lambda x: not x.parent_id, categories)
         if category:
             selected_id = int(category)
-            children_ids = category_obj.\
+            children_ids = category_obj. \
                 search([('parent_id', '=', selected_id)])
             values.update({'child_list': children_ids})
         attributes_obj = request.env['product.attribute']
