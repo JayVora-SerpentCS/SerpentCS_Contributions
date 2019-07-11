@@ -183,23 +183,35 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 
         load_list: function(data) {
             var self = this;
-            $('.oe-list-expand').unbind('click').bind('click', function() {
+            var oe_list_expand = $(".oe-list-expand");
+            if(self.ViewManager && 
+                    self.ViewManager.switch_buttons && 
+                    self.ViewManager.switch_buttons.$multi){
+                _.each(self.ViewManager.switch_buttons.$multi,function(mul){
+                    if($(mul).hasClass("oe-list-expand")){
+                        oe_list_expand = $(mul);
+                    }
+                });
+            }
+            oe_list_expand.unbind('click').bind('click', function() {
                 self.options.expand = true;
                 self.groups.render_auto_groups(false);
             });
             var res = this._super.apply(this, arguments);
-            $("#expand_icon").addClass('fa-expand');
-            $("#expand_icon").removeClass('fa-compress');
+            oe_list_expand.addClass('fa-expand');
+            oe_list_expand.removeClass('fa-compress');
+           // $("#expand_icon").addClass('fa-expand');
+           // $("#expand_icon").removeClass('fa-compress');
             if (self.groups.datagroup.dataset) {
-                $('.oe-list-expand').hide();
+                oe_list_expand.addClass("hidden");
             }
-            if (self.groups.datagroup.group_by === "") {
-                $('.oe-list-expand').hide();
+            if (self.groups.datagroup.group_by === "" || self.groups.datagroup.group_by.length === 0) {
+                oe_list_expand.addClass("hidden");
             } else if (typeof self.groups.datagroup.group_by === "undefined") {
-                $('.oe-list-expand').hide();
+                oe_list_expand.addClass("hidden");
                 $(".oe_list_pager").hide();
             } else {
-                $('.oe-list-expand').show();
+                oe_list_expand.removeClass("hidden");
             }
             return res;
         },
@@ -218,7 +230,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
         switch_mode: function(view_type, no_store, options) {
             var res = this._super.apply(this, arguments);
             if (view_type !== 'list') {
-                $('.oe-list-expand').hide();
+                $('.oe-list-expand').addClass("hidden");
             }
             return res;
         },

@@ -7,7 +7,7 @@
                     t-attf-class="btn btn-default fa #{view.icon} oe-cp-switch-#{view.type}"
                     t-att-data-view-type="view.type" t-att-title="view.label"/>
         </t>
-        <li id="expand_icon" type="button" class="btn btn-default fa fa-expand oe-list-expand"
-            style="display:none;" title="Expand"/>
+        <li id="expand_icon" type="button" class="btn btn-default fa fa-expand oe-list-expand hidden"
+            title="Expand"/>
     </t>
 </templates>
