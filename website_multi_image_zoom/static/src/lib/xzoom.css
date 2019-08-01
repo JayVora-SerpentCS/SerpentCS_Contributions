@@ -16,12 +16,16 @@
   margin-bottom: 10px;
 }
 
-.xzoom { 
-  -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-  -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);  
-  margin-bottom: 15px; 
+.xzoom {
+    width:100% !important; 
+    max-width: 100% !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    max-height: 500px !important;
 }
+
 .xzoom2, .xzoom3, .xzoom4, .xzoom5 {
   -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
   -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
@@ -54,6 +58,7 @@
   background: #2f4f4f;
   box-shadow: -0px -0px 10px rgba(0,0,0,0.50);
   margin-left: 25px !important;
+  z-index: 999;
 }
 
 /* Lens */
