@@ -26,16 +26,16 @@
     <template id="product_extended" name="product_extended"
               inherit_id="website_sale.product">
         <xpath
-                expr="//section[@id='product_detail']/div[@class='row']/div[@class='col-sm-7']" position="replace">
+                expr="//section[@id='product_detail']/div[@class='row']/div[@class='col-md-6']" position="replace">
             <input type="hidden" id="variant_img_display" t-att-value="product.variant_bool"/>
             <input type="hidden" id="product_img_display" t-att-value="product.id"/>
-            <div class="col-sm-7 col-md-7 col-lg-7">
+            <div class="col-sm-6 col-md-6 col-lg-6">
                 <!-- Assigned id to the span for able to find image which
                     like to be magnifying -->
-                <div class="image_bigsize">
+                <div style="min-height: 400px;">
                     <div id="ex1" onclick='full_img(this)'>
                         <span itemprop="image" t-field="product.image"
-                              t-field-options='{"widget": "image", "class": "img_set"}'/>
+                              t-options='{"widget": "image", "class": "img_set"}'/>
                     </div>
                 </div>
                 <!-- Model to display image instead of image zoom when in mobile view -->
@@ -56,14 +56,13 @@
                         <!-- Indicators -->
                         <ol class='carousel-indicators'>
                             <li>
-                                <img onclick="pro_img_click(this)" itemprop="image"
-                                     class="image_thumb img-responsive"
-                                     t-att-src="'data:image/jpeg;base64,%s' %product.image"/>
+                                 <img onclick="pro_img_click(this)" class="img img-fluid js_variant_img_small" 
+                                     t-attf-src="/website/image/product.product/{{product_variant.id}}/image" t-att-alt="product.name"/>
                             </li>
                             <t t-foreach="product.images" t-as="i">
                                 <li>
-                                    <img onclick="pro_img_click(this)" class="image_thumb img-responsive"
-                                         t-att-src="'data:image/jpeg;base64,%s' %i.image"/>
+                                     <img onclick="pro_img_click(this)" class="img img-fluid js_variant_img_small" 
+                                     t-attf-src="/website/image/product.image/{{i.id}}/image" t-att-alt="product.name"/>
                                 </li>
                             </t>
                         </ol>
