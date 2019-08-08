@@ -18,6 +18,4 @@
         'views/report_saleorder.xml',
     ],
     'installable': True,
-    'price': 9,
-    'currency': 'EUR',
 }
