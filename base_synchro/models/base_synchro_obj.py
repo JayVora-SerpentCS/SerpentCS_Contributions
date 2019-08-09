@@ -1,12 +1,9 @@
 # See LICENSE file for full copyright and licensing details.
 
-import time
-
 from odoo import api, fields, models
 
 
 class BaseSynchroServer(models.Model):
-    """Class to store the information regarding server."""
     _name = "base.synchro.server"
     _description = "Synchronized server"
 
@@ -21,7 +18,6 @@ class BaseSynchroServer(models.Model):
 
 
 class BaseSynchroObj(models.Model):
-    """Class to store the operations done by wizard."""
     _name = "base.synchro.obj"
     _description = "Register Class"
     _order = 'sequence'
@@ -46,25 +42,20 @@ class BaseSynchroObj(models.Model):
 
     @api.model
     def get_ids(self, obj, dt, domain=None, action=None):
+        """Get record which has write or create date greater than dt."""
         if action is None:
             action = {}
         pool = self.env[obj]
-        result = []
         if dt:
-            w_date = domain + [('write_date', '>=', dt)]
-            c_date = domain + [('create_date', '>=', dt)]
-        else:
-            w_date = c_date = domain
-        obj_rec = pool.search(w_date)
-        obj_rec += pool.search(c_date)
-        for r in obj_rec.read(['create_date', 'write_date']):
-            result.append((r['write_date'] or r['create_date'], r['id'],
-                           action.get('action', 'd')))
-        return result
+            domain = domain + ['|', ('write_date', '>=', dt),
+                               ('create_date', '>=', dt)]
+
+        object_rec = pool.search(domain)
+        return [(o.write_date or o.create_date, o.id,
+                 action.get('action', 'd'))for o in object_rec]
 
 
 class BaseSynchroObjAvoid(models.Model):
-    """Class to avoid the base synchro object."""
     _name = "base.synchro.obj.avoid"
     _description = "Fields to not synchronize"
 
@@ -74,13 +65,11 @@ class BaseSynchroObjAvoid(models.Model):
 
 
 class BaseSynchroObjLine(models.Model):
-    """Class to store object line in base synchro."""
     _name = "base.synchro.obj.line"
     _description = "Synchronized instances"
 
     name = fields.Datetime('Date', required=True,
-                           default=lambda *args:
-                           time.strftime('%Y-%m-%d %H:%M:%S'))
+                           default=lambda d: fields.Datetime.now())
     obj_id = fields.Many2one('base.synchro.obj', 'Object', ondelete='cascade')
     local_id = fields.Integer('Local ID', readonly=True)
     remote_id = fields.Integer('Remote ID', readonly=True)
