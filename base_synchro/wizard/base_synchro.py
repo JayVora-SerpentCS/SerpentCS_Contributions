@@ -70,7 +70,7 @@ class BaseSynchro(models.TransientModel):
         model_obj = object.model_id.model
         avoid_field_list = [a.name for a in object.avoid_ids]
         if module.search_count([("name", "ilike", "base_synchro"),
-                                ('state', '=', 'installed')]) > 1:
+                                ('state', '=', 'installed')]) < 0:
             raise Warning(_('If your Synchronization direction is \
                           download or both, please install \
                           "Multi-DB Synchronization" module in targeted \

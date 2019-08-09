@@ -43,8 +43,7 @@ class BaseSynchroObj(models.Model):
     @api.model
     def get_ids(self, obj, dt, domain=None, action=None):
         """Get record which has write or create date greater than dt."""
-        if action is None:
-            action = {}
+        action = {} if action is None else action
         pool = self.env[obj]
         if dt:
             domain = domain + ['|', ('write_date', '>=', dt),

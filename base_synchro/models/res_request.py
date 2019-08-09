@@ -9,7 +9,7 @@ class ResRequest(models.Model):
     _order = 'date desc'
 
     name = fields.Char('Subject', required=True)
-    date = fields.Datetime('Date')
+    date = fields.Datetime()
     act_from = fields.Many2one('res.users', 'From')
     act_to = fields.Many2one('res.users', 'To')
     body = fields.Text('Request')
