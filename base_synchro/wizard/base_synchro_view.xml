@@ -39,7 +39,7 @@
             <form string="Synchronization Completed!">
                 <separator string="The synchronisation has been started. You will receive a request when it's done."/>
                 <footer>
-                    <button string="Cancel" class="oe_link" special="cancel"/>
+                    <button string="Ok" class="oe_highlight" special="cancel"/>
                 </footer>
             </form>
         </field>
