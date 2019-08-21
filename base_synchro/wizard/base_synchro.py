@@ -112,9 +112,9 @@ class BaseSynchro(models.TransientModel):
                               id2)
                 if not destination_inverted:
                     pool = pool_dest.env[object.model_id.model]
-                    pool.browse([id2]).write(value)
+                    pool.browse([id2]).update(value)
                 else:
-                    pool_dest.get(object.model_id.model).write([id2], value)
+                    pool_dest.get(object.model_id.model).write(id2,value)
                 self.report_total += 1
                 self.report_write += 1
             else:
@@ -159,8 +159,9 @@ class BaseSynchro(models.TransientModel):
         result = False
         if obj:
             result = self.get_id(obj[0], res_id, action)
-            _logger.debug("Relation object already synchronized. Getting id%s",
-                          result)
+            _logger.debug(
+                "Relation object already synchronized. Getting id %s",
+                result)
         else:
             _logger.debug('Relation object not synchronized. Searching \
              by name_get and name_search')
@@ -168,21 +169,22 @@ class BaseSynchro(models.TransientModel):
                 names = pool_src.get(obj_model).name_get([res_id])[0][1]
                 res = pool_dest.env[obj_model].name_search(
                     names, [], 'like', 1)
+                res = res and res[0][0] or False
             else:
                 pool = pool_src.env[obj_model]
                 names = pool.browse([res_id]).name_get()[0][1]
                 try:
                     rec_name = pool_src.env[obj_model]._rec_name
                     res = pool_dest.get(obj_model).search(
-                        [(rec_name, '=', names)])
+                        [(rec_name, '=', names)], 1)
+                    res = res and res[0] or False
                 except Exception as e:
-                    print("")
                     raise Warning(_(e))
 
             _logger.debug("name_get in src: %s", names)
             _logger.debug("name_search in dest: %s", res)
             if res:
-                result = res[0]
+                result = res
             else:
                 _logger.warning(
                     "Record '%s' on relation %s not found, set to null.",
@@ -277,7 +279,7 @@ Exceptions:
             request.create({
                 'name': "Synchronization report",
                 'act_from': self.user_id.id,
-                'date': time.strftime('%Y-%m-%d, %H:%M:%S'),
+                'date': fields.Datetime.now(),
                 'act_to': self.user_id.id,
                 'body': summary,
             })
