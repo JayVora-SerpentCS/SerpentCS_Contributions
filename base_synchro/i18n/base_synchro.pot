@@ -1,13 +1,13 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* base_synchro
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.1rc1\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-08 00:36+0000\n"
+"POT-Creation-Date: 2019-08-21 05:09+0000\n"
+"PO-Revision-Date: 2019-08-21 05:09+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,115 +16,24 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_search
+msgid "Action From"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_search
+msgid "Action To"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__active
+msgid "Active"
+msgstr ""
+
+#. module: base_synchro
 #: model:ir.actions.act_window,name:base_synchro.action_view_base_synchro
+#: model:ir.model,name:base_synchro.model_base_synchro
 msgid "Base Synchronization"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.server,server_db:0
-msgid "Server Database"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro.server:0
-#: model:ir.model,name:base_synchro.model_base_synchro_server
-msgid "Synchronized server"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj.avoid,name:0
-msgid "Field Name"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj,synchronize_date:0
-msgid "Latest Synchronization"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro,user_id:0
-msgid "Send Result To"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.model,name:base_synchro.model_base_synchro_obj_avoid
-msgid "Fields to not synchronize"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro:0
-msgid "_Close"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro:0
-msgid "Transfer Data To Server"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.model,name:base_synchro.model_base_synchro_obj
-msgid "Register Class"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro.obj:0
-#: model:ir.actions.act_window,name:base_synchro.action_transfer_tree
-#: model:ir.ui.menu,name:base_synchro.transfer_menu_id
-msgid "Synchronized objects"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.server,obj_ids:0
-msgid "Models"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj.avoid,obj_id:0
-#: view:base.synchro.obj.line:0
-#: field:base.synchro.obj.line,obj_id:0
-msgid "Object"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro:0
-msgid "Synchronization Completed!"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.server,login:0
-msgid "User Name"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro.obj:0
-#: view:base.synchro.obj.line:0
-msgid "Group By"
-msgstr ""
-
-#. module: base_synchro
-#: selection:base.synchro.obj,action:0
-msgid "Upload"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro.obj:0
-msgid "Latest synchronization"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro.obj.line:0
-#: field:base.synchro.obj.line,name:0
-msgid "Date"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.server,password:0
-msgid "Password"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj,avoid_ids:0
-msgid "Fields Not Sync."
 msgstr ""
 
 #. module: base_synchro
@@ -133,28 +42,320 @@ msgid "Both"
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro.obj,name:0
-msgid "Name"
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro
+msgid "Cancel"
 msgstr ""
 
 #. module: base_synchro
-#: view:base.synchro.obj:0
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__create_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__create_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__create_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__create_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__create_uid
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__create_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__create_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__create_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__create_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__create_date
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__name
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__date
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_transfer_line_form
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_search
+msgid "Date"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__display_name
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__display_name
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__display_name
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__display_name
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__display_name
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__domain
+msgid "Domain"
+msgstr ""
+
+#. module: base_synchro
+#: selection:base.synchro.obj,action:0
+msgid "Download"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__name
+msgid "Field Name"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.base_synchro_obj_form
 msgid "Fields"
 msgstr ""
 
 #. module: base_synchro
-#: view:base.synchro.obj.line:0
-msgid "Transfered Ids Details"
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__avoid_ids
+#: model_terms:ir.ui.view,arch_db:base_synchro.base_synchro_obj_form
+msgid "Fields Not Sync."
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro.obj,action:0
-msgid "Synchronisation direction"
+#: model:ir.model,name:base_synchro.model_base_synchro_obj_avoid
+msgid "Fields to not synchronize"
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro.obj,server_id:0
+#: model:ir.actions.act_window,name:base_synchro.actions_regclass_tree
+#: model:ir.actions.act_window,name:base_synchro.actions_transfer_line_form
+msgid "Filters"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__act_from
+msgid "From"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_regclass_tree
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_transfer_line_form
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_search
+msgid "Group By"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.ui.menu,name:base_synchro.next_id_63
+msgid "History"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__id
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__id
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__id
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__id
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__id
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__id
+msgid "ID"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__line_id
+msgid "IDs Affected"
+msgstr ""
+
+#. module: base_synchro
+#: code:addons/base_synchro/wizard/base_synchro.py:72
+#, python-format
+msgid "If your Synchronization direction is                           download and/or upload, please install                           \"Multi-DB Synchronization\" module in targeted                           server!"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro____last_update
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj____last_update
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid____last_update
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line____last_update
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server____last_update
+#: model:ir.model.fields,field_description:base_synchro.field_res_request____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__write_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__write_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__write_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__write_uid
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__write_uid
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__write_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__write_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__write_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__write_date
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__write_date
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__synchronize_date
+msgid "Latest Synchronization"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_regclass_tree
+msgid "Latest synchronization"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__local_id
+msgid "Local"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_form
+msgid "Message"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__obj_ids
+msgid "Models"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__name
+msgid "Name"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_avoid__obj_id
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__obj_id
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_transfer_line_form
+msgid "Object"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__model_id
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_regclass_tree
+msgid "Object to synchronize"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro_finish
+msgid "Ok"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__password
+msgid "Password"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model,name:base_synchro.model_base_synchro_obj
+msgid "Register Class"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj_line__remote_id
+msgid "Remote"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model,name:base_synchro.model_res_request
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__body
+msgid "Request"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.actions.act_window,name:base_synchro.action_res_request
+#: model:ir.ui.menu,name:base_synchro.menu_res_request
+msgid "Request Report"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_form
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_search
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_res_request_tree
+msgid "Res Request"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__user_id
+msgid "Send Result To"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__server_id
 msgid "Server"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__server_db
+msgid "Server Database"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__server_port
+msgid "Server Port"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro__server_url
+msgid "Server URL"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__server_url
+msgid "Server Url"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__name
+msgid "Server name"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.actions.act_window,name:base_synchro.action_base_synchro_server_tree
+#: model:ir.ui.menu,name:base_synchro.synchro_server_tree_menu_id
+msgid "Servers to be synchronized"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__name
+msgid "Subject"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.ui.menu,name:base_synchro.next_id_62
+#: model:ir.ui.menu,name:base_synchro.synch_config
+msgid "Synchronization"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro_finish
+msgid "Synchronization Completed!"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_obj__action
+msgid "Synchronization direction"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro
+msgid "Synchronize"
+msgstr ""
+
+#. module: base_synchro
+#: model:ir.ui.menu,name:base_synchro.menu_action_view_base_synchro
+msgid "Synchronize objects"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.base_synchro_obj_tree
+msgid "Synchronized Objects"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro_server_tree
+msgid "Synchronized Server"
 msgstr ""
 
 #. module: base_synchro
@@ -165,112 +366,61 @@ msgid "Synchronized instances"
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro.obj,active:0
-msgid "Active"
+#: model:ir.actions.act_window,name:base_synchro.action_transfer_tree
+#: model:ir.ui.menu,name:base_synchro.transfer_menu_id
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_regclass_tree
+msgid "Synchronized objects"
 msgstr ""
 
 #. module: base_synchro
-#: view:base.synchro.obj:0
-#: field:base.synchro.obj,model_id:0
-msgid "Object to synchronize"
+#: model:ir.model,name:base_synchro.model_base_synchro_server
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro_server_form
+msgid "Synchronized server"
 msgstr ""
 
 #. module: base_synchro
-#: model:ir.actions.act_window,name:base_synchro.action_base_synchro_server_tree
-#: model:ir.ui.menu,name:base_synchro.synchro_server_tree_menu_id
-msgid "Servers to be synchronized"
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro_finish
+msgid "The synchronisation has been started. You will receive a request when it's done."
 msgstr ""
 
 #. module: base_synchro
-#: view:base.synchro.obj:0
+#: model:ir.model.fields,field_description:base_synchro.field_res_request__act_to
+msgid "To"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro
+msgid "Transfer Data To Server"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.base_synchro_obj_form
 msgid "Transfer Details"
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro.obj.line,remote_id:0
-msgid "Remote Id"
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_transfer_line_form
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_transfer_line_tree
+msgid "Transfered IDs Details"
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro.obj,line_id:0
-msgid "Ids Affected"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.ui.menu,name:base_synchro.next_id_63
-msgid "History"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.ui.menu,name:base_synchro.next_id_62
-#: model:ir.ui.menu,name:base_synchro.synch_config
-msgid "Synchronization"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj,domain:0
-msgid "Domain"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro:0
-msgid "_Synchronize"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro:0
-msgid "OK"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.server,name:0
-msgid "Server name"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj,sequence:0
-msgid "Sequence"
-msgstr ""
-
-#. module: base_synchro
-#: view:base.synchro:0
-msgid "The synchronisation has been started.You will receive a request when it's done."
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.server,server_port:0
-msgid "Server Port"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.ui.menu,name:base_synchro.menu_action_view_base_synchro
-msgid "Synchronize objects"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.model,name:base_synchro.model_base_synchro
-msgid "base.synchro"
-msgstr ""
-
-#. module: base_synchro
-#: field:base.synchro.obj.line,local_id:0
-msgid "Local Id"
-msgstr ""
-
-#. module: base_synchro
-#: model:ir.actions.act_window,name:base_synchro.actions_regclass_tree
-#: model:ir.actions.act_window,name:base_synchro.actions_transfer_line_form
-msgid "Filters"
+#: model_terms:ir.ui.view,arch_db:base_synchro.ir_filters_transfer_line_form
+msgid "Transfered Ids Details"
 msgstr ""
 
 #. module: base_synchro
 #: selection:base.synchro.obj,action:0
-msgid "Download"
+msgid "Upload"
 msgstr ""
 
 #. module: base_synchro
-#: field:base.synchro,server_url:0
-#: field:base.synchro.server,server_url:0
-msgid "Server URL"
+#: model:ir.model.fields,field_description:base_synchro.field_base_synchro_server__login
+msgid "User Name"
+msgstr ""
+
+#. module: base_synchro
+#: model_terms:ir.ui.view,arch_db:base_synchro.view_base_synchro
+msgid "or"
 msgstr ""
 
