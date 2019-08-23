@@ -112,7 +112,7 @@ var PubSubClass = function(context){
             var currentTopic = this.topics[token.topic]
             
             for (var i = 0, l = currentTopic.length; i < l; i++) {
-                if (currentTopic[i][0] === token.callback) {
+                if (currentTopic[i] && currentTopic[i][0] === token.callback) {
                     currentTopic.splice(i, 1)
                 }
             }
@@ -912,12 +912,12 @@ function jSignatureClass(parent, options, instanceExtensions) {
     // If we have proportional width, we sign up to events broadcasting "window resized" and checking if
     // parent's width changed. If so, we (1) extract settings + data from current signature pad,
     // (2) remove signature pad from parent, and (3) reinit new signature pad at new size with same settings, (rescaled) data.
-    conditionallyLinkCanvasResizeToWindowResize.call(
-        this
-        , this
-        , settings.width.toString(10)
-        , apinamespace, globalEvents
-    )
+//    conditionallyLinkCanvasResizeToWindowResize.call(
+//        this
+//        , this
+//        , settings.width.toString(10)
+//        , apinamespace, globalEvents
+//    )
     
     // end of event handlers.
     // ===============================
