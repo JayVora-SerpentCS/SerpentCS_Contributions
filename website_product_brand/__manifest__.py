@@ -10,7 +10,7 @@
     'license': 'AGPL-3',
     'summary': 'Product Brand based filters',
     'version': '10.0.0.0.1',
-    'depends': ['product_brand', 'website_sale'],
+    'depends': ['product_brand', 'website_sale','sale_management'],
     'images': ['static/description/icon.png'],
     'data': [
         "security/ir.model.access.csv",
