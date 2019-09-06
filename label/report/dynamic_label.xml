@@ -19,7 +19,7 @@
                                                 <t t-if="val['newline']">
                                                     <br/>
                                                 </t>
-                                                <span style="val['style']">
+                                                <span t-att-style="val['style']">
                                                     <t t-if="(val.get('type') == 'normal')">
                                                         <t t-esc="val['string']"/>
                                                         <t t-esc="val['value']"/>
