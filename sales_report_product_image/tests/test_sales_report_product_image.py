@@ -22,5 +22,5 @@ class SaleReportProductImageTestCase(common.TransactionCase):
                 'pricelist_id': self.env.ref('product.list0').id,
                 'print_image': 'True',
                 'image_sizes': 'image_medium',
-                'image_small': self.product.image_small,
+                'image_small': self.name.image_1920,
             })
