@@ -20,4 +20,4 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     image_small = fields.Binary(
-        'Product Image', related='product_id.image_small')
+        'Product Image', related='product_id.image_1920')
