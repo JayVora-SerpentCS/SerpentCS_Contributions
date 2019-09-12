@@ -2,31 +2,65 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 
     var core = require('web.core');
     var ListRenderer = require('web.ListRenderer')
+    var ListController = require('web.ListController')
     var AbstractController = require('web.AbstractController');
     var _t = core._t;
 
     var HEADING_COLUMNS_TO_SKIP_IN_GROUPS = 2
 
-    ListRenderer.include({
+    ListController.include({
+        start: function() {
+            this._super.apply(this, arguments)
+            var self = this;
+            var is_grouped = !!self.renderer.state.groupedBy.length;
+            var oe_list_expand = $("#expand_icon");
+            _.each(this.controlPanelElements.$switch_buttons, function(rec){
+                if (rec.id == 'expand_icon'){
+                    oe_list_expand = $(rec);
+                }
 
+            })
+            if(!is_grouped){
+                oe_list_expand.hide();
+            }
+            oe_list_expand.unbind('click').bind('click', function() {
+                var is_grouped = !!self.renderer.state.groupedBy.length;
+                if (is_grouped) {
+                    if ($(this).hasClass('fa-expand')){
+                        self.renderer.in_expand = true;
+                        $(this).removeClass('fa-expand');
+                        $(this).addClass('fa-compress');
+                    }else{
+                        self.renderer.in_expand = false;
+                        $(this).addClass('fa-expand');
+                        $(this).removeClass('fa-compress');
+                    }
+                    self.renderer.render_auto_groups();
+                }
+            });
+        },
+    });
+    ListRenderer.include({
         init: function (parent, state, params) {
             var self = this;
+            var res = this._super.apply(this, arguments);
             this.expand = false;
             this.expand_btn = false;
-            var res = this._super.apply(this, arguments);
+            this.in_expand = false;
             return res;
         },
-
         render_auto_groups: function() {
             var self = this;
-            _.each(self.state.data, function(group) {
-                if(group){
-                    self.trigger_up('toggle_group', {group: group});
-                }
-            })
-
+            var is_grouped = !!self.state.groupedBy.length;
+            if (is_grouped) {
+                self.expand = true;
+                _.each(self.state.data, function(group) {
+                    if(group){
+                        self.trigger_up('toggle_group', {group: group});
+                    }
+                })
+            }
         },
-
         _renderGroupRow: function (group, groupLevel) {
             var self = this;
             var aggregateValues = _.mapObject(group.aggregateValues, function (value) {
@@ -58,7 +92,6 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 var $lastCell = $cells[$cells.length - 1] || $th;
                 $lastCell.addClass('o_group_pager').append($pager);
             }
-
             if (self.expand) {
                 if(self.in_expand){
                     if(group.isOpen==false){
@@ -66,7 +99,6 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                     }
                 }
             }
-
             return $('<tr>')
                 .addClass('o_group_header')
                 .toggleClass('o_group_open', group.isOpen)
@@ -79,23 +111,12 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
         _renderView: function () {
             var self = this;
             var is_grouped = !!this.state.groupedBy.length;
-            if (is_grouped) {
-                $('button#expand_icon.fa-expand').unbind('click').bind('click', function() {
-                    self.expand = true;
-                    self.in_expand = true;
-                    self.render_auto_groups();
-                    $(this).removeClass('fa-expand');
-                    $(this).addClass('fa-compress');
-                })
-                $('button#expand_icon.fa-compress').unbind('click').bind('click', function() {
-                    self.expand = true;
-                    self.in_expand = false;
-                    self.render_auto_groups();
-                    $(this).addClass('fa-expand');
-                    $(this).removeClass('fa-compress');
-                })
-            }
             var res = this._super();
+            if(is_grouped){
+                $('button#expand_icon').show()
+            }else{
+                $('button#expand_icon').hide()
+            }
             return res
         },
 
