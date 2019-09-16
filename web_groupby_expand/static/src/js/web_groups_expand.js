@@ -87,18 +87,16 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
                 oe_list_expand.show();
                 oe_list_expand.unbind('click').bind('click', function() {
                     self.expand = true;
-                    if (is_grouped) {
-                        if ($(this).hasClass('fa-expand')){
-                            self.in_expand = true;
-                            $(this).removeClass('fa-expand');
-                            $(this).addClass('fa-compress');
-                        }else{
-                            self.in_expand = false;
-                            $(this).addClass('fa-expand');
-                            $(this).removeClass('fa-compress');
-                        }
-                        self.render_auto_groups();
+                    if ($(this).hasClass('fa-expand')){
+                        self.in_expand = true;
+                        $(this).removeClass('fa-expand');
+                        $(this).addClass('fa-compress');
+                    }else{
+                        self.in_expand = false;
+                        $(this).addClass('fa-expand');
+                        $(this).removeClass('fa-compress');
                     }
+                    self.render_auto_groups();
                 });
             }else{
                 oe_list_expand.hide();
