@@ -2,7 +2,7 @@
 
 {
     "name": "Web GroupBy Expand",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
