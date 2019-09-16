@@ -6,12 +6,12 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
     var _t = core._t;
 
     ListRenderer.include({
-
         init: function (parent, state, params) {
             var self = this;
+            var res = this._super.apply(this, arguments);
+            this.switch_buttons = parent.switch_buttons
             this.expand = false;
             this.expand_btn = false;
-            var res = this._super.apply(this, arguments);
             return res;
         },
 
@@ -76,21 +76,30 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
         _renderView: function () {
             var self = this;
             var is_grouped = !!this.state.groupedBy.length;
+            var oe_list_expand = $("#expand_icon");
+            _.each(this.switch_buttons.$multi, function(rec){
+                if (rec.id == 'expand_icon'){
+                    oe_list_expand = $(rec);
+                }
+
+            })
             if (is_grouped) {
-                $('button#expand_icon.fa-expand').unbind('click').bind('click', function() {
+                oe_list_expand.show();
+                oe_list_expand.unbind('click').bind('click', function() {
                     self.expand = true;
-                    self.in_expand = true;
+                    if ($(this).hasClass('fa-expand')){
+                        self.in_expand = true;
+                        $(this).removeClass('fa-expand');
+                        $(this).addClass('fa-compress');
+                    }else{
+                        self.in_expand = false;
+                        $(this).addClass('fa-expand');
+                        $(this).removeClass('fa-compress');
+                    }
                     self.render_auto_groups();
-                    $(this).removeClass('fa-expand');
-                    $(this).addClass('fa-compress');
-                })
-                $('button#expand_icon.fa-compress').unbind('click').bind('click', function() {
-                    self.in_expand = false;
-                    self.expand = true;
-                    self.render_auto_groups();
-                    $(this).addClass('fa-expand');
-                    $(this).removeClass('fa-compress');
-                })
+                });
+            }else{
+                oe_list_expand.hide();
             }
             var res = this._super();
             return res
