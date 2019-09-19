@@ -28,7 +28,7 @@ class WebsiteSale(odoo.addons.website_sale.controllers.main.WebsiteSale):
         if category:
             domain += [('public_categ_ids', 'child_of', int(category))]
         attrib_list = request.httprequest.args.getlist('attrib')
-        attrib_values = [map(int, v.split('-')) for v in attrib_list if v]
+        attrib_values = [list(map(int, v.split('-'))) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
         if attrib_values:
             attrib = None
