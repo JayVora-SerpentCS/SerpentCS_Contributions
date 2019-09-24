@@ -18,7 +18,6 @@
     # Dependencies
     'depends': [
         'sale_management',
-        'web_tree_image',
     ],
 
     # Views

@@ -4,7 +4,6 @@ Product Image for Sale
 ======================
 
 * Product images for sale order/quotation and report.
-* This module is developed to see the product images in tree view and report. Make sure to install the web_tree_image Module from OCA.
 * To display images of product in report, you need to tick print image and image size you want to display in report.
 
 ========
