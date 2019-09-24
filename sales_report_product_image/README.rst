@@ -20,21 +20,22 @@ Requirments
 Sale Report Product Image
 =========================
 
+======================
+Product Image for Sale
+======================
+
 * Product images for sale order/quotation and report.
 * This module is developed to see the product images in tree view and report. Make sure to install the web_tree_image Module from OCA.
 * To display images of product in report, you need to tick print image and image size you want to display in report.
 
-Usage
-=====
+========
+Features
+========
 
-Bug Tracker
-===========
-
-Credits
-=======
-
-Contributors
-------------
+Product Images In Quotation and Sale Order
+Product Images in Big, Medium and Small
+Product Images in Quotation and Sale Report
+Option to Print Images in Report Or Not
 
 * Jay Vora <jay.vora@serpentcs.com>
 
@@ -53,4 +54,21 @@ promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+============
+Similar Apps
+============
 
+Product Image for Sale
+Product Image
+Sales Product Image
+Sales Report Product Image
+sales product image
+sales product image in report
+product image in report
+image in sales report
+serpent product image report
+SCS product image option in report
+product images for quotation
+image in report
+Print image option in odoo
+image option in report
