@@ -9,7 +9,10 @@
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']" position="before">
                 <field name="image_small" widget="image"/>
             </xpath>
-            <field name="client_order_ref" position="after">
+            <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                <field name="image_small" widget="image" height="50"/>
+            </xpath>
+            <field name="payment_term_id" position="before">
                 <field name="print_image"/>
                 <field name="image_sizes"/>
             </field>
