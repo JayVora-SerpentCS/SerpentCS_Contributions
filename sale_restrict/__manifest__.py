@@ -2,7 +2,7 @@
 
 {
     'name': 'SO - Product Price Check',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Sales Management',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Restrict sales on 0 value.',
@@ -10,7 +10,7 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
     'depends': [
-        'sale',
+        'sale_management',
     ],
     'images': [
         'static/description/PriceCheck.png',
