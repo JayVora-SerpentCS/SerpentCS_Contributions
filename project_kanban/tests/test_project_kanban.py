@@ -1,10 +1,10 @@
-# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
 # See LICENSE file for full copyright and licensing details.
 
 from odoo.tests import common
 
 
 class ProjectKanbanTest(common.TransactionCase):
+
     def setup(self):
         super(ProjectKanbanTest, self).setup()
 

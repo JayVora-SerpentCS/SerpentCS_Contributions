@@ -1,9 +1,8 @@
-# Copyright 2016 Serpent Consulting Services Pvt. Ltd.
 # See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Project - Status by Recent Activities',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'license': 'AGPL-3',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
