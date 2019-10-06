@@ -2,7 +2,7 @@
 
 {
     'name': 'Sale Product Smart Buttons',
-    'version': '12.0.0.0.1',
+    'version': '13.0.0.0.1',
     'sequence': 1,
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
@@ -20,7 +20,7 @@
     'license': 'AGPL-3',
     'depends': ['sale_management'],
     'data': [
-            'views/product_view.xml',
+        'views/product_view.xml',
     ],
     'installable': True,
     'application': False,
