@@ -44,7 +44,6 @@
     <record id="action_employee_grade" model="ir.actions.act_window">
         <field name="name">Employee Grades</field>
         <field name="res_model">grade.grade</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
@@ -88,7 +87,6 @@
     <record id="action_employee_rank" model="ir.actions.act_window">
         <field name="name">Employee Ranks</field>
         <field name="res_model">rank.rank</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
@@ -128,7 +126,7 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_filter"/>
         <field name="arch" type="xml">
-            <filter name="group_job" context="{'group_by':'job_id'}" position="after">
+            <filter name="group_job" position="after">
                 <filter string="Grade" icon="terp-gtk-select-all" domain="[]"
                         name ='grade' context="{'group_by':'grade_id'}"/>
                 <filter string="Rank" icon="terp-gtk-select-all" domain="[]"
@@ -147,7 +145,7 @@
                 <field name="grade_id"/>
                 <field name="rank_id"/>
             </xpath>
-            <xpath expr="//field[@name='work_location']" position="after">
+            <xpath expr="//field[@name='work_phone']" position="after">
                 <li t-if="record.grade_id.raw_value">
                     <field name="grade_id"/>
                 </li>
