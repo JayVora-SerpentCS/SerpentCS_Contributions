@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="project_task_qweb_report">
-	    <t>
+        <t t-call="web.html_container">
+        <t t-call="web.internal_layout">
 	        <t t-foreach="docs" t-as="e">
-	            <t t-call="web.basic_layout">
-	                <div class="page">
+	            <div class="page">
 	                    <form>
 	                        <br/>
 	                        <div class="container">
@@ -17,7 +17,6 @@
 	                                                <t t-if="e.stage_id">
 	                                                        ( 
 	                                                    <span t-field="e.stage_id"/> )
-	                                                    
 	                                                </t>
 	                                            </b>
 	                                        </h3>
@@ -196,9 +195,9 @@
 	                            </div>
 	                        </div>
 	                    </form>
-	                </div>
-	            </t>
+	            </div>
 	        </t>
 	    </t>
+	</t>
 	</template>
 </odoo>
