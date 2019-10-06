@@ -2,7 +2,7 @@
 
 {
     'name': 'HR-Grade Rank',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'license': 'AGPL-3',
     'summary': 'Manage grade and rank of employee',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
