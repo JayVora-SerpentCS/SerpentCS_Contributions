@@ -8,7 +8,6 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    @api.multi
     def check_limit(self):
         self.ensure_one()
         partner = self.partner_id
@@ -48,7 +47,6 @@ class SaleOrder(models.Model):
                     {'credit_limit': credit - debit + self.amount_total})
             return True
 
-    @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         for order in self:
