@@ -25,13 +25,15 @@
         </xpath>
         <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[last()]" position="replace">
             <t t-if="doc.show_price">
+            <t t-if="doc.show_price">
                 <td class="text-right" groups="account.group_show_line_subtotals_tax_excluded">
-                     <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                     <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                    <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
                 </td>
             </t>
             <t t-if="not doc.show_price">
                 <td class="text-right" groups="account.group_show_line_subtotals_tax_excluded">-N.A.-</td>
+            </t>
             </t>
         </xpath>
         <xpath expr="//div[@name='total']" position="replace">
