@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="applicant_profile">
+        <t t-call='web.html_container'>
         <t t-call="web.internal_layout">
             <t t-foreach="docs" t-as="o">
                 <div class="page">
@@ -96,7 +97,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>
+                            <td colspan="15">
                                 <br/>
                             </td>
                         </tr>
@@ -374,7 +375,7 @@
                                 <td style="border:1px solid black;">
                                     <t t-if="not education.illiterate"><span t-field="education.field"/></t>
                                 </td>
-                                <td style="border:1px solid black;" colspan="2">
+                                <td style="border:1px solid black;text-align:center;" colspan="2">
                                     <t t-if="education.illiterate"><input type="checkbox" checked="True"/></t>
                                     <t t-if="not education.illiterate"><input type="checkbox"/></t>
                                 </td>
@@ -435,7 +436,8 @@
                     </t>
                   </table>
                 </div>
-             </t>
+            </t>
+           </t>
         </t>
     </template>
 </odoo>
