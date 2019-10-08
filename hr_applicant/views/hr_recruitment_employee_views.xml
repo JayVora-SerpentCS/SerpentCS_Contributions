@@ -62,7 +62,6 @@
     <record id="action_emp_medical_details_list" model="ir.actions.act_window">
         <field name="name">Medical Details</field>
         <field name="res_model">hr.employee.medical.details</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_hr_employee_medical_details_tree" />
         <field name="domain">[('employee_id', '=', active_id)]</field>
@@ -107,7 +106,6 @@
     <record id="action_emp_prev_occupation_list" model="ir.actions.act_window">
         <field name="name">Previous Occupation</field>
         <field name="res_model">employee.previous.occupation</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_employee_previous_occupation_tree" />
         <field name="domain">[('employee_id', '=', active_id)]</field>
@@ -150,7 +148,6 @@
     <record id="action_emp_relatives_list" model="ir.actions.act_window">
         <field name="name">Relatives</field>
         <field name="res_model">employee.relative</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_employee_relative_tree" />
         <field name="domain">[('employee_id', '=', active_id)]</field>
@@ -195,7 +192,6 @@
     <record id="action_emp_education_list" model="ir.actions.act_window">
         <field name="name">Education Details</field>
         <field name="res_model">employee.education</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_employee_education_tree" />
         <field name="domain">[('employee_id', '=', active_id)]</field>
@@ -234,7 +230,6 @@
     <record id="action_emp_travels_list" model="ir.actions.act_window">
         <field name="name">Previous Travels</field>
         <field name="res_model">employee.previous.travel</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_employee_previous_travel_tree" />
         <field name="domain">[('employee_id', '=', active_id)]</field>
@@ -279,7 +274,6 @@
     <record id="action_emp_languages_list" model="ir.actions.act_window">
         <field name="name">Languages</field>
         <field name="res_model">employee.language</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_employee_language_tree" />
         <field name="domain">[('employee_id', '=', active_id)]</field>
