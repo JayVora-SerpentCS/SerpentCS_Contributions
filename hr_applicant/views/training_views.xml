@@ -15,7 +15,6 @@
     <record id="action_course_type_list" model="ir.actions.act_window">
         <field name="name">Course Type</field>
         <field name="res_model">course.type</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_course_type_tree" />
     </record>
@@ -63,7 +62,6 @@
     <record id="action_training_courses_list" model="ir.actions.act_window">
         <field name="name">Training Courses</field>
         <field name="res_model">training.courses</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_training_courses_tree"/>
     </record>
@@ -127,7 +125,6 @@
     <record id="action_training_class_list" model="ir.actions.act_window">
         <field name="name">Training</field>
         <field name="res_model">training.class</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_training_class_tree" />
     </record>
@@ -157,10 +154,10 @@
                         </group>
                     </group>
                     <group col="4" colspan="4">
-                         <field name="training_start_date"/>
-                         <field name="date_of_arrival" attrs="{'required': [('state', '=', 'awaiting_training_start')]}"/>
-                         <field name="training_end_date"/>
-                         <field name="class_id" invisible="1"/>
+                        <field name="training_start_date"/>
+                        <field name="date_of_arrival" attrs="{'required': [('state', '=', 'awaiting_training_start')]}"/>
+                        <field name="training_end_date"/>
+                        <field name="class_id" invisible="1"/>
                     </group>
                     <notebook>
                         <page string="Attachments" name="attachment_ids">

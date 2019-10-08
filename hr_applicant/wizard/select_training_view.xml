@@ -19,7 +19,6 @@
     <record id="action_select_training_wizard" model="ir.actions.act_window">
         <field name="name">Need Training</field>
         <field name="res_model">select.training</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
