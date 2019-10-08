@@ -62,7 +62,6 @@
     <record id="action_medical_details_list" model="ir.actions.act_window">
         <field name="name">Medical Details</field>
         <field name="res_model">hr.applicant.medical.details</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_hr_applicant_medical_details_tree" />
         <field name="domain">[('applicant_id', '=', active_id)]</field>
@@ -108,7 +107,6 @@
     <record id="action_prev_occupation_list" model="ir.actions.act_window">
         <field name="name">Previous Occupation</field>
         <field name="res_model">applicant.previous.occupation</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_applicant_previous_occupation_tree" />
         <field name="domain">[('applicant_id', '=', active_id)]</field>
@@ -151,7 +149,6 @@
     <record id="action_relatives_list" model="ir.actions.act_window">
         <field name="name">Relatives</field>
         <field name="res_model">applicant.relative</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_applicant_relative_tree" />
         <field name="domain">[('applicant_id', '=', active_id)]</field>
@@ -196,7 +193,6 @@
     <record id="action_education_list" model="ir.actions.act_window">
         <field name="name">Education Details</field>
         <field name="res_model">applicant.education</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_applicant_education_tree" />
         <field name="domain">[('applicant_id', '=', active_id)]</field>
@@ -237,7 +233,6 @@
     <record id="action_travels_list" model="ir.actions.act_window">
         <field name="name">Previous Travels</field>
         <field name="res_model">applicant.previous.travel</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_applicant_previous_travel_tree" />
         <field name="domain">[('applicant_id', '=', active_id)]</field>
@@ -282,7 +277,6 @@
     <record id="action_languages_list" model="ir.actions.act_window">
         <field name="name">Languages</field>
         <field name="res_model">applicant.language</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_applicant_language_tree" />
         <field name="domain">[('applicant_id', '=', active_id)]</field>
@@ -291,7 +285,7 @@
     <record id="view_hr_applicant_inherited" model="ir.ui.view">
         <field name="name">hr.applicant.form.inherited</field>
         <field name="model">hr.applicant</field>
-        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job" />
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
                 <newline />
