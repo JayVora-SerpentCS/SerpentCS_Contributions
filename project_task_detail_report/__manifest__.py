@@ -1,11 +1,8 @@
-#    Copyright (C) 2017 Serpent Consulting Services Pvt. Ltd.
-#    Copyright (C) 2017 OpenERP SA (<http://www.serpentcs.com>)
-#    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+# See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Project Task Report',
-    'version': '12.0.1.0.0',
+    'version': '13.0.1.0.0',
     'category': 'Project Management',
     'license': 'AGPL-3',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
