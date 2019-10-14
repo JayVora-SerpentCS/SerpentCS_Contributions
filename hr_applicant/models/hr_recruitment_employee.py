@@ -160,7 +160,6 @@ class EmployeePreviousOccupation(models.Model):
             vals.update({'employee_id': self._context.get('active_id')})
         return super(EmployeePreviousOccupation, self).create(vals)
 
-
 class EmployeeRelative(models.Model):
 
     _name = 'employee.relative'
@@ -191,7 +190,7 @@ class EmployeeRelative(models.Model):
     @api.onchange('birthday')
     def onchange_birthday(self):
         if self.birthday and datetime.strptime(
-                self.birthday, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.birthday), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'Date of Birth must be less than today!')}
             self.birthday = False

@@ -19,7 +19,6 @@
         'views/hr_recruitment_employee_views.xml',
         'views/training_views.xml',
         'views/applicant_profile_report_view.xml',
-        
     ],
     'demo': [],
     'test': [],
