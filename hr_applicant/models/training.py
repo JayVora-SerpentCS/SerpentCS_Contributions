@@ -97,7 +97,7 @@ class TrainingClass(models.Model):
                 end_date = False
                 training_start_date = rec.training_start_date and \
                     datetime.datetime.strftime(rec.training_start_date,
-                                      DEFAULT_SERVER_DATE_FORMAT)
+                                DEFAULT_SERVER_DATE_FORMAT)
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
                     end_date = \
@@ -119,7 +119,7 @@ class TrainingClass(models.Model):
                         months=rec.course_id.duration, days=-1)
                 end_date = end_date and \
                     datetime.datetime.strftime(end_date,
-                                    DEFAULT_SERVER_DATE_FORMAT)
+                            DEFAULT_SERVER_DATE_FORMAT)
                 rec.training_end_date = end_date
 
     def action_to_be_approve(self):
@@ -139,16 +139,14 @@ class TrainingClass(models.Model):
         for rec in self:
             if not rec.attendees_ids:
                 raise ValidationError(
-                    _("You can not Approve this training which \
-                    don't have any attendees!"))
+                    _("You cannot Approve Any Training with no Attendees!"))
             else:
                 if len(rec.attendees_ids.ids) > rec.training_attendees:
                     raise ValidationError(
                         _("List of attendees are greater than \
-                            Training Attendees!"))
+                           Training Attendees!"))
                     for attendee in rec.attendees_ids:
-                        if attendee.state not in ('train_completed',
-                                        'in_complete'):
+                        if attendee.state not in ('train_completed','in_complete'):
                             raise ValidationError(
                                 _("You can not Mark the training as Completed \
                                    till any of attendee is not in \
@@ -159,12 +157,11 @@ class TrainingClass(models.Model):
     def action_cancel(self):
         for rec in self:
             for attendee in rec.attendees_ids:
-                if attendee.state not in ['draft', 'awaiting_training_start',
-                                          'in_complete']:
+                if attendee.state not in ['draft', 'awaiting_training_start','in_complete']:
                     raise ValidationError(
                         _("You can not cancel the Training Class if \
-                            all attendees are not in Draft, Awaiting \
-                            Training Start or In complete state!"))
+                           all attendees are not in Draft, Awaiting \
+                           Training Start or In complete state!"))
         self.write({'state': 'cancel'})
         return True
 
@@ -178,7 +175,7 @@ class ListOfAttendees(models.Model):
                     'date_of_arrival')
     def _check_training_dup(self):
         self.ensure_one()
-        if str(self.training_start_date) < datetime.datetime.now().strftime(
+        if self.training_start_date < datetime.datetime.now().strftime(
                 DEFAULT_SERVER_DATE_FORMAT):
             raise ValidationError(_("You can't create past training!"))
         if self.training_start_date > self.training_end_date:
@@ -189,6 +186,7 @@ class ListOfAttendees(models.Model):
             raise ValidationError(
                 _("Arrival Date should be less or equal than \
                     Start date of Training!"))
+
     _sql_constraints = [
         ('employee_class_unique', 'unique(class_id, employee_id)',
          'You can not add employee multiple times in a Training!'),
