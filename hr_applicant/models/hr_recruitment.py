@@ -91,7 +91,6 @@ class Applicant(models.Model):
             res.get('toolbar', {})['print'] = new_reports
         return res
 
-
     def create_employee_from_applicant(self):
         res = super(Applicant, self).create_employee_from_applicant()
         if res.get('res_id', False):
@@ -254,7 +253,6 @@ class Applicant(models.Model):
                             {'res_model': 'employee.language',
                              'res_id': language_id.id})
         return res
-
 
 class ApplicantMedicalDetails(models.Model):
 
@@ -480,7 +478,6 @@ class ApplicantEducation(models.Model):
 
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
-        #FIX issue 319 convert datetime.date to string
         to_date = self.to_date and datetime.strftime(
                 self.to_date, DEFAULT_SERVER_DATE_FORMAT)
         if to_date and datetime.strptime(
