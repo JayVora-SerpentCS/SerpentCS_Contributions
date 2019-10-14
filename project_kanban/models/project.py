@@ -9,8 +9,6 @@ class Project(models.Model):
     @api.depends('message_ids')
     def _compute_get_recent_date(self):
         for project in self:
-            # TODO: It can be improved using tasks of the projects
-            # instead of message_ids
             date_lst = [x.date for x in project.message_ids]
             project.recent_date = date_lst and max(date_lst) or False
 
@@ -19,3 +17,11 @@ class Project(models.Model):
         string="Recent date",
         help="This will be auto set"
     )
+
+class ProjectTask(models.Model):
+    _inherit = 'project.task'
+
+    def write(self,vals):
+        res = super(ProjectTask, self).write(vals)
+        self.project_id.write_date = self.write_date
+        return res
