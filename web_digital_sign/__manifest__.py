@@ -1,8 +1,8 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Web Digital Signature v12.0',
-    'version': '12.0.1.0.0',
+    'name': 'Web Digital Signature v13.0',
+    'version': '13.0.1.0.0',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'complexity': 'easy',
