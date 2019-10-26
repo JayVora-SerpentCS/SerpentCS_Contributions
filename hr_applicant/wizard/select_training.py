@@ -12,7 +12,6 @@ class SelectTraining(models.TransientModel):
     is_triaing_needed = fields.Boolean(
         string="Is Training needed?", required=True)
 
-    @api.multi
     def action_done(self):
         applicant = self.env['hr.applicant'].search(
             [('id', '=', self._context.get('active_id'))])

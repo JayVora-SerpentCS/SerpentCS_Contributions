@@ -96,8 +96,8 @@ class TrainingClass(models.Model):
             if rec.training_start_date and rec.course_id:
                 end_date = False
                 training_start_date = rec.training_start_date and \
-                    datetime.datetime.strftime(rec.training_start_date, 
-                                      DEFAULT_SERVER_DATE_FORMAT)
+                    datetime.datetime.strftime(rec.training_start_date,
+                                DEFAULT_SERVER_DATE_FORMAT)
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
                     end_date = \
@@ -118,16 +118,15 @@ class TrainingClass(models.Model):
                         DEFAULT_SERVER_DATE_FORMAT) + relativedelta(
                         months=rec.course_id.duration, days=-1)
                 end_date = end_date and \
-                    datetime.datetime.strftime(end_date, 
-                                      DEFAULT_SERVER_DATE_FORMAT)                        
+                    datetime.datetime.strftime(end_date,
+                            DEFAULT_SERVER_DATE_FORMAT)
                 rec.training_end_date = end_date
 
-    @api.multi
     def action_to_be_approve(self):
         self.write({'state': 'to_be_approved'})
         return True
 
-    @api.multi
+
     def action_approve(self):
         for rec in self:
             if not rec.training_attendees:
@@ -136,38 +135,33 @@ class TrainingClass(models.Model):
             rec.write({'state': 'approved'})
         return True
 
-    @api.multi
     def action_completed(self):
         for rec in self:
             if not rec.attendees_ids:
                 raise ValidationError(
-                    _("You can not Approve this training which \
-                        don't have any attendees!"))
+                    _("You cannot Approve Any Training with no Attendees!"))
             else:
                 if len(rec.attendees_ids.ids) > rec.training_attendees:
                     raise ValidationError(
                         _("List of attendees are greater than \
-                            Training Attendees!"))
-                for attendee in rec.attendees_ids:
-                    if attendee.state not in ('train_completed',
-                                              'in_complete'):
-                        raise ValidationError(
-                            _("You can not Mark the training as Completed \
-                                till any of attendee is not in \
-                                Training Completed or Training incomplete!"))
-            rec.write({'state': 'completed'})
+                           Training Attendees!"))
+                    for attendee in rec.attendees_ids:
+                        if attendee.state not in ('train_completed','in_complete'):
+                            raise ValidationError(
+                                _("You can not Mark the training as Completed \
+                                   till any of attendee is not in \
+                                   Training Completed or Training incomplete!"))
+        rec.write({'state': 'completed'})
         return True
 
-    @api.multi
     def action_cancel(self):
         for rec in self:
             for attendee in rec.attendees_ids:
-                if attendee.state not in ['draft', 'awaiting_training_start',
-                                          'in_complete']:
+                if attendee.state not in ['draft', 'awaiting_training_start','in_complete']:
                     raise ValidationError(
                         _("You can not cancel the Training Class if \
-                            all attendees are not in Draft, Awaiting \
-                            Training Start or In complete state!"))
+                           all attendees are not in Draft, Awaiting \
+                           Training Start or In complete state!"))
         self.write({'state': 'cancel'})
         return True
 
@@ -202,8 +196,7 @@ class ListOfAttendees(models.Model):
     employee_id = fields.Many2one("hr.employee", "Employee", readonly=True,
                                   states={
                                       'draft': [('readonly', False)]})
-    attendees_image = fields.Binary(
-        related="employee_id.image", string="Image")
+    attendees_image = fields.Binary(related='employee_id.image_1920',string="Image")
     training_start_date = fields.Date('Training Start Date', required=True,
                                       readonly=True, states={
                                           'draft': [('readonly', False)]})
@@ -232,12 +225,10 @@ class ListOfAttendees(models.Model):
                 rec.training_start_date = self.class_id.training_start_date
                 rec.training_end_date = self.class_id.training_end_date
 
-    @api.multi
     def action_awaiting_training_start(self):
         self.write({'state': 'awaiting_training_start'})
         return True
 
-    @api.multi
     def action_in_training(self):
         for rec in self:
             if not rec.date_of_arrival:
@@ -245,17 +236,14 @@ class ListOfAttendees(models.Model):
             rec.write({'state': 'train_completed'})
         return True
 
-    @api.multi
     def action_training_completed(self):
         self.write({'state': 'train_completed'})
         return True
 
-    @api.multi
     def action_in_complete(self):
         self.write({'state': 'in_complete'})
         return True
 
-    @api.multi
     def action_cancel(self):
         self.write({'state': 'in_complete'})
         return True

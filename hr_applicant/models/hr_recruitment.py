@@ -91,7 +91,6 @@ class Applicant(models.Model):
             res.get('toolbar', {})['print'] = new_reports
         return res
 
-    @api.multi
     def create_employee_from_applicant(self):
         res = super(Applicant, self).create_employee_from_applicant()
         if res.get('res_id', False):
@@ -255,7 +254,6 @@ class Applicant(models.Model):
                              'res_id': language_id.id})
         return res
 
-
 class ApplicantMedicalDetails(models.Model):
 
     _name = "hr.applicant.medical.details"
@@ -350,7 +348,7 @@ class ApplicantPreviousOccupation(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         if self.to_date and datetime.strptime(
-                self.to_date,
+                str(self.to_date),
                 DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today!')}
@@ -394,7 +392,7 @@ class ApplicantRelative(models.Model):
     @api.onchange('birthday')
     def onchange_birthday(self):
         if self.birthday and datetime.strptime(
-                self.birthday, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.birthday), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'Date of Birth must be less than today!')}
             self.birthday = False
@@ -480,9 +478,8 @@ class ApplicantEducation(models.Model):
 
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
-        #FIX issue 319 convert datetime.date to string
         to_date = self.to_date and datetime.strftime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT)        
+                self.to_date, DEFAULT_SERVER_DATE_FORMAT)
         if to_date and datetime.strptime(
                 to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
@@ -520,7 +517,7 @@ class ApplicantPreviousTravel(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         if self.to_date and datetime.strptime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.to_date), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today!')}
             self.to_date = False

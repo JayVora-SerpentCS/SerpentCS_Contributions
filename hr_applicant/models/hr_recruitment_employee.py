@@ -160,7 +160,6 @@ class EmployeePreviousOccupation(models.Model):
             vals.update({'employee_id': self._context.get('active_id')})
         return super(EmployeePreviousOccupation, self).create(vals)
 
-
 class EmployeeRelative(models.Model):
 
     _name = 'employee.relative'
@@ -191,7 +190,7 @@ class EmployeeRelative(models.Model):
     @api.onchange('birthday')
     def onchange_birthday(self):
         if self.birthday and datetime.strptime(
-                self.birthday, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.birthday), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'Date of Birth must be less than today!')}
             self.birthday = False
@@ -278,7 +277,7 @@ class EmployeeEducation(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         to_date = self.to_date and datetime.strftime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT)           
+                self.to_date, DEFAULT_SERVER_DATE_FORMAT)
         if to_date and datetime.strptime(
                 to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
@@ -317,7 +316,7 @@ class EmployeePreviousTravel(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         if self.to_date and datetime.strptime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.to_date), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today !')}
             self.to_date = False
