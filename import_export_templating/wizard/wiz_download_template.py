@@ -49,7 +49,7 @@ class WizDownloadTemplate(models.TransientModel):
     def _onchange_blank(self):
         self.button_uncheck()
 
-    @api.multi
+   
     def button_required(self):
         manual_selected = []
         if self.fields_list_ids:
@@ -73,7 +73,7 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new',
         }
 
-    @api.multi
+    
     def button_select_all(self):
         self.fields_list_ids = [(6, 0, self.field_names_computed.filtered(
             lambda l: l.name != 'id').ids)]
@@ -90,7 +90,7 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new',
         }
 
-    @api.multi
+    
     def button_uncheck(self):
         self.fields_list_ids = [(5, self.field_names_computed.ids)]
         ctx = dict(self._context)
@@ -106,7 +106,7 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new',
         }
 
-    @api.multi
+    
     def download_template(self, row_values=None, error_reason=None,
                           error_value=None):
         """This method is used for export template."""
@@ -293,7 +293,7 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new'
         }
 
-    @api.multi
+    
     def import_data(self):
         """This method is used for import data."""
         for rec in self:
