@@ -99,7 +99,6 @@
     <record id="action_wiz_download_template" model="ir.actions.act_window">
         <field name="name">Import / Export Tool</field>
         <field name="res_model">wiz.download.template</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="context">{'nodestroy': True}</field>
         <field name="view_id" ref="wiz_download_template_form_view"/>
