@@ -18,7 +18,7 @@ class WizDownloadTemplate(models.TransientModel):
     _description = 'Wiz Download Template'
 
     @api.depends('ir_model', 'ir_model.field_id', 'ir_model.field_id.model_id')
-    def _get_names(self):
+    def _compute_get_names(self):
         self.field_names_computed = self.ir_model.field_id.filtered(
             lambda l: l.model_id.id == self.ir_model.id)
 
@@ -33,7 +33,7 @@ class WizDownloadTemplate(models.TransientModel):
     update_only = fields.Boolean(string="Update records", default=True)
     create_only = fields.Boolean(string="Create records", default=True)
     field_names_computed = fields.Many2many(
-        'ir.model.fields', compute='_get_names')
+        'ir.model.fields', compute='_compute_get_names')
     fields_list_ids = fields.Many2many(
         'ir.model.fields', domain="[('model_id', '=', ir_model)]")
 
@@ -49,7 +49,6 @@ class WizDownloadTemplate(models.TransientModel):
     def _onchange_blank(self):
         self.button_uncheck()
 
-   
     def button_required(self):
         manual_selected = []
         if self.fields_list_ids:
@@ -73,7 +72,6 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new',
         }
 
-    
     def button_select_all(self):
         self.fields_list_ids = [(6, 0, self.field_names_computed.filtered(
             lambda l: l.name != 'id').ids)]
@@ -90,7 +88,6 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new',
         }
 
-    
     def button_uncheck(self):
         self.fields_list_ids = [(5, self.field_names_computed.ids)]
         ctx = dict(self._context)
@@ -106,7 +103,6 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new',
         }
 
-    
     def download_template(self, row_values=None, error_reason=None,
                           error_value=None):
         """This method is used for export template."""
@@ -152,29 +148,29 @@ class WizDownloadTemplate(models.TransientModel):
                 5, 5, 0, 2, 'First data column must be blank.')
             worksheet.write_merge(
                 6, 6, 0, 2, 'If you are uploading new records, "Naming Series"'
-                ' becomes mandatory, if present.')
+                            ' becomes mandatory, if present.')
             worksheet.write_merge(
                 7, 7, 0, 2, 'Only mandatory fields are necessary for new'
-                ' records. You can keep non-mandatory columns blank if you'
-                ' wish.')
+                            ' records. You can keep non-mandatory columns'
+                            ' blank if you wish.')
             worksheet.write_merge(
                 8, 8, 0, 2, 'For updating, you can update only selective'
-                ' columns.')
+                            ' columns.')
             worksheet.write_merge(
                 9, 9, 0, 2, 'You can only upload upto 5000 records in one go.'
-                ' (may be less in some cases)')
+                            ' (may be less in some cases)')
 
             worksheet.write_merge(3, 3, 3, 4, 'Data Import Notes:', bold)
             worksheet.write_merge(4, 4, 3, 4, '')
             worksheet.write_merge(
                 5, 5, 3, 4, 'Many2one: You can enter "NAME" of the relational'
-                ' model!')
+                            ' model!')
             worksheet.write_merge(
                 6, 6, 3, 4, 'Many2many: You can enter "NAME" of the relational'
-                ' model Seprate by ";"')
+                            ' model Seprate by ";"')
             worksheet.write_merge(
                 7, 7, 3, 4, 'One2many: Let this blank! & Download Blank'
-                ' Template for displayed comodel to Import!')
+                            ' Template for displayed comodel to Import!')
             worksheet.write_merge(8, 8, 3, 4, '')
             worksheet.write_merge(9, 9, 3, 4, '')
             worksheet.write_merge(10, 10, 3, 4, '')
@@ -261,11 +257,11 @@ class WizDownloadTemplate(models.TransientModel):
                                 col += 1
                             worksheet.write(row_17, col, (str(
                                 reason) + ': Value not found in Database!'
-                                ' Please create it'
-                                ' first. once create'
-                                ' value in database.'
-                                ' remove (REASON)'
-                                ' column for IMPORT!'
+                                          ' Please create it'
+                                          ' first. once create'
+                                          ' value in database.'
+                                          ' remove (REASON)'
+                                          ' column for IMPORT!'
                             ))
                             col += 1
                             row_17 += 1
@@ -273,7 +269,7 @@ class WizDownloadTemplate(models.TransientModel):
 
         workbook.save(fl)
         fl.seek(0)
-        buf = base64.encodestring(fl.read())
+        buf = base64.encodebytes(fl.read())
         ctx = dict(self._context)
         vals = {'file': buf}
         ctx.update(vals)
@@ -293,7 +289,6 @@ class WizDownloadTemplate(models.TransientModel):
             'target': 'new'
         }
 
-    
     def import_data(self):
         """This method is used for import data."""
         for rec in self:
@@ -305,7 +300,7 @@ class WizDownloadTemplate(models.TransientModel):
                 raise UserError(
                     _("""Please select an (Downloded Blank Template)
                      .xls compatible file to Import"""))
-            xls_data = base64.decodestring(datafile)
+            xls_data = base64.decodebytes(datafile)
             temp_path = tempfile.gettempdir()
 
             # writing a file to temp. location
@@ -422,12 +417,12 @@ class WizDownloadTemplate(models.TransientModel):
                                     field_type_dict.get(str(key))[1]
                                 ) + ""].search(
                                     [('name', '=',
-                                        row[headers_dict[str(key)]])],
+                                      row[headers_dict[str(key)]])],
                                     limit=1).id
 
                                 self.create_m2o = True
                                 if not search_id and self.create_m2o:
-                                    ir_model_search = self.env['ir.model'].\
+                                    ir_model_search = self.env['ir.model']. \
                                         search([('model', '=', str(
                                             field_type_dict.get(str(key))[1])
                                         )])
@@ -435,7 +430,7 @@ class WizDownloadTemplate(models.TransientModel):
                                         x.id for x in
                                         ir_model_search.field_id.filtered(
                                             lambda l: l.required)]
-                                    count = self.env['ir.model.fields'].\
+                                    count = self.env['ir.model.fields']. \
                                         search_count([('id', 'in',
                                                        required_field)])
                                     if (count > 1):
@@ -466,16 +461,16 @@ class WizDownloadTemplate(models.TransientModel):
                                         [('name', '=', line)])
                                     self.create_m2m = True
                                     if not search_id and self.create_m2m:
-                                        ir_model_search\
+                                        ir_model_search \
                                             = self.env['ir.model'].search(
                                                 [('model', '=',
-                                                    str(field_type_dict.get(
-                                                        str(key))[1]))])
+                                                  str(field_type_dict.get(
+                                                      str(key))[1]))])
                                         required_field = [
                                             x.id for x in ir_model_search.
                                             field_id.filtered(
                                                 lambda l: l.required)]
-                                        count = self.env['ir.model.fields'].\
+                                        count = self.env['ir.model.fields']. \
                                             search_count([('id', 'in',
                                                            required_field)])
                                         if (count > 1):

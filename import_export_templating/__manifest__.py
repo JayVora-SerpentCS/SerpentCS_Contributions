@@ -2,8 +2,8 @@
 
 {
     'name': 'Import / Export Templating',
-    'version': '12.0.1.0.0',
-    'license': 'AGPL-3',
+    'version': '13.0.1.0.0',
+    'license': 'LGPL-3',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'website': 'http://www.serpentcs.com',
