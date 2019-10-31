@@ -17,8 +17,27 @@ FormController.include({
      * @override
      */
     renderSidebar: function ($node) {
-        if (!this.sidebar && this.hasSidebar) {
+        var self = this;
+        if (this.hasSidebar) {
             var otherItems = [];
+            if (this.archiveEnabled && this.initialState.data.active !== undefined) {
+                var classname = "o_sidebar_item_archive" + (this.initialState.data.active ? "" : " o_hidden")
+                otherItems.push({
+                    label: _t("Archive"),
+                    callback: function () {
+                        Dialog.confirm(self, _t("Are you sure that you want to archive this record?"), {
+                            confirm_callback: self._toggleArchiveState.bind(self, true),
+                        });
+                    },
+                    classname: classname,
+                });
+                classname = "o_sidebar_item_unarchive" + (this.initialState.data.active ? " o_hidden" : "")
+                otherItems.push({
+                    label: _t("Unarchive"),
+                    callback: this._toggleArchiveState.bind(this, false),
+                    classname: classname,
+                });
+            }
             if (this.is_action_enabled('delete')) {
                 otherItems.push({
                     label: _t('Delete'),
@@ -45,11 +64,12 @@ FormController.include({
                 },
                 actions: _.extend(this.toolbarActions, {other: otherItems}),
             });
-            this.sidebar.appendTo($node);
-
-            // Show or hide the sidebar according to the view mode
-            this._updateSidebar();
+            return this.sidebar.appendTo($node).then(function() {
+                 // Show or hide the sidebar according to the view mode
+                self._updateSidebar();
+            });
         }
+        return Promise.resolve();
     },
 
     _onActionCall: function (event) {
@@ -71,25 +91,28 @@ ListController.include({
      * @override
      */
     renderSidebar: function ($node) {
-        if (this.hasSidebar && !this.sidebar) {
+        var self = this;
+        if (this.hasSidebar) {
             var other = [{
                 label: _t("Export"),
                 callback: this._onExportData.bind(this)
             }];
-
             other.push({
                 label: _t('Import / Export Tools'),
                 callback: this._onActionCall.bind(this),
             });
-
             if (this.archiveEnabled) {
                 other.push({
                     label: _t("Archive"),
-                    callback: this._onToggleArchiveState.bind(this, true)
+                    callback: function () {
+                        Dialog.confirm(self, _t("Are you sure that you want to archive all the selected records?"), {
+                            confirm_callback: self._toggleArchiveState.bind(self, true),
+                        });
+                    }
                 });
                 other.push({
                     label: _t("Unarchive"),
-                    callback: this._onToggleArchiveState.bind(this, false)
+                    callback: this._toggleArchiveState.bind(this, false)
                 });
             }
             if (this.is_action_enabled('delete')) {
@@ -107,10 +130,11 @@ ListController.include({
                 },
                 actions: _.extend(this.toolbarActions, {other: other}),
             });
-            this.sidebar.appendTo($node);
-
-            this._toggleSidebar();
+            return this.sidebar.appendTo($node).then(function() {
+                self._toggleSidebar();
+            });
         }
+        return Promise.resolve();
     },
 
     _onActionCall: function (event) {
@@ -141,16 +165,11 @@ ActionManager.include({
         var self = this;
         var controller = this.controllers[action.controllerID];
         var widget = controller.widget;
-        // AAB: this will be moved to the Controller
-        if (widget.need_control_panel) {
-            // set the ControlPanel bus on the controller to allow it to
-            // communicate its status
-            widget.set_cp_bus(new Bus());
-        }
 
         return this._startController(controller).then(function (controller) {
             var prevDialogOnClose;
             if (self.currentDialogController) {
+
                 if (action.context['nodestroy']) {
                     self.precurrentDialogController = self.currentDialogController;
                     prevDialogOnClose = self.currentDialogController.onClose;
@@ -197,10 +216,11 @@ ActionManager.include({
 
                 return action;
             });
-        }).fail(function () {
+        }).guardedCatch(function () {
             self._removeAction(action.jsID);
         });
     },
+
     _executeCloseAction: function (action, options) {
         var result;
         if (!this.currentDialogController) {
@@ -222,8 +242,9 @@ ActionManager.include({
             this.trigger_up('show_effect', action.effect);
         }
 
-        return $.when(result);
+        return Promise.resolve(result);
     },
+
 });
 
 });
