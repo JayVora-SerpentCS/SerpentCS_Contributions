@@ -88,7 +88,6 @@
         <field name="name">Projects Team</field>
         <field name="res_model">crm.team</field>
         <field name="domain">[('type_team','=','project')]</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="context">{'default_type_team':'project'}</field>
         <field name="view_id" ref="project_team_tree_view"/>
