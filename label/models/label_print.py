@@ -35,19 +35,16 @@ class LabelPrint(models.Model):
                         model_list.append(key)
         self.model_list = model_list
 
-    @api.multi
     def create_action(self):
         vals = {}
         action_obj = self.env['ir.actions.act_window']
         for data in self.browse(self.ids):
-            src_obj = data.model_id.model
             button_name = _('Label (%s)') % data.name
             vals['ref_ir_act_report'] = action_obj.create({
                 'name': button_name,
                 'type': 'ir.actions.act_window',
                 'res_model': 'label.print.wizard',
-                'src_model': src_obj,
-                'view_type': 'form',
+                'binding_view_types': 'form',
                 'context': "{'label_print' : %d}" % (data.id),
                 'view_mode': 'form,tree',
                 'target': 'new',
@@ -59,7 +56,6 @@ class LabelPrint(models.Model):
         })
         return True
 
-    @api.multi
     def unlink_action(self):
         for template in self:
             if template.ref_ir_act_report.id:

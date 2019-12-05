@@ -81,7 +81,7 @@
             <field name="name">Label Print</field>
             <field name="res_model">label.print</field>
             <field name="context">{'default_field_id':1}</field>
-            <field name="view_type">form</field>
+            <field name="binding_view_types">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 

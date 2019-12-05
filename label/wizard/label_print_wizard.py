@@ -37,7 +37,6 @@ class LabelPrintWizard(models.TransientModel):
     is_image = fields.Boolean('Is Image?')
     brand_id = fields.Many2one('label.brand', 'Brand Name', required=True)
 
-    @api.multi
     def print_report(self):
         if self._context is None:
             self._context = {}
@@ -71,7 +70,7 @@ class LabelPrintWizard(models.TransientModel):
                 'cell_spacing': str(data.name.cell_spacing) + "px",
                 'ids': self._context.get('active_ids', [])
             }
-        cr, uid, context = self.env.args
+        cr, uid, context, su = self.env.args
         context = dict(context)
         context.update({"label_print_id": self._context.get('label_print'),
                         'datas': datas})
