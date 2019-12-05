@@ -5,13 +5,11 @@ import time
 from odoo import models, api, _
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval as eval
-from odoo.osv.orm import browse_record
 
 
 class ReportDynamicLabel(models.AbstractModel):
     _name = 'report.label.report_label'
 
-    @api.multi
     def get_data(self, row, columns, ids, model, number_of_copy):
         active_model_obj = self.env[model]
         label_print_obj = self.env['label.print']
@@ -39,7 +37,7 @@ class ReportDynamicLabel(models.AbstractModel):
                     if not value:
                         continue
 
-                    if isinstance(value, browse_record):
+                    if isinstance(value, dict):
                         model_obj = self.env[value._name]
                         value = eval("obj." + model_obj._rec_name,
                                      {'obj': value})
@@ -122,7 +120,7 @@ class ReportDynamicLabel(models.AbstractModel):
 
         return new_list
 
-    @api.multi
+    @api.model
     def _get_report_values(self, docids, data=None):
         if not data.get('form') or not self.env.context.get('active_model'):
             raise UserError(_("Form content is missing, \
