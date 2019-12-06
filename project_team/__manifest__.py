@@ -12,7 +12,6 @@
     'depends': [
         'project',
         'crm',
-        'web',
     ],
     'data': [
         'views/project_team_view.xml',
