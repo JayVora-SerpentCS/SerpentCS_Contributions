@@ -29,7 +29,7 @@ Credits
 
 Contributors
 
-Serpent Consulting Services PVT. LTD. <http://serpentcs.com>
+Serpent Consulting Services PVT. LTD. <https://serpentcs.com>
 
 Maintainer
 
@@ -37,4 +37,4 @@ Serpent Consulting Services PVT. LTD.
 
 This module is maintained by the SerpentCS.
 
-To contribute to this module, please visit http://serpentcs.com.
+To contribute to this module, please visit https://serpentcs.com.
