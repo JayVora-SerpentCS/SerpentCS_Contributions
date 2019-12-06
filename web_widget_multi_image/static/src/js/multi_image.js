@@ -3,6 +3,8 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
 
     var core = require('web.core');
     var FieldOne2Many = require('web.relational_fields').FieldOne2Many;
+    var ControlPanelView = require('web.ControlPanelView');
+    var Pager = require('web.Pager');
     var dataset = require('web.data');
     var Dialog = require('web.Dialog');
     var QWeb = core.qweb;
@@ -191,6 +193,55 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                 args: [parseInt($(curr_id)[0].id, 10)],
             });
             $(curr_id).closest('table.hoverbox').parent().remove();
+        },
+
+        _renderControlPanel: function () {
+            if (!this.view) {
+                return Promise.resolve();
+            }
+            var self = this;
+
+            var defs = [];
+            var controlPanelView = new ControlPanelView({
+                template: 'X2ManyControlPanel',
+                withSearchBar: false,
+                context: {'widget': self.attrs.widget}
+            });
+            var cpDef = controlPanelView.getController(this).then(function (controlPanel) {
+                self._controlPanel = controlPanel;
+                return self._controlPanel.prependTo(self.$el);
+            });
+            this.pager = new Pager(this, this.value.count, this.value.offset + 1, this.value.limit, {
+                single_page_hidden: true,
+                withAccessKey: false,
+                validate: function () {
+                    var isList = self.view.arch.tag === 'tree';
+                    // TODO: we should have some common method in the basic renderer...
+                    return isList ? self.renderer.unselectRow() : Promise.resolve();
+                },
+            });
+            this.pager.on('pager_changed', this, function (new_state) {
+                self.trigger_up('load', {
+                    id: self.value.id,
+                    limit: new_state.limit,
+                    offset: new_state.current_min - 1,
+                    on_success: function (value) {
+                        self.value = value;
+                        self._render();
+                    },
+                });
+            });
+            this._renderButtons();
+            defs.push(this.pager.appendTo($('<div>'))); // start the pager
+            defs.push(cpDef);
+            return Promise.all(defs).then(function () {
+                self._controlPanel.updateContents({
+                    cp_content: {
+                        $buttons: self.$buttons,
+                        $pager: self.pager.$el,
+                    }
+                });
+            });
         },
 
     });
