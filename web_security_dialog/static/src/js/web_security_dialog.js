@@ -41,13 +41,13 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             }
 
             function openmodel_dialog(){
-                return $.when(self.open_pincode_dialog()).done(function(dialog){
+                return $.when(self.open_pincode_dialog()).then(function(dialog){
                     dialog.$footer.find('.validate_pincode').click(function(){
                         var password = dialog.$el.find("#pincode").val();
                         if (password) {
                             framework.blockUI();
                             var callback = self.validate_pincode(self.is_dialog_security,password);
-                            callback.done(function(result){
+                            callback.then(function(result){
                                 framework.unblockUI();
                                 if (result) {
                                     dialog.close();
@@ -56,7 +56,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                                     Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
                                     return;
                                 }
-                            }).fail(function(error){
+                            }).guardedCatch(function(error){
                                 framework.unblockUI();
                                 Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
                                 return;
@@ -98,27 +98,25 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 title: _t('Security'),
                 size : "small",
                 $content: QWeb.render('DialogSecurity'),
-                buttons: [
-                            {
-                                text: _t("Ok"),
-                                classes: 'btn-primary validate_pincode',
-                            },
-                            {
-                                text:_t('Cancel'),
-                                close:true
-                            }
-                        ]
+                buttons: [{
+                    text: _t("Ok"),
+                    classes: 'btn-primary validate_pincode',
+                },
+                {
+                    text:_t('Cancel'),
+                    close:true
+                }]
             }).open();
         },
         validate_pincode : function(field,value) {
             var self = this;
             var data = false;
             var data_vals = {
-                    "field" : field,
-                    "password"  : value,
-                    "companyId" : session.company_id
-                };
-           var data_value = rpc.query({
+                "field" : field,
+                "password"  : value,
+                "companyId" : session.company_id
+            };
+            var data_value = rpc.query({
                 model: 'res.company',
                 method: 'check_security',
                 args: [[],data_vals]
