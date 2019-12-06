@@ -2,13 +2,13 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
     "use strict";
 
     var core = require('web.core');
-    var fieldRegistry = require('web.field_registry');
+    var FieldOne2Many = require('web.relational_fields').FieldOne2Many;
     var dataset = require('web.data');
     var Dialog = require('web.Dialog');
     var QWeb = core.qweb;
     var _t = core._t;
 
-    var MultiImage = fieldRegistry.map.one2many.include({
+    FieldOne2Many.include({
 
         events: {
             'click .oe-image-preview': 'image_preview',
@@ -37,7 +37,7 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                         });
                         self.mydataset.read_slice([], {
                             'domain': [['id', 'in', saved_images]]
-                        }).done(function(records) {
+                        }).then(function(records) {
                             if (records && !_.isEmpty(records)) {
                                 _.each(records, function(img) {
                                     if (img) {
@@ -194,5 +194,4 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
         },
 
     });
-    return MultiImage;
 });
