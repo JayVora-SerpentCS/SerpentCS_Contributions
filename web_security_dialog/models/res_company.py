@@ -9,7 +9,6 @@ class SecurityDialog(models.Model):
 
     security_key = fields.Char('Security Code')
 
-    @api.multi
     def check_security(self, vals):
         fields = vals.get('field').encode('ascii', 'ignore')
         fields = fields.decode('utf-8')
