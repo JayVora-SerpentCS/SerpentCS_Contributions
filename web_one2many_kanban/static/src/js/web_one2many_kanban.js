@@ -11,7 +11,7 @@ KanbanRecord.include({
         var self = this;
         var o2x_field_names = [];
         _.each(this.fieldsInfo, function (field_info, field_nm){
-            if(field_info.mode === 'list'){
+            if(field_info.mode === 'list' || field_info.mode == 'kanban'){
                 o2x_field_names.push(field_nm);
             }
         })
