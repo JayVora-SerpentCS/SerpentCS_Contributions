@@ -57,8 +57,8 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                 });
                 var funnel_container = self.CrmFunnelChart.container;
                 return self._rpc({route: '/web/action/load',params: {
-                    action_id: "crm.crm_lead_opportunities_tree_view",
-                }}).done(function(result){
+                    action_id: "crm.crm_lead_action_pipeline",
+                }}).then(function(result){
                     funnel_container.onclick = function (event) {
                         if(event.composedPath()[0].point !== undefined) {
                             var crm_stage = event.composedPath()[0].point.name;

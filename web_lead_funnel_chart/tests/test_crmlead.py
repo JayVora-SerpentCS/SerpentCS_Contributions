@@ -22,3 +22,4 @@ class CrmLeadFunnelTestCase(common.TransactionCase):
             create({'name': 'Interest in your customizable Pcs',
                     'stage_id': self.stageC.id})
         self.crm_obj.get_lead_stage_data()
+
