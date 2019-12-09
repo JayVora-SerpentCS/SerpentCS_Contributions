@@ -55,6 +55,8 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                         funnel_container.onclick = function (event) {
                             if(event.explicitOriginalTarget || event.path){
                                 var crm_stage;
+//                               Following condition is used for making code browser compatible
+//                              (added code to fixed out issue of event.path not find when user clicks on funnel chart.)
                                 if(event.explicitOriginalTarget && event.explicitOriginalTarget.point !== undefined){
                                     crm_stage = event.explicitOriginalTarget.point.name;
                                 } else if(event.path && event.path[0].point !== undefined) {
