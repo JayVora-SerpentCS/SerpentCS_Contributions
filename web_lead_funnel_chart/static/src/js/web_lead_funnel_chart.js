@@ -53,8 +53,13 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                     var funnel_container = self.CrmFunnelChart.container;
                     return self.rpc("/web/action/load", {action_id: "crm.crm_lead_opportunities_tree_view"}).done(function(result) {
                         funnel_container.onclick = function (event) {
-                            if(event.path[0].point !== undefined) {
-                                var crm_stage = event.path[0].point.name;
+                            if(event.explicitOriginalTarget || event.path){
+                                var crm_stage;
+                                if(event.explicitOriginalTarget && event.explicitOriginalTarget.point !== undefined){
+                                    crm_stage = event.explicitOriginalTarget.point.name;
+                                } else if(event.path && event.path[0].point !== undefined) {
+                                    crm_stage = event.path[0].point.name;
+                                }
                                 result.display_name = _t(crm_stage);
                                 result.view_type = "list";
                                 result.view_mode = "list";
@@ -70,9 +75,6 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function(require) {
                                 result.filter = true;
                                 result.target = 'current';
                                 result.context = {'default_user_id': Session.uid};
-                                if (crm_stage === 'Archive'){
-                                	result.domain = [['stage_id.name', '=', _t(crm_stage)], ['active', '=', false]];
-                            	}
                                 return WebClient.action_manager.do_action(result);
                             }
                         }
