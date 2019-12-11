@@ -18,10 +18,11 @@
     </record>
 
     <report id="report_project_detail"
-            string="Project Details"
             model="project.project"
+            report_type="qweb-pdf"
             name="project_detail_report.project_detail_qweb_report"
+            file="project_detail_report.project_detail_qweb_report"
             paperformat="project_detail_report.project_paperformat_qweb"
-            report_type="qweb-pdf"/>
+            string="Project Details"/>
 
 </odoo>
