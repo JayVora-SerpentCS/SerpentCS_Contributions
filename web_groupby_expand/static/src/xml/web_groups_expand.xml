@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <templates id="groupby_expand_template" xml:space="preserve">
-    <t t-extend="ControlPanel.SwitchButtons">
-        <t t-jquery="t[t-foreach*='views'][t-as*='view']" t-operation="after">
-            <button id="expand_icon" type="button" class="btn btn-default fa fa-expand oe-list-expand"
-                title="Expand"/>
+
+
+        <t t-name="ControlPanel.SwitchButtons" t-extend="ControlPanel.SwitchButtons">
+            <t t-jquery="t[t-foreach*='views'][t-as*='view']" t-operation="after">
+                <a id="expand_icon" class="btn btn-secondary fa fa-expand oe-list-expand" title="Expand" />
+            </t>
         </t>
-    </t>
+        <t t-name="ControlPanel.SingleViewSwitchButtons">
+            <a id="expand_icon" class="btn btn-secondary fa fa-expand oe-list-expand" title="Expand"/>
+        </t>
+
 </templates>
