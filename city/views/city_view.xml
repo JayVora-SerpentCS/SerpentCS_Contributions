@@ -21,7 +21,7 @@
                     <field name="std_code" colspan="4" placeholder="Std Code"/>
                 </field>
                 <field name="child_ids" position="attributes">
-                    <attribute name="context">{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_area_id': area_id, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_supplier': supplier, 'default_customer': customer, 'default_lang': lang}</attribute>
+                    <attribute name="context">{'default_parent_id': active_id, 'default_street': street, 'default_street2': street2, 'default_area_id': area_id, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id, 'default_lang': lang}</attribute>
                 </field>
             </data>
         </field>
@@ -85,7 +85,6 @@
         <field name="name">City</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">city.city</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
@@ -125,7 +124,6 @@
         <field name="name">Area</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">city.area</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 

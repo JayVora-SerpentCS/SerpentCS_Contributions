@@ -1,14 +1,17 @@
 # See LICENSE file for full copyright and licensing details.
+"""Module For City."""
 
 from odoo import api, fields, models
 
 
 class City(models.Model):
+    """Model City."""
+
     _name = 'city.city'
     _description = 'City'
 
-    @api.multi
     def name_get(self):
+        """Method Name Get."""
         res = []
         for line in self:
             name = line.name
@@ -23,6 +26,7 @@ class City(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
+        """Method Name Search."""
         if args is None:
             args = []
         args = ['|', ('zip', operator, name), ('name', operator, name)]
@@ -40,11 +44,13 @@ class City(models.Model):
 
 
 class CityArea(models.Model):
+    """Model City Area."""
+
     _name = 'city.area'
     _description = 'City'
 
-    @api.multi
     def name_get(self):
+        """Method Name Get."""
         res = []
         for line in self:
             name = line.name
@@ -61,6 +67,7 @@ class CityArea(models.Model):
 
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
+        """Method Name Search."""
         if args is None:
             args = []
         areas = self.search(['|', ('zip', 'ilike', name),
@@ -85,12 +92,16 @@ class CityArea(models.Model):
 
 
 class CountryState(models.Model):
+    """Model Country State."""
+
     _inherit = 'res.country.state'
 
     city_ids = fields.One2many('city.city', 'state_id', 'Cities')
 
 
 class ResPartner(models.Model):
+    """Model Res Partner."""
+
     _inherit = "res.partner"
 
     area_id = fields.Many2one('city.area', 'Location')
@@ -99,6 +110,7 @@ class ResPartner(models.Model):
 
     @api.onchange('area_id')
     def onchange_area_id(self):
+        """Method Onchange."""
         if self.area_id:
             self.zip = self.state_id = self.country_id = False
             self.zip = self.area_id.zip
