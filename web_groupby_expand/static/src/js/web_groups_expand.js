@@ -1,21 +1,17 @@
 odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
+"use strict";
 
+var AbstractController = require('web.AbstractController');
 var core = require('web.core');
 var ListRenderer = require('web.ListRenderer')
-var ListController = require('web.ListController')
-var AbstractController = require('web.AbstractController');
-var _t = core._t;
+
 var QWeb = core.qweb;
-
-
-var HEADING_COLUMNS_TO_SKIP_IN_GROUPS = 2
 
 ListRenderer.include({
     init: function (parent, state, params) {
         var self = this;
         var res = this._super.apply(this, arguments);
         this.expand = false;
-        this.expand_btn = false;
         this.in_expand = false;
         return res;
     },
