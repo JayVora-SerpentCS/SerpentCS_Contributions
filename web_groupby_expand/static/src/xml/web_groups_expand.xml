@@ -7,4 +7,8 @@
                 title="Expand"/>
         </t>
     </t>
+    <t t-name="ControlPanel.SingleViewSwitchButtons">
+        <button id="expand_icon" type="button" class="btn btn-default fa fa-expand oe-list-expand"
+                title="Expand"/>
+    </t>
 </templates>

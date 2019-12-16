@@ -4,6 +4,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
     var ListRenderer = require('web.ListRenderer')
     var ViewManager = require('web.ViewManager');
     var _t = core._t;
+    var QWeb = core.qweb;
 
     ListRenderer.include({
         init: function (parent, state, params) {
@@ -77,12 +78,13 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
             var self = this;
             var is_grouped = !!this.state.groupedBy.length;
             var oe_list_expand = $("#expand_icon");
-            _.each(this.switch_buttons.$multi, function(rec){
-                if (rec.id == 'expand_icon'){
-                    oe_list_expand = $(rec);
-                }
-
-            })
+            if(this.switch_buttons){
+                _.each(this.switch_buttons.$multi, function(rec){
+                    if (rec.id == 'expand_icon'){
+                        oe_list_expand = $(rec);
+                    }
+                })
+            }
             if (is_grouped) {
                 oe_list_expand.show();
                 oe_list_expand.unbind('click').bind('click', function() {
@@ -120,24 +122,35 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 
 
     ViewManager.include({
-
         switch_mode: function(view_type, view_options) {
             var self = this;
             var res = this._super.apply(this, arguments);
             if(self.switch_buttons){
-                jQuery.grep(self.switch_buttons.$multi, function( a ) {
-                    if($(a)[0].id == 'expand_icon'){
-                        if (view_type !== 'list') {
-                            $(a).hide();
+                if(self.switch_buttons.$multi.length > 0){
+                    jQuery.grep(self.switch_buttons.$multi, function( a ) {
+                        if($(a)[0].id == 'expand_icon'){
+                            if (view_type !== 'list') {
+                                $(a).hide();
+                            }
+                            else{
+                                $(a).css('display','block')
+                            }
                         }
-                        else{
-                            $(a).css('display','block')
-                        }
-                    }
-                });
+                    });
+                }
+
             }
             return res;
         },
+        render_switch_buttons: function() {
+            var self = this;
+            var res = this._super.apply(this, arguments);
+            if(!self.switch_buttons.$multi && !self.switch_buttons.$mono){
+                self.switch_buttons.$multi = $(QWeb.render('ControlPanel.SingleViewSwitchButtons', {this:self}));
+                self.switch_buttons.$mono = $(QWeb.render('ControlPanel.SingleViewSwitchButtons', {this:self}));
+            }
+            return res;
+        }
     });
 
 });
