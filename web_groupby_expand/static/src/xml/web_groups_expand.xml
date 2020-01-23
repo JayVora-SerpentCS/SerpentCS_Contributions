@@ -9,4 +9,9 @@
     <t t-name="ControlPanel.SingleViewSwitchButtons">
         <a id="expand_icon" class="btn btn-secondary fa fa-expand oe-list-expand" title="Expand"/>
     </t>
+    <t t-name="ControlPanel.SwitchButtons.Mobile" t-extend="ControlPanel.SwitchButtons.Mobile">
+        <t t-jquery="li[t-foreach*=views][t-as*='view']" t-operation="after">
+            <a id="expand_icon" class="btn btn-secondary fa fa-expand oe-list-expand" title="Expand" />
+        </t>
+    </t>
 </templates>

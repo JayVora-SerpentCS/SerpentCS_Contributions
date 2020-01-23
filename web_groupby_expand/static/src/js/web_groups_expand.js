@@ -4,6 +4,7 @@ odoo.define('web_groupby_expand.web_groupby_expand', function(require) {
 var AbstractController = require('web.AbstractController');
 var core = require('web.core');
 var ListRenderer = require('web.ListRenderer')
+var config = require('web.config');
 
 var QWeb = core.qweb;
 
@@ -60,6 +61,9 @@ AbstractController.include({
         _.each(res, function(rec){
             if (rec.id == 'expand_icon'){
                 oe_list_expand = $(rec);
+            }
+            if(config.device.isMobile && $(rec).find('#expand_icon')){
+                oe_list_expand = $(rec).find('#expand_icon')
             }
         })
         if(self.viewType !== 'list'){
