@@ -15,10 +15,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <a style="cursor: default;" href='#' id="image_preview">
-                                    <img class="list_image" t-att-src="column.path"/>
-                                    <img t-att-src="column.path" class="preview list_image" />
-                                </a>
+                            	<img class="list_image" t-att-src="column.path"/>
                             </td>
                         </tr>
                     </table>
