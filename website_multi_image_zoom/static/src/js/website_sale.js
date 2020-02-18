@@ -27,19 +27,6 @@ $(document).ready(function() {
                     });
                 }
             }
-            else {
-                $img.attr("src", "/website/image/product.template/" + $('#product_img_display').val() + "/image");
-            }
-            var wi = $(window).width();
-            if (wi >= 980) {
-            	$img.attr("id", "image2"); // Give Id to image
-                $('#image2').addimagezoom({
-                    zoomrange: [2, 10],
-                    magnifiersize: [350, 350],
-                    magnifierpos: 'right',
-                    cursorshade: true,
-                });
-            }
         });
 
         $('ul.js_add_cart_variants', oe_website_sale).each(function () {
