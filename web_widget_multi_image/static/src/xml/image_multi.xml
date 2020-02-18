@@ -29,7 +29,7 @@
 
     <t t-extend="X2ManyControlPanel">
         <t t-jquery=".o_cp_buttons" t-operation="before">
-            <table>
+            <table t-if="widget.attrs.widget == 'image_multi'">
                 <tr style="background:white;">
                     <td style="padding: 10px 250px 15px 250px;">
                         <button class="fa fa-search oe-image-preview btn btn-sm oe_form_binary btn-primary" type="button" title="Preview">
