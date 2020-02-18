@@ -27,7 +27,7 @@
     'category': 'purchases Management',
     'website': 'http://www.serpentcs.com',
     'version': '8.0.1.0.0',
-    'license': 'GPL-3',
+    'license': 'AGPL-3',
     'sequence': 1,
     'depends': ['purchase', 'web_tree_image'],
     'qweb': [],
