@@ -27,7 +27,7 @@
     'website': 'http://www.serpentcs.com',
     'summary': '',
     'version': '1.2',
-    'license': 'GPL-3',
+    'license': 'AGPL-3',
     'description': """
 Allows to use product brands as filtering for products in website.\n
 This Module depends on product_brand module
