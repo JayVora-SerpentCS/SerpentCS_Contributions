@@ -26,13 +26,12 @@
                                                     </t>
                                                     <t t-if="(val.get('type') == 'image')">
                                                         <t t-esc="val.get('string')"/>
-                                                        <img t-att-src="'data:image/png;base64,%s' % (val.get('value'))"
-                                                             t-att-style="'height:'+data['form']['image_height']+';width:'+data['form']['image_width']"/>
+                                                        <img t-att-src="'data:image/png;base64,%s' % to_text(val.get('value'))" t-att-height="data['form']['image_height']"  t-att-width="data['form']['image_width']"/>
                                                     </t>
                                                     <t t-if="(val.get('type') == 'barcode')">
                                                         <t t-esc="val.get('string')"/>
                                                         <img
-                                                                t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',val.get('value') , data['form']['barcode_width'], data['form']['barcode_height'])"/>
+                                                            t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',val.get('value') , data['form']['barcode_width'], data['form']['barcode_height'])"/>
                                                     </t>
                                                 </span>
                                             </t>
