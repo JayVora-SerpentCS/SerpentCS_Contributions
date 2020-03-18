@@ -243,7 +243,6 @@ class BaseSynchro(models.TransientModel):
         del data['id']
         return data
 
-    @api.multi
     def upload_download(self):
         self.ensure_one()
         self.report = []
@@ -286,14 +285,13 @@ Exceptions:
             })
             return {}
 
-    @api.multi
     def upload_download_multi_thread(self):
         threaded_synchronization = \
             threading.Thread(target=self.upload_download())
         threaded_synchronization.run()
         id2 = self.env.ref('base_synchro.view_base_synchro_finish').id
         return {
-            'view_type': 'form',
+            'binding_view_types': 'form',
             'view_mode': 'form',
             'res_model': 'base.synchro',
             'views': [(id2, 'form')],
