@@ -32,7 +32,6 @@ class BaseModuleRecord(models.TransientModel):
                                     ], string='Records only', required=True,
                                    default='created')
 
-    @api.multi
     def record_objects(self):
         data = self.read([])[0]
         check_date = data['check_date']
@@ -67,7 +66,7 @@ class BaseModuleRecord(models.TransientModel):
             return {
                 'name': _('Module Recording'),
                 'context': self._context,
-                'view_type': 'form',
+                'binding_view_types': 'form',
                 'view_mode': 'form',
                 'res_model': 'base.module.record.objects',
                 'views': [(res_id, 'form')],
@@ -79,7 +78,7 @@ class BaseModuleRecord(models.TransientModel):
         return {
             'name': _('Module Recording'),
             'context': self._context,
-            'view_type': 'form',
+            'binding_view_types': 'form',
             'view_mode': 'form',
             'res_model': 'base.module.record.objects',
             'views': [(res_id, 'form')],
@@ -111,7 +110,7 @@ class BaseModuleRecordObjects(models.TransientModel):
         }).id
         return {
             'name': _('Module Recording'),
-            'view_type': 'form',
+            'binding_view_types': 'form',
             'view_mode': 'form',
             'res_id': rec_id,
             'res_model': 'base.module.record.objects',

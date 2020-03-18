@@ -25,7 +25,7 @@
     <record id="action_base_module_record_objects" model="ir.actions.act_window">
         <field name="name">Export Customizations as a Module</field>
         <field name="res_model">base.module.record</field>
-        <field name="view_type">form</field>
+        <field name="binding_view_types">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="view_id" ref="base_module_record_objects_view"/>
@@ -43,11 +43,8 @@
     <act_window id="act_base_module_record_objects"
                 name="Export Customizations As a Module"
                 res_model="base.module.record"
-                src_model="ir.module.module"
-                view_mode="form"
-                target="new"
-                multi="True"
-                key2="client_action_multi"/>
+                binding_model="ir.module.module"
+                binding_views="list"/>
 
     <record id="module_create_form_view" model="ir.ui.view">
         <field name="name">module.create.form</field>
@@ -79,7 +76,7 @@
     <record id="action_module_created" model="ir.actions.act_window">
         <field name="name">Module Recording</field>
         <field name="res_model">base.module.record.objects</field>
-        <field name="view_type">form</field>
+        <field name="binding_view_types">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="view_id" ref="module_create_form_view"/>
