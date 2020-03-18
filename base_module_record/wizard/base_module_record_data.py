@@ -33,7 +33,6 @@ class BaseModuleData(models.TransientModel):
         res_xml = self.env['ir.module.record'].generate_xml()
         return {'res_text': res_xml}
 
-    @api.multi
     def record_objects(self):
         data = self.read([])[0]
         check_date = data['check_date']
@@ -70,7 +69,7 @@ class BaseModuleData(models.TransientModel):
             return {
                 'name': _('Data Recording'),
                 'context': {'default_res_text': ustr(res['res_text'])},
-                'view_type': 'form',
+                'binding_view_types': 'form',
                 'view_mode': 'form',
                 'res_model': 'base.module.record.data',
                 'views': [(res_id, 'form')],
@@ -82,7 +81,7 @@ class BaseModuleData(models.TransientModel):
         return {
             'name': _('Module Recording'),
             'context': {},
-            'view_type': 'form',
+            'binding_view_types': 'form',
             'view_mode': 'form',
             'res_model': 'base.module.record.objects',
             'views': [(res_id, 'form')],
