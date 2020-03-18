@@ -7,8 +7,8 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <field name="payment_term_id" position="after">
-                <field name="show_price"/>
-                <field name="show_discount"/>
+                <!-- Field to display the Show price button -->
+                <field name="hide_price"/>
             </field>
         </field>
     </record>
