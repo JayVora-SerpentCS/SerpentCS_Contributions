@@ -279,7 +279,7 @@ Exceptions:
             request.create({
                 'name': "Synchronization report",
                 'act_from': self.env.user.id,
-                'date': time.strftime('%Y-%m-%d, %H:%M:%S'),
+                'date': fields.Datetime.now(),
                 'act_to': self.user_id.id,
                 'body': summary,
             })

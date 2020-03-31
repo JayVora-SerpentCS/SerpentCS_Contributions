@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html>
 <odoo>
 
     <record id="view_base_synchro" model="ir.ui.view">
