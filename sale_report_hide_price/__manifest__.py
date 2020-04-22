@@ -15,7 +15,8 @@
     'images': ['static/description/icon.png'],
     'data': [
         'views/sale_view.xml',
-        'views/report_saleorder.xml'
+        'views/report_saleorder.xml',
+        'views/preview_sale_order.xml'
     ],
     'installable': True,
 }
