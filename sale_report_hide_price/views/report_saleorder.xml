@@ -10,7 +10,7 @@
                 </td>
             </t>
             <t t-if="not doc.show_discount">
-                <td class="text-right" groups="product.group_discount_per_so_line">-N.A.-</td>
+                <td t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">-N.A.-</td>
             </t>
         </td>
         <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[3]" position="replace">
