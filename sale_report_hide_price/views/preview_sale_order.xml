@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="preview_sale_sale_orderument" inherit_id="sale.sale_order_portal_content">
+        <td t-if="display_discount" position="replace">
+            <t t-if="sale_order.show_discount">
+                <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
+                    <span t-field="line.discount" />
+                </td>
+            </t>
+            <t t-if="not sale_order.show_discount">
+                <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">-N.A.-</td>
+            </t>
+        </td>
+        <xpath expr="//table[@id='sales_order_table']/tbody/t[2]/tr/t/td[3]" position="replace">
+            <t t-if="sale_order.show_price">
+                <td t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
+                    <div t-field="line.price_unit"/>
+                </td>
+            </t>
+            <t t-if="not sale_order.show_price">
+                <td class="text-right">-N.A.-</td>
+            </t>
+        </xpath>
+        <xpath expr="//table[@id='sales_order_table']/tbody/t[2]/tr/t/td[hasclass('text-right')][2]" position="replace">
+            <t t-if="sale_order.show_price">
+                <td class="text-right">
+                    <span class="oe_order_line_price_subtotal" t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <span class="oe_order_line_price_total" t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                </td>
+            </t>
+            <t t-if="not sale_order.show_price">
+                <td class="text-right" groups="account.group_show_line_subtotals_tax_excluded">-N.A.-</td>
+            </t>
+        </xpath>
+        <xpath expr="//div[@name='total']" position="replace">
+            <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                <table class="table table-sm">
+                    <tr class="border-black" style="border-bottom:1px solid #dddddd;">
+                        <td><strong>Total Without Taxes</strong></td>
+                        <t t-if="sale_order.show_price">
+                            <td class="text-right">
+                                <span
+                                    data-id="total_untaxed"
+                                    t-field="sale_order.amount_untaxed"
+                                    t-options='{"widget": "monetary","display_currency": sale_order.pricelist_id.currency_id}'
+                                />
+                            </td>
+                        </t>
+                        <t t-if="not sale_order.show_price">
+                            <td class="text-right">-N.A.-</td>
+                        </t>
+                    </tr>
+                    <t t-foreach="sale_order.amount_by_group" t-as="amount_by_group">
+                        <tr style="border-bottom:1px solid #dddddd;">
+                            <t t-if="amount_by_group[3] == 1 and sale_order.amount_untaxed == amount_by_group[2]">
+                                <t t-if="sale_order.show_price">
+                                    <td>
+                                        <span t-esc="amount_by_group[0]"/>
+                                        <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/></span>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="amount_by_group[1]"
+                                            t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
+                                    </td>
+                                </t>
+                                <t t-if="not sale_order.show_price">
+                                    <td class="text-right">-N.A.-</td>
+                                </t>
+                            </t>
+                            <t t-else ="">
+                                <td>
+                                    <span t-esc="amount_by_group[0]"/>
+                                </td>
+                                <t t-if="sale_order.show_price">
+                                    <td class="text-right">
+                                        <span t-esc="amount_by_group[1]"
+                                            t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
+                                    </td>
+                                </t>
+                                <t t-if="not sale_order.show_price">
+                                    <td class="text-right">-N.A.-</td>
+                                </t>
+                            </t>
+                        </tr>
+                    </t>
+                    <tr class="border-black">
+                        <td><strong>Total</strong></td>
+                        <t t-if="sale_order.show_price">
+                            <td class="text-right">
+                                <span data-id="total_amount" t-field="sale_order.amount_total" t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
+                            </td>
+                        </t>
+                        <t t-if="not sale_order.show_price">
+                            <td class="text-right">-N.A.-</td>
+                        </t>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+  </template>
+</odoo>
