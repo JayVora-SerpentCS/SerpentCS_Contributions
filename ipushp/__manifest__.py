@@ -22,7 +22,7 @@
         'views/hr_employee_view.xml',
         'views/website_ipushp_template.xml',
     ],
-    'price': 99,
+    'price': 0,
     'currency': 'EUR',
     'installable': True,
     'auto_install': False
