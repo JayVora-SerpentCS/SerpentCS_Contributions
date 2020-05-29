@@ -1,0 +1,40 @@
+<odoo>
+    <template id="website.find_contacts" name="Find Contects">
+        <t t-call="website.layout">
+            <section class="container oe_structure">
+                <div class="row">
+                    <div class="col-md-12 mt64 mb64">
+                        <h2 class="text-center">List of Contacts</h2>
+                        <t t-as="contacts" t-foreach="contact_data">
+                            <div class="col-md-4 ">
+                                <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                                    <span class="icon bg-df circle">
+                                        <i class="fa fa-male"/>
+                                    </span>
+                                    <h4>
+                                        <t t-esc="contacts.name"/>
+                                    </h4>
+                                    <div class="divider clearfix"/>
+                                    <p>
+                                        <t t-esc="contacts.email"/>
+                                    </p>
+                                    <p>
+                                        <t t-esc="contacts.phone"/>
+                                    </p>
+                                    <p>Referrer:
+                                        <t t-esc="contacts.employee_id.name"/></p>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="not contact_data">
+                            <h4 class="text-center mt64 mb32" style="font-style: italic;">No results found!</h4>
+                        </t>
+                        <div class=" col-md-12 text-center">
+                            <a class="btn btn-primary " href="/page/search" type="button">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </template>
+</odoo>
