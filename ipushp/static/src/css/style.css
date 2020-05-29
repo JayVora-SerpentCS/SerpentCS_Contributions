@@ -1,0 +1,640 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+/*html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Roboto", sans-serif;
+  color: #0f293d;
+  background-color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: #f6f9e7;
+  text-decoration: none;
+}
+*/
+/*img {
+  max-width: 100%;
+}*/
+
+.cd-img-replace {
+  /* replace text with image */
+  color: transparent;
+  white-space: nowrap;
+  text-indent: 100%;
+  overflow: hidden;
+}
+
+#top_menu > li >a.dropdown-toggle {
+color: rgba(0, 0, 0, 0.5);
+padding-right: 0.5rem;
+padding-left: 0.5rem;
+white-space: nowrap;
+display: block;
+padding: 0.5rem 1rem;
+text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+.cd-image-mask-effect {
+  min-height: 100vh;
+}
+
+.cd-project-mask {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cd-project-mask h1 {
+  position: absolute;
+  z-index: 1;
+  top: 5%;
+  left: 5%;
+  font-size: 2.4rem;
+  font-weight: 300;
+  -webkit-transition: opacity .4s;
+  transition: opacity .4s;
+}
+
+.cd-project-mask.center-title h1 {
+  /* this class is used to center the project title when a project is active */
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  color: white;
+}
+
+.project-view .cd-project-mask:not(.project-selected) {
+  /* the project-view class is added to the .cd-image-mask-effect element when a project is selected - hide all not selected projects */
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cd-project-mask .featured-image,
+.cd-project-mask .mask {
+  /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+/* .cd-project-mask .featured-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  height: 100%;
+  width: 100%;
+  background: url(/ipushp/static/src/img/img-01.jpg) no-repeat center center;
+  background-size: cover;
+}*/
+
+.cd-project-mask .mask {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  width: 300px;
+  height: 300px;
+}
+
+.cd-project-mask .mask img {
+  display: block;
+}
+
+.cd-project-mask .mask .mask-border {
+  /* this is used to create a frame around the mask */
+  position: absolute;
+}
+
+.cd-project-mask .mask .mask-border-top,
+.cd-project-mask .mask .mask-border-bottom {
+  /* this is used to create a frame around the mask */
+  height: calc(50vh - 150px + 10px);
+  width: 100vw;
+  left: 50%;
+  right: auto;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.cd-project-mask .mask .mask-border-top {
+  bottom: calc(100% - 10px);
+}
+
+.cd-project-mask .mask .mask-border-bottom {
+  top: calc(100% - 10px);
+}
+
+.cd-project-mask .mask .mask-border-left,
+.cd-project-mask .mask .mask-border-right {
+  /* this is used to create a frame around the mask */
+  height: 100vh;
+  width: calc(50vw - 150px + 10px);
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.cd-project-mask .mask .mask-border-left {
+  left: calc(100% - 10px);
+}
+
+.cd-project-mask .mask .mask-border-right {
+  right: calc(100% - 10px);
+}
+
+.cd-project-mask .project-trigger,
+.cd-project-mask .project-close {
+  position: absolute;
+  z-index: 3;
+  right: 5%;
+}
+
+.cd-project-mask .project-trigger {
+  bottom: 10%;
+  color: #0f293d;
+  font-family: "Lora", serif;
+  font-style: italic;
+  font-weight: bold;
+  text-decoration: underline;
+  -webkit-transition: opacity .4s;
+  transition: opacity .4s;
+}
+
+.cd-project-mask .project-trigger:hover {
+  opacity: .8;
+}
+
+.cd-project-mask .project-close {
+  /* this is the 'X' icon - visible when a project has been selected */
+  top: 24px;
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
+  -webkit-transition: -webkit-transform .3s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
+  transition: transform .3s, -webkit-transform .3s;
+}
+
+.cd-project-mask .project-close:hover {
+  background: black;
+}
+
+.cd-project-mask .project-close::after, .cd-project-mask .project-close::before {
+  /* the 'X' lines */
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 2px;
+  top: 50%;
+  left: 50%;
+  background: white;
+}
+
+.cd-project-mask .project-close::before {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+      -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+          transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+
+.cd-project-mask .project-close::after {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+      -ms-transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+          transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+}
+
+.cd-project-mask.project-selected .project-trigger {
+  /* hide .project-trigger when a project has been selected */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cd-project-mask.project-selected .project-close {
+  /* show the 'X' icon when a project has been selected */
+  -webkit-transform: scale(1);
+      -ms-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition: background .3s, -webkit-transform .3s .6s;
+  transition: background .3s, -webkit-transform .3s .6s;
+  transition: transform .3s .6s, background .3s;
+  transition: transform .3s .6s, background .3s, -webkit-transform .3s .6s;
+}
+
+.cd-project-mask.project-selected .featured-image {
+  -webkit-transform: translateX(-50%) translateY(-50%) scale(1.15);
+      -ms-transform: translateX(-50%) translateY(-50%) scale(1.15);
+          transform: translateX(-50%) translateY(-50%) scale(1.15);
+  -webkit-transition: -webkit-transform .6s;
+  transition: -webkit-transform .6s;
+  transition: transform .6s;
+  transition: transform .6s, -webkit-transform .6s;
+}
+
+.cd-project-mask.project-selected .mask {
+  /* mask scale value is set using js */
+  opacity: 0;
+  -webkit-transition: opacity .3s .3s, -webkit-transform .6s 0s;
+  transition: opacity .3s .3s, -webkit-transform .6s 0s;
+  transition: transform .6s 0s, opacity .3s .3s;
+  transition: transform .6s 0s, opacity .3s .3s, -webkit-transform .6s 0s;
+  -webkit-transition-timing-function: cubic-bezier(0.59, 0.05, 0.82, 0.13);
+          transition-timing-function: cubic-bezier(0.59, 0.05, 0.82, 0.13);
+}
+
+.cd-project-mask.scaling-down.project-selected .project-close {
+  /* the scaling-down class is added to the project when the user closes it */
+  -webkit-transform: scale(0);
+      -ms-transform: scale(0);
+          transform: scale(0);
+  -webkit-transition: -webkit-transform .3s 0s;
+  transition: -webkit-transform .3s 0s;
+  transition: transform .3s 0s;
+  transition: transform .3s 0s, -webkit-transform .3s 0s;
+}
+
+.cd-project-mask.scaling-down.project-selected .featured-image {
+  /* the scaling-down class is added to the project when the user closes it */
+  -webkit-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+}
+
+.cd-project-mask.scaling-down.project-selected .mask {
+  /* the scaling-down class is added to the project when the user closes it */
+  opacity: 1;
+  -webkit-transition: opacity .3s, -webkit-transform 1s 0s;
+  transition: opacity .3s, -webkit-transform 1s 0s;
+  transition: transform 1s 0s, opacity .3s;
+  transition: transform 1s 0s, opacity .3s, -webkit-transform 1s 0s;
+  -webkit-transition-timing-function: cubic-bezier(0.08, 0.37, 0.13, 0.99);
+          transition-timing-function: cubic-bezier(0.08, 0.37, 0.13, 0.99);
+}
+
+.cd-project-mask.no-transition .mask {
+  /* the no-transition class is used during window resize - remove transition while resetting mask scale */
+  -webkit-transition: none;
+  transition: none;
+}
+
+.cd-project-mask.dark-bg h1, .cd-project-mask.dark-bg .project-trigger {
+  color: white;
+}
+
+@media only screen and (max-height: 390px) {
+  .cd-project-mask .mask {
+    width: 76vh;
+    height: 76vh;
+  }
+  .cd-project-mask .mask .mask-border-top, .cd-project-mask .mask .mask-border-bottom {
+    /* height -> 50vh - 38vh + 10px */
+    height: calc(12vh + 10px);
+  }
+  .cd-project-mask .mask .mask-border-left, .cd-project-mask .mask .mask-border-right {
+    width: calc(50vw - 38vh + 10px);
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .cd-project-mask h1 {
+    font-size: 3rem;
+  }
+  .cd-project-mask .mask {
+    width: 480px;
+    height: 480px;
+  }
+  .cd-project-mask .mask .mask-border-top, .cd-project-mask .mask .mask-border-bottom {
+    height: calc(50vh - 240px  + 10px);
+  }
+  .cd-project-mask .mask .mask-border-left, .cd-project-mask .mask .mask-border-right {
+    width: calc(50vw - 240px  + 10px);
+  }
+  .cd-project-mask .project-trigger {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-height: 630px) {
+  .cd-project-mask .mask {
+    width: 76vh;
+    height: 76vh;
+  }
+  .cd-project-mask .mask .mask-border-top, .cd-project-mask .mask .mask-border-bottom {
+    /* height -> 50vh - 38vh + 10px */
+    height: calc(12vh + 10px);
+  }
+  .cd-project-mask .mask .mask-border-left, .cd-project-mask .mask .mask-border-right {
+    width: calc(50vw - 38vh + 10px);
+  }
+}
+
+@media only screen and (min-width: 1170px) {
+  .cd-project-mask h1 {
+    font-size: 4.3rem;
+  }
+ /*  .cd-project-mask.center-title h1 {
+    font-size: 6rem;
+  }*/
+  .cd-project-mask .mask {
+    width: 640px;
+    height: 640px;
+  }
+  .cd-project-mask .mask .mask-border-top, .cd-project-mask .mask .mask-border-bottom {
+    height: calc(50vh - 320px  + 10px);
+  }
+  .cd-project-mask .mask .mask-border-left, .cd-project-mask .mask .mask-border-right {
+    width: calc(50vw - 320px  + 10px);
+  }
+  .cd-project-mask .project-trigger {
+    font-size: 2.4rem;
+  }
+}
+
+@media only screen and (min-width: 1170px) and (max-height: 840px) {
+  .cd-project-mask .mask {
+    width: 76vh;
+    height: 76vh;
+  }
+  .cd-project-mask .mask .mask-border-top, .cd-project-mask .mask .mask-border-bottom {
+    /* height -> 50vh - 38vh + 10px */
+    height: calc(12vh + 10px);
+  }
+  .cd-project-mask .mask .mask-border-left, .cd-project-mask .mask .mask-border-right {
+    width: calc(50vw - 38vh + 10px);
+  }
+}
+
+.cd-project-mask.project-1 {
+  background-color: #a6dad3;
+}
+
+.cd-project-mask.project-1 .mask-border {
+  background-color: #a6dad3;
+}
+
+.cd-project-mask.project-2 {
+  background-color: #f6f9e7;
+}
+
+.cd-project-mask.project-2 .mask-border {
+  background-color: #f6f9e7;
+}
+
+.cd-project-mask.project-2 .featured-image {
+  background-image: url(../img/img-02.jpg);
+}
+
+.cd-project-mask.project-3 {
+  background-color: #ff8d78;
+}
+
+.cd-project-mask.project-3 .mask-border {
+  background-color: #ff8d78;
+}
+
+.cd-project-mask.project-3 .featured-image {
+  background-image: url(../img/img-03.jpg);
+}
+
+.cd-project-mask.project-4 {
+  background-color: #ea5056;
+}
+
+.cd-project-mask.project-4 .mask-border {
+  background-color: #ea5056;
+}
+
+.cd-project-mask.project-4 .featured-image {
+  background-image: url(../img/img-04.jpg);
+}
+
+.cd-project-mask.project-5 {
+  background-color: #0f293d;
+}
+
+.cd-project-mask.project-5 .mask-border {
+  background-color: #0f293d;
+}
+
+.cd-project-mask.project-5 .featured-image {
+  background-image: url(../img/img-05.jpg);
+}
+
+/* .cd-scroll {
+  position: fixed;
+  z-index: 3;
+  top: calc(100% - 100px);
+  left: 50%;
+  right: auto;
+  -webkit-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+          transform: translateX(-50%);
+  height: 48px;
+  width: 48px;
+  background: transparent url(/ipushp/static/src/img/cd-arrow.svg) no-repeat center center;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity .4s, visibility .4s;
+  transition: opacity .4s, visibility .4s;
+}*/
+
+.content-visible .cd-scroll {
+  opacity: 1;
+  visibility: visible;
+  -webkit-animation: cd-translate 1.2s 1s;
+          animation: cd-translate 1.2s 1s;
+  -webkit-animation-iteration-count: 2;
+          animation-iteration-count: 2;
+  -webkit-transition: opacity .4s .6s, visibility .4s .6s;
+  transition: opacity .4s .6s, visibility .4s .6s;
+}
+
+.scrolling .cd-scroll {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.cd-project-info {
+  /* project content */
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity .4s, visibility .4s;
+  transition: opacity .4s, visibility .4s;
+}
+
+.cd-project-info::before {
+  /* use to push the .content-wrapper below the project image */
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.cd-project-info .content-wrapper {
+  position: relative;
+  z-index: 2;
+  padding: 2em 0 3em;
+  background-color: white;
+}
+
+.cd-project-info .content-wrapper > * {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #4b5f6e;
+  font-weight: 400;
+}
+
+.cd-project-info .content-wrapper p {
+  margin-bottom: 2em;
+  line-height: 1.6;
+}
+
+.content-visible .cd-project-info {
+  -webkit-overflow-scrolling: touch;
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0s, visibility 0s;
+  transition: opacity 0s, visibility 0s;
+}
+
+@media only screen and (min-width: 1170px) {
+  .cd-project-info .content-wrapper {
+    padding: 4em 0;
+  }
+  .cd-project-info .content-wrapper > * {
+    font-size: 2rem;
+    line-height: 1.8;
+  }
+}
+
+/* -------------------------------- 
+
+Keyframes 
+
+-------------------------------- */
+@-webkit-keyframes cd-translate {
+  0%, 100% {
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+  50% {
+    -webkit-transform: translateY(10px) translateX(-50%);
+            transform: translateY(10px) translateX(-50%);
+  }
+}
+@keyframes cd-translate {
+  0%, 100% {
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+  }
+  50% {
+    -webkit-transform: translateY(10px) translateX(-50%);
+            transform: translateY(10px) translateX(-50%);
+  }
+}
+
+
+
+
+
+/*========================SEARCH======================= */
+
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/ipushp/static/src/img/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+//  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+//  background-color: #eee;
+  border-left:5px solid green;
+  
+}
+
+
+
+
+.alternet_bg { background: #ffffff; }
+.alternet_bg:nth-child(odd) { background: #f6f6f6; }
