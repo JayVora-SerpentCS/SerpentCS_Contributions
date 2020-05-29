@@ -20,6 +20,7 @@
         'views/ipushp_search.xml',
         'views/find_contacts.xml',
     ],
+    'images': ['static/description/page_1.png'],
     'installable': True,
     'auto_install': False
 }
