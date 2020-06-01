@@ -49,6 +49,7 @@
                                 <div class="divider"></div>
                                 <!-- <h4>we will publish a program where everyone can subscribe and register their family/familyperson business and get the benefit, contact Team or Register</h4> -->
                             </div>
+                            <div style="margin-left:250px">
                             <div class="col-md-4 ">
                                 <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                                     <span class="icon bg-df circle">
@@ -63,17 +64,6 @@
                             <div class="col-md-4 ">
                                 <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                                     <span class="icon bg-df circle">
-                                        <i class="fa fa-male"></i>
-                                    </span>
-                                    <h4>Maulik Joshi</h4>
-                                    <div class="divider clearfix"></div>
-                                    <p>maulik.joshi.serpentcs@gmail.com</p>
-                                    <p>+91 7046035544</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4 ">
-                                <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
-                                    <span class="icon bg-df circle">
                                         <i class="fa fa-female"></i>
                                     </span>
                                     <h4>Dhwani Vora</h4>
@@ -83,6 +73,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </section>
                 <div id="registration_section"></div>
