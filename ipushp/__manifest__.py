@@ -1,13 +1,14 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'iPushp',
+    'name': 'iPushp - Employee Business Directory',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'category': 'Human Resource',
     'website': "http://www.serpentcs.com",
     'summary': 'iPushp',
     'version': '13.0.1.0.0',
-    'description': "",
+    'license': 'AGPL-3',
+    'description': "iPushp - Employee Business Directory",
     'depends': ['hr', 'website'],
     'data': [
         'security/ir.model.access.csv',
@@ -21,8 +22,6 @@
         'views/find_contacts.xml',
     ],
     'images': ['static/description/page_1.png'],
-    'price': 0,
-    'currency': 'EUR',
     'installable': True,
     'auto_install': False
 }

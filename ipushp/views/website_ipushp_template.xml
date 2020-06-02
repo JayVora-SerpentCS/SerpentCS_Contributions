@@ -53,14 +53,12 @@
                 </section>
                 <section class="teamblock">
                     <div class="container">
-                        <div class="row">
-                            <!-- <div class="col-md-8 col-md-offset-2 text-center mb32"><h1 style="text-shadow: 3px 1px wheat;">Program Teams</h1><div class="divider"></div>-->
-                            <!-- <h4>we will publish a program where everyone can subscribe and register their family/familyperson business and get the benefit, contact Team or Register</h4>-->
-                            <!-- </div>-->
+                        <div class="row ">
                             <div class="col-md-12 text-center">
                                 <h1 style="text-shadow: 3px 1px wheat;">Program Teams</h1>
                                 <div class="divider"/>
                             </div>
+                            <div class="text-center">
                             <div class="col-md-4 ">
                                 <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                                     <span class="icon bg-df circle">
@@ -83,6 +81,7 @@
                                     <p>+91 9662768877</p>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </section>
