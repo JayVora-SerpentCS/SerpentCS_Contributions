@@ -17,4 +17,3 @@ class WebFieldData(http.Controller):
                 o2x_obj = request.env[o2x_model]
                 o2x_datas.append(o2x_obj.search_read([('id', 'in', o2x_ids)]))
         return o2x_datas
-
