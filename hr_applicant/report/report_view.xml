@@ -6,6 +6,7 @@
            model="hr.applicant"
            string="Resume"
            name="hr_applicant.applicant_profile"
+           file="hr_applicant.applicant_profile"
            report_type="qweb-pdf"/>
 
     <record id="applicant_profile_report_paperformat" model="report.paperformat">
