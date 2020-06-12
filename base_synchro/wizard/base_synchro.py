@@ -114,7 +114,7 @@ class BaseSynchro(models.TransientModel):
                     pool = pool_dest.env[object.model_id.model]
                     pool.browse([id2]).update(value)
                 else:
-                    pool_dest.get(object.model_id.model).write(id2,value)
+                    pool_dest.get(object.model_id.model).write(id2, value)
                 self.report_total += 1
                 self.report_write += 1
             else:

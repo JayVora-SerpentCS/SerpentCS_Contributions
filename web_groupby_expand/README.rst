@@ -1,4 +1,4 @@
-alt: License: AGPL-3
+alt: License: LGPL-3
 
 ==================================
 Web Groupby Expand

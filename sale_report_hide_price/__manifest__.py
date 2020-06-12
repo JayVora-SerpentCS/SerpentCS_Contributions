@@ -7,7 +7,7 @@
     'category': 'Sales Management',
     'website': 'http://www.serpentcs.com',
     'version': '12.0.1.0.1',
-    'license': 'AGPL-3',
+    'license': 'LGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'depends': [
         'sale'

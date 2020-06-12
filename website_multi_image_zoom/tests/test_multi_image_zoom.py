@@ -1,5 +1,5 @@
 # See LICENSE file for full copyright and
-# licensing details.http://www.gnu.org/licenses/agpl).
+# licensing details.http://www.gnu.org/licenses/lgpl).
 
 from odoo.tests import common
 
