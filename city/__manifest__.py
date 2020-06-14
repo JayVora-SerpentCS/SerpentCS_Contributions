@@ -2,7 +2,7 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "City-Helps to keep Homogeneous address data in the Database",
+    "name": "City - Keep Homogeneous address data in the Database",
     "version": "10.0.1.0.0",
     "author": "Pablo Rocandio, Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
