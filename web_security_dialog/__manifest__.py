@@ -17,7 +17,7 @@
         invoice" options='{"security":"security_field"}'/>""",
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': ['base', 'web'],
     'data': [
