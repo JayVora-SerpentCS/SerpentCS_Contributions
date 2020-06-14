@@ -1,7 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    "name": "City - Helps to keep Homogeneous address data in the Database",
+    "name": "City - Keep Homogeneous address data in the Database",
     "version": "13.0.1.0.0",
     "category": "Hidden",
     "license": "AGPL-3",
