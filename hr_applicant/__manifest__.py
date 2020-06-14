@@ -2,10 +2,10 @@
 
 {
     'name': 'Applicant Process',
-    'version': '11.0.0.1.0',
+    'version': '12.0.0.1.0',
     'category': 'Human Resources',
     'sequence': 90,
-    'license': "LGPL-3",
+    'license': "AGPL-3",
     'summary': 'Applicant and Employee Subsections, Training',
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
