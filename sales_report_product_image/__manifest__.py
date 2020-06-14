@@ -7,7 +7,7 @@
     'version': '12.0.1.0.0',
     'category': 'Sales Management',
     'summary': 'Product Image for Sale Reports',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'depends': [
         'sale',
