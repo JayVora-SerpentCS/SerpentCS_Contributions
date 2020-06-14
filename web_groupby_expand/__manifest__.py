@@ -7,7 +7,7 @@
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
     "category": "Web",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     'summary': 'Expand all groups on single click',
     "depends": [
         "web",

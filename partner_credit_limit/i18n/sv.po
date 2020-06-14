@@ -27,4 +27,3 @@ msgstr "Partner Credit Limit'\n"
 "    if the differance is positive and acceptable then Salesman \n"
 "    able to confirm SO\n"
 "    "
-

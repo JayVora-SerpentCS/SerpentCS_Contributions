@@ -8,7 +8,7 @@
     'summary': 'Funnel Chart for Leads & Opportunities',
     'website': 'http://www.serpentcs.com',
     'version': '12.0.1.0.1',
-    'license': 'AGPL-3',
+    'license': 'LGPL-3',
     'depends': [
         'crm', 'sale'
     ],
