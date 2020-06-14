@@ -5,7 +5,7 @@
     'version': '12.0.1.0.0',
     'category': 'Project Management',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'website': 'http://www.serpentcs.com',
     'summary': """
       Print Project Detail report with task list and task details.""",
