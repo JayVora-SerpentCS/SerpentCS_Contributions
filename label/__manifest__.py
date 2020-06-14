@@ -3,7 +3,7 @@
     "name": "Mass Label Reporting",
     "version": "12.0.1.0.0",
     "category": "Tools",
-    "license": "LGPL-3",
+    "license": "AGPL-3",
     "summary": "Generate customised labels of any document",
     "author": 'Serpent Consulting Services Pvt. Ltd.',
     "website": "http://www.serpentcs.com",
