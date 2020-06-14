@@ -96,8 +96,8 @@ class TrainingClass(models.Model):
             if rec.training_start_date and rec.course_id:
                 end_date = False
                 training_start_date = rec.training_start_date and \
-                    datetime.datetime.strftime(rec.training_start_date, 
-                                      DEFAULT_SERVER_DATE_FORMAT)
+                    datetime.datetime.strftime(rec.training_start_date,
+                                               DEFAULT_SERVER_DATE_FORMAT)
                 if rec.course_id.duration and \
                         rec.course_id.duration_type == 'day':
                     end_date = \
@@ -118,8 +118,8 @@ class TrainingClass(models.Model):
                         DEFAULT_SERVER_DATE_FORMAT) + relativedelta(
                         months=rec.course_id.duration, days=-1)
                 end_date = end_date and \
-                    datetime.datetime.strftime(end_date, 
-                                      DEFAULT_SERVER_DATE_FORMAT)                        
+                    datetime.datetime.strftime(end_date,
+                                               DEFAULT_SERVER_DATE_FORMAT)
                 rec.training_end_date = end_date
 
     @api.multi

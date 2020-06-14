@@ -350,7 +350,7 @@ class ApplicantPreviousOccupation(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         if self.to_date and datetime.strptime(
-                self.to_date,
+                str(self.to_date),
                 DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today!')}
@@ -520,7 +520,7 @@ class ApplicantPreviousTravel(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         if self.to_date and datetime.strptime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.to_date), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today!')}
             self.to_date = False
