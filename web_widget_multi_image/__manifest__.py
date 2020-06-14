@@ -8,7 +8,7 @@
     'category': 'Image',
     'complexity': 'easy',
     'depends': ['product'],
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'summary': 'Multiple web images widget',
     'data': [
         'security/ir.model.access.csv',
