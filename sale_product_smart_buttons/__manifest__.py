@@ -17,7 +17,7 @@
         Smart button for Amount sale on product
     """,
     'category': 'Products',
-    'license': 'LGPL-3',
+    'license': 'AGPL-3',
     'depends': ['sale_management'],
     'data': [
             'views/product_view.xml',
