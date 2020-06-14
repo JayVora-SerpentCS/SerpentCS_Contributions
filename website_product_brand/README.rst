@@ -1,4 +1,3 @@
-alt: License: LGPL-3
 
 Website Product Brand
 ==================================
