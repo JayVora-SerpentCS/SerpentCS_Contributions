@@ -9,11 +9,6 @@
     'depends': ['web'],
     "license": "AGPL-3",
     'category': 'Tools',
-    'description': '''
-     This module provides the functionality to store digital signature
-     Example can be seen into the User's form view where we have
-        added a test field under signature.
-    ''',
     'summary': '''
         Touch screen enable so user can add signature with touch devices.
         Digital signature can be very usefull for documents.
