@@ -5,7 +5,8 @@
  * This package is distributed under the BSD license.
  * For full license information, see LICENSE.TXT
  *
- * Based on Lightbox 2 by Lokesh Dhakar (http://www.huddletogether.com/projects/lightbox2/)
+ * Based on Lightbox 2 by Lokesh Dhakar (http://www.huddletogether.com/
+    projects/lightbox2/)
  *
  *
  **/
@@ -30,15 +31,18 @@
         initialize();
         showLightbox(this);
         /*
-        # Initialize the lightbox by creating our html and reading some image data
-        # This method is called by the constructor after any click events trigger it
+        # Initialize the lightbox by creating our html and reading some image
+        data
+        # This method is called by the constructor after any click events
+        trigger it
         # You will never call it by itself, to my knowledge.
         */
         function initialize() {
             $('#overlay, #lightbox').remove();
             opts.inprogress = false;
 
-            // if jsonData, build the imageArray from data provided in JSON format
+            // if jsonData, build the imageArray from data provided in JSON
+            //format
             if (opts.jsonData && opts.jsonData.length > 0) {
                 var parser = opts.jsonDataParser
                     ? opts.jsonDataParser
@@ -47,26 +51,54 @@
                 opts.imageArray = parser(opts.jsonData);
             }
 
-            var outerImage = '<div id="outerImageContainer"><div id="imageContainer" style="height: 520px; width: 720px;"><iframe id="lightboxIframe"></iframe><img id="lightboxImage" /><div id="hoverNav"><a href="javascript://" title="' + opts.strings.prevLinkTitle + '" id="prevLink"></a><a href="javascript://" id="nextLink" title="' + opts.strings.nextLinkTitle + '"></a></div><div id="loading"><a href="javascript://" id="loadingLink"><img src="' + opts.fileLoadingImage + '"></a></div></div></div>';
-            var imageData = '<div id="imageDataContainer" class="clearfix"><div id="imageData"><div id="imageDetails"><span id="caption"></span><span id="numberDisplay"></span></div><div id="bottomNav">';
+            var outerImage = '<div id="outerImageContainer">\
+            <div id="imageContainer" style="height: 520px; width: 720px;">\
+            <iframe id="lightboxIframe"></iframe><img id="lightboxImage" />\
+            <div id="hoverNav"><a href="javascript://" title="' +
+            opts.strings.prevLinkTitle + '" id="prevLink"></a>\
+            <a href="javascript://" id="nextLink" title="' +
+            opts.strings.nextLinkTitle + '"></a></div><div id="loading">\
+            <a href="javascript://" id="loadingLink"><img src="' +
+            opts.fileLoadingImage + '"></a></div></div></div>';
+            var imageData = '<div id="imageDataContainer" class="clearfix">\
+            <div id="imageData"><div id="imageDetails"><span id="caption">\
+            </span><span id="numberDisplay"></span></div><div id="bottomNav">';
 
-            // var outerImage = '<div id="outerImageContainer"><div id="imageContainer" style="height: 520px; width: 720px;"><iframe id="lightboxIframe"></iframe><img id="lightboxImage" syle="vertical-align: middle;" /><div id="hoverNav"><a href="javascript://" title="' + opts.strings.prevLinkTitle + '" id="prevLink"></a><a href="javascript://" id="nextLink" title="' + opts.strings.nextLinkTitle + '"></a></div><div id="loading"><a href="javascript://" id="loadingLink"><img src="'+opts.fileLoadingImage+'"></a></div></div></div>';
-            // var imageData = '<div id="imageDataContainer" class="clearfix"><div id="imageData"><div id="imageDetails"><span id="caption"></span><span id="numberDisplay"></span></div><div id="bottomNav">';
+            // var outerImage = '<div id="outerImageContainer">
+            //<div id="imageContainer" style="height: 520px; width: 720px;">
+            //<iframe id="lightboxIframe"></iframe>
+            //<img id="lightboxImage" syle="vertical-align: middle;" />
+            //<div id="hoverNav">
+            //<a href="javascript://" title="' + opts.strings.prevLinkTitle +
+            // '" id="prevLink"></a><a href="javascript://" id="nextLink"
+            //title="' + opts.strings.nextLinkTitle + '"></a>
+            // </div><div id="loading"><a href="javascript://" id="loadingLink">
+            //<img src="'+opts.fileLoadingImage+'"></a></div></div></div>';
+            // var imageData = '<div id="imageDataContainer" class="clearfix">
+            //<div id="imageData"><div id="imageDetails"><span id="caption">
+            //</span><span id="numberDisplay"></span></div>
+            //<div id="bottomNav">';
 
             if (opts.displayHelp) {
-                imageData += '<span id="helpDisplay">' + opts.strings.help + '</span>';
+                imageData += '<span id="helpDisplay">' + opts.strings.help + \
+                '</span>';
             }
 
-            imageData += '<a href="javascript://" id="bottomNavClose" title="' + opts.strings.closeTitle + '"><img src="' + opts.fileBottomNavCloseImage + '"></a></div></div></div>';
+            imageData +=
+            '<a href="javascript://" id="bottomNavClose" title="' +
+            opts.strings.closeTitle + '"><img src="' +
+            opts.fileBottomNavCloseImage + '"></a></div></div></div>';
 
             var string = '';
 
             if (opts.navbarOnTop) {
-                string = '<div id="overlay"></div><div id="lightbox">' + imageData + outerImage + '</div>';
+                string = '<div id="overlay"></div><div id="lightbox">' +
+                imageData + outerImage + '</div>';
                 $("body").append(string);
                 $("#imageDataContainer").addClass('ontop');
             } else {
-                string = '<div id="overlay"></div><div id="lightbox">' + outerImage + imageData + '</div>';
+                string = '<div id="overlay"></div><div id="lightbox">' +
+                outerImage + imageData + '</div>';
                 $("body").append(string);
             }
 
@@ -75,7 +107,8 @@
                 end();
                 return false;
             });
-            $('#outerImageContainer').width(opts.widthCurrent).height(opts.heightCurrent);
+            $('#outerImageContainer').width(opts.widthCurrent).
+            height(opts.heightCurrent);
             $('#imageDataContainer').width(opts.widthCurrent);
 
             if (!opts.imageClickClose) {
@@ -101,7 +134,8 @@
         # Returns a numerically indexed array of document width/height and window width/height
         */
         function getPageSize() {
-            var jqueryPageSize = new Array($(document).width(), $(document).height(), $(window).width(), $(window).height());
+            var jqueryPageSize = new Array($(document).width(),
+                $(document).height(), $(window).width(), $(window).height());
             return jqueryPageSize;
         };
 
@@ -111,7 +145,8 @@
             if (self.pageYOffset) {
                 yScroll = self.pageYOffset;
                 xScroll = self.pageXOffset;
-            } else if (document.documentElement && document.documentElement.scrollTop) { // Explorer 6 Strict
+            } else if (document.documentElement &&
+            document.documentElement.scrollTop) { // Explorer 6 Strict
                 yScroll = document.documentElement.scrollTop;
                 xScroll = document.documentElement.scrollLeft;
             } else if (document.body) { // all other Explorers
@@ -126,20 +161,26 @@
         /*
         # Deploy the sexy overlay and display the lightbox
         #
-        # imageObject - the jQuery object passed via the click event in the constructor
+        # imageObject - the jQuery object passed via the click event in 
+        #the constructor
         #
         # Examples
         #
         # showLightbox($('#CheesusCrust'))
         #
-        # Returns a boolean true, because it's got nothing else to return. It should give visual feedback when run
+        # Returns a boolean true, because it's got nothing else to return. 
+        #It should give visual feedback when run
         */
         function showLightbox(imageObject) {
             /**
-             * select, embed and object tags render over the lightbox in some browsers
-             * Right now, the best way to fix it is to hide them, but that can trigger reloading of some flash content
-             * I don't have a better fix for this right now, but I want ot leave this comment here so you and I both 
-             * know that i'm aware of it, and I would love to fix it, if you have any suggestions.
+             * select, embed and object tags render over the lightbox in some
+             browsers
+             * Right now, the best way to fix it is to hide them, but that can
+             trigger reloading of some flash content
+             * I don't have a better fix for this right now, but I want ot leave
+              this comment here so you and I both 
+             * know that i'm aware of it, and I would love to fix it, if you
+             have any suggestions.
              **/
             $("select, embed, object").hide();
 
@@ -154,7 +195,8 @@
             if (!opts.jsonData) {
                 opts.imageArray = [];
                 // if image is NOT part of a set..
-                if (!imageObject.rel || ((imageObject.rel === '') && !opts.allSet)) {
+                if (!imageObject.rel || ((imageObject.rel === '') &&
+                    !opts.allSet)) {
                     // add single image to Lightbox.imageArray
                     opts.imageArray.push(new Array(imageObject.href,
                         opts.displayTitle
@@ -241,18 +283,24 @@
                 if (opts.fitToScreen) {
                     var arrayPageSize = getPageSize();
                     var ratio = 0;
-                    var initialPageWidth = (arrayPageSize[2] - 2) * opts.borderSize;
+                    var initialPageWidth =
+                    (arrayPageSize[2] - 2) * opts.borderSize;
                     var initialPageHeight = arrayPageSize[3] - 200;
 
                     var dI = initialPageWidth / initialPageHeight;
                     var dP = imgPreloader.width / imgPreloader.height;
 
-                    if ((imgPreloader.height > initialPageHeight) || (imgPreloader.width > initialPageWidth)) {
+                    if ((imgPreloader.height > initialPageHeight) ||
+                        (imgPreloader.width > initialPageWidth)) {
                         if (dI > dP) {
-                            newWidth = parseFloat((initialPageHeight / imgPreloader.height) * imgPreloader.width);
+                            newWidth = 
+                            parseFloat((initialPageHeight / imgPreloader.height)
+                                * imgPreloader.width);
                             newHeight = initialPageHeight;
                         } else {
-                            newHeight = parseFloat((initialPageWidth / imgPreloader.width) * imgPreloader.height);
+                            newHeight =
+                            parseFloat((initialPageWidth / imgPreloader.width) *
+                                imgPreloader.height);
                             newWidth = initialPageWidth;
                         }
                     }
@@ -264,11 +312,15 @@
                     newHeight = 500;
                 }
                 var line_height = (newHeight / 100) * (7 + 24);
-                // $("#imageContainer").attr("style", "line-height:" + line_height)
-                // $("#lightboxImage").attr("style", "line-height:" + line_height)
+                // $("#imageContainer").attr("style", "line-height:" +
+                //line_height)
+                // $("#lightboxImage").attr("style", "line-height:" +
+                //line_height)
                 $("#imageContainer").attr("style", "line-height:" + "");
                 $("#lightboxImage").attr("style", "line-height:" + "");
-                $('#lightboxImage').attr('src', opts.imageArray[opts.activeImage][0]).width(newWidth).height(newHeight);
+                $('#lightboxImage').attr('src',
+                    opts.imageArray[opts.activeImage][0]).width(newWidth).
+                height(newHeight);
 
                 resizeImageContainer(newWidth, newHeight);
             };
@@ -277,13 +329,15 @@
         };
 
         function end() {
-            $('#overlay, #lightbox, #outerImageContainer, #imageDataContainer').remove();
+            $('#overlay, #lightbox, #outerImageContainer,\
+                #imageDataContainer').remove();
         };
 
         function preloadNeighborImages() {
             if (opts.loopImages && opts.imageArray.length > 1) {
                 preloadNextImage = new Image();
-                preloadNextImage.src = opts.imageArray[(opts.activeImage === (opts.imageArray.length - 1))
+                preloadNextImage.src = opts.imageArray[(opts.activeImage ===
+                    (opts.imageArray.length - 1))
                     ? 0
                     : opts.activeImage + 1][0];
 
@@ -294,11 +348,13 @@
             } else {
                 if ((opts.imageArray.length - 1) > opts.activeImage) {
                     preloadNextImage = new Image();
-                    preloadNextImage.src = opts.imageArray[opts.activeImage + 1][0];
+                    preloadNextImage.src =
+                    opts.imageArray[opts.activeImage + 1][0];
                 }
                 if (opts.activeImage > 0) {
                     preloadPrevImage = new Image();
-                    preloadPrevImage.src = opts.imageArray[opts.activeImage - 1][0];
+                    preloadPrevImage.src =
+                    opts.imageArray[opts.activeImage - 1][0];
                 }
             }
         };
@@ -311,7 +367,8 @@
             var widthNew = 730;
             var heightNew = 520;
 
-            // calculate size difference between new and old image, and resize if necessary
+            // calculate size difference between new and old image,
+            //and resize if necessary
             wDiff = opts.widthCurrent - widthNew;
             hDiff = opts.heightCurrent - heightNew;
 
@@ -333,7 +390,8 @@
                 $('#nextLink').height(500);
             };
 
-            // if new and old image are same size and no scaling transition is necessary,
+            // if new and old image are same size and no scaling
+            //transition is necessary,
             // do a quick pause to prevent image flicker.
             if ((hDiff === 0) && (wDiff === 0)) {
                 if (jQuery.browser.msie) {
@@ -368,20 +426,28 @@
             if (opts.imageArray.length > 1) {
                 var nav_html = 0;
 
-                nav_html = opts.strings.image + (opts.activeImage + 1) + opts.strings.of + opts.imageArray.length;
+                nav_html = opts.strings.image + (opts.activeImage + 1) +
+                opts.strings.of + opts.imageArray.length;
 
                 if (opts.displayDownloadLink) {
-                    nav_html += "<a href='" + opts.imageArray[opts.activeImage][0] + "'>" + opts.strings.download + "</a>";
+                    nav_html += "<a href='" +
+                    opts.imageArray[opts.activeImage][0] + "'>" +
+                    opts.strings.download + "</a>";
                 }
 
                 if (!opts.disableNavbarLinks) {
                     // display previous / next text links
                     if ((opts.activeImage) > 0 || opts.loopImages) {
-                        nav_html = '<a title="' + opts.strings.prevLinkTitle + '" href="#" id="prevLinkText">' + opts.strings.prevLinkText + "</a>" + nav_html;
+                        nav_html = '<a title="' + opts.strings.prevLinkTitle +
+                        '" href="#" id="prevLinkText">' +
+                        opts.strings.prevLinkText + "</a>" + nav_html;
                     }
 
-                    if (((opts.activeImage + 1) < opts.imageArray.length) || opts.loopImages) {
-                        nav_html += '<a title="' + opts.strings.nextLinkTitle + '" href="#" id="nextLinkText">' + opts.strings.nextLinkText + "</a>";
+                    if (((opts.activeImage + 1) < 
+                        opts.imageArray.length) || opts.loopImages) {
+                        nav_html += '<a title="' + opts.strings.nextLinkTitle +
+                    '" href="#" id="nextLinkText">' + opts.strings.nextLinkText
+                    + "</a>";
                     }
                 }
 
@@ -399,9 +465,11 @@
         };
 
         /*
-        # Resize the sexy overlay to fit the constraints of your current viewing environment
+        # Resize the sexy overlay to fit the constraints of your current viewing
+         environment
         #
-        # This should now happen whenever a window is resized, so you should always see a full overlay
+        # This should now happen whenever a window is resized, so you should
+        always see a full overlay
         */
         function resizeOverlayToFitWindow() {
             $('#overlay').css({
@@ -414,7 +482,8 @@
             if (opts.imageArray.length > 1) {
                 $('#hoverNav').show();
 
-                // if loopImages is true, always show next and prev image buttons
+                // if loopImages is true, always show next and prev image
+                // buttons
                 if (opts.loopImages) {
                     $('#prevLink,#prevLinkText').show().click(function() {
                         changeImage((opts.activeImage === 0)
@@ -424,7 +493,8 @@
                     });
 
                     $('#nextLink,#nextLinkText').show().click(function() {
-                        changeImage((opts.activeImage === (opts.imageArray.length - 1))
+                        changeImage((opts.activeImage ===
+                            (opts.imageArray.length - 1))
                             ? 0
                             : opts.activeImage + 1);
                         return false;
@@ -459,7 +529,8 @@
             var key = String.fromCharCode(keycode).toLowerCase();
 
             // close lightbox
-            if ((key === 'x') || (key === 'o') || (key === 'c') || (keycode === escapeKey)) {
+            if ((key === 'x') || (key === 'o') || (key === 'c') ||
+                (keycode === escapeKey)) {
                 end();
 
             // display previous image
@@ -512,8 +583,11 @@
     $.fn.lightbox.defaults = {
             triggerEvent: "click",
             allSet: false,
-            fileLoadingImage: '/web_widget_multi_image/static/library/lightbox/images/loading.gif',
-            fileBottomNavCloseImage: '/web_widget_multi_image/static/library/lightbox/images/closelabel.gif',
+            fileLoadingImage:
+            '/web_widget_multi_image/static/library/lightbox/images/\
+            loading.gif',
+            fileBottomNavCloseImage: '/web_widget_multi_image/static/library/\
+            lightbox/images/closelabel.gif',
             overlayOpacity: 0.6,
             borderSize: 10,
             imageArray: new Array(),
@@ -532,7 +606,9 @@
             navBarSlideSpeed: 350,
             displayHelp: false,
             strings: {
-                help: ' \u2190 / P - previous image\u00a0\u00a0\u00a0\u00a0\u2192 / N - next image\u00a0\u00a0\u00a0\u00a0ESC / X - close image gallery',
+                help: ' \u2190 / P - previous image\u00a0\u00a0\u00a0\
+                u00a0\u2192 / N - next image\u00a0\u00a0\u00a0\u00a0ESC / X - \
+                close image gallery',
                 prevLinkTitle: 'previous image',
                 nextLinkTitle: 'next image',
                 prevLinkText: '&laquo; Previous',
