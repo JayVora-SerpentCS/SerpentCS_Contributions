@@ -5,7 +5,7 @@ HR Applicant
 * Extend features of recruitment process and Manage Training
 
 * This module helps you to keep employee information.
-	
+
 * Have subsections in Applicant and Employee forms to have several informations like Medical details, Relatives, Previous Occupations etc. 
 
 * Informations which will filled for Applicant will be added automatically in Employee when applicant will converted into Employee. 
