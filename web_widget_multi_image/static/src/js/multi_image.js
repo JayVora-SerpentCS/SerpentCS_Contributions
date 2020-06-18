@@ -1,4 +1,4 @@
-odoo.define('web_widget_multi_image.MultiImage', function(require) {
+odoo.define('web_widget_multi_image.MultiImage', function (require) {
     "use strict";
 
     var core = require('web.core');
@@ -9,107 +9,122 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
     var QWeb = core.qweb;
     var _t = core._t;
 
-    ControlPanel.include({
-        init: function(parent, template) {
-            this.attrs = parent.attrs
+    ControlPanel.include( {
+        init: function (parent) {
+            this.attrs = parent.attrs;
             this._super.apply(this, arguments);
         },
     });
 
-    fieldRegistry.map.one2many.include({
+    fieldRegistry.map.one2many.include( {
 
         events: {
             'click .oe-image-preview': 'image_preview',
             'click .oe_image_list': 'image_list_view',
         },
 
-        image_preview : function(){
-            if(this.view.type === "list" && this.attrs.widget === 'image_multi') {
+        image_preview : function () {
+            if
+            (this.view.type === "list" &&
+                    this.attrs.widget === 'image_multi') {
                 var self = this;
                 var saved_images = [];
                 var url_list = [];
                 var model = self.field.relation;
                 var res_ids = self.value.res_ids;
-                self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
-                if (res_ids.length > 0){
-                    if (_.every(res_ids, function(i){
+                self.mydataset =
+                new dataset.DataSetSearch(self, model, {}, []);
+                if (res_ids.length > 0) {
+                    if (_.every(res_ids, function (i) {
                         return _.isString(i);
-                        })){
-                            Dialog.alert(self, _t("Please Save the record when you are adding an image for the first time !!"));
-                            return;
-                    }else{
-                        _.each(res_ids, function(i) {
-                            if (_.isNumber(i)){
+                    })) {
+                        Dialog.alert(self,
+                            _t("Please Save the record when you are\
+                                adding an image for the first time !!"));
+                        return;
+                    } else {
+                        _.each(res_ids, function (i) {
+                            if (_.isNumber(i)) {
                                 saved_images.push(i);
                             }
                         });
                         self.mydataset.read_slice([], {
-                            'domain': [['id', 'in', saved_images]]
-                        }).done(function(records) {
+                            'domain': [['id', 'in', saved_images]],
+                        }).done(function (records) {
                             if (records && !_.isEmpty(records)) {
-                                _.each(records, function(img) {
+                                _.each(records, function (img) {
                                     if (img) {
-                                        var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
-                                            if (img.image) {
-                                                src = "data:image/jpeg;base64," + img.image;
-                                            }
-                                            var title = img.title
+                                        var src = window.location.origin +
+                                        "/web/binary/image?model=" + model +
+                                        "&field=image&id=" + img.id;
+                                        if (img.image) {
+                                            src = "data:image/jpeg;base64," +
+                                            img.image;
+                                        }
+                                        var title = img.title
                                             ? img.title
                                             : '';
-                                            var description = img.description
+                                        var description = img.description
                                             ? img.description
                                             : '';
-                                            url_list.push({
-                                                "url": src,
-                                                "title": 'Title:-' + title + '<br/>Description:-' + description
-                                            });
+                                        url_list.push({
+                                            "url": src,
+                                            "title": 'Title:-' + title +
+                                '<br/>Description:-' + description,
+                                        });
                                     }
                                 });
                             } else {
                                 self.do_warn("Image", "Image not available !");
                                 return;
                             }
-                            self.$el.find('.oe-image-preview').lightbox({
+                            self.$el.find('.oe-image-preview').lightbox( {
                                 fitToScreen: true,
                                 jsonData: url_list,
                                 loopImages: true,
                                 imageClickClose: false,
-                                disableNavbarLinks: true
+                                disableNavbarLinks: true,
                             });
                         });
                     }
-                }else{
-                    Dialog.alert(self, _t("There are no image for showing in preview !!"));
+                } else {
+                    Dialog.alert(self,
+                        _t("There are no image for showing in preview !!"));
                     return;
                 }
             }
         },
 
-        image_list_view : function(){
-            if(this.view.type === "list" && this.attrs.widget === 'image_multi'){
+        image_list_view : function () {
+            if (this.view.type === "list" &&
+                this.attrs.widget === 'image_multi') {
                 var self = this;
                 var saved_images = [];
                 var model = self.field.relation;
                 var res_ids = self.value.res_ids;
-                self.mydataset = new dataset.DataSetSearch(self, model, {}, []);
-                if (res_ids.length > 0){
-                    if (_.every(res_ids, function(i) {
+                self.mydataset = new dataset.DataSetSearch(self, model, {},
+                    []);
+                if (res_ids.length > 0) {
+                    if (_.every(res_ids, function (i) {
                         return _.isString(i);
-                    })){
-                        Dialog.alert(self, _t("Please Save the record when you are adding an image for the first time !!"));
+                    })) {
+                        Dialog.alert(self,
+                            _t("Please Save the record when you are adding "
+                                "an image for the first time !!"));
                         return;
-                    }else{
-                        _.each(res_ids, function(i) {
-                            if (_.isNumber(i)){
+                    } else {
+                        _.each(res_ids, function (i) {
+                            if (_.isNumber(i)) {
                                 saved_images.push(i);
                             }
                         });
                         self.mydataset.read_slice([], {
-                            'domain': [['id', 'in', saved_images]]
-                        }).then(function(records) {
+                            'domain': [['id', 'in', saved_images]],
+                        }).then(function (records) {
                             self.images_list = records;
                             if (self.images_list.length === 0) {
-                                self.do_warn(_t("Image"), _t("Image not available !"));
+                                self.do_warn(_t("Image"),
+                                    _t("Image not available !"));
                                 return;
                             }
 
@@ -121,11 +136,11 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                                 min_height: '500px',
                                 buttons: [{
                                     text: _t("Close"),
-                                    click: function() {
+                                    click: function () {
                                         self.image_list_dialog.close();
                                         self.trigger_up('reload');
                                     },
-                                    close: true
+                                    close: true,
                                 }],
                             });
                             self.image_list_dialog.opened().then(function () {
@@ -135,14 +150,15 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
 
                         });
                     }
-                }else{
-                    Dialog.alert(self, _t("There are no image for showing in preview !!"));
+                } else {
+                    Dialog.alert(self,
+                        _t("There are no image for showing in preview !!"));
                     return;
                 }
             }
         },
 
-        on_render_dialog: function() {
+        on_render_dialog: function () {
             var self = this;
             var images_list = [];
             images_list = self.images_list;
@@ -151,8 +167,10 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
             var images = [];
             var start = 0;
             if (images_list) {
-                _.each(images_list, function(img) {
-                    var src = window.location.origin + "/web/binary/image?model=" + model + "&field=image&id=" + img.id;
+                _.each(images_list, function (img) {
+                    var src = window.location.origin +
+                    "/web/binary/image?model=" + model +
+                    "&field=image&id=" + img.id;
                     if (img.image) {
                         src = "data:image/jpeg;base64," + img.image;
                     }
@@ -161,13 +179,13 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                             url_list.push({
                                 'name': img.title,
                                 'path': src,
-                                'id': img.id
+                                'id': img.id,
                             });
-                        }else {
+                        } else {
                             url_list.push({
                                 'name': 'Image',
                                 'path': src,
-                                'id': img.id
+                                'id': img.id,
                             });
                         }
                     }
@@ -185,12 +203,13 @@ odoo.define('web_widget_multi_image.MultiImage', function(require) {
                 'image_list': images,
                 'readonly': self.isReadonly,
             }));
-            self.image_list_dialog.$el.find(".oe-remove-image").click(function() {
-                self.do_remove_image(this);
-            });
+            self.image_list_dialog.$el.find(".oe-remove-image").click(
+                function () {
+                    self.do_remove_image(this);
+                });
         },
 
-        do_remove_image: function(curr_id) {
+        do_remove_image: function (curr_id) {
             var self = this;
             var model = self.field.relation;
             self._rpc({
