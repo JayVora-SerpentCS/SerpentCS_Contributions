@@ -8,19 +8,19 @@ class ProductTemplate(models.Model):
 
     @api.multi
     @api.depends('product_variant_ids.sales_amt')
-    def _sales_amt(self):
+    def _compute_sales_amt(self):
         for product in self:
             product.sales_amt = sum([p.sales_amt
                                      for p in product.product_variant_ids])
 
-    sales_amt = fields.Float(compute='_sales_amt', string='Sales amt')
+    sales_amt = fields.Float(compute='_compute_sales_amt', string='Sales amt')
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     @api.multi
-    def _sales_amt(self):
+    def _compute_sales_amt(self):
         res = {}
         amt = 0.00
         domain = [
@@ -35,4 +35,4 @@ class ProductProduct(models.Model):
             if res:
                 product.sales_amt = res.get(product.id, 0).get('amt', 0)
 
-    sales_amt = fields.Float(compute='_sales_amt', string='# Sales amt')
+    sales_amt = fields.Float(compute='_compute_sales_amt', string='# Sales amt')
