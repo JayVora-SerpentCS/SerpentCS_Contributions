@@ -1,4 +1,4 @@
-odoo.define("web_security_dialog.SecurityDialog",function(require){
+odoo.define("web_security_dialog.SecurityDialog", function (require){
     "use strict";
 
     var core = require('web.core');
@@ -13,7 +13,8 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
 
     FormController.include({
         _onButtonClicked: function (event) {
-            // stop the event's propagation as a form controller might have other
+            // stop the event's propagation as a form controller might have 
+            //other
             // form controllers in its descendants (e.g. in a FormViewDialog)
             event.stopPropagation();
             var self = this;
@@ -32,37 +33,46 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                 return self.saveRecord(self.handle, {
                     stayInEdit: true,
                 }).then(function () {
-                    // we need to reget the record to make sure we have changes made
-                    // by the basic model, such as the new res_id, if the record is
-                    // new.
+                    // we need to reget the record to make sure we have
+                    //changes made
+                    // by the basic model, such as the new res_id,
+                    //if the record is new.
                     var record = self.model.get(event.data.record.id);
                     return self._callButtonAction(attrs, record);
                 });
             }
 
-            function openmodel_dialog(){
-                return $.when(self.open_pincode_dialog()).done(function(dialog){
-                    dialog.$footer.find('.validate_pincode').click(function(){
+            function openmodel_dialog() {
+                return $.when(self.open_pincode_dialog()).done(
+                    function( dialog) {
+                    dialog.$footer.find('.validate_pincode').click(function () {
                         var password = dialog.$el.find("#pincode").val();
                         if (password) {
                             framework.blockUI();
-                            var callback = self.validate_pincode(self.is_dialog_security,password);
-                            callback.done(function(result){
+                            var callback =
+                            self.validate_pincode(self.is_dialog_security,
+                                password);
+                            callback.done(function(result) {
                                 framework.unblockUI();
                                 if (result) {
                                     dialog.close();
                                     saveAndExecuteAction(event);
                                 } else {
-                                    Dialog.alert(self, _t("Invalid or Wrong Password! Contact your Administrator."));
+                                    Dialog.alert(self
+                                     _t("Invalid or Wrong Password! "
+                                        "Contact your Administrator."));
                                     return;
                                 }
-                            }).fail(function(error){
+                            }).fail(function (error) {
                                 framework.unblockUI();
-                                Dialog.alert(self, _t("Either the password is wrong or the connection is lost! Contact your Administrator."));
+                                Dialog.alert(self, _t("Either the password is "
+                                    "wrong or the connection is lost! "
+                                    "Contact your Administrator."));
                                 return;
                             });
                         } else {
-                            Dialog.alert(self, _t("Please Enter the Password."));
+                            Dialog.alert(self,
+                                _t("Please Enter the Password."));
                             return;
                         }
                     });
@@ -73,7 +83,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
             if (attrs.confirm && self.is_dialog_security) {
                 Dialog.confirm(this, attrs.confirm, {
                     confirm_callback: openmodel_dialog,
-                }).on("closed", null, function (){
+                }).on("closed", null, function () {
                     d.resolve();
                 });
             } else if (attrs.confirm && !self.is_dialog_security) {
@@ -92,9 +102,9 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
 
             def.always(this._enableButtons.bind(this));
         },
-        open_pincode_dialog : function(event){
+        open_pincode_dialog : function(event) {
             var self = this;
-            return new Dialog(self,{
+            return new Dialog(self, {
                 title: _t('Security'),
                 size : "small",
                 $content: QWeb.render('DialogSecurity'),
@@ -110,7 +120,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                         ]
             }).open();
         },
-        validate_pincode : function(field,value) {
+        validate_pincode : function (field,value) {
             var self = this;
             var data = false;
             var data_vals = {
@@ -118,7 +128,7 @@ odoo.define("web_security_dialog.SecurityDialog",function(require){
                     "password"  : value,
                     "companyId" : session.company_id
                 };
-           var data_value = rpc.query({
+           var data_value = rpc.query( {
                 model: 'res.company',
                 method: 'check_security',
                 args: [[],data_vals]
