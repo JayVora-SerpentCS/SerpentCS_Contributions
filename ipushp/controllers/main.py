@@ -1,6 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
 
-import odoo
 from odoo import http
 from odoo.http import request
 
@@ -23,7 +22,8 @@ class website_ipushp(http.Controller):
             ['business.category'].sudo().search([]),
         })
 
-    @http.route(['/page/find_contacts'], type='http', auth="public", website=True)
+    @http.route(['/page/find_contacts'], type='http', auth="public",
+                website=True)
     def find_contacts(self, **kwargs):
         category_id = kwargs.get('category_id')
         contact_ids = request.env['business.line'].sudo().search(
