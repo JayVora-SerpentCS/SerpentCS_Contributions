@@ -44,6 +44,7 @@
 
             // If jsonData, build the imageArray from data provided in JSON
             //  Format
+
             if (opts.jsonData && opts.jsonData.length > 0) {
                 var parser = opts.jsonDataParser
                     ? opts.jsonDataParser
@@ -82,6 +83,7 @@
 
             if (opts.displayHelp) {
                 imageData += '<span id="helpDisplay">' + opts.strings.help +
+
                 '</span>';
             }
 
@@ -135,7 +137,9 @@
         # Returns a numerically indexed array of document width/height and
         # Window width/height
         */
+
         function getPageSize () {
+
             var jqueryPageSize = new Array($(document).width(),
                 $(document).height(), $(window).width(), $(window).height());
             return jqueryPageSize;
@@ -148,9 +152,11 @@
                 yScroll = self.pageYOffset;
                 xScroll = self.pageXOffset;
             } else if (document.documentElement &&
+
             document.documentElement.scrollTop) {
 
                 //  Explorer 6 Strict
+
                 yScroll = document.documentElement.scrollTop;
                 xScroll = document.documentElement.scrollLeft;
             } else if (document.body) {
@@ -327,12 +333,13 @@
                 $('#lightboxImage').attr('src',
                     opts.imageArray[opts.activeImage][0]).width(newWidth).
                     height(newHeight);
-
+              
                 resizeImageContainer(newWidth, newHeight);
             };
 
             imgPreloader.src = opts.imageArray[opts.activeImage][0];
         };
+
 
         function end  () {
             $('#overlay, #lightbox, #outerImageContainer,\
@@ -499,6 +506,7 @@
                     });
 
                     $('#nextLink,#nextLinkText').show().click(function () {
+
                         changeImage((opts.activeImage ===
                             (opts.imageArray.length - 1))
                             ? 0

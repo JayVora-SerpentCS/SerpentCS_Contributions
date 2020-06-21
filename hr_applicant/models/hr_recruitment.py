@@ -1,10 +1,11 @@
 # See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools.translate import _
 
 
 class Applicant(models.Model):
@@ -77,6 +78,7 @@ class Applicant(models.Model):
     @api.model
     def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
                         submenu=False):
+        """Field view get to update view."""
         ir_actions_report = self.env['ir.actions.report']
         res = super(Applicant, self).fields_view_get(
             view_id=view_id, view_type=view_type, toolbar=toolbar,
@@ -480,9 +482,9 @@ class ApplicantEducation(models.Model):
 
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
-        #FIX issue 319 convert datetime.date to string
+        # FIX issue 319 convert datetime.date to string
         to_date = self.to_date and datetime.strftime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT)        
+            self.to_date, DEFAULT_SERVER_DATE_FORMAT)
         if to_date and datetime.strptime(
                 to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
@@ -512,6 +514,7 @@ class ApplicantPreviousTravel(models.Model):
 
     @api.model
     def create(self, vals):
+        """Create a record."""
         if (self._context.get('active_model') == 'hr.applicant' and
                 self._context.get('active_id')):
             vals.update({'applicant_id': self._context.get('active_id')})
@@ -520,7 +523,8 @@ class ApplicantPreviousTravel(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         if self.to_date and datetime.strptime(
-                str(self.to_date), DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
+                str(self.to_date),
+                DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(
                 'To date must be less than today!')}
             self.to_date = False

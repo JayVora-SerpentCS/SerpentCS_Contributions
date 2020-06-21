@@ -1,10 +1,11 @@
 # See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
+
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.tools.translate import _
 
 
 class Employee(models.Model):
@@ -278,7 +279,7 @@ class EmployeeEducation(models.Model):
     @api.onchange('from_date', 'to_date')
     def onchange_date(self):
         to_date = self.to_date and datetime.strftime(
-                self.to_date, DEFAULT_SERVER_DATE_FORMAT)           
+            self.to_date, DEFAULT_SERVER_DATE_FORMAT)
         if to_date and datetime.strptime(
                 to_date, DEFAULT_SERVER_DATE_FORMAT) >= datetime.today():
             warning = {'title': _('User Alert !'), 'message': _(

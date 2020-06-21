@@ -11,6 +11,7 @@ odoo.define('web_widget_multi_image.MultiImage', function (require) {
 
     ControlPanel.include( {
         init: function (parent) {
+
             this.attrs = parent.attrs;
             this._super.apply(this, arguments);
         },
@@ -51,6 +52,7 @@ odoo.define('web_widget_multi_image.MultiImage', function (require) {
                         self.mydataset.read_slice([], {
                             'domain': [['id', 'in', saved_images]],
                         }).done(function (records) {
+
                             if (records && !_.isEmpty(records)) {
                                 _.each(records, function (img) {
                                     if (img) {
@@ -85,7 +87,6 @@ odoo.define('web_widget_multi_image.MultiImage', function (require) {
                                 imageClickClose: false,
                                 disableNavbarLinks: true,
                             });
-                        });
                     }
                 } else {
                     Dialog.alert(self,
@@ -151,6 +152,7 @@ odoo.define('web_widget_multi_image.MultiImage', function (require) {
                         });
                     }
                 } else {
+
                     Dialog.alert(self,
                         _t("There are no image for showing in preview !!"));
                     return;
