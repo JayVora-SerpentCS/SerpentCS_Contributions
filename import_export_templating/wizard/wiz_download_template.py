@@ -18,7 +18,7 @@ class WizDownloadTemplate(models.TransientModel):
     _description = 'Wiz Download Template'
 
     @api.depends('ir_model', 'ir_model.field_id', 'ir_model.field_id.model_id')
-    def _get_names(self):
+    def _compute_get_names(self):
         self.field_names_computed = self.ir_model.field_id.filtered(
             lambda l: l.model_id.id == self.ir_model.id)
 
@@ -33,7 +33,7 @@ class WizDownloadTemplate(models.TransientModel):
     update_only = fields.Boolean(string="Update records", default=True)
     create_only = fields.Boolean(string="Create records", default=True)
     field_names_computed = fields.Many2many(
-        'ir.model.fields', compute='_get_names')
+        'ir.model.fields', compute='_compute_get_names')
     fields_list_ids = fields.Many2many(
         'ir.model.fields', domain="[('model_id', '=', ir_model)]")
 
