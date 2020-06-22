@@ -8,6 +8,7 @@ from dateutil.relativedelta import relativedelta
 class SelectTraining(models.TransientModel):
 
     _name = 'select.training'
+    _description = 'Select Training'
 
     is_triaing_needed = fields.Boolean(
         string="Is Training needed?", required=True)

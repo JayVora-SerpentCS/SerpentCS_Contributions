@@ -17,6 +17,7 @@ class IrAttachement(models.Model):
 class CoursesType(models.Model):
 
     _name = 'course.type'
+    _description = 'Course Type'
 
     name = fields.Char('Name', required=True)
     code = fields.Char('Code', required=True)
@@ -25,6 +26,7 @@ class CoursesType(models.Model):
 class Trainingcourses(models.Model):
 
     _name = 'training.courses'
+    _description = 'Training Courses'
 
     @api.constrains('duration')
     def _check_duration(self):
@@ -51,6 +53,7 @@ class Trainingcourses(models.Model):
 class TrainingClass(models.Model):
 
     _name = "training.class"
+    _description = "Training Class"
     _rec_name = "course_id"
 
     @api.constrains('training_start_date', 'training_end_date')
@@ -175,6 +178,7 @@ class TrainingClass(models.Model):
 class ListOfAttendees(models.Model):
 
     _name = "list.of.attendees"
+    _description = "List of Attendees"
     _rec_name = "class_id"
 
     @api.constrains('class_id', 'training_start_date', 'training_end_date',
