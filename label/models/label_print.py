@@ -69,6 +69,7 @@ class LabelPrint(models.Model):
 
 class LabelPrintField(models.Model):
     _name = "label.print.field"
+    _description = "Label Print Field"
     _rec_name = "sequence"
     _order = "sequence"
 

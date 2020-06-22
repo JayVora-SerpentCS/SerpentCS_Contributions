@@ -10,6 +10,7 @@ from odoo.osv.orm import browse_record
 
 class ReportDynamicLabel(models.AbstractModel):
     _name = 'report.label.report_label'
+    _description = 'Report Lable'
 
     @api.multi
     def get_data(self, row, columns, ids, model, number_of_copy):
