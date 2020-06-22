@@ -12,8 +12,8 @@ class SaleOrderTest(common.TransactionCase):
         self.sale_order = self.env['sale.order']
         self.partner = self.env.ref('base.res_partner_2')
         self.products = {
-            'serv_order': self.env.ref('product.service_order_01'),
-            'serv_deli': self.env.ref('product.service_delivery'),
+            'serv_order': self.env.ref('product.product_delivery_01'),
+            'serv_deli': self.env.ref('product.product_order_01'),
         }
 
         self.order_idA = self.sale_order.create({
@@ -24,5 +24,5 @@ class SaleOrderTest(common.TransactionCase):
                 (0, 0, {'name': p.name, 'product_id': p.id,
                         'product_uom_qty': 2, 'product_uom': p.uom_id.id,
                         'price_unit': p.list_price
-                        })for (_, p) in self.products.items()],
+                        }) for (_, p) in self.products.items()],
         })
