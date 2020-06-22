@@ -4,12 +4,13 @@
 import math
 
 # 2:  imports of openerp
-from odoo import fields, models, api
+from odoo import api, fields, models
 from odoo.tools import misc
 
 
 class LabelPrintWizard(models.TransientModel):
     _name = 'label.print.wizard'
+    _description = "Label Print Wizard"
 
     @api.model
     def default_get(self, fields):
