@@ -10,10 +10,14 @@ DEFAULT_FIELDS = ['create_date', 'create_uid', 'display_name', 'id',
 
 
 class XElement(minidom.Element):
-    """dom.Element with compact print
+    """dom.Element with compact print.
+
     The Element in minidom has a problem: if printed, adds whitespace
+
     around the text nodes. The standard will not ignore that whitespace.
+
     This class simply prints the contained nodes in their compact form, w/o
+
     added spaces.
     """
 
@@ -24,8 +28,8 @@ class XElement(minidom.Element):
         writer.write(newl)
 
 
-def doc_createXElement(xdoc, tagName):
-    e = XElement(tagName)
+def doc_createxelement(xdoc, tagname):
+    e = XElement(tagname)
     e.ownerDocument = xdoc
     return e
 
@@ -173,7 +177,7 @@ class BaseModuleRecord(models.Model):
                             ) + '])]')
                         record.appendChild(field)
             else:
-                field = doc_createXElement(doc, 'field')
+                field = doc_createxelement(doc, 'field')
                 field.setAttribute("name", key)
                 field.appendChild(doc.createTextNode(ustr(val)))
                 record.appendChild(field)
