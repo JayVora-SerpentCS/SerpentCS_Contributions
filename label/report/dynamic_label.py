@@ -8,13 +8,12 @@ from odoo.tools.safe_eval import safe_eval as eval
 
 
 class ReportDynamicLabel(models.AbstractModel):
-    _name = 'report.label.report_label'
+    _name = "report.label.report_label"
 
     def get_data(self, row, columns, ids, model, number_of_copy):
         active_model_obj = self.env[model]
-        label_print_obj = self.env['label.print']
-        label_print_data = label_print_obj.\
-            browse(self.env.context.get('label_print'))
+        label_print_obj = self.env["label.print"]
+        label_print_data = label_print_obj.browse(self.env.context.get("label_print"))
         result = []
         value_vals = []
         diff = 0
@@ -24,11 +23,11 @@ class ReportDynamicLabel(models.AbstractModel):
                 bot = False
                 bot_dict = {}
                 for field in label_print_data.field_ids:
-                    string = ''
-                    pos = ''
+                    string = ""
+                    pos = ""
                     if field.python_expression and field.python_field:
-                        string = field.python_field.split('.')[-1]
-                        value = eval(field.python_field, {'obj': datas})
+                        string = field.python_field.split(".")[-1]
+                        value = eval(field.python_field, {"obj": datas})
 
                     elif field.field_id.name:
                         string = field.field_id.field_description
@@ -39,42 +38,48 @@ class ReportDynamicLabel(models.AbstractModel):
 
                     if isinstance(value, dict):
                         model_obj = self.env[value._name]
-                        value = eval("obj." + model_obj._rec_name,
-                                     {'obj': value})
+                        value = eval("obj." + model_obj._rec_name, {"obj": value})
 
                     if not value:
-                        value = ''
+                        value = ""
 
                     if field.nolabel:
-                        string = ''
+                        string = ""
                     else:
-                        string += ' :- '
+                        string += " :- "
 
-                    if field.type == 'image' or field.type == 'barcode':
-                        string = ''
-                        if field.position != 'bottom':
-                            pos = 'float:' + str(field.position) + ';'
+                    if field.type == "image" or field.type == "barcode":
+                        string = ""
+                        if field.position != "bottom":
+                            pos = "float:" + str(field.position) + ";"
                             bot = False
                         else:
                             bot = True
-                            bot_dict = {'string': string, 'value': value,
-                                        'type': field.type,
-                                        'newline': field.newline,
-                                        'style': "font-size:" +
-                                        str(field.fontsize) + "px;" + pos}
+                            bot_dict = {
+                                "string": string,
+                                "value": value,
+                                "type": field.type,
+                                "newline": field.newline,
+                                "style": "font-size:"
+                                + str(field.fontsize)
+                                + "px;"
+                                + pos,
+                            }
                     else:
                         bot = False
                     if not bot:
-                        vals_dict = {'string': string, 'value': value,
-                                     'type': field.type,
-                                     'newline': field.newline,
-                                     'style': "font-size:" +
-                                     str(field.fontsize) + "px;" + pos}
+                        vals_dict = {
+                            "string": string,
+                            "value": value,
+                            "type": field.type,
+                            "newline": field.newline,
+                            "style": "font-size:" + str(field.fontsize) + "px;" + pos,
+                        }
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals and vals[0]['value'] not in value_vals:
-                    value_vals.append(vals[0]['value'])
+                if vals and vals[0]["value"] not in value_vals:
+                    value_vals.append(vals[0]["value"])
                 result.append(vals)
                 temp = vals
 
@@ -83,12 +88,12 @@ class ReportDynamicLabel(models.AbstractModel):
         result1 = []
         list_newdata = []
         for row in range(0, len(result) // (columns) + 1):
-            val = result[row * columns: row * columns + columns]
+            val = result[row * columns : row * columns + columns]
             if val:
                 new_list.append(val)
             for value_list in val:
                 for value_print in value_list:
-                    list_newdata.append(value_print['value'])
+                    list_newdata.append(value_print["value"])
 
         for data in new_list:
             for list_data in data:
@@ -122,18 +127,21 @@ class ReportDynamicLabel(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        if not data.get('form') or not self.env.context.get('active_model'):
-            raise UserError(_("Form content is missing, \
-                        this report cannot be printed."))
+        if not data.get("form") or not self.env.context.get("active_model"):
+            raise UserError(
+                _(
+                    "Form content is missing, \
+                        this report cannot be printed."
+                )
+            )
 
-        self.model = self.env.context.get('active_model')
-        docs = self.env[self.model].\
-            browse(self.env.context.get('active_ids', []))
+        self.model = self.env.context.get("active_model")
+        docs = self.env[self.model].browse(self.env.context.get("active_ids", []))
         return {
-            'doc_ids': docs.ids,
-            'doc_model': self.model,
-            'data': data,
-            'docs': docs,
-            'time': time,
-            'get_data': self.get_data,
+            "doc_ids": docs.ids,
+            "doc_model": self.model,
+            "data": data,
+            "docs": docs,
+            "time": time,
+            "get_data": self.get_data,
         }
