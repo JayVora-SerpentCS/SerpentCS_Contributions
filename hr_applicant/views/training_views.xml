@@ -81,7 +81,7 @@
                     <button name="action_completed" type="object" states="approved" string="Mark as Complete" class="oe_highlight"/>
                     <button name="action_cancel" type="object" string="Cancel" states="draft,to_be_approved,approved"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,to_be_approved,approved,completed" statusbar_colors='{"draft":"blue"}' />
-                </header>	
+                </header>
                 <sheet>
                     <group col="4" colspan="4">
                         <field name="course_id" required="1"  attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}"/>
