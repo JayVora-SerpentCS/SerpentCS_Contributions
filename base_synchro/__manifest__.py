@@ -9,12 +9,8 @@
     "author": "OpenERP SA, Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
-    "images": [
-        "static/description/Synchro.png",
-    ],
-    "depends": [
-        "base",
-    ],
+    "images": ["static/description/Synchro.png"],
+    "depends": ["base"],
     "data": [
         "security/ir.model.access.csv",
         "wizard/base_synchro_view.xml",

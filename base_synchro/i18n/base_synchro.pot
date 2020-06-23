@@ -273,4 +273,3 @@ msgstr ""
 #: field:base.synchro.server,server_url:0
 msgid "Server URL"
 msgstr ""
-
