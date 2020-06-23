@@ -81,7 +81,7 @@ FormController.include({
             context: {'active_model':this.modelName, 'nodestroy': true},
             target: 'new'
         });
-    },    
+    },
 
 });
 
@@ -146,7 +146,7 @@ ListController.include({
             context: {'active_model':this.modelName, 'nodestroy': true},
             target: 'new'
         });
-    },    
+    },
 
 });
 
