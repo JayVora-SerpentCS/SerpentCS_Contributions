@@ -2,7 +2,7 @@
 <odoo>
 
         <!-- QWEB Report use paperformat -->
-        <report 
+        <report
             id="dynamic_label"
             model="label.config"
             string="Label"
