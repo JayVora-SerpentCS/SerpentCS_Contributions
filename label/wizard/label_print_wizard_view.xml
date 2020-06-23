@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <odoo>
 
-    <!-- This wizard view use for label formating like height,width,number of 
+    <!-- This wizard view use for label formating like height,width,number of
         copy etc... -->
     <record id="view_label_print_wizard" model="ir.ui.view">
         <field name="name">label_print_wizard_name</field>
