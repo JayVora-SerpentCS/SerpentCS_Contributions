@@ -42,4 +42,3 @@ promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
-
