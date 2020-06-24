@@ -71,5 +71,8 @@ promote its widespread use.
 To contribute to this module, please visit http://odoo-community.org.
 =======
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+<<<<<<< HEAD
 
 >>>>>>> Fixed travis error and added README.rst file.
+=======
+>>>>>>> web_digital_sign : Fixed the travis issue.
