@@ -10,10 +10,7 @@
     "website": "http://www.serpentcs.com",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "depends": ["sales_team", "crm"],
-    "data": [
-        "views/city_view.xml",
-        "security/ir.model.access.csv",
-    ],
+    "data": ["views/city_view.xml", "security/ir.model.access.csv"],
     "installable": True,
     "auto_install": False,
 }

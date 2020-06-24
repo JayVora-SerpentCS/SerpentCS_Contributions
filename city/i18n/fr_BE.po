@@ -82,4 +82,3 @@ msgstr "Le code officiel de la ville"
 #: field:res.country.state,city_ids:0
 msgid "Cities"
 msgstr "Villes"
-
