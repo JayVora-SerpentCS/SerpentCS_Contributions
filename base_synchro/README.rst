@@ -26,4 +26,3 @@ Bug Tracker
 
 Credits
 =======
-
