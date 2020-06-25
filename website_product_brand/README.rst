@@ -28,4 +28,3 @@ Contributors
 ------------
 
 * Jay Vora <jay.vora@serpentcs.com>
-
