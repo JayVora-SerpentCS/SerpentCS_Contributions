@@ -1,4 +1,4 @@
-/* -------------------------------- 
+/* --------------------------------
 
 Primary style
 
@@ -47,9 +47,9 @@ padding: 0.5rem 1rem;
 text-decoration: none;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
-Main Components 
+Main Components
 
 -------------------------------- */
 .cd-image-mask-effect {
@@ -563,9 +563,9 @@ Main Components
   }
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
-Keyframes 
+Keyframes
 
 -------------------------------- */
 @-webkit-keyframes cd-translate {
@@ -630,7 +630,7 @@ Keyframes
 #myUL li a:hover:not(.header) {
 //  background-color: #eee;
   border-left:5px solid green;
-  
+
 }
 
 
