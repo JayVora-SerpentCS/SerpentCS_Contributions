@@ -9,7 +9,7 @@
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
-    "summary": 'Display one2many widget as kanban',
+    "summary": "Display one2many widget as kanban",
     "description": """
         You need to define one2many field in kanban view definition and use
         for loop to display fields like:
@@ -17,12 +17,8 @@
             <t t-esc="o.name">
             <t t-esc="o.many2onefield[1]">
         </t>""",
-    "depends": [
-        "web",
-    ],
-    "data": [
-        "view/templates.xml",
-    ],
+    "depends": ["web"],
+    "data": ["view/templates.xml"],
     "images": ["static/description/o2mKanban.png"],
     "installable": True,
     "application": True,
