@@ -82,7 +82,7 @@ padding-right: 20px;
 #imageData{
    padding:0 10px;
    }
-#imageData #imageDetails{ width: 70%; float: left; text-align: left; } 
+#imageData #imageDetails{ width: 70%; float: left; text-align: left; }
 #imageData #caption{ font-weight: bold;    }
 #imageData #numberDisplay{ display: block; clear: left; padding-bottom: 1.0em; }
 #imageData #numberDisplay a { color: black; padding-left: 5px; padding-right: 5px;}
@@ -102,18 +102,18 @@ padding-right: 20px;
    opacity: 0.6 !important;
    display: none;
    }
-   
+
 
 .clearfix:after {
-   content: "."; 
-   display: block; 
-   height: 0; 
-   clear: both; 
+   content: ".";
+   display: block;
+   height: 0;
+   clear: both;
    visibility: hidden;
    }
 
 * html>body .clearfix {
-   display: inline-block; 
+   display: inline-block;
    width: 100%;
    }
 
@@ -121,8 +121,8 @@ padding-right: 20px;
    /* Hides from IE-mac \*/
    height: 1%;
    /* End hide from IE-mac */
-   }   
+   }
 
 #lightboxIframe {
    display: none;
-}  
+}
