@@ -6,14 +6,15 @@ from odoo import fields, models
 class MultiImages(models.Model):
     _name = "multi.images"
 
-    image = fields.Binary('Images')
-    description = fields.Char('Description')
-    title = fields.Char('title')
-    product_template_id = fields.Many2one('product.template', 'Product')
+    image = fields.Binary("Images")
+    description = fields.Char("Description")
+    title = fields.Char("title")
+    product_template_id = fields.Many2one("product.template", "Product")
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    multi_images = fields.One2many('multi.images', 'product_template_id',
-                                   'Multi Images')
+    multi_images = fields.One2many(
+        "multi.images", "product_template_id", "Multi Images"
+    )

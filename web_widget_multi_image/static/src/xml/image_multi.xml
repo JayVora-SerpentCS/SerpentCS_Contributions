@@ -15,7 +15,7 @@
                         </tr>
                         <tr>
                             <td>
-                            	<img class="list_image" t-att-src="column.path"/>
+                                <img class="list_image" t-att-src="column.path"/>
                             </td>
                         </tr>
                     </table>
