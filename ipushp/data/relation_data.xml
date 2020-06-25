@@ -19,6 +19,6 @@
         <record id="relation_other" model="relation.relation">
             <field name="name">Other</field>
         </record>
-        
+
     </data>
 </odoo>

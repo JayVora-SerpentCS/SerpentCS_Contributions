@@ -30,7 +30,7 @@
                             li[i].style.display = &quot;&quot;;
                         } else {
                             li[i].style.display = &quot;none&quot;;
-                
+
                         }
                     }
                 }
