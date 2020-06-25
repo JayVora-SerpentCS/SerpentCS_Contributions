@@ -1,5 +1,5 @@
 /*
- 
+
  Highcharts funnel module
 
  (c) 2010-2016 Torstein Honsi
