@@ -4,7 +4,7 @@
     <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
         <xpath expr="//table[hasclass('o_main_table')]/thead/tr/th[1]" position="before">
             <t t-if="doc.print_image and doc.image_sizes in ('image', 'image_medium', 'image_small') ">
-                <th>Product Image</th>
+                <th style="width:15%;">Product Image</th>
             </t>
         </xpath>
         <xpath expr="//table/tbody[hasclass('sale_tbody')]/t[2]/tr/t/td[1]" position="before">
