@@ -23,8 +23,6 @@
         'views/website_ipushp_template.xml',
     ],
     'images': ['static/description/page_1.png'],
-    'price': 0,
-    'currency': 'EUR',
     'installable': True,
     'auto_install': False
 }
