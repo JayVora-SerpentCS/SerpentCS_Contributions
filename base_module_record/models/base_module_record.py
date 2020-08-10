@@ -26,7 +26,8 @@ class XElement(minidom.Element):
 
     def writexml(self, writer, indent="", addindent="", newl=""):
         writer.write(indent)
-        minidom.Element.writexml(self, writer, indent="", addindent="", newl="")
+        minidom.Element.writexml(self, writer, indent="", addindent="",
+                                 newl="")
         writer.write(newl)
 
 

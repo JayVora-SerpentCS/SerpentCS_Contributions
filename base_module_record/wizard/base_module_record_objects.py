@@ -3,7 +3,7 @@
 from . import base_module_save
 from odoo.tools import ustr
 from odoo.tools.translate import _
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class BaseModuleRecord(models.TransientModel):
@@ -19,14 +19,10 @@ class BaseModuleRecord(models.TransientModel):
             "ir.model.fields",
             "ir.model.access",
             "res.partner",
-            "res.partner.address",
             "res.partner.category",
-            "workflow",
-            "workflow.activity",
-            "workflow.transition",
             "ir.actions.server",
-            "ir.server.object.lines",
-        )
+            "ir.server.object.lines"
+    )
         return self.env["ir.model"].search([("model", "in", names)])
 
     check_date = fields.Datetime(
@@ -53,23 +49,21 @@ class BaseModuleRecord(models.TransientModel):
 
     def record_objects(self):
         data = self.read([])[0]
-        check_date = data["check_date"]
-        filter_cond = data["filter_cond"]
         mod_obj = self.env["ir.model"]
         recording_data = []
         for obj_id in data["objects"]:
             obj_name = (mod_obj.browse(obj_id)).model
             obj_pool = self.env[obj_name]
-            if filter_cond == "created":
-                search_condition = [("create_date", ">", check_date)]
-            elif filter_cond == "modified":
-                search_condition = [("write_date", ">", check_date)]
-            elif filter_cond == "created_modified":
-                search_condition = [
-                    "|",
-                    ("create_date", ">", check_date),
-                    ("write_date", ">", check_date),
-                ]
+            if data.get("filter_cond") == "created":
+                search_condition = [(
+                                "create_date", ">", data.get("check_date"))]
+            elif data.get("filter_cond") == "modified":
+                search_condition = [(
+                                "write_date", ">", data.get("check_date"))]
+            elif data.get("filter_cond") == "created_modified":
+                search_condition = ["|", 
+                                ("create_date", ">", data.get("check_date")),
+                                ("write_date", ">", data.get("check_date"))]
             if "_log_access" in dir(obj_pool):
                 if not (obj_pool._log_access):
                     search_condition = []
@@ -79,7 +73,8 @@ class BaseModuleRecord(models.TransientModel):
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name, "copy", s_id.id, {})
+                args = (dbname, self.env.user.id, obj_name, "copy", 
+                        s_id.id, {})
                 recording_data.append(("query", args, {}, s_id.id))
         if len(recording_data):
             res_id = self.env.ref("base_module_record.info_start_form_view").id
@@ -94,7 +89,8 @@ class BaseModuleRecord(models.TransientModel):
                 "type": "ir.actions.act_window",
                 "target": "new",
             }
-        res_id = self.env.ref("base_module_record.module_recording_message_view").id
+        res_id = self.env.ref(
+                    "base_module_record.module_recording_message_view").id
         return {
             "name": _("Module Recording"),
             "context": self._context,
@@ -117,19 +113,17 @@ class BaseModuleRecordObjects(models.TransientModel):
         ctx.update(({"depends": {}}))
         res = base_module_save._create_module(self.with_context(ctx), data)
         res_id = self.env.ref("base_module_record.module_create_form_view").id
-        rec_id = self.create(
-            {
-                "module_filename": ustr(res["module_filename"]),
-                "module_file": ustr(res["module_file"]),
-                "name": ustr(res["name"]),
-                "directory_name": ustr(res["directory_name"]),
-                "version": ustr(res["version"]),
-                "author": ustr(res["author"]),
-                "website": ustr(res["website"]),
-                "category": ustr(res["category"]),
-                "description": ustr(res["description"]),
-            }
-        ).id
+        rec_id = self.create({
+            "module_filename": ustr(res.get("module_filename")),
+            "module_file": ustr(res.get("module_file")),
+            "name": ustr(res.get("name")),
+            "directory_name": ustr(res.get("directory_name")),
+            "version": ustr(res.get("version")),
+            "author": ustr(res.get("author")),
+            "website": ustr(res.get("website")),
+            "category": ustr(res.get("category")),
+            "description": ustr(res.get("description")),
+        }).id
         return {
             "name": _("Module Recording"),
             "binding_view_types": "form",
@@ -143,26 +137,28 @@ class BaseModuleRecordObjects(models.TransientModel):
 
     name = fields.Char(string="Module Name", size=64)
     directory_name = fields.Char(string="Directory Name", size=32)
-    version = fields.Char(string="Version", default="11.0", size=16)
-    author = fields.Char(string="Author", size=64, required=True, default="Odoo SA")
+    version = fields.Char(string="Version", default="13.0", size=16)
+    author = fields.Char(string="Author", size=64, required=True,
+                         default="Odoo SA")
     category = fields.Char(
         string="Category",
         size=64,
         required=True,
-        default="Vertical Modules/Parametrization",
+        default="Vertical Modules/Parametrization"
     )
     website = fields.Char(
         string="Documentation URL",
         size=64,
         required=True,
-        default="https://www.odoo.com",
+        default="https://www.odoo.com"
     )
     description = fields.Text(string="Full Description")
     data_kind = fields.Selection(
         [("demo", "Demo Data"), ("update", "Normal Data")],
         string="Type of Data",
         required=True,
-        default="update",
+        default="update"
     )
     module_file = fields.Binary("Module .zip File", filename="module_filename")
     module_filename = fields.Char("Filename", size=64)
+
