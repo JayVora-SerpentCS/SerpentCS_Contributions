@@ -1,7 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo.tools import ustr
 from odoo import api, fields, models, _
+from odoo.tools import ustr
 
 
 class BaseModuleData(models.TransientModel):
@@ -24,7 +24,7 @@ class BaseModuleData(models.TransientModel):
         return self.env["ir.model"].search([("model", "in", names)])
 
     check_date = fields.Datetime(
-        string="Record from Date", required=True, default=fields.Datetime.now
+        "Record from Date", required=True, default=fields.Datetime.now
         )
     objects = fields.Many2many(
          "ir.model",
@@ -39,33 +39,34 @@ class BaseModuleData(models.TransientModel):
                     ("modified", "Modified"),
                     ("created_modified", "Created & Modified")
             ],
-            string="Records only",
+            "Records only",
             required=True,
             default="created")
 
     @api.model
     def _create_xml(self, data):
-        res_xml = self.env["ir.module.record"].generate_xml()
-        return {"res_text": res_xml}
+        return {"res_text": self.env["ir.module.record"].generate_xml()}
 
     def record_objects(self):
         data = self.read([])[0]
         mod_obj = self.env["ir.model"]
+        filter_cond = data.get("filter_cond")
+        check_date = data.get("check_date")
         recording_data = []
         self = self.with_context({"recording_data": recording_data})
         for o_id in data.get("objects", False):
             obj_name = (mod_obj.browse(o_id)).model
             obj_pool = self.env[obj_name]
-            if data.get("filter_cond") == "created":
+            if filter_cond == "created":
                 search_condition = [(
-                                "create_date", ">", data.get("check_date"))]
-            elif data.get("filter_cond") == "modified":
+                                "create_date", ">", check_date)]
+            elif filter_cond == "modified":
                 search_condition = [(
-                                "write_date", ">", data.get("check_date"))]
-            elif data.get("filter_cond") == "created_modified":
+                                "write_date", ">", check_date)]
+            elif filter_cond == "created_modified":
                 search_condition = ['|', 
-                                ("create_date", ">", data.get("check_date")),
-                                ("write_date", ">", data.get("check_date"))]
+                                ("create_date", ">", check_date),
+                                ("write_date", ">", check_date)]
             if "_log_access" in dir(obj_pool):
                 if not (obj_pool._log_access):
                     search_condition = []
@@ -75,13 +76,14 @@ class BaseModuleData(models.TransientModel):
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name,
-                        "copy", s_id.id, {})
+                args = (dbname, self.env.user.id, obj_name, "copy",
+                                                            s_id.id, {})
                 recording_data.append(("query", args, {}, s_id.id))
-        if len(recording_data):
+        if recording_data:
             res = self._create_xml(data)
             res_id = self.env.ref(
-                            "base_module_record.module_create_xml_view").id
+                            "base_module_record.module_create_xml_view",
+                            raise_if_not_found=False).id
             return {
                 "name": _("Data Recording"),
                 "context": {"default_res_text": ustr(res.get("res_text"))},
@@ -93,7 +95,8 @@ class BaseModuleData(models.TransientModel):
                 "target": "new",
             }
         res_id = self.env.ref(
-                    "base_module_record.module_recording_message_view").id
+                    "base_module_record.module_recording_message_view", 
+                    raise_if_not_found=False).id
         return {
             "name": _("Module Recording"),
             "context": {},
@@ -110,5 +113,5 @@ class BaseModuleRecordData(models.TransientModel):
     _name = "base.module.record.data"
     _description = "Base Module Record Data"
 
-    res_text = fields.Text(string="Result")
+    res_text = fields.Text("Result")
 

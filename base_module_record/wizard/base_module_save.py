@@ -14,7 +14,7 @@ def _create_module(self, ids):
     data = ids.read([])[0]
     s = BytesIO()
     zip_file = zipfile.ZipFile(s, "w")
-    dname = data["directory_name"]
+    dname = data.get("directory_name")
     data["update_name"] = ""
     data["demo_name"] = ""
     if ["data_kind"] == "demo":
@@ -52,12 +52,12 @@ def _create_module(self, ids):
         "module_file": base64.encodestring(s.getvalue()),
         "module_filename": data.get(
                     'directory_name') + '-' + data.get('version') + '.zip',
-        "name": data["name"],
-        "version": data["version"],
-        "author": data["author"],
-        "website": data["website"],
-        "category": data["category"],
-        "description": data["description"],
-        "directory_name": data["directory_name"],
+        "name": data.get("name"),
+        "version": data.get("version"),
+        "author": data.get("author"),
+        "website": data.get("website"),
+        "category": data.get("category"),
+        "description": data.get("description"),
+        "directory_name": data.get("directory_name"),
     }
 
