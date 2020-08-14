@@ -75,10 +75,10 @@ class BaseModuleData(models.TransientModel):
                         continue
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
-                dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name, "copy",
-                                                            s_id.id, {})
-                recording_data.append(("query", args, {}, s_id.id))
+                recording_data = [("query", (self.env.cr.dbname, 
+                                             self.env.user.id, obj_name, 
+                                             "copy", s_id.id, {}), 
+                                   {}, s_id.id) for s_id in search_ids]
         if recording_data:
             res = self._create_xml(data)
             res_id = self.env.ref(
