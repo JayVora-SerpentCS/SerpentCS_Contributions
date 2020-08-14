@@ -6,6 +6,7 @@ import threading
 from xmlrpc.client import ServerProxy
 from odoo import api, fields, models
 from odoo.exceptions import Warning
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -59,7 +60,9 @@ class BaseSynchro(models.TransientModel):
         "base.synchro.server", string="Server URL", required=True
     )
     user_id = fields.Many2one(
-        "res.users", string="Send Result To", default=lambda self: self.env.user
+        "res.users",
+        string="Send Result To",
+        default=lambda self: self.env.user
     )
 
     report = []
@@ -142,7 +145,8 @@ class BaseSynchro(models.TransientModel):
                 if field.name in value:
                     del value[field.name]
             if id2:
-                _logger.debug("Updating model %s [%d]", object.model_id.name, id2)
+                _logger.debug(
+                        "Updating model %s [%d]", object.model_id.name, id2)
                 if not destination_inverted:
                     pool = pool_dest.env[object.model_id.model]
                     pool.browse([id2]).write(value)
@@ -174,7 +178,8 @@ class BaseSynchro(models.TransientModel):
         line_pool = self.env["base.synchro.obj.line"]
         field_src = (action == "u") and "local_id" or "remote_id"
         field_dest = (action == "d") and "local_id" or "remote_id"
-        rid = line_pool.search([("obj_id", "=", object_id), (field_src, "=", id)])
+        rid = line_pool.search([("obj_id", "=", object_id),
+                                (field_src, "=", id)])
         result = False
         if rid:
             result = line_pool.browse([rid[0].id]).read([field_dest])
@@ -184,7 +189,8 @@ class BaseSynchro(models.TransientModel):
 
     @api.model
     def relation_transform(
-        self, pool_src, pool_dest, obj_model, res_id, action, destination_inverted
+        self, pool_src, pool_dest, obj_model,
+        res_id, action, destination_inverted
     ):
         if not res_id:
             return False
@@ -199,7 +205,8 @@ class BaseSynchro(models.TransientModel):
         result = False
         if obj:
             result = self.get_id(obj[0], res_id, action)
-            _logger.debug("Relation object already synchronized. Getting id%s", result)
+            _logger.debug(
+                "Relation object already synchronized. Getting id%s", result)
         else:
             _logger.debug(
                 """Relation object not synchronized. Searching/
@@ -237,7 +244,8 @@ class BaseSynchro(models.TransientModel):
 
     @api.model
     def data_transform(
-        self, pool_src, pool_dest, obj, data, action=None, destination_inverted=False
+        self, pool_src, pool_dest, obj, data,
+        action=None, destination_inverted=False
     ):
         if action is None:
             action = {}
@@ -287,17 +295,17 @@ class BaseSynchro(models.TransientModel):
     def upload_download(self):
         self.ensure_one()
         self.report = []
-        start_date = time.strftime("%Y-%m-%d, %Hh %Mm %Ss")
+        start_date = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         server = self.server_url
         for obj_rec in server.obj_ids:
             _logger.debug("Start synchro of %s", obj_rec.name)
-            dt = time.strftime("%Y-%m-%d %H:%M:%S")
+            dt = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
             self.synchronize(server, obj_rec)
             if obj_rec.action == "b":
                 time.sleep(1)
-                dt = time.strftime("%Y-%m-%d %H:%M:%S")
+                dt = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
             obj_rec.write({"synchronize_date": dt})
-        end_date = time.strftime("%Y-%m-%d, %Hh %Mm %Ss")
+        end_date = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
         # Creating res.request for summary results
         if self.user_id:
@@ -306,14 +314,14 @@ class BaseSynchro(models.TransientModel):
                 self.report.append("No exception.")
             summary = """Here is the synchronization report:
 
-Synchronization started: %s
-Synchronization finished: %s
-
-Synchronized records: %d
-Records updated: %d
-Records created: %d
-
-Exceptions:
+                        Synchronization started: %s
+                        Synchronization finished: %s
+                        
+                        Synchronized records: %d
+                        Records updated: %d
+                        Records created: %d
+                        
+                        Exceptions:
         """ % (
                 start_date,
                 end_date,
@@ -334,7 +342,8 @@ Exceptions:
             return {}
 
     def upload_download_multi_thread(self):
-        threaded_synchronization = threading.Thread(target=self.upload_download())
+        threaded_synchronization = threading.Thread(
+                                            target=self.upload_download())
         threaded_synchronization.run()
         id2 = self.env.ref("base_synchro.view_base_synchro_finish").id
         return {
@@ -346,3 +355,4 @@ Exceptions:
             "type": "ir.actions.act_window",
             "target": "new",
         }
+
