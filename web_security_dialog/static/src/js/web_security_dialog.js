@@ -99,7 +99,7 @@ odoo.define("web_security_dialog.SecurityDialog", function (require) {
                 def = saveAndExecuteAction();
             }
 
-            def.always(this._enableButtons.bind(this));
+            d.always(this._enableButtons.bind(this));
         },
         open_pincode_dialog : function (event) {
             var self = this;
