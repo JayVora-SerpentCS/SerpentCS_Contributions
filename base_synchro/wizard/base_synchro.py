@@ -6,7 +6,6 @@ import threading
 from xmlrpc.client import ServerProxy
 from odoo import api, fields, models
 from odoo.exceptions import Warning
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -57,11 +56,11 @@ class BaseSynchro(models.TransientModel):
     _description = "Base Synchronization"
 
     server_url = fields.Many2one(
-        "base.synchro.server", string="Server URL", required=True
+        "base.synchro.server", "Server URL", required=True
     )
     user_id = fields.Many2one(
         "res.users",
-        string="Send Result To",
+        "Send Result To",
         default=lambda self: self.env.user
     )
 
@@ -121,8 +120,8 @@ class BaseSynchro(models.TransientModel):
             if not destination_inverted:
                 value = pool_src.get(object.model_id.model).read([id], fields)[0]
             else:
-                pool = pool_src.env[object.model_id.model]
-                value = pool.browse([id]).read(fields)[0]
+                model_obj = pool_src.env[object.model_id.model]
+                value = model_obj.browse([id]).read(fields)[0]
             if "create_date" in value:
                 del value["create_date"]
             if "write_date" in value:
@@ -148,8 +147,8 @@ class BaseSynchro(models.TransientModel):
                 _logger.debug(
                         "Updating model %s [%d]", object.model_id.name, id2)
                 if not destination_inverted:
-                    pool = pool_dest.env[object.model_id.model]
-                    pool.browse([id2]).write(value)
+                    model_obj = pool_dest.env[object.model_id.model]
+                    model_obj.browse([id2]).write(value)
                 else:
                     pool_dest.get(object.model_id.model).write([id2], value)
                 self.report_total += 1
@@ -175,14 +174,14 @@ class BaseSynchro(models.TransientModel):
 
     @api.model
     def get_id(self, object_id, id, action):
-        line_pool = self.env["base.synchro.obj.line"]
+        synchro_line_obj = self.env["base.synchro.obj.line"]
         field_src = (action == "u") and "local_id" or "remote_id"
         field_dest = (action == "d") and "local_id" or "remote_id"
-        rid = line_pool.search([("obj_id", "=", object_id),
+        rec_id = synchro_line_obj.search([("obj_id", "=", object_id),
                                 (field_src, "=", id)])
         result = False
-        if rid:
-            result = line_pool.browse([rid[0].id]).read([field_dest])
+        if rec_id:
+            result = synchro_line_obj.browse([rec_id[0].id]).read([field_dest])
             if result:
                 result = result[0][field_dest]
         return result
@@ -216,8 +215,8 @@ class BaseSynchro(models.TransientModel):
                 names = pool_src.get(obj_model).name_get([res_id])[0][1]
                 res = pool_dest.env[obj_model].name_search(names, [], "like")
             else:
-                pool = pool_src.env[obj_model]
-                names = pool.browse([res_id]).name_get()[0][1]
+                model_obj = pool_src.env[obj_model]
+                names = model_obj.browse([res_id]).name_get()[0][1]
                 res = pool_dest.get(obj_model).name_search(names, [], "like")
             _logger.debug("name_get in src: %s", names)
             _logger.debug("name_search in dest: %s", res)
@@ -295,17 +294,17 @@ class BaseSynchro(models.TransientModel):
     def upload_download(self):
         self.ensure_one()
         self.report = []
-        start_date = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        start_date = fields.Datetime.now()
         server = self.server_url
         for obj_rec in server.obj_ids:
             _logger.debug("Start synchro of %s", obj_rec.name)
-            dt = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+            dt = fields.Datetime.now()
             self.synchronize(server, obj_rec)
             if obj_rec.action == "b":
                 time.sleep(1)
-                dt = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+                dt = fields.Datetime.now()
             obj_rec.write({"synchronize_date": dt})
-        end_date = time.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        end_date = fields.Datetime.now()
 
         # Creating res.request for summary results
         if self.user_id:
@@ -314,14 +313,14 @@ class BaseSynchro(models.TransientModel):
                 self.report.append("No exception.")
             summary = """Here is the synchronization report:
 
-                        Synchronization started: %s
-                        Synchronization finished: %s
-                        
-                        Synchronized records: %d
-                        Records updated: %d
-                        Records created: %d
-                        
-                        Exceptions:
+     Synchronization started: %s
+     Synchronization finished: %s
+    
+     Synchronized records: %d
+     Records updated: %d
+     Records created: %d
+    
+     Exceptions:
         """ % (
                 start_date,
                 end_date,

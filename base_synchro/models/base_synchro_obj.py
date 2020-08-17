@@ -1,9 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-import time
-
 from odoo import api, fields, models
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class BaseSynchroServer(models.Model):
@@ -19,7 +16,7 @@ class BaseSynchroServer(models.Model):
     login = fields.Char("User Name", required=True)
     password = fields.Char(required=True)
     obj_ids = fields.One2many(
-        "base.synchro.obj", "server_id", string="Models", ondelete="cascade"
+        "base.synchro.obj", "server_id", "Models", ondelete="cascade"
     )
 
 
@@ -34,12 +31,12 @@ class BaseSynchroObj(models.Model):
     domain = fields.Char(required=True, default="[]")
     server_id = fields.Many2one(
         "base.synchro.server",
-        string="Server",
+        "Server",
         ondelete="cascade",
         required=True
     )
     model_id = fields.Many2one(
-        "ir.model", string="Object to synchronize", required=True
+        "ir.model", "Object to synchronize", required=True
     )
     action = fields.Selection(
         [("d", "Download"), ("u", "Upload"), ("b", "Both")],
@@ -54,31 +51,30 @@ class BaseSynchroObj(models.Model):
     line_id = fields.One2many(
         "base.synchro.obj.line",
         "obj_id",
-        string="IDs Affected",
+        "IDs Affected",
         ondelete="cascade"
     )
     avoid_ids = fields.One2many(
-        "base.synchro.obj.avoid", "obj_id", string="Fields Not Sync."
+        "base.synchro.obj.avoid", "obj_id", "Fields Not Sync."
     )
 
     @api.model
     def get_ids(self, obj, dt, domain=None, action=None):
         if action is None:
             action = {}
-        pool = self.env[obj]
-#        result = []
+        model_obj = self.env[obj]
         if dt:
             w_date = domain + [("write_date", ">=", dt)]
             c_date = domain + [("create_date", ">=", dt)]
         else:
             w_date = c_date = domain
-        obj_rec = pool.search(w_date)
-        obj_rec += pool.search(c_date)
+        obj_rec = model_obj.search(w_date)
+        obj_rec += model_obj.search(c_date)
         result = [(
                     r.get("write_date") or r.get("create_date"),
                     r.get("id"),
                     action.get("action", "d"),
-                ) for r in obj_rec.read(["create_date", "write_date"]) ]
+                ) for r in obj_rec.read(["create_date", "write_date"])]
         return result
 
 
@@ -90,7 +86,7 @@ class BaseSynchroObjAvoid(models.Model):
 
     name = fields.Char("Field Name", required=True)
     obj_id = fields.Many2one(
-        "base.synchro.obj", string="Object", required=True, ondelete="cascade"
+        "base.synchro.obj", "Object", required=True, ondelete="cascade"
     )
 
 
@@ -103,11 +99,11 @@ class BaseSynchroObjLine(models.Model):
     name = fields.Datetime(
         "Date",
         required=True,
-        default=lambda *args: time.strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+        default=lambda self: fields.Datetime.now(),
     )
     obj_id = fields.Many2one(
                 "base.synchro.obj",
-                string="Object",
+                "Object",
                 ondelete="cascade"
         )
     local_id = fields.Integer("Local ID", readonly=True)
