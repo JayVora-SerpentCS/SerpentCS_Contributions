@@ -26,7 +26,8 @@ class XElement(minidom.Element):
 
     def writexml(self, writer, indent="", addindent="", newl=""):
         writer.write(indent)
-        minidom.Element.writexml(self, writer, indent="", addindent="", newl="")
+        minidom.Element.writexml(self, writer, indent="", addindent="",
+                                 newl="")
         writer.write(newl)
 
 
@@ -299,7 +300,7 @@ class BaseModuleRecord(models.Model):
     @api.model
     def generate_xml(self):
         recording_data = self._context.get("recording_data", [])
-        if len(recording_data):
+        if recording_data:
             self.blank_dict = {}
             doc = minidom.Document()
             terp = doc.createElement("odoo")
@@ -332,3 +333,4 @@ class BaseModuleRecord(models.Model):
                 elif rec[0] == "assert":
                     pass
             return doc.toprettyxml(indent="\t").encode("utf-8")
+
