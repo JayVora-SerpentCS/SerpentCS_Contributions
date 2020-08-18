@@ -232,8 +232,7 @@ odoo.define('web_widget_multi_image.MultiImage', function (require) {
                 validate: function () {
                     var isList = self.view.arch.tag === 'tree';
                     // TODO: we should have some common method in the basic renderer...
-                    return isList ? self.renderer.unselectRow()
-                    Promise.resolve();
+                    return isList ? self.renderer.unselectRow() :  Promise.resolve();
                 },
             });
             this.pager.on('pager_changed', this, function (new_state) {
