@@ -20,24 +20,26 @@
 ##############################################################################
 
 {
-    "name" : "Mass Label Reporting",
-    "version" : "1.0",
-    "author" : "Serpent Consulting Services Pvt. Ltd.",
+    "name" : "Mass Reporting",
+    "version" : "1.1",
+    "author" : "Serpent Consulting Services",
     "category" : "Tools",
     "website" : "http://www.serpentcs.com",
     "description": """
     """,
+    'author': 'SerpentCS',
     'depends': ['report_webkit'],
-    'data': [
-             'data/report_paperformat.xml',
-             'security/label.brand.csv',
-             'security/label.config.csv',
-             'label_config_view.xml',
-             'label_print_view.xml',
-             'label_size_data.xml',
-             'wizard/label_print_wizard_view.xml',
-             'label_report.xml',
-             'report/dynamic_label.xml'
+    'init_xml': [],
+    'update_xml': [
+        'security/label.brand.csv',
+        'security/label.config.csv',
+        'wizard/label_print_wizard_view.xml',
+        'label_print_view.xml',
+        'label_config_view.xml',
+        'label_size_data.xml',
+        'label_report.xml',
+    ],
+    'test': [
     ],
     'installable': True,
     'auto_install': False,

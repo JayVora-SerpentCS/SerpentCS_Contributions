@@ -19,25 +19,40 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-from openerp import models,fields,api
 
-class label_main(models.Model):
+from osv import osv,fields
+
+class label_main(osv.osv):
     _name = 'label.brand'
     _rec_name = 'brand_name'
-    
-    brand_name = fields.Char("Name", size=64, select=1)
-    label_config_ids = fields.One2many('label.config', 'label_main_id', 'Label Config')
+    _columns = {
+        'brand_name' : fields.char("Name", size=64, select=1),
+        'label_config_ids' : fields.one2many('label.config', 'label_main_id', 'Label Config'),
+    }
+label_main()
 
-class label_config(models.Model):
+class label_config(osv.osv):
     
     _name = 'label.config'
     
-    name = fields.Char("Name", size=64, required=True, select=1)
-    height = fields.Float("Height (in mm)", required=True)
-    width = fields.Float("Width (in mm)", required=True)
-    top_margin = fields.Float("Top Margin (in mm)",default=0.0)
-    bottom_margin = fields.Float("Bottom Margin  (in mm)",default=0.0)
-    left_margin = fields.Float("Left Margin (in mm)",default=0.0)
-    right_margin = fields.Float("Right Margin (in mm)",default=0.0)
-    cell_spacing = fields.Float("Cell Spacing",default=1.0)
-    label_main_id = fields.Many2one('label.brand', 'Label')
+    _columns = {
+        'name' : fields.char("Name", size=64, required=True, select=1),
+        'height' : fields.float("Height (in mm)", required=True),
+        'width' : fields.float("Width (in mm)", required=True),
+        'top_margin' : fields.float("Top Margin (in mm)"),
+        'bottom_margin' : fields.float("Bottom Margin  (in mm)"),
+        'left_margin' : fields.float("Left Margin (in mm)"),
+        'right_margin' : fields.float("Right Margin (in mm)"),
+        'cell_spacing' : fields.float("Cell Spacing"),
+        'label_main_id' : fields.many2one('label.brand', 'Label'),
+    }
+    
+    _defaults = {
+        'top_margin' : 0.0,
+        'bottom_margin' : 0.0,
+        'left_margin' : 0.0,
+        'right_margin' : 0.0,
+        'cell_spacing' : 1.0
+    }
+
+label_config()

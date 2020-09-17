@@ -1,48 +1,44 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models,fields,api,_
-from openerp.exceptions import except_orm, Warning, RedirectWarning
+from osv import fields, osv
+from tools.translate import _
 
-class label_print(models.Model):
+class label_print(osv.osv):
     _name = "label.print"
 
-    name = fields.Char("Name", size=64, required=True, select=1)
-    model_id = fields.Many2one('ir.model', 'Model', required=True, select=1)
-    field_ids = fields.One2many("label.print.field", 'report_id',string ='Fields')
-    ref_ir_act_report = fields.Many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
-                                        help="Sidebar action to make this template available on records "
-                                             "of the related document model")
-    ref_ir_value = fields.Many2one('ir.values', 'Sidebar button', readonly=True,
-                                   help="Sidebar button to open the sidebar action")
-    model_list = fields.Char('Model List', size=256)
-
-    @api.onchange('model_id')
-    def onchange_model(self):
-        model_list = [] 
-        if self.model_id:
-            model_obj = self.env['ir.model']
-            current_model=self.model_id.model
-            model_list.append(current_model)
-            
-            active_model_obj = self.env[self.model_id.model]
+    _columns = {
+        'name' : fields.char("Name", size=64, required=True, select=1),
+        'model_id' : fields.many2one('ir.model', 'Model', required=True, select=1),
+        'field_ids' : fields.one2many("label.print.field", 'report_id', 'Fields'),
+        'ref_ir_act_report':fields.many2one('ir.actions.act_window', 'Sidebar action', readonly=True,
+                                            help="Sidebar action to make this template available on records "
+                                                 "of the related document model"),
+        'ref_ir_value':fields.many2one('ir.values', 'Sidebar button', readonly=True,
+                                       help="Sidebar button to open the sidebar action"),
+        'model_list': fields.char('Model List', size=256)
+    }
+    def onchange_model(self, cr, uid, ids, model_id):
+        model_list = ""
+        if model_id:
+            model_obj = self.pool.get('ir.model')
+            model_data = model_obj.browse(cr, uid, model_id)
+            model_list = "[" + str(model_id) + ""
+            active_model_obj = self.pool.get(model_data.model)
             if active_model_obj._inherits:
                 for key, val in active_model_obj._inherits.items():
-                    model_ids = model_obj.search([('model', '=', key)])
+                    model_ids = model_obj.search(cr, uid, [('model', '=', key)])
                     if model_ids:
-                        model_list.append(key)
-        self.model_list = model_list                
-        return model_list
+                        model_list += "," + str(model_ids[0]) + ""
+            model_list += "]"
+        return {'value': {'model_list': model_list}}
 
-
-    @api.multi
-    def create_action(self):
+    def create_action(self, cr, uid, ids, context=None):
         vals = {}
-        action_obj = self.env['ir.actions.act_window']
-        for data in self.browse(self.ids):
+        action_obj = self.pool.get('ir.actions.act_window')
+        for data in self.browse(cr, uid, ids, context=context):
             src_obj = data.model_id.model
             button_name = _('Label (%s)') % data.name
-            
-            vals['ref_ir_act_report'] = action_obj.create({
+            vals['ref_ir_act_report'] = action_obj.create(cr, uid, {
                  'name': button_name,
                  'type': 'ir.actions.act_window',
                  'res_model': 'label.print.wizard',
@@ -51,77 +47,58 @@ class label_print(models.Model):
                  'context': "{'label_print' : %d}" % (data.id),
                  'view_mode':'form,tree',
                  'target' : 'new',
-            })
-            
-            id_temp = vals['ref_ir_act_report'].id
-            vals['ref_ir_value'] = self.env['ir.values'].create({
+            }, context)
+            vals['ref_ir_value'] = self.pool.get('ir.values').create(cr, uid, {
                  'name': button_name,
                  'model': src_obj,
                  'key2': 'client_action_multi',
-                 'value': "ir.actions.act_window," + str(id_temp),
+                 'value': "ir.actions.act_window," + str(vals['ref_ir_act_report']),
                  'object': True,
-             })
-        self.write({
-                    'ref_ir_act_report': vals.get('ref_ir_act_report',False).id,
-                    'ref_ir_value': vals.get('ref_ir_value',False).id,
-                })
+             }, context)
+        self.write(cr, uid, ids, {
+                    'ref_ir_act_report': vals.get('ref_ir_act_report',False),
+                    'ref_ir_value': vals.get('ref_ir_value',False),
+                }, context)
         return True
-    
-    @api.multi
-    def unlink_action(self):
-        ir_values_obj = self.env['ir.values']
-        
-        act_window_obj = self.env['ir.actions.act_window']
 
-        for template in self:
-                if template.ref_ir_act_report.id:
-                    act_window_obj_search = act_window_obj.browse(template.ref_ir_act_report.id)
-                    act_window_obj_search.unlink()
-                if template.ref_ir_value.id:
-                    ir_values_obj_search = ir_values_obj.browse(template.ref_ir_value.id)
-                    ir_values_obj_search.unlink()
+    def unlink_action(self, cr, uid, ids, context=None):
+        ir_values_obj = self.pool.get('ir.values')
+        act_window_obj = self.pool.get('ir.actions.act_window')
+        for template in self.browse(cr, uid, ids, context=context):
+            try:
+                if template.ref_ir_act_report:
+                    act_window_obj.unlink(cr, uid, template.ref_ir_act_report.id, context)
+                if template.ref_ir_value:
+                    ir_values_obj.unlink(cr, uid, template.ref_ir_value.id, context)
+            except Exception, e:
+                raise osv.except_osv(_("Warning"), _("Deletion of the action record failed. %s" % (e)))
         return True
-    
-class label_print_field(models.Model):
+
+label_print()
+
+class label_print_field(osv.osv):
     _name = "label.print.field"
     _rec_name = "sequence"
     _order = "sequence"
-   
-    
-    sequence = fields.Integer("Sequence", required=True)
-    field_id = fields.Many2one('ir.model.fields', 'Fields', required=False)
-    report_id = fields.Many2one('label.print', 'Report')
-    type = fields.Selection([('normal','Normal'), ('barcode', 'Barcode'), ('image', 'Image')], 'Type', required=True,default='normal')
-    python_expression = fields.Boolean('Python Expression')
-    python_field = fields.Char('Fields', size=32)
-    fontsize = fields.Float("Font Size",default=8.0)
-    position = fields.Selection([('left','Left'),('right','Right'),('top','Top'),('bottom','Bottom')],'Position')
-    nolabel = fields.Boolean('No Label')
-    newline = fields.Boolean('New Line',deafult=True)
+    _columns = {
+        'sequence' : fields.integer("Sequence", required=True),
+        'field_id' : fields.many2one('ir.model.fields', 'Fields', required=False),
+        'report_id': fields.many2one('label.print', 'Report'),
+        'type': fields.selection([('normal','Normal'), ('barcode', 'Barcode'), ('image', 'Image')], 'Type', required=True),
+        'python_expression': fields.boolean('Python Expression'),
+        'python_field': fields.char('Fields', size=32),
+        'fontsize' : fields.float("Font Size"),
+        'position' : fields.selection([('left','Left'),('right','Right'),('top','Top'),('bottom','Bottom')],'Position'),
+        'nolabel' : fields.boolean('No Label'),
+        'newline' : fields.boolean('New Line')
+    }
 
-class ir_model_fields(models.Model):
-    
-    _inherit = 'ir.model.fields'
-      
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=None):
-        
-        data = self._context['model_list']
-        args.append(('model','in',eval(data)))
-        ret_vat = super(ir_model_fields, self).name_search(name=name, args=args, operator=operator, limit=limit)
-        return ret_vat
-     
+    _defaults = {
+        'type': 'normal',
+        'fontsize' : 8.0,
+        'newline' : True
+    }
 
-        
-        
-           
-        
-
-
-
-
-
-
-
+label_print_field()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
