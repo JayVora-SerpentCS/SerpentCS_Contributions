@@ -19,24 +19,91 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 ##############################################################################
-from openerp.osv import osv
-from openerp.report import report_sxw
+
+from report import report_sxw
 import barcode
 from barcode.writer import ImageWriter
 import base64
-from openerp.osv.orm import browse_record
-import utils
+from osv.orm import browse_record
+#import utils
 import cairosvg
+import cairo
+import rsvg
 import tempfile
 
 class report_dynamic_label(report_sxw.rml_parse):
-            
-    def get_data(self,row,columns,ids,model,number_of_copy):
+
+    def generate_barcode(self, barcode_string, height, width):
+        temp_path_svg = tempfile.gettempdir()+"/temp_barcode"
+        temp_path_png = tempfile.gettempdir()+"/temp_barcode.png"
+        code39 = barcode.get_barcode_class('code39')
+        c39 = code39(str(barcode_string))
+        fullname = c39.save(temp_path_svg)
+        file = open(temp_path_svg+".svg")
+        
+        img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 200,75)
+        ctx = cairo.Context(img)
+        svg_data = file.read()
+        handler = rsvg.Handle(None, str(svg_data))
+        handler.render_cairo(ctx)
+        img.write_to_png(temp_path_png)
+        
+        name = open(temp_path_png, "r+")
+        barcode_data = base64.b64encode(name.read())
+        return barcode_data
+#         barcode_data = ""
+#         try:
+#             EAN = barcode.get_barcode_class('code39')
+#             ean = EAN(barcode_string, writer=ImageWriter())
+#             ean.default_writer_options['font_size'] = 1
+#             ean.default_writer_options['text_distance'] = False
+#             ean.default_writer_options['quiet_zone'] = 2.0
+#             fullname = ean.save('code39_barcode')
+#             name = open(fullname, "r+")
+#             barcode_data = base64.b64encode(name.read())
+#         except Exception, e:
+#             return False
+#         return barcode_data
+
+#         try:
+#             from reportlab.graphics.barcode import code128
+#             from reportlab.graphics.barcode import code39
+#             from reportlab.graphics.barcode import code93
+#             from reportlab.graphics.barcode import common
+#             from reportlab.graphics.barcode import fourstate
+#             from reportlab.graphics.barcode import usps
+#             from reportlab.graphics.barcode import createBarcodeDrawing
+#         except ImportError:
+#             _logger.warning("Cannot use barcode renderers:", exc_info=True)
+#             return None
+# #         args = utils.attr_get(node, [], {'ratio':'float','xdim':'unit','height':'unit','checksum':'int','quiet':'int','width':'unit','stop':'bool','bearers':'int','barWidth':'float','barHeight':'float'})
+#         codes = {
+#             'codabar': lambda x: common.Codabar(x, **args),
+#             'code11': lambda x: common.Code11(x, **args),
+#             'code128': lambda x: code128.Code128(str(x), **args),
+#             'standard39': lambda x: code39.Standard39(str(x), **args),
+#             'standard93': lambda x: code93.Standard93(str(x), **args),
+#             'i2of5': lambda x: common.I2of5(x, **args),
+#             'extended39': lambda x: code39.Extended39(str(x), **args),
+#             'extended93': lambda x: code93.Extended93(str(x), **args),
+#             'msi': lambda x: common.MSI(x, **args),
+#             'fim': lambda x: usps.FIM(x, **args),
+#             'postnet': lambda x: usps.POSTNET(x, **args),
+#             'ean13': lambda x: createBarcodeDrawing('EAN13', value=str(x), **args),
+#             'qrcode': lambda x: createBarcodeDrawing('QR', value=x, **args),
+#         }
+#         code = 'standard39'
+# #         if node.get('code'):
+# #             code = node.get('code').lower()
+#         print "dgdsfgsdfgsdfg",codes[code](barcode_string)
+#         return codes[code](barcode_string)
+
+    def _get_record(self, rows, columns, ids, model, number_of_copy):
         active_model_obj = self.pool.get(model)
         label_print_obj = self.pool.get('label.print')
         label_print_data = label_print_obj.browse(self.cr, self.uid, self.context.get('label_print'))
         result = []
-        value_vals = []
+        
         for datas in active_model_obj.browse(self.cr, self.uid, ids):
             for i in range(0, number_of_copy):
                 vals=[]
@@ -47,31 +114,24 @@ class report_dynamic_label(report_sxw.rml_parse):
                     if field.python_expression and field.python_field:
                         string = field.python_field.split('.')[-1]
                         value = eval(field.python_field, {'obj': datas})
-                        
                     elif field.field_id.name:
                         string = field.field_id.field_description
                         value = getattr(datas, field.field_id.name)
-                        
                     if not value:
                         continue
-                    
                     if isinstance(value, browse_record):
                         model_obj = self.pool.get(value._name)
                         value = eval("obj." + model_obj._rec_name, {'obj': value})
-
-                         
                     if not value:
                         value = ''
-                        
                     if field.nolabel:
                         string='';
                     else :
                         string+=' :- '
-                    
                     if field.type == 'image' or field.type == 'barcode':
                         string = '';
                         if field.position != 'bottom':
-                            pos ='float:'+ str(field.position)+';'
+                            pos ='float:'+field.position+';'
                             bot = False
                         else :
                             bot =True
@@ -83,77 +143,22 @@ class report_dynamic_label(report_sxw.rml_parse):
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
-                if vals[0]['value'] not in value_vals:    
-                    value_vals.append(vals[0]['value'])
                 result.append(vals)
-                temp = vals
-
-        
-        newlist_len = 0        
         new_list = []
-        result1 = []
-        list_newdata=[]
-        for row in range(0,len(result)/(columns +1)):
+        for row in range(0, len(result)/(columns)):
             val = result[row*columns: row*columns + columns]
             if val:
                 new_list.append(val)
-            for value_list in val:
-                for value_print in value_list:
-                    list_newdata.append(value_print['value'])    
-        
-        for data in new_list:
-            for list_data in data:
-                newlist_len =newlist_len + 1
-        
-        remain_data = []
-        counter = 0
-        for newlist_data in list_newdata:
-                if  newlist_data in list_newdata:
-                    counter = counter + 1
-                if counter > number_of_copy:
-                    counter = 1
-        if counter < number_of_copy:
-                    remain_copy = number_of_copy - counter
-                    for xx in range(0,remain_copy):
-                        remain_data.append( newlist_data)
-        
-        for data_value_vals in value_vals:
-            if data_value_vals not in list_newdata:
-                 for add_data in range(0,number_of_copy):
-                     remain_data.append(data_value_vals)
-                 
-        if newlist_len < number_of_copy:
-            diff = number_of_copy - newlist_len
-        
-        new_val = []
-        list_newdata=[]
-        if len(ids) == 1:     
-            for new_result in range(0, diff):
-                    result1.append(temp)
-
-        if len(ids) > 1:
-                for remain_data_value in remain_data:
-                    temp[0]['value']=remain_data_value
-                    result1.append([temp[0].copy()])
-                    
-        for row in range(0, len(result1)):
-                    new_val = result1[row*columns: row*columns + columns]
-                    new_list.append(new_val)
         return new_list
-         
+
     def __init__(self, cr, uid, name, context):
-        
         super(report_dynamic_label,self).__init__(cr, uid, name, context=context)
         self.context=context
         self.rec_no = 0
         self.localcontext.update({
-            'get_data':self.get_data,
+            'get_record' : self._get_record,
+            'generate_barcode': self.generate_barcode
         })
 
-class report_employee(osv.AbstractModel):
-    _name = 'report.label.report_label'
-    _inherit = 'report.abstract_report'
-    _template = 'label.report_label'
-    _wrapped_report_class = report_dynamic_label
+report_sxw.report_sxw('report.dynamic.label','label.config','addons/label/report/dynamic_label.mako',parser=report_dynamic_label, header=False)
 
-#report_sxw.report_sxw('report.dynamic.label','label.config','addons/label/report/dynamic_label.mako',parser=report_dynamic_label, header=False)
