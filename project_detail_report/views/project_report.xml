@@ -6,7 +6,6 @@
         <t t-call="web.external_layout">
             <div class="page">
                 <form>
-                    <br/>
                     <div class="container">
                         <tr>
                             <th>
@@ -70,7 +69,7 @@
                                 </thead>
                                 <tbody>
                                     <t t-foreach="e.tasks" t-as="t">
-                                        <tr>
+                                        <tr style="page-break-inside: avoid;">
                                             <td>
                                                 <t t-if='t.name'>
                                                     <span t-field="t.name"/>
