@@ -29,7 +29,7 @@
                     </group>
                     <notebook>
                         <page name="members" string="Team Members">
-                            <field name="team_member_ids" widget="many2many">
+                            <field name="team_members_ids" widget="many2many">
                                 <kanban quick_create="false" create="true" delete="true">
                                     <field name="id"/>
                                     <field name="name"/>
@@ -126,7 +126,7 @@
             </field>
             <page name="settings" position="after">
                 <page string="Team">
-                    <field name="member_ids" widget="many2many"
+                    <field name="members_ids" widget="many2many"
                            context="{'form_view_ref': 'project_team.project_team_form_view', 'default_type_team':'project'}">
                         <kanban quick_create="false" create="true" delete="true">
                             <field name="id"/>
