@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <template id="project_task_qweb_report">
         <t t-call="web.html_container">
