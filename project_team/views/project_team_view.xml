@@ -29,7 +29,7 @@
                     </group>
                     <notebook>
                         <page name="members" string="Team Members">
-                            <field name="team_members" widget="many2many">
+                            <field name="team_member_ids" widget="many2many">
                                 <kanban quick_create="false" create="true" delete="true">
                                     <field name="id"/>
                                     <field name="name"/>
@@ -37,12 +37,12 @@
                                         <t t-name="kanban-box">
                                             <div class="oe_kanban_global_click" style="max-width: 200px">
                                                 <div class="o_kanban_record_top">
-                                                    <img t-att-src="kanban_image('res.users', 'image_1920', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kanban_avatar_smallbox mb0"/>
+                                                    <img t-att-src="kanban_image('res.users', 'image_1920', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kanban_avatar_smallbox mb0" alt="Avatar"/>
                                                     <div class="o_kanban_record_headings ml8">
                                                         <strong class="o_kanban_record_title"><field name="name"/></strong>
                                                     </div>
                                                     <a t-if="! read_only_mode" type="delete" class="text-danger">
-                                                        <i class="fa fa-times"></i>
+                                                        <i class="fa fa-times" title="Delete"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -120,13 +120,13 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
+            <field name="allowed_portal_user_ids" position="after">
                 <field name="team_id"
                        context="{'form_view_ref': 'project_team.project_team_form_view', 'default_type_team':'project'}"/>
             </field>
             <page name="settings" position="after">
                 <page string="Team">
-                    <field name="members" widget="many2many"
+                    <field name="member_ids" widget="many2many"
                            context="{'form_view_ref': 'project_team.project_team_form_view', 'default_type_team':'project'}">
                         <kanban quick_create="false" create="true" delete="true">
                             <field name="id"/>
@@ -135,12 +135,12 @@
                                 <t t-name="kanban-box">
                                     <div class="oe_kanban_global_click" style="max-width: 200px">
                                         <div class="o_kanban_record_top">
-                                            <img t-att-src="kanban_image('res.users', 'image_1920', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kanban_avatar_smallbox mb0"/>
+                                            <img t-att-src="kanban_image('res.users', 'image_1920', record.id.raw_value)" height="40" width="40" class="oe_avatar oe_kanban_avatar_smallbox mb0" alt="Avatar"/>
                                             <div class="o_kanban_record_headings ml8">
                                                 <strong class="o_kanban_record_title"><field name="name"/></strong>
                                             </div>
                                             <a t-if="! read_only_mode" type="delete" class="text-danger">
-                                                <i class="fa fa-times"></i>
+                                                <i class="fa fa-times" title="Delete"></i>
                                             </a>
                                         </div>
                                     </div>
