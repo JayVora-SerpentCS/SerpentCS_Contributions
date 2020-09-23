@@ -2,7 +2,7 @@
 
 {
     "name": "Project - Status by Recent Activities",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "license": "AGPL-3",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
