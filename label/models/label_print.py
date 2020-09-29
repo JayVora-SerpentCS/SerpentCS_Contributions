@@ -10,8 +10,10 @@ class LabelPrint(models.Model):
     _description = "Label Print"
 
     name = fields.Char("Name", size=64, required=True, index=True)
-    model_id = fields.Many2one("ir.model", "Model", required=True, index=True)
-    field_ids = fields.One2many("label.print.field", "report_id", string="Fields")
+    model_id = fields.Many2one("ir.model", "Model", required=True, index=True,
+                               ondelete='cascade')
+    field_ids = fields.One2many(
+        "label.print.field", "report_id", string="Fields")
     ref_ir_act_report = fields.Many2one(
         "ir.actions.act_window",
         "Sidebar action",
@@ -47,15 +49,16 @@ class LabelPrint(models.Model):
                     "name": button_name,
                     "type": "ir.actions.act_window",
                     "res_model": "label.print.wizard",
-                    "binding_view_types": "form",
+                    "binding_view_types": "form,list",
                     "context": "{'label_print' : %d}" % (data.id),
-                    "view_mode": "form,tree",
+                    "view_mode": "form",
                     "target": "new",
                     "binding_model_id": data.model_id.id,
                     "binding_type": "action",
                 }
             )
-        self.write({"ref_ir_act_report": vals.get("ref_ir_act_report", False).id})
+        self.write({"ref_ir_act_report": vals.get(
+            "ref_ir_act_report", False).id})
         return True
 
     def unlink_action(self):
@@ -69,10 +72,12 @@ class LabelPrintField(models.Model):
     _name = "label.print.field"
     _rec_name = "sequence"
     _order = "sequence"
+    _description = "Label Print Field One2many"
 
     sequence = fields.Integer("Sequence", required=True)
     field_id = fields.Many2one("ir.model.fields", "Fields", required=False)
     report_id = fields.Many2one("label.print", "Report")
+    model_id = fields.Many2one(related="report_id.model_id", string="Model")
     type = fields.Selection(
         [("normal", "Normal"), ("barcode", "Barcode"), ("image", "Image")],
         "Type",
@@ -83,7 +88,8 @@ class LabelPrintField(models.Model):
     python_field = fields.Char("Fields", size=32)
     fontsize = fields.Float("Font Size", default=8.0)
     position = fields.Selection(
-        [("left", "Left"), ("right", "Right"), ("top", "Top"), ("bottom", "Bottom")],
+        [("left", "Left"), ("right", "Right"),
+         ("top", "Top"), ("bottom", "Bottom")],
         "Position",
     )
     nolabel = fields.Boolean("No Label")
