@@ -5,13 +5,16 @@ from odoo.tools import ustr
 
 
 class LabelTestCase(common.TransactionCase):
+
     def setUp(self):
         super(LabelTestCase, self).setUp()
 
     def test_cityarea_action(self):
         self.model_field = self.env["ir.model.fields"]
-        self.model = self.env["ir.model"].sudo().search([("model", "=", "res.users")])
-        self.fields = self.model_field.sudo().search([("model_id", "=", self.model.id)])
+        self.model = self.env["ir.model"].sudo().search(
+            [("model", "=", "res.users")])
+        self.fields = self.model_field.sudo().search(
+            [("model_id", "=", self.model.id)])
         self.image_field = self.fields.with_context(
             {"model_list": ustr([ustr("res.users"), "res.partner"])}
         ).name_search(

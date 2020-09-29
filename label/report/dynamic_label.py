@@ -2,18 +2,21 @@
 
 # 1:  imports of odoo
 import time
-from odoo import models, api, _
+
+from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval as eval
 
 
 class ReportDynamicLabel(models.AbstractModel):
     _name = "report.label.report_label"
+    _description = "Print Label Report Class"
 
     def get_data(self, row, columns, ids, model, number_of_copy):
         active_model_obj = self.env[model]
         label_print_obj = self.env["label.print"]
-        label_print_data = label_print_obj.browse(self.env.context.get("label_print"))
+        label_print_data = label_print_obj.browse(
+            self.env.context.get("label_print"))
         result = []
         value_vals = []
         diff = 0
@@ -38,7 +41,8 @@ class ReportDynamicLabel(models.AbstractModel):
 
                     if isinstance(value, dict):
                         model_obj = self.env[value._name]
-                        value = eval("obj." + model_obj._rec_name, {"obj": value})
+                        value = eval("obj." + model_obj._rec_name,
+                                     {"obj": value})
 
                     if not value:
                         value = ""
@@ -60,10 +64,9 @@ class ReportDynamicLabel(models.AbstractModel):
                                 "value": value,
                                 "type": field.type,
                                 "newline": field.newline,
-                                "style": "font-size:"
-                                + str(field.fontsize)
-                                + "px;"
-                                + pos,
+                                "style":
+                                "font-size:" +
+                                str(field.fontsize) + "px;" + pos,
                             }
                     else:
                         bot = False
@@ -73,7 +76,8 @@ class ReportDynamicLabel(models.AbstractModel):
                             "value": value,
                             "type": field.type,
                             "newline": field.newline,
-                            "style": "font-size:" + str(field.fontsize) + "px;" + pos,
+                            "style":
+                            "font-size:" + str(field.fontsize) + "px;" + pos,
                         }
                         vals.append(vals_dict)
                 if bot_dict != {}:
@@ -88,7 +92,7 @@ class ReportDynamicLabel(models.AbstractModel):
         result1 = []
         list_newdata = []
         for row in range(0, len(result) // (columns) + 1):
-            val = result[row * columns : row * columns + columns]
+            val = result[row * columns: row * columns + columns]
             if val:
                 new_list.append(val)
             for value_list in val:
@@ -135,11 +139,11 @@ class ReportDynamicLabel(models.AbstractModel):
                 )
             )
 
-        self.model = self.env.context.get("active_model")
-        docs = self.env[self.model].browse(self.env.context.get("active_ids", []))
+        model = self.env.context.get("active_model")
+        docs = self.env[model].browse(self.env.context.get("active_ids", []))
         return {
             "doc_ids": docs.ids,
-            "doc_model": self.model,
+            "doc_model": model,
             "data": data,
             "docs": docs,
             "time": time,
