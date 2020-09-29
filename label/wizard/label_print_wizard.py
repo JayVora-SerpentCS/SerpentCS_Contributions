@@ -3,13 +3,14 @@
 # 1: imports of python lib
 import math
 
-# 2:  imports of openerp
-from odoo import fields, models, api
+# 2:  imports of odoo
+from odoo import api, fields, models
 from odoo.tools import misc
 
 
 class LabelPrintWizard(models.TransientModel):
     _name = "label.print.wizard"
+    _description = "Print Wizard"
 
     @api.model
     def default_get(self, fields):
@@ -18,7 +19,8 @@ class LabelPrintWizard(models.TransientModel):
         result = super(LabelPrintWizard, self).default_get(fields)
         if self._context.get("label_print"):
             label_print_obj = self.env["label.print"]
-            label_print_data = label_print_obj.browse(self._context.get("label_print"))
+            label_print_data = label_print_obj.browse(
+                self._context.get("label_print"))
             for field in label_print_data.field_ids:
                 if field.type == "image":
                     result["is_image"] = True
@@ -39,7 +41,8 @@ class LabelPrintWizard(models.TransientModel):
     def print_report(self):
         if self._context is None:
             self._context = {}
-        if not self._context.get("label_print") or not self._context.get("active_ids"):
+        if not self._context.get("label_print") or not \
+                self._context.get("active_ids"):
             return False
         total_record = len(self._context.get("active_ids", []))
         datas = {}
@@ -71,7 +74,8 @@ class LabelPrintWizard(models.TransientModel):
         cr, uid, context, su = self.env.args
         context = dict(context)
         context.update(
-            {"label_print_id": self._context.get("label_print"), "datas": datas}
+            {"label_print_id": self._context.get(
+                "label_print"), "datas": datas}
         )
         self.env.args = cr, uid, misc.frozendict(context)
 
