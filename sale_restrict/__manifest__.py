@@ -2,7 +2,7 @@
 
 {
     'name': 'SO - Product Price Check',
-    'version': '13.0.1.0.0',
+    'version': '14.0.1.0.0',
     'category': 'Sales Management',
     'author': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Restrict sales on 0 value.',
