@@ -1,6 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import models, _
+from odoo import _, models
 from odoo.exceptions import UserError
 
 
