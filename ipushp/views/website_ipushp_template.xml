@@ -58,9 +58,7 @@
                                 <h1 style="text-shadow: 3px 1px wheat;">Program Teams</h1>
                                 <div class="divider"/>
                             </div>
-                            <div class="text-center">
-                            <div class="col-md-4 ">
-                                <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                                <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-left" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                                     <span class="icon bg-df circle">
                                         <i class="fa fa-male"/>
                                     </span>
@@ -69,9 +67,7 @@
                                     <p>vinay.vandra@serpentcs.com</p>
                                     <p>+91 9909913165</p>
                                 </div>
-                            </div>
-                            <div class="col-md-4 ">
-                                <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                                <div class="pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-right" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
                                     <span class="icon bg-df circle">
                                         <i class="fa fa-female"/>
                                     </span>
@@ -80,8 +76,6 @@
                                     <p>d.vasavada.serpentcs@gmail.com</p>
                                     <p>+91 9662768877</p>
                                 </div>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </section>
