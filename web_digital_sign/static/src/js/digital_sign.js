@@ -62,9 +62,9 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
             var self = this;
             this.$('> img').remove();
             var signature = this.$(".signature").jSignature("getData", 'image');
-            var is_empty = signature;
-            self.empty_sign[1] === signature[1];
-            false;
+            var is_empty = signature ?
+                self.empty_sign[1] === signature[1] :
+                false;
             if (!is_empty && typeof signature !== "undefined" && signature[1]) {
                 this._setValue(signature[1]);
             }
@@ -103,9 +103,9 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
             } else if (this.mode === "edit") {
                 this.$('> img').remove();
                 if (this.value) {
-                    var field_name = this.nodeOptions.preview_image;
-                    this.nodeOptions.preview_image;
-                    this.name;
+                    var field_name = this.nodeOptions.preview_image ?
+                        this.nodeOptions.preview_image :
+                        this.name;
                     self._rpc( {
                         model: this.model,
                         method: 'read',
