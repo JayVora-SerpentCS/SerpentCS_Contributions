@@ -401,15 +401,16 @@ class WizDownloadTemplate(models.TransientModel):
                             x.strip().encode().decode("utf-8")
                             for x in sheet.row_values(rownum)
                         ]
-                        model_name = self.ir_model.name
-                        name_file = "".join(map(str, file_name.split(".xls")))
-                        if model_name != name_file:
-                            raise UserError(
-                                _(
-                                    """Selected document type not matched
-                                    with browsed file name!"""
-                                )
-                            )
+                        # To do (Check condition based on Model/DocType: inside the template)
+                        # model_name = self.ir_model.name
+                        # name_file = "".join(map(str, file_name.split(".xls")))
+                        # if model_name != name_file:
+                        #     raise UserError(
+                        #         _(
+                        #             """Selected document type not matched
+                        #             with browsed file name!"""
+                        #         )
+                        #     )
 
                         index = []
                         for x in header_list:
