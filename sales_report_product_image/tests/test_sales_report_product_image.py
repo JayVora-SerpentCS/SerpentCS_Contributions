@@ -5,11 +5,11 @@ from odoo.tests import common
 
 
 class SaleReportProductImageTestCase(common.TransactionCase):
+
     def setup(self):
         super(SaleReportProductImageTestCase, self).setup()
 
     def test_sale_report_product(self):
-
         self.product = self.env.ref("product.product_product_7")
         self.partner = self.env.ref("base.res_partner_2")
 
