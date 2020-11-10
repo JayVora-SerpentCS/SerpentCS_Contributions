@@ -19,16 +19,18 @@ odoo.define('web_one2many_kanban.web_one2many_kanban', function (require) {
 
             if ( o2x_field_names.length > 0) {
                 var o2x_records = [];
+                var o2x_recordData = [];
                 _.each(o2x_field_names, function (o2x_field_name) {
                     var record = self.qweb_context.record[o2x_field_name];
                     if (record.type === 'one2many') {
                         o2x_records.push(record);
+                        o2x_recordData.push(self.recordData[o2x_field_name])
                     }
                 });
                 def = ajax.jsonRpc(
                     "/web/fetch_x2m_data",
                     "call",
-                    {'o2x_records': o2x_records}).then(function (o2x_datas) {
+                    {'o2x_records': o2x_records, 'o2x_record_data': o2x_recordData}).then(function (o2x_datas) {
                     for (var i=0; i<o2x_datas.length; i++) {
                         o2x_records[i].raw_value = o2x_datas[i];
                     }
