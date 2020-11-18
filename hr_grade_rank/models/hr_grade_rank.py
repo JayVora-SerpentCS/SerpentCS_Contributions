@@ -5,6 +5,7 @@ from odoo import fields, models, api
 
 class RankRank(models.Model):
     _name = "rank.rank"
+    _description = "Rank"
 
     name = fields.Char("Name")
     description = fields.Text("Description")
@@ -14,6 +15,7 @@ class RankRank(models.Model):
 
 class GradeGrade(models.Model):
     _name = "grade.grade"
+    _description = "Grade"
 
     name = fields.Char("Name")
     description = fields.Text("Description")
