@@ -17,6 +17,7 @@ class IrAttachement(models.Model):
 class CoursesType(models.Model):
 
     _name = "course.type"
+    _description = "Course Type"
 
     name = fields.Char("Name", required=True)
     code = fields.Char("Code", required=True)
@@ -25,6 +26,7 @@ class CoursesType(models.Model):
 class Trainingcourses(models.Model):
 
     _name = "training.courses"
+    _description = "Training Courses"
 
     @api.constrains("duration")
     def _check_duration(self):
@@ -39,7 +41,8 @@ class Trainingcourses(models.Model):
     name = fields.Char(string="Course Name", required=True)
     course_type_id = fields.Many2one("course.type", string="Course Category")
     job_id = fields.Many2one("hr.job", "Applied Job")
-    department = fields.Char(related="job_id.name", string="Department", readonly=True)
+    department = fields.Char(related="job_id.name",
+                             string="Department", readonly=True)
     training_location = fields.Char("Training Location")
     duration = fields.Integer("Course Duration", required=True)
     duration_type = fields.Selection(
@@ -52,18 +55,20 @@ class TrainingClass(models.Model):
 
     _name = "training.class"
     _rec_name = "course_id"
+    _description = "Training Class"
 
     @api.constrains("training_start_date", "training_end_date")
     def _check_training_dup(self):
         self.ensure_one()
-        if self.training_start_date > fields.Date.context_today(self):
+        if self.training_start_date < fields.Date.context_today(self):
             raise ValidationError(_("You can't create past training!"))
         if self.training_start_date > self.training_end_date:
             raise ValidationError(
                 _("End Date should be greated than Start date of Training!")
             )
 
-    course_id = fields.Many2one("training.courses", string="Course Name", required=True)
+    course_id = fields.Many2one(
+        "training.courses", string="Course Name", required=True)
     department = fields.Char(
         related="course_id.department", string="Department", readonly=True
     )
@@ -80,11 +85,13 @@ class TrainingClass(models.Model):
         readonly=True,
     )
     training_location = fields.Char(
-        related="course_id.training_location", string="Training Location", readonly=True
+        related="course_id.training_location", string="Training Location",
+        readonly=True
     )
     training_attendees = fields.Integer("Training Attendees", required=True)
     training_start_date = fields.Date(
-        "Training Start Date", readonly=True, states={"draft": [("readonly", False)]}
+        "Training Start Date", readonly=True,
+        states={"draft": [("readonly", False)]}, required=True
     )
     training_end_date = fields.Date(
         "Training End Date", readonly=True, states={"draft": [("readonly", False)]}
@@ -140,7 +147,8 @@ class TrainingClass(models.Model):
     def action_approve(self):
         for rec in self:
             if not rec.training_attendees:
-                raise ValidationError(_("Training Attendees should not be Zero!"))
+                raise ValidationError(
+                    _("Training Attendees should not be Zero!"))
             rec.write({"state": "approved"})
         return True
 
@@ -193,27 +201,30 @@ class ListOfAttendees(models.Model):
 
     _name = "list.of.attendees"
     _rec_name = "class_id"
+    _description = "List Of Attendees"
 
     @api.constrains(
         "class_id", "training_start_date", "training_end_date", "date_of_arrival"
     )
     def _check_training_dup(self):
-        self.ensure_one()
-        if self.training_start_date < datetime.datetime.now().strftime(
-            DEFAULT_SERVER_DATE_FORMAT
-        ):
-            raise ValidationError(_("You can't create past training!"))
-        if self.training_start_date > self.training_end_date:
-            raise ValidationError(
-                _("End Date should be greater than Start date of Training!")
-            )
-        if self.date_of_arrival and self.date_of_arrival < self.training_start_date:
-            raise ValidationError(
-                _(
-                    "Arrival Date should be less or equal than \
-                    Start date of Training!"
+        # self.ensure_one()
+        for rec in self:
+            if str(rec.training_start_date) < datetime.datetime.now().strftime(
+                DEFAULT_SERVER_DATE_FORMAT
+            ):
+                raise ValidationError(
+                    _("You can't create past training!"))
+            if rec.training_start_date > rec.training_end_date:
+                raise ValidationError(
+                    _("End Date should be greater than Start date of Training!")
                 )
-            )
+            if rec.date_of_arrival and rec.date_of_arrival < rec.training_start_date:
+                raise ValidationError(
+                    _(
+                        "Arrival Date should be less or equal than \
+                        Start date of Training!"
+                    )
+                )
 
     _sql_constraints = [
         (
@@ -230,7 +241,8 @@ class ListOfAttendees(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
-    attendees_image = fields.Binary(related="employee_id.image_1920", string="Image")
+    attendees_image = fields.Binary(
+        related="employee_id.image_1920", string="Image")
     training_start_date = fields.Date(
         "Training Start Date",
         required=True,
