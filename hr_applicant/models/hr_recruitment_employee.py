@@ -246,6 +246,7 @@ class EmployeeRelative(models.Model):
 
 class EmployeeEducation(models.Model):
     _name = "employee.education"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Employee Education"
     _rec_name = "from_date"
     _order = "from_date"
@@ -270,10 +271,10 @@ class EmployeeEducation(models.Model):
     def onchange_edu_type(self):
         for rec in self:
             if rec.edu_type == "Local":
-                rec.abroad_country_id = False
+                rec.country_id = False
             else:
-                rec.local_province_id = False
-                rec.local_district_id = False
+                rec.province = False
+                rec.state_id = False
 
     @api.onchange("illiterate")
     def onchange_illiterate(self):

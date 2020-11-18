@@ -7,6 +7,7 @@
             <form string="Need Training" version='9.0'>
                 <group>
                     <field name="is_triaing_needed"/>
+                    <field name="training_courses_ids" attrs="{'invisible': [('is_triaing_needed', '!=', True)]}" widget="many2many_checkboxes"/>
                 </group>
                 <footer>
                     <button icon="fa-check" name="action_done" string="Ok" type="object" class="oe_highlight"/>
