@@ -75,7 +75,8 @@ class Applicant(models.Model):
     no_of_prev_travel = fields.Integer(
         "No of Previous Travel", compute="_compute_no_of_prev_travel", readonly=True
     )
-    lang_ids = fields.One2many("applicant.language", "applicant_id", "Language Ref.")
+    lang_ids = fields.One2many(
+        "applicant.language", "applicant_id", "Language Ref.")
     no_of_lang = fields.Integer(
         "No of Language", compute="_compute_no_of_lang", readonly=True
     )
@@ -101,6 +102,18 @@ class Applicant(models.Model):
 
     def create_employee_from_applicant(self):
         res = super(Applicant, self).create_employee_from_applicant()
+        data_dict = res.get("context")
+        record_emp = self.env['hr.employee'].create({
+            'name': data_dict.get("default_name"),
+            'job_id': data_dict.get("default_job_id"),
+            'job_title': data_dict.get("default_job_title"),
+            'address_home_id': data_dict.get("address_home_id"),
+            'department_id': data_dict.get("default_department_id"),
+            'address_id': data_dict.get("default_address_id"),
+            'work_email': data_dict.get("default_work_email"),
+            'work_phone': data_dict.get("default_work_phone")})
+        res["res_id"] = record_emp.id
+        self.write({"emp_id": record_emp.id})
         if res.get("res_id", False):
             for applicant in self:
                 for medical_detail in self.env["hr.applicant.medical.details"].search(
@@ -205,7 +218,8 @@ class Applicant(models.Model):
                     for relative_attachment in relative_attachments:
                         emp_relative_attachment = relative_attachment.copy()
                         emp_relative_attachment.write(
-                            {"res_model": "employee.relative", "res_id": relative_id.id}
+                            {"res_model": "employee.relative",
+                                "res_id": relative_id.id}
                         )
                 for education in self.env["applicant.education"].search(
                     [("applicant_id", "=", applicant.id)]
@@ -289,7 +303,8 @@ class Applicant(models.Model):
                     for language_attachment in language_attachments:
                         emp_language_attachment = language_attachment.copy()
                         emp_language_attachment.write(
-                            {"res_model": "employee.language", "res_id": language_id.id}
+                            {"res_model": "employee.language",
+                                "res_id": language_id.id}
                         )
         return res
 
@@ -302,7 +317,8 @@ class ApplicantMedicalDetails(models.Model):
 
     medical_examination = fields.Char("Medical Examination")
     vital_sign = fields.Char("Vital sign")
-    date = fields.Date("Date", default=fields.Date.context_today, readonly=True)
+    date = fields.Date(
+        "Date", default=fields.Date.context_today, readonly=True)
     doc_comment = fields.Char("Doctor’s Comments")
 
     head_face_scalp = fields.Selection(
@@ -318,12 +334,14 @@ class ApplicantMedicalDetails(models.Model):
         [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Ears/TMs"
     )
     eyes_pupils_ocular = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Eyes/Pupils/Ocular Motility"
+        [("Abnormal", "Abnormal"), ("Normal", "Normal")
+         ], "Eyes/Pupils/Ocular Motility"
     )
     heart_vascular_system = fields.Selection(
         [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Heart/Vascular System"
     )
-    lungs = fields.Selection([("Abnormal", "Abnormal"), ("Normal", "Normal")], "Lungs")
+    lungs = fields.Selection(
+        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Lungs")
     abdomen_hernia = fields.Selection(
         [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Abdomen/Hernia"
     )
@@ -349,7 +367,8 @@ class ApplicantMedicalDetails(models.Model):
     epilepsy = fields.Boolean("Epilepsy")
     history_drug_use = fields.Boolean("Any History of drug use?")
 
-    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one(
+        "hr.applicant", "Applicant Ref", ondelete="cascade")
     active = fields.Boolean(string="Active", default=True)
     blood_name = fields.Selection(
         [("A", "A"), ("B", "B"), ("O", "O"), ("AB", "AB")], "Blood Type"
@@ -380,7 +399,8 @@ class ApplicantPreviousOccupation(models.Model):
     ref_position = fields.Char(string="Reference Position")
     ref_phone = fields.Char(string="Reference Phone")
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one(
+        "hr.applicant", "Applicant Ref", ondelete="cascade")
     email = fields.Char("Email")
 
     @api.model
@@ -445,7 +465,8 @@ class ApplicantRelative(models.Model):
         [("Male", "Male"), ("Female", "Female")], string="Gender", required=False
     )
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one(
+        "hr.applicant", "Applicant Ref", ondelete="cascade")
 
     @api.onchange("birthday")
     def onchange_birthday(self):
@@ -489,6 +510,7 @@ class ApplicantRelative(models.Model):
 class ApplicantEducation(models.Model):
     _name = "applicant.education"
     _description = "Applicant Education"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = "from_date"
     _order = "from_date"
 
@@ -500,7 +522,8 @@ class ApplicantEducation(models.Model):
     field = fields.Char(string="Major/Field of Education", size=128)
     illiterate = fields.Boolean("Illiterate")
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one(
+        "hr.applicant", "Applicant Ref", ondelete="cascade")
     edu_type = fields.Selection(
         [("Local", "Local"), ("Abroad", "Abroad")],
         string="School Location",
@@ -514,10 +537,10 @@ class ApplicantEducation(models.Model):
     def onchange_edu_type(self):
         for rec in self:
             if rec.edu_type == "Local":
-                rec.abroad_country_id = False
+                rec.country_id = False
             else:
-                rec.local_province_id = False
-                rec.local_district_id = False
+                rec.province = False
+                rec.state_id = False
 
     @api.onchange("illiterate")
     def onchange_illiterate(self):
@@ -577,7 +600,8 @@ class ApplicantPreviousTravel(models.Model):
     location = fields.Char(string="Location", size=128, required=True)
     reason = fields.Char("Reason", required=True)
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one(
+        "hr.applicant", "Applicant Ref", ondelete="cascade")
 
     @api.model
     def create(self, vals):
@@ -625,7 +649,8 @@ class ApplicantLanguage(models.Model):
         [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Speak"
     )
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one(
+        "hr.applicant", "Applicant Ref", ondelete="cascade")
     mother_tongue = fields.Boolean("Mother Tongue")
 
     @api.constrains("mother_tongue")
