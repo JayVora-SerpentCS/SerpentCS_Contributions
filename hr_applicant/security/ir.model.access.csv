@@ -15,3 +15,4 @@ access_training_courses,training.courses,model_training_courses,base.group_syste
 access_training_class,training.class,model_training_class,base.group_system,1,1,1,1
 access_list_of_attendees,list.of.attendees,model_list_of_attendees,base.group_system,1,1,1,1
 access_employee_relative,employee.relative,model_employee_relative,base.group_system,1,1,1,1
+select_training_id,select_training_name,model_select_training,base.group_system,1,1,1,1
