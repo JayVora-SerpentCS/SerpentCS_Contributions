@@ -66,7 +66,7 @@
         <field name="view_id" ref="view_training_courses_tree"/>
     </record>
 
-    <menuitem id="menu_training_main" name="Training" string="Training" parent="hr_recruitment.menu_hr_recruitment_root"/>
+    <menuitem id="menu_training_main" name="Training" parent="hr_recruitment.menu_hr_recruitment_root"/>
     <menuitem id="menu_training_course" name="Training Course" parent="menu_training_main" action="action_training_courses_list"/>
 
     <record model="ir.ui.view" id="view_training_class_form">
@@ -77,7 +77,6 @@
                 <header>
                     <button name="action_to_be_approve" type="object" states="draft" string="Send for Approval" class="oe_highlight"/>
                     <button name="action_approve" type="object" states="to_be_approved" string="Approve" class="oe_highlight"/>
-                    <button name="action_to_be_approve" type="object" states="draft" string="Send for Approval" class="oe_highlight"/>
                     <button name="action_completed" type="object" states="approved" string="Mark as Complete" class="oe_highlight"/>
                     <button name="action_cancel" type="object" string="Cancel" states="draft,to_be_approved,approved"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,to_be_approved,approved,completed" statusbar_colors='{"draft":"blue"}' />
