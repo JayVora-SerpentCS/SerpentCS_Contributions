@@ -202,7 +202,7 @@ class WizDownloadTemplate(models.TransientModel):
             worksheet.write_merge(10, 10, 3, 4, "")
 
             worksheet.write(row_12, 0, "DocType:", bold)
-            worksheet.write(row_12, 1, self.ir_model.name)
+            worksheet.write(row_12, 1, self.ir_model.model)
             worksheet.write(row_13, 0, "Column Name:", bold)
             worksheet.write(row_14, 0, "Type:", bold)
             worksheet.write(row_15, 0, "Mandatory:", bold)
@@ -360,6 +360,18 @@ class WizDownloadTemplate(models.TransientModel):
                 for rownum in range(sheet.nrows):
                     row_values.append(sheet.row_values(rownum))
                     # headers
+                    if rownum == 12:
+                        # (Checking condition based on Model/DocType: inside the template)
+                        ir_model = [
+                            x.strip().encode().decode("utf-8")
+                            for x in sheet.row_values(rownum)
+                        ]
+                        model = self.ir_model.model
+                        ir_model_model = ir_model[1]
+                        if ir_model_model != model:
+                            raise UserError(_(
+                                    """Selected document model not matched with browsed file!"""
+                            ))
                     if rownum == 13:
                         # converting unicode chars into string
                         header_key = [
@@ -401,16 +413,6 @@ class WizDownloadTemplate(models.TransientModel):
                             x.strip().encode().decode("utf-8")
                             for x in sheet.row_values(rownum)
                         ]
-                        # To do (Check condition based on Model/DocType: inside the template)
-                        # model_name = self.ir_model.name
-                        # name_file = "".join(map(str, file_name.split(".xls")))
-                        # if model_name != name_file:
-                        #     raise UserError(
-                        #         _(
-                        #             """Selected document type not matched
-                        #             with browsed file name!"""
-                        #         )
-                        #     )
 
                         index = []
                         for x in header_list:
