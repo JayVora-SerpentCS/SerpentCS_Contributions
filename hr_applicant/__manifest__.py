@@ -20,9 +20,6 @@
         "views/training_views.xml",
         "views/applicant_profile_report_view.xml",
     ],
-    "demo": [],
-    "test": [],
     "installable": True,
-    "auto_install": False,
     "application": True,
 }
