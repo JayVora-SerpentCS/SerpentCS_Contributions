@@ -1,6 +1,6 @@
-==================
+============
 HR Applicant
-==================
+============
 
 * Extend features of recruitment process and Manage Training
 
