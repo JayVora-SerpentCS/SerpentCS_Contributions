@@ -3,7 +3,6 @@
 import datetime
 from odoo import api, fields, models
 from odoo.tools.translate import _
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import ValidationError
 
@@ -46,8 +45,8 @@ class Trainingcourses(models.Model):
     training_location = fields.Char("Training Location")
     duration = fields.Integer("Course Duration", required=True)
     duration_type = fields.Selection(
-        [("day", "Days"), ("week", "Weeks"), ("month", "Months")], required=True
-    )
+        [("day", "Days"), ("week", "Weeks"),
+         ("month", "Months")], required=True)
     local_short_description = fields.Text("Course Short Description")
 
 
@@ -94,8 +93,8 @@ class TrainingClass(models.Model):
         states={"draft": [("readonly", False)]}, required=True
     )
     training_end_date = fields.Date(
-        "Training End Date", readonly=True, states={"draft": [("readonly", False)]}
-    )
+        "Training End Date", readonly=True,
+        states={"draft": [("readonly", False)]})
     attendees_ids = fields.One2many(
         "list.of.attendees", "class_id", string="List of Local Attendees"
     )
@@ -117,40 +116,29 @@ class TrainingClass(models.Model):
         for rec in self:
             if rec.training_start_date and rec.course_id:
                 end_date = False
-                training_start_date = (
-                    rec.training_start_date
-                    and datetime.datetime.strftime(
-                        rec.training_start_date, DEFAULT_SERVER_DATE_FORMAT
-                    )
-                )
                 if rec.course_id.duration and rec.course_id.duration_type == "day":
-                    end_date = datetime.datetime.strptime(
-                        training_start_date, DEFAULT_SERVER_DATE_FORMAT
-                    ) + datetime.timedelta(days=rec.course_id.duration - 1)
+                    end_date = rec.training_start_date + \
+                        datetime.timedelta(days=rec.course_id.duration - 1)
+
                 elif rec.course_id.duration and rec.course_id.duration_type == "week":
-                    end_date = datetime.datetime.strptime(
-                        training_start_date, DEFAULT_SERVER_DATE_FORMAT
-                    ) + relativedelta(weeks=rec.course_id.duration, days=-1)
+                    end_date = rec.training_start_date + \
+                        relativedelta(weeks=rec.course_id.duration, days=-1)
+
                 elif rec.course_id.duration and rec.course_id.duration_type == "month":
-                    end_date = datetime.datetime.strptime(
-                        training_start_date, DEFAULT_SERVER_DATE_FORMAT
-                    ) + relativedelta(months=rec.course_id.duration, days=-1)
-                end_date = end_date and datetime.datetime.strftime(
-                    end_date, DEFAULT_SERVER_DATE_FORMAT
-                )
+                    end_date = rec.training_start_date + \
+                        relativedelta(months=rec.course_id.duration, days=-1)
+
                 rec.training_end_date = end_date
 
     def action_to_be_approve(self):
-        self.write({"state": "to_be_approved"})
-        return True
+        self.state = "to_be_approved"
 
     def action_approve(self):
         for rec in self:
             if not rec.training_attendees:
                 raise ValidationError(
                     _("Training Attendees should not be Zero!"))
-            rec.write({"state": "approved"})
-        return True
+            rec.state = "approved"
 
     def action_completed(self):
         for rec in self:
@@ -167,7 +155,8 @@ class TrainingClass(models.Model):
                         )
                     )
                     for attendee in rec.attendees_ids:
-                        if attendee.state not in ("train_completed", "in_complete"):
+                        if attendee.state not in ("train_completed",
+                                                  "in_complete"):
                             raise ValidationError(
                                 _(
                                     "You can not Mark the training as Completed \
@@ -175,8 +164,7 @@ class TrainingClass(models.Model):
                                    Training Completed or Training incomplete!"
                                 )
                             )
-        rec.write({"state": "completed"})
-        return True
+        rec.state = "completed"
 
     def action_cancel(self):
         for rec in self:
@@ -193,8 +181,7 @@ class TrainingClass(models.Model):
                            Training Start or In complete state!"
                         )
                     )
-        self.write({"state": "cancel"})
-        return True
+        self.state = "cancel"
 
 
 class ListOfAttendees(models.Model):
@@ -204,14 +191,12 @@ class ListOfAttendees(models.Model):
     _description = "List Of Attendees"
 
     @api.constrains(
-        "class_id", "training_start_date", "training_end_date", "date_of_arrival"
-    )
+        "class_id", "training_start_date",
+        "training_end_date", "date_of_arrival")
     def _check_training_dup(self):
         # self.ensure_one()
         for rec in self:
-            if str(rec.training_start_date) < datetime.datetime.now().strftime(
-                DEFAULT_SERVER_DATE_FORMAT
-            ):
+            if rec.training_start_date < fields.Date.context_today(rec):
                 raise ValidationError(
                     _("You can't create past training!"))
             if rec.training_start_date > rec.training_end_date:
@@ -287,24 +272,19 @@ class ListOfAttendees(models.Model):
                 rec.training_end_date = self.class_id.training_end_date
 
     def action_awaiting_training_start(self):
-        self.write({"state": "awaiting_training_start"})
-        return True
+        self.state = "awaiting_training_start"
 
     def action_in_training(self):
         for rec in self:
             if not rec.date_of_arrival:
                 raise ValidationError(_("Please add Date of arrival!"))
-            rec.write({"state": "train_completed"})
-        return True
+            rec.state = "train_completed"
 
     def action_training_completed(self):
-        self.write({"state": "train_completed"})
-        return True
+        self.state = "train_completed"
 
     def action_in_complete(self):
-        self.write({"state": "in_complete"})
-        return True
+        self.state = "in_complete"
 
     def action_cancel(self):
-        self.write({"state": "in_complete"})
-        return True
+        self.state = "in_complete"

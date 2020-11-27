@@ -1,7 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api
-import datetime
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -18,10 +17,10 @@ class SelectTraining(models.TransientModel):
 
     @api.onchange("is_triaing_needed")
     def onchange_training_courses(self):
+        class_obj = self.env["training.class"]
+        applicant = self.env["hr.applicant"].browse(
+            self._context.get("active_id"))
         for rec in self:
-            class_obj = self.env["training.class"]
-            applicant = self.env["hr.applicant"].search(
-                [("id", "=", self._context.get("active_id"))])
             if rec.is_triaing_needed:
                 course = class_obj.search(
                     [("job_id", "=", applicant.job_id.id)])
@@ -34,13 +33,11 @@ class SelectTraining(models.TransientModel):
 
     def action_done(self):
 
-        applicant = self.env["hr.applicant"].search(
-            [("id", "=", self._context.get("active_id"))])
+        applicant = self.env["hr.applicant"].browse(
+            self._context.get("active_id"))
         employee_dict = applicant.create_employee_from_applicant()
         attendee_obj = self.env["list.of.attendees"]
-        class_obj = self.env["training.class"]
-        for rec in self.training_courses_ids:
-            training_class = class_obj.search([("id", "=", rec.id)])
+        for training_class in self.training_courses_ids:
             attendee_obj.create(
                 {
                     "class_id": training_class.id,
@@ -51,5 +48,3 @@ class SelectTraining(models.TransientModel):
                     "state": "in_training",
                 }
             )
-
-        return True
