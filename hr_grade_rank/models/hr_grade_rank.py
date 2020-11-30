@@ -1,6 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class RankRank(models.Model):
@@ -34,5 +34,6 @@ class HrEmployee(models.Model):
         res = {}
         if self.grade_id:
             self.rank_id = False
-            res["domain"] = {"rank_id": [("id", "in", self.grade_id.rank_ids.ids)]}
+            res["domain"] = {"rank_id": [
+                ("id", "in", self.grade_id.rank_ids.ids)]}
         return res
