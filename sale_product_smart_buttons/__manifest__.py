@@ -22,7 +22,6 @@
     "data": ["views/product_view.xml"],
     "installable": True,
     "application": False,
-    "auto_install": False,
     "price": 10,
     "currency": "EUR",
 }
