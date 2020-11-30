@@ -21,11 +21,10 @@ class ProductProduct(models.Model):
         res = {}
         amt = 0.00
         sales_amount = 0.0
-        domain = [
+        order_lines = self.env["sale.order.line"].search([
             ("order_id.state", "in", ["sale", "done"]),
             ("product_id", "in", self.ids),
-        ]
-        order_lines = self.env["sale.order.line"].search(domain)
+        ])
 
         for line in order_lines:
             amt += line.price_subtotal
