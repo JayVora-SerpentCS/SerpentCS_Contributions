@@ -33,19 +33,19 @@ class SaleOrder(models.Model):
                 debit += line.debit
             partner_credit_limit = (partner.credit_limit - debit) + credit
             available_credit_limit = \
-                ((partner_credit_limit -
-                  (amount_total - debit)) + self.amount_total)
+                ((partner_credit_limit - debit
+                  ))
 
-            if (amount_total - debit) > partner_credit_limit:
+            if (amount_total - debit) > available_credit_limit:
                 if not partner.over_credit:
                     msg = 'Your available credit limit' \
                           ' Amount = %s \nCheck "%s" Accounts or Credit ' \
-                          'Limits.' % (available_credit_limit,
+                          'Limits.' % (partner.credit_limit,
                                        self.partner_id.name)
                     raise UserError(_('You can not confirm Sale '
                                       'Order. \n' + msg))
-                partner.write(
-                    {'credit_limit': credit - debit + self.amount_total})
+                # partner.write(
+                #     {'credit_limit': credit - debit + self.amount_total})
             return True
 
     @api.multi
