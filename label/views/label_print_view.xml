@@ -31,7 +31,7 @@
                                         <field name="python_expression"/>
                                         <field name="field_id"
                                                attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
-                                               domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"
+                                               domain="[('ttype', 'not in', ['one2many', 'reference'])]"
                                                context="{'model_list':parent.model_list}"/>
                                         <field name="python_field"
                                                attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"/>
@@ -43,7 +43,7 @@
                                 <tree string="Fields">
                                     <field name="sequence"/>
                                     <field name="field_id"
-                                           domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"/>
+                                           domain="[('ttype', 'not in', ['one2many', 'reference'])]"/>
                                     <field name="python_field"/>
                                     <field name="type"/>
                                 </tree>
