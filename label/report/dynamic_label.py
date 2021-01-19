@@ -51,7 +51,11 @@ class ReportDynamicLabel(report_sxw.rml_parse):
 
                     elif field.field_id.name:
                         string = field.field_id.field_description
-                        value = getattr(datas, field.field_id.name)
+                        if field.field_id.ttype == "many2one":
+                            value_object = getattr(datas, field.field_id.name)
+                            value = value_object.display_name
+                        else:
+                            value = getattr(datas, field.field_id.name)
 
                     if not value:
                         continue
