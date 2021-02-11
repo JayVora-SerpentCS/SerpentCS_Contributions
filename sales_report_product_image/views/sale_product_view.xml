@@ -14,7 +14,7 @@
             </xpath>
             <field name="payment_term_id" position="before">
                 <field name="print_image"/>
-                <field name="image_sizes"/>
+                <field name="image_sizes" attrs="{'required': [('print_image', '!=', False)]}"/>
             </field>
         </field>
     </record>
