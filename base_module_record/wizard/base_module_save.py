@@ -49,7 +49,7 @@ def _create_module(self, ids):
         zip_file.writestr(info, datastr)
     zip_file.close()
     return {
-        "module_file": base64.encodestring(s.getvalue()),
+        "module_file": base64.encodebytes(s.getvalue()),
         "module_filename": data.get(
                     'directory_name') + '-' + data.get('version') + '.zip',
         "name": data.get("name"),
