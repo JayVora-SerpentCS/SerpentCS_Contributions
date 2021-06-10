@@ -299,7 +299,6 @@ class BaseModuleRecord(models.Model):
     def generate_xml(self):
         recording_data = self._context.get("recording_data", [])
         if recording_data:
-            blank_dict = {}
             doc = minidom.Document()
             terp = doc.createElement("odoo")
             doc.appendChild(terp)
