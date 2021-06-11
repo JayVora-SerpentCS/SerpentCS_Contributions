@@ -1,179 +1,171 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# See LICENSE file for full copyright and licensing details.
 
 from . import base_module_save
-
-from odoo.tools import frozendict, ustr
+from odoo import api, fields, models
+from odoo.tools import ustr
 from odoo.tools.translate import _
-from odoo import models, fields, api
 
 
 class BaseModuleRecord(models.TransientModel):
-    _name = 'base.module.record'
+    _name = "base.module.record"
     _description = "Base Module Record"
 
     @api.model
     def _get_default_objects(self):
-        names = ('ir.ui.view', 'ir.ui.menu', 'ir.model',
-                 'ir.model.fields', 'ir.model.access',
-                 'res.partner', 'res.partner.address',
-                 'res.partner.category', 'workflow',
-                 'workflow.activity', 'workflow.transition',
-                 'ir.actions.server', 'ir.server.object.lines')
-        return self.env['ir.model'].search([('model', 'in', names)])
+        names = (
+            "ir.ui.view",
+            "ir.ui.menu",
+            "ir.model",
+            "ir.model.fields",
+            "ir.model.access",
+            "res.partner",
+            "res.partner.category",
+            "ir.actions.server",
+            "ir.server.object.lines"
+    )
+        return self.env["ir.model"].search([("model", "in", names)])
 
-    check_date = fields.Datetime('Record from Date', required=True,
-                                 default=fields.Datetime.now)
-    objects = fields.Many2many('ir.model', 'base_module_record_object_rel',
-                               'objects',
-                               'model_id', 'Objects',
-                               default=_get_default_objects)
-    filter_cond = fields.Selection([('created', 'Created'),
-                                    ('modified', 'Modified'),
-                                    ('created_modified', 'Created & Modified')
-                                    ], 'Records only', required=True,
-                                   default='created')
-    info_yaml = fields.Boolean('YAML')
+    check_date = fields.Datetime(
+        "Record from Date", required=True, default=fields.Datetime.now
+    )
+    objects = fields.Many2many(
+        "ir.model",
+        "base_module_record_object_rel",
+        "objects",
+        "model_id",
+        default=_get_default_objects,
+    )
+    filter_cond = fields.Selection(
+        [
+            ("created", "Created"),
+            ("modified", "Modified"),
+            ("created_modified", "Created & Modified"),
+        ],
+        "Records only",
+        required=True,
+        default="created",
+    )
 
-    @api.multi
     def record_objects(self):
         data = self.read([])[0]
-        check_date = data['check_date']
-        filter_cond = data['filter_cond']
-        mod_obj = self.env['ir.model']
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'recording_data': []})
-        recording_data = context.get('recording_data')
-        self.env.args = cr, uid, frozendict(context)
-        for obj_id in data['objects']:
+        filter_cond = data.get("filter_cond")
+        check_date = data.get("check_date")
+        mod_obj = self.env["ir.model"]
+        recording_data = []
+        for obj_id in data["objects"]:
             obj_name = (mod_obj.browse(obj_id)).model
             obj_pool = self.env[obj_name]
-            if filter_cond == 'created':
-                search_condition = [('create_date', '>', check_date)]
-            elif filter_cond == 'modified':
-                search_condition = [('write_date', '>', check_date)]
-            elif filter_cond == 'created_modified':
-                search_condition = ['|', ('create_date', '>', check_date),
-                                    ('write_date', '>', check_date)]
-            if '_log_access' in dir(obj_pool):
+            if filter_cond == "created":
+                search_condition = [(
+                                "create_date", ">", check_date)]
+            elif filter_cond == "modified":
+                search_condition = [(
+                                "write_date", ">", check_date)]
+            elif filter_cond == "created_modified":
+                search_condition = ["|", 
+                                ("create_date", ">", check_date),
+                                ("write_date", ">", check_date)]
+            if "_log_access" in dir(obj_pool):
                 if not (obj_pool._log_access):
                     search_condition = []
-                if '_auto' in dir(obj_pool):
+                if "_auto" in dir(obj_pool):
                     if not obj_pool._auto:
                         continue
             search_ids = obj_pool.search(search_condition)
             for s_id in search_ids:
                 dbname = self.env.cr.dbname
-                args = (dbname, self.env.user.id, obj_name,
-                        'copy', s_id.id, {})
+                args = (dbname, self.env.user.id, obj_name, 'copy',
+                        s_id.id, {})
                 recording_data.append(('query', args, {}, s_id.id))
-        mod_obj = self.env['ir.model.data']
-        if len(recording_data):
-            if data['info_yaml']:
-                res = base_module_save._create_yaml(self, data)
-                model_data_ids = mod_obj.\
-                    search([('model', '=', 'ir.ui.view'),
-                            ('name', '=', 'yml_save_form_view')])
-                resource_id = model_data_ids.read(['res_id'])[0]['res_id']
-                return {
-                    'name': _('Module Recording'),
-                    'context': {
-                        'default_yaml_file': ustr(res['yaml_file']),
-                        'default_module_filename': 'demo_yaml.yml',
-                    },
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'res_model': 'base.module.record.objects',
-                    'views': [(resource_id, 'form')],
-                    'type': 'ir.actions.act_window',
-                    'target': 'new',
-                }
-            else:
-                model_data_ids = mod_obj.\
-                    search([('model', '=', 'ir.ui.view'),
-                            ('name', '=', 'info_start_form_view')])
-                resource_id = model_data_ids.read(['res_id'])[0]['res_id']
-                return {
-                    'name': _('Module Recording'),
-                    'context': context,
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'res_model': 'base.module.record.objects',
-                    'views': [(resource_id, 'form')],
-                    'type': 'ir.actions.act_window',
-                    'target': 'new',
-                }
-        model_data_ids = mod_obj.\
-            search([('model', '=', 'ir.ui.view'),
-                    ('name', '=', 'module_recording_message_view')])
-        resource_id = model_data_ids.read(['res_id'])[0]['res_id']
+
+        if recording_data:
+            res_id = self.env.ref("base_module_record.info_start_form_view",
+                                  raise_if_not_found=False).id
+            self = self.with_context({"recording_data": recording_data})
+            return {
+                "name": _("Module Recording"),
+                "context": self._context,
+                "binding_view_types": "form",
+                "view_mode": "form",
+                "res_model": "base.module.record.objects",
+                "views": [(res_id, "form")],
+                "type": "ir.actions.act_window",
+                "target": "new",
+            }
+        res_id = self.env.ref(
+                    "base_module_record.module_recording_message_view",
+                    raise_if_not_found=False).id
         return {
-            'name': _('Module Recording'),
-            'context': self.env.context,
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'base.module.record.objects',
-            'views': [(resource_id, 'form')],
-            'type': 'ir.actions.act_window',
-            'target': 'new',
+            "name": _("Module Recording"),
+            "context": self._context,
+            "binding_view_types": "form",
+            "view_mode": "form",
+            "res_model": "base.module.record.objects",
+            "views": [(res_id, "form")],
+            "type": "ir.actions.act_window",
+            "target": "new",
         }
 
 
 class BaseModuleRecordObjects(models.TransientModel):
-    _name = 'base.module.record.objects'
+    _name = "base.module.record.objects"
     _description = "Base Module Record Objects"
 
-    @api.model
-    def inter_call(self, data):
-        cr, uid, context = self.env.args
-        context = dict(context)
-        context.update({'depends': {}})
-        self.env.args = cr, uid, frozendict(context)
-        res = base_module_save._create_module(self, data)
-        mod_obj = self.env['ir.model.data']
-        model_data_ids = mod_obj.\
-            search([('model', '=', 'ir.ui.view'),
-                    ('name', '=', 'module_create_form_view')])
-        resource_id = model_data_ids.read(fields=['res_id'])[0]['res_id']
-        context.update(res)
-
-        res_id = self.create({
-            'module_filename': ustr(res['module_filename']),
-            'module_file': ustr(res['module_file']),
-            'name': ustr(res['name']),
-            'directory_name': ustr(res['directory_name']),
-            'version': ustr(res['version']),
-            'author': ustr(res['author']),
-            'website': ustr(res['website']),
-            'category': ustr(res['category']),
-            'description': ustr(res['description']),
-        })
+    def inter_call(self):
+        ctx = dict(self._context)
+        ctx.update({"depends": {}})
+        data = self.ids
+        res = base_module_save._create_module(self.with_context(ctx), data)
+        res_id = self.env.ref("base_module_record.module_create_form_view",
+                              raise_if_not_found=False).id
+        rec_id = self.create({
+            "module_filename": ustr(res.get("module_filename")),
+            "module_file": ustr(res.get("module_file")),
+            "name": ustr(res.get("name")),
+            "directory_name": ustr(res.get("directory_name")),
+            "version": ustr(res.get("version")),
+            "author": ustr(res.get("author")),
+            "website": ustr(res.get("website")),
+            "category": ustr(res.get("category")),
+            "description": ustr(res.get("description")),
+        }).id
         return {
-            'name': _('Module Recording'),
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_id': res_id.id,
-            'res_model': 'base.module.record.objects',
-            'views': [(resource_id, 'form')],
-            'type': 'ir.actions.act_window',
-            'target': 'new',
+            "name": _("Module Recording"),
+            "binding_view_types": "form",
+            "view_mode": "form",
+            "res_id": rec_id,
+            "res_model": "base.module.record.objects",
+            "views": [(res_id, "form")],
+            "type": "ir.actions.act_window",
+            "target": "new",
         }
 
-    name = fields.Char('Module Name', size=64)
-    directory_name = fields.Char('Directory Name', size=32)
-    version = fields.Char('Version', size=16)
-    author = fields.Char('Author', size=64, required=True,
-                         default='OpenERP SA')
-    category = fields.Char('Category', size=64, required=True,
-                           default='Vertical Modules/Parametrization')
-    website = fields.Char('Documentation URL', size=64, required=True,
-                          default='http://www.openerp.com')
-    description = fields.Text('Full Description')
-    data_kind = fields.Selection([('demo', 'Demo Data'),
-                                  ('update', 'Normal Data')],
-                                 'Type of Data', required=True,
-                                 default='update')
-    module_file = fields.Binary('Module .zip File', filename="module_filename")
-    module_filename = fields.Char('Filename', size=64)
-    yaml_file = fields.Binary('Module .zip File')
+    def _valid_field_parameter(self, field, name):
+        # I can't even
+        return name == 'filename' or super()._valid_field_parameter(field, name)
+
+    name = fields.Char("Module Name", size=64)
+    directory_name = fields.Char(size=32)
+    version = fields.Char(default="14.0", size=16)
+    author = fields.Char(size=64, required=True, default="Odoo SA")
+    category = fields.Char(
+        size=64,
+        required=True,
+        default="Vertical Modules/Parametrization"
+    )
+    website = fields.Char(
+        "Documentation URL",
+        size=64,
+        required=True,
+        default="https://www.odoo.com"
+    )
+    description = fields.Text("Full Description")
+    data_kind = fields.Selection(
+        [("demo", "Demo Data"), ("update", "Normal Data")],
+        "Type of Data",
+        required=True,
+        default="update"
+    )
+    module_file = fields.Binary("Module .zip File", filename="module_filename")
+    module_filename = fields.Char("Filename", size=64)
+
