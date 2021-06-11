@@ -307,10 +307,8 @@ class BaseModuleRecord(models.Model):
                     rec_id, noupdate = self._get_id(rec[1][2], rec[1][4])
                     if not rec_id:
                         continue
-                    data = doc.createElement("data")
-                    terp.appendChild(data)
                     wkf = doc.createElement("workflow")
-                    data.appendChild(wkf)
+                    terp.appendChild(wkf)
                     wkf.setAttribute("model", rec[1][2])
                     wkf.setAttribute("action", rec[1][3])
                     if noupdate:
@@ -322,11 +320,9 @@ class BaseModuleRecord(models.Model):
                     )
                     data = doc.createElement("data")
                     if noupdate:
-                        data.setAttribute("noupdate", "1")
-                    if res_list:
-                        terp.appendChild(data)
+                        terp.setAttribute("noupdate", "1")
                     for res in res_list:
-                        data.appendChild(res)
+                        terp.appendChild(res)
                 elif rec[0] == "assert":
                     pass
             return doc.toprettyxml(indent="\t").encode("utf-8")
