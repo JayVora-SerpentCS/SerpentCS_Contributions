@@ -1,6 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ir_module_record,ir.module.record,model_ir_module_record,base.group_system,1,1,1,1
-access_base_module_record,access_base_module_record,model_base_module_record,base.group_user,1,1,1,1
-access_base_module_record_objects,access_base_module_record_objects,model_base_module_record_objects,base.group_user,1,1,1,1
-access_base_module_data,access_base_module_data,model_base_module_data,base.group_user,1,1,1,1
-access_base_module_record_data,access_base_module_record_data,model_base_module_record_data,base.group_user,1,1,1,1
