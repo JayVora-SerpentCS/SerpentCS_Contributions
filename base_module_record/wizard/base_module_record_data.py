@@ -73,12 +73,13 @@ class BaseModuleData(models.TransientModel):
                 if "_auto" in dir(obj_pool):
                     if not obj_pool._auto:
                         continue
-            recording_data = [("query", (self.env.cr.dbname, 
+            recording_data += [("query", (self.env.cr.dbname, 
                                          self.env.user.id, obj_name, 
-                                         "copy", s_id.id, {}), 
-                               {}, s_id.id) for s_id in obj_pool.search(search_condition)]
+                                         "copy", s_id.id, {}), {}, s_id.id)
+                                         for s_id in obj_pool.search(search_condition)]
+
         if recording_data:
-            res = self._create_xml(data)
+            res = self.with_context({"recording_data": recording_data})._create_xml(data)
             res_id = self.env.ref(
                             "base_module_record.module_create_xml_view",
                             raise_if_not_found=False).id
