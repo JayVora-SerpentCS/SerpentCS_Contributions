@@ -1,0 +1,339 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_module_record
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-14 03:30+0000\n"
+"PO-Revision-Date: 2021-06-14 03:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__author
+msgid "Author"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model,name:base_module_record.model_base_module_data
+msgid "Base Module Data"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model,name:base_module_record.model_base_module_record
+msgid "Base Module Record"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model,name:base_module_record.model_base_module_record_data
+msgid "Base Module Record Data"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model,name:base_module_record.model_base_module_record_objects
+msgid "Base Module Record Objects"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_data_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_objects_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.info_start_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__category
+msgid "Category"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_data_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_objects_view
+msgid "Choose objects to record"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_form_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_xml_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_recording_message_view
+msgid "Close"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.info_start_form_view
+msgid "Continue"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_data__filter_cond__created
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_record__filter_cond__created
+msgid "Created"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_data__filter_cond__created_modified
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_record__filter_cond__created_modified
+msgid "Created & Modified"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__create_uid
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__create_uid
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__create_uid
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__create_uid
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__create_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__create_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__create_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__create_date
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: base_module_record
+#: code:addons/base_module_record/wizard/base_module_record_data.py:0
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_data_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_xml_view
+#, python-format
+msgid "Data Recording"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_record_objects__data_kind__demo
+msgid "Demo Data"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__directory_name
+msgid "Directory Name"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__display_name
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__display_name
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__display_name
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__display_name
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__website
+msgid "Documentation URL"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.actions.act_window,name:base_module_record.act_base_module_record_data
+msgid "Export Customizations As Data File"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.ui.menu,name:base_module_record.menu_wizard_base_module_record_data
+msgid "Export Customizations As Data file"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.actions.act_window,name:base_module_record.act_base_module_record_objects
+#: model:ir.ui.menu,name:base_module_record.menu_wizard_base_module_record_objects
+msgid "Export Customizations As a Module"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.actions.act_window,name:base_module_record.action_base_module_record_data
+msgid "Export Customizations as Data"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.actions.act_window,name:base_module_record.action_base_module_record_objects
+msgid "Export Customizations as a Module"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__module_filename
+msgid "Filename"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__description
+msgid "Full Description"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__id
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__id
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__id
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__id
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record__id
+msgid "ID"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_form_view
+msgid ""
+"If you think your module could interest other people, we'd like you to "
+"publish it on                     https://www.odoo.com, in the 'Modules' "
+"section. You can do it through the website or using features of"
+"                     the 'base_module_publish' module."
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_form_view
+msgid "Information"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data____last_update
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record____last_update
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data____last_update
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects____last_update
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__write_uid
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__write_uid
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__write_uid
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__write_uid
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__write_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__write_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__write_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__write_date
+#: model:ir.model.fields,field_description:base_module_record.field_ir_module_record__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_data__filter_cond__modified
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_record__filter_cond__modified
+msgid "Modified"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__module_file
+msgid "Module .zip File"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.ui.menu,name:base_module_record.menu_wizard_base_mod_rec
+msgid "Module Creation"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.info_start_form_view
+msgid "Module Information"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__name
+msgid "Module Name"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model,name:base_module_record.model_ir_module_record
+msgid "Module Record"
+msgstr ""
+
+#. module: base_module_record
+#: code:addons/base_module_record/wizard/base_module_record_data.py:0
+#: code:addons/base_module_record/wizard/base_module_record_objects.py:0
+#: code:addons/base_module_record/wizard/base_module_record_objects.py:0
+#: code:addons/base_module_record/wizard/base_module_record_objects.py:0
+#: model:ir.actions.act_window,name:base_module_record.action_module_created
+#: model_terms:ir.ui.view,arch_db:base_module_record.info_start_form_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_form_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_recording_message_view
+#, python-format
+msgid "Module Recording"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_form_view
+msgid "Module successfully created !"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields.selection,name:base_module_record.selection__base_module_record_objects__data_kind__update
+msgid "Normal Data"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__objects
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__objects
+msgid "Objects"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_objects_view
+msgid "Objects Recording"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_data_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_objects_view
+msgid "Record"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__check_date
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__check_date
+msgid "Record from Date"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_data__filter_cond
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record__filter_cond
+msgid "Records only"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_data__res_text
+msgid "Result"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_xml_view
+msgid "Result, paste this to your module's xml"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_recording_message_view
+msgid "Thanks For using Module Recorder"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.module_create_form_view
+msgid "Thanks in advance for your contribution."
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__data_kind
+msgid "Type of Data"
+msgstr ""
+
+#. module: base_module_record
+#: model:ir.model.fields,field_description:base_module_record.field_base_module_record_objects__version
+msgid "Version"
+msgstr ""
+
+#. module: base_module_record
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_data_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.base_module_record_objects_view
+#: model_terms:ir.ui.view,arch_db:base_module_record.info_start_form_view
+msgid "or"
+msgstr ""
