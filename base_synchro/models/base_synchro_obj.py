@@ -13,7 +13,7 @@ class BaseSynchroServer(models.Model):
     server_url = fields.Char(required=True)
     server_port = fields.Integer(required=True, default=8069)
     server_db = fields.Char("Server Database", required=True)
-    login = fields.Char("User Name", required=True)
+    login = fields.Char("Database UserName", required=True)
     password = fields.Char(required=True)
     obj_ids = fields.One2many(
         "base.synchro.obj", "server_id", "Models", ondelete="cascade"
