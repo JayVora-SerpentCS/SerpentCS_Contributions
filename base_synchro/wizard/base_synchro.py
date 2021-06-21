@@ -4,10 +4,10 @@ import logging
 import threading
 import time
 from xmlrpc.client import ServerProxy
-
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
+from odoo.tools import format_datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -121,9 +121,7 @@ class BaseSynchro(models.TransientModel):
             if object.model_id.model == "crm.case.history":
                 fields = ["email", "description", "log_id"]
             if not destination_inverted:
-                value = pool_src.get(object.model_id.model).read([id], fields)[
-                    0
-                ]
+                value = pool_src.get(object.model_id.model).read([id], fields)[0]
             else:
                 model_obj = pool_src.env[object.model_id.model]
                 value = model_obj.browse([id]).read(fields)[0]
@@ -142,6 +140,7 @@ class BaseSynchro(models.TransientModel):
                 action,
                 destination_inverted,
             )
+
             id2 = self.get_id(object.id, id, action)
 
             # Filter fields to not sync
@@ -162,8 +161,26 @@ class BaseSynchro(models.TransientModel):
             else:
                 _logger.debug("Creating model %s", object.model_id.name)
                 if not destination_inverted:
-                    idnew = pool_dest.env[object.model_id.model].create(value)
-                    new_id = idnew.id
+                    if object.model_id.model == "sale.order.line":
+                        if value['product_template_id']:
+                            value['product_id'] = value['product_template_id']
+                            del value['product_template_id']
+                            idnew = pool_dest.env[object.model_id.model].create(value)
+                            new_id = idnew.id
+                        else:
+                            idnew = pool_dest.env[object.model_id.model].create(value)
+                            new_id = idnew.id
+                    elif object.model_id.model == "stock.move.line":
+                        a = value.pop('product_qty')
+                        b = value.pop('product_uom_qty')
+                        idnew = pool_dest.env[object.model_id.model].create(value)
+                        idnew.write({
+                            'product_uom_qty': b
+                        })
+                        new_id = idnew.id
+                    else:
+                        idnew = pool_dest.env[object.model_id.model].create(value)
+                        new_id = idnew.id
                 else:
                     idnew = pool_dest.get(object.model_id.model).create(value)
                     new_id = idnew
@@ -203,6 +220,7 @@ class BaseSynchro(models.TransientModel):
         action,
         destination_inverted,
     ):
+
         if not res_id:
             return False
         _logger.debug("Relation transform")
@@ -219,19 +237,54 @@ class BaseSynchro(models.TransientModel):
             _logger.debug(
                 "Relation object already synchronized. Getting id%s", result
             )
+            if obj_model == "stock.location":
+                names = pool_src.get(obj_model).name_get([res_id])[0][1]
+                res = pool_dest.env[obj_model]._name_search(names, [], "like")
+                from_clause, where_clause, where_clause_params = res.get_sql()
+                where_str = where_clause and (" WHERE %s" % where_clause) or ''
+                query_str = 'SELECT "%s".id FROM ' % pool_dest.env[obj_model]._table + from_clause + where_str
+                order_by = pool_dest.env[obj_model]._generate_order_by(None, query_str)
+                query_str = query_str + order_by
+                pool_dest.env[obj_model]._cr.execute(query_str, where_clause_params)
+                res1 = self._cr.fetchall()
+                res = [ls[0] for ls in res1]
+                result = res[0]
+            if obj_model == "stock.picking.type":
+                names = pool_src.get(obj_model).name_get([res_id])[0][1]
+                name = names.split(':')[0].strip()
+                res = pool_dest.env[obj_model]._name_search(name, [], "like")
+                from_clause, where_clause, where_clause_params = res.get_sql()
+                where_str = where_clause and (" WHERE %s" % where_clause) or ''
+                query_str = 'SELECT "%s".id FROM ' % pool_dest.env[obj_model]._table + from_clause + where_str
+                order_by = pool_dest.env[obj_model]._generate_order_by(None, query_str)
+                query_str = query_str + order_by
+                pool_dest.env[obj_model]._cr.execute(query_str, where_clause_params)
+                res1 = self._cr.fetchone()
+                result = res1
         else:
             _logger.debug(
                 """Relation object not synchronized. Searching/
              by name_get and name_search"""
             )
             report = []
+
             if not destination_inverted:
-                names = pool_src.get(obj_model).name_get([res_id])[0][1]
-                res = pool_dest.env[obj_model].name_search(names, [], "like")
+                if obj_model == "res.country.state":
+                    names = pool_src.get(obj_model).name_get([res_id])[0][1]
+                    name = names.split("(")[0].strip()
+                    res = pool_dest.env[obj_model]._name_search(name, [], "like")
+                    res = [res]
+                elif obj_model == "res.country":
+                    names = pool_src.get(obj_model).name_get([res_id])[0][1]
+                    res = pool_dest.env[obj_model]._name_search(names, [], "=")
+                    res = [[res[0]]]
+                else:
+                    names = pool_src.get(obj_model).name_get([res_id])[0][1]
+                    res = pool_dest.env[obj_model].name_search(names, [], "like")
             else:
                 model_obj = pool_src.env[obj_model]
                 names = model_obj.browse([res_id]).name_get()[0][1]
-                res = pool_dest.get(obj_model).name_search(names, [], "like")
+                res = pool_dest.env[obj_model].name_search(names, [], "like")
             _logger.debug("name_get in src: %s", names)
             _logger.debug("name_search in dest: %s", res)
             if res:
@@ -283,6 +336,7 @@ class BaseSynchro(models.TransientModel):
                     fdata = data[f][0]
                 else:
                     fdata = data[f]
+
                 df = self.relation_transform(
                     pool_src,
                     pool_dest,
@@ -291,9 +345,15 @@ class BaseSynchro(models.TransientModel):
                     action,
                     destination_inverted,
                 )
-                data[f] = df
-                if not data[f]:
-                    del data[f]
+                if obj == "stock.picking":
+                    data[f] = df
+                    if not data[f]:
+                        del data[f]
+                else:
+                    data[f] = df
+                    if not data[f]:
+                        del data[f]
+
             elif ftype == "many2many":
                 res = map(
                     lambda x: self.relation_transform(
@@ -314,6 +374,10 @@ class BaseSynchro(models.TransientModel):
         self.ensure_one()
         report = []
         start_date = fields.Datetime.now()
+        timezone = self._context.get("tz", "UTC")
+        start_date = format_datetime(
+            self.env, start_date, timezone, dt_format=False
+        )
         server = self.server_url
         for obj_rec in server.obj_ids:
             _logger.debug("Start synchro of %s", obj_rec.name)
@@ -324,7 +388,9 @@ class BaseSynchro(models.TransientModel):
                 dt = fields.Datetime.now()
             obj_rec.write({"synchronize_date": dt})
         end_date = fields.Datetime.now()
-
+        end_date = format_datetime(
+            self.env, end_date, timezone, dt_format=False
+        )
         # Creating res.request for summary results
         if self.user_id:
             request = self.env["res.request"]

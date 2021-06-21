@@ -1,8 +1,5 @@
 <odoo>
 
-    <menuitem id="synch_config" name="Synchronization"
-              parent="base.menu_administration" sequence="30"/>
-
     <record id="view_transfer_line_form" model="ir.ui.view">
         <field name="name">base.synchro.obj.line.form</field>
         <field name="model">base.synchro.obj.line</field>
@@ -168,11 +165,11 @@
                 <sheet>
                     <group colspan="4" col="4">
                         <field name="name"/>
-                        <field name="login"/>
-                        <field name="password" password="True"/>
-                        <field name="server_url"/>
-                        <field name="server_port"/>
                         <field name="server_db"/>
+                        <field name="server_url"/>
+                        <field name="login"/>
+                        <field name="server_port"/>
+                        <field name="password" password="True"/>
                     </group>
                 </sheet>
             </form>
@@ -186,7 +183,10 @@
         <field name="binding_view_types">form</field>
     </record>
 
-    <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id"
-              parent="base_synchro.synch_config"/>
+    <menuitem id="synchro_server_tree_menu_id"
+              action="action_base_synchro_server_tree"
+              parent="base_synchro.next_id_62"
+              sequence="2"
+    />
 
 </odoo>
