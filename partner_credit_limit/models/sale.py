@@ -19,10 +19,13 @@ class SaleOrder(models.Model):
             movelines = moveline_obj.search(
                 [('partner_id', '=', partner.id),
                  ('account_id.user_type_id.name', 'in',
-                  ['Receivable', 'Payable'])]
+                    ['Receivable', 'Payable']),
+                 ('parent_state','!=','cancel')]
             )
-            confirm_sale_order = self.search([('partner_id', '=', partner.id),
-                                              ('state', '=', 'sale')])
+            confirm_sale_order = self.search(
+                [('partner_id', '=', partner.id),
+                 ('state', '=', 'sale'),
+                 ('invoice_status', '!=', 'invoiced')])
             debit, credit = 0.0, 0.0
             amount_total = 0.0
             for status in confirm_sale_order:
@@ -30,12 +33,12 @@ class SaleOrder(models.Model):
             for line in movelines:
                 credit += line.credit
                 debit += line.debit
-            partner_credit_limit = (partner.credit_limit - debit) + credit
-            available_credit_limit = \
-                ((partner_credit_limit -
-                  (amount_total - debit)) + self.amount_total)
-
-            if (amount_total - debit) > partner_credit_limit:
+            partner_credit_limit = (
+                debit + amount_total) - credit
+            available_credit_limit = round(
+                partner.credit_limit - partner_credit_limit, 2)
+            if partner_credit_limit > partner.credit_limit and \
+                    partner.credit_limit > 0.0:
                 if not partner.over_credit:
                     msg = 'Your available credit limit' \
                           ' Amount = %s \nCheck "%s" Accounts or Credit ' \
@@ -43,8 +46,6 @@ class SaleOrder(models.Model):
                                        self.partner_id.name)
                     raise UserError(_('You can not confirm Sale '
                                       'Order. \n' + msg))
-                partner.write(
-                    {'credit_limit': credit - debit + self.amount_total})
             return True
 
     def action_confirm(self):
@@ -57,3 +58,11 @@ class SaleOrder(models.Model):
     def check_amount(self):
         for order in self:
             order.check_limit()
+
+    @api.model
+    def create(self, vals):
+        res = super(SaleOrder, self).create(vals)
+        if res.partner_id.credit_limit > 0.0 and \
+                not res.partner_id.over_credit:
+            res.check_limit()
+        return res
