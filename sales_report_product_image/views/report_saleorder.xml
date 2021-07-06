@@ -9,18 +9,18 @@
         </xpath>
         <xpath expr="//table/tbody[hasclass('sale_tbody')]/t[2]/tr/t/td[1]" position="before">
             <t t-if="doc.image_sizes == 'image' and doc.print_image ">
-                <td>
-                    <img t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="width:95%;height:30%"/>
+                <td class="text-center">
+                    <img t-if="line.product_id.image_1920" t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="resize:both;width:95%;height:auto"/>
                 </td>
             </t>
             <t t-if="doc.image_sizes == 'image_medium' and doc.print_image">
-                <td>
-                    <img t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="width:95%;height:15%"/>
+                <td class="text-center">
+                    <img t-if="line.product_id.image_1920" t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="resize:both;width:70%;height:auto"/>
                 </td>
             </t>
             <t t-if="doc.image_sizes == 'image_small' and doc.print_image ">
-                <td>
-                    <img t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="width:95%;height:10%"/>
+                <td class="text-center">
+                    <img t-if="line.product_id.image_1920" t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="resize:both;width:50%;height:auto"/>
                 </td>
             </t>
         </xpath>
