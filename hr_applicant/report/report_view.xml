@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <report id="applicant_profile_form_report"
+           model="hr.applicant"
+           string="Resume"
+           name="hr_applicant.applicant_profile"
+           report_type="qweb-pdf"/>
+
+    <record id="applicant_profile_report_paperformat" model="report.paperformat">
+        <field name="name">Applicant Profile format</field>
+        <field name="default" eval="True" />
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">20</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+        <field name="report_ids" eval="[(4, ref('hr_applicant.applicant_profile_form_report'))]">
+        </field>
+    </record>
+
+</odoo>

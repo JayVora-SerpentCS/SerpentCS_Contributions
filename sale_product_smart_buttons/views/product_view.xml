@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!--  Added smart button for Sale amt -->
+
+    <record model="ir.ui.view" id="product_template_form_view_sale_smart_button">
+        <field name="name">product.template.sale.smart.button</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_sale_order_button"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/sheet/div[1]/button[@name='action_view_sales']" position="attributes">
+                <attribute name="icon">fa-cart-plus</attribute>
+            </xpath>
+            <div name="button_box" position="inside">
+                <button type="object" class="oe_stat_button" icon="fa-money" name="action_view_sales">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="sales_amt" />
+                        </span>
+                        <span class="o_stat_text">Sales Amt</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+</odoo>
