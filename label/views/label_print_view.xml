@@ -28,7 +28,7 @@
                                         <field attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}" context="{'model_list':parent.model_list}" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']),                                                ('model_id','=',model_id)]" name="field_id"/>
                                         <field attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}" name="python_field"/>
                                         <newline/>
-                                        <label class="o_form_label" colspan="4" for="python_field" string="Python experession field must be start with obj. e.g:- obj.M2O_field.field_name"/>
+                                        <label class="o_form_label" colspan="4" for="python_field" string="Python expression field must be start with obj. e.g:- obj.M2O_field.field_name"/>
                                     </group>
                                 </form>
                                 <tree string="Fields">
