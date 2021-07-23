@@ -2,6 +2,7 @@
 
 from odoo import _, api, fields, models
 from odoo.tools.safe_eval import safe_eval as eval
+from odoo.exceptions import UserError, ValidationError
 
 
 class LabelPrint(models.Model):
@@ -94,6 +95,12 @@ class LabelPrintField(models.Model):
     )
     nolabel = fields.Boolean("No Label")
     newline = fields.Boolean("New Line", deafult=True)
+    
+    @api.onchange("python_field")
+    def _onchange_python_field(self):
+        if self.python_field and not self.python_field.startswith("obj."):
+            raise ValidationError(_("Python field value is wrong. Please follow proper python expression."))
+
 
 
 class IrModelFields(models.Model):
