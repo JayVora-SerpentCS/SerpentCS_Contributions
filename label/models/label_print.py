@@ -86,7 +86,7 @@ class LabelPrintField(models.Model):
         default="normal",
     )
     python_expression = fields.Boolean("Python Expression")
-    python_field = fields.Char("Fields", size=32)
+    python_field = fields.Char("Fields", size=52)
     fontsize = fields.Float("Font Size", default=8.0)
     position = fields.Selection(
         [("left", "Left"), ("right", "Right"),
@@ -98,9 +98,18 @@ class LabelPrintField(models.Model):
     
     @api.onchange("python_field")
     def _onchange_python_field(self):
+        field_str = self.python_field
+        if field_str:
+            python_field = field_str.rpartition(".")[-1]
+            model_id = self.model_id
+            fields = self.env[model_id.model].fields_get()
+            key_list = []
+            for key,v in fields.items():
+                key_list.append(key)
+            if not python_field in key_list:
+                raise ValidationError(_("Please enter valid field."))
         if self.python_field and not self.python_field.startswith("obj."):
             raise ValidationError(_("Python field value is wrong. Please follow proper python expression."))
-
 
 
 class IrModelFields(models.Model):

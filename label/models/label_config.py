@@ -1,6 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import  api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 
 class LabelMain(models.Model):
@@ -12,7 +13,7 @@ class LabelMain(models.Model):
     brand_name = fields.Char("Name", size=64, index=True)
     label_config_ids = fields.One2many(
         "label.config", "label_main_id", "Label Config")
-
+    
 
 class LabelConfig(models.Model):
     _name = "label.config"
@@ -28,3 +29,15 @@ class LabelConfig(models.Model):
     right_margin = fields.Float("Right Margin (in mm)", default=0.0)
     cell_spacing = fields.Float("Cell Spacing", default=1.0)
     label_main_id = fields.Many2one("label.brand", "Label")
+ 
+
+    @api.model
+    def create(self,vals):
+        if vals.get('height') == 0.0 or vals.get('width') == 0.0:
+            raise ValidationError(_("Height/Width value must be non zero."))
+        return super().create(vals)
+
+    def write(self,vals):
+        if vals.get('height') == 0.0 or vals.get('width') == 0.0:
+            raise ValidationError(_("Height/Width value must be non zero."))
+        return super().write(vals)

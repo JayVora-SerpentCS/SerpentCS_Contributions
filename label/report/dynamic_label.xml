@@ -9,7 +9,8 @@
                             <t t-as="row" t-foreach="get_data(data['form'].get('rows'),data['form'].get('columns'),data['form'].get('ids'),data ['form'].get('model'),data['form'].get('number_of_copy'))">
                                 <tr t-att-height="data['form']['height']">
                                     <t t-as="col" t-foreach="row">
-                                        <td t-att-style="'padding-left:'+data['form']['left_margin']+';padding-right:'+data['form']['right_margin']+';padding-top:'+data['form']['top_margin']+';border:1px solid black;'" t-att-width="data['form']['width']">
+                                        <td t-att-style="'padding-left:'+data['form']['left_margin']+';padding-right:'+data['form']['right_margin']+';padding-top:'+data['form']['top_margin']+';border:1px solid black;position:relative;'" t-att-width="data['form']['width']">
+                                            
                                             <t t-as="val" t-foreach="col">
                                                 <t t-if="val['newline']">
                                                     <br/>
@@ -21,7 +22,12 @@
                                                     </t>
                                                     <t t-if="(val.get('type') == 'image')">
                                                         <t t-esc="val.get('string')"/>
-                                                        <img t-att-height="data['form']['image_height']" t-att-src="'data:image/png;base64,%s' % to_text(val.get('value'))" t-att-width="data['form']['image_width']"/>
+                                                        <t t-if="val.get('bottom')">
+                                                            <img style="position:absolute;bottom:0;" t-att-height="data['form']['image_height']" t-att-src="'data:image/png;base64,%s' % to_text(val.get('value'))" t-att-width="data['form']['image_width']"/>    
+                                                        </t>
+                                                        <t t-if="not val.get('bottom')">
+                                                            <img t-att-height="data['form']['image_height']" t-att-src="'data:image/png;base64,%s' % to_text(val.get('value'))" t-att-width="data['form']['image_width']"/>
+                                                        </t>
                                                     </t>
                                                     <t t-if="(val.get('type') == 'barcode')">
                                                         <t t-esc="val.get('string')"/>
