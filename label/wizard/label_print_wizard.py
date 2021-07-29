@@ -62,7 +62,7 @@ class LabelPrintWizard(models.TransientModel):
                 "image_height": str(data.image_height),
                 "barcode_width": data.barcode_width,
                 "barcode_height": data.barcode_height,
-                "font_size": 10,
+                "font_size": 20,
                 "number_of_copy": data.number_of_copy,
                 "top_margin": str(data.name.top_margin) + "mm",
                 "bottom_margin": str(data.name.bottom_margin) + "mm",
@@ -85,3 +85,5 @@ class LabelPrintWizard(models.TransientModel):
             .with_context(context)
             .report_action(self, data=data)
         )
+    
+    

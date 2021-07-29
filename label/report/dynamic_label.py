@@ -31,7 +31,7 @@ class ReportDynamicLabel(models.AbstractModel):
                     if field.python_expression and field.python_field:
                         string = field.python_field.split(".")[-1]
                         value = eval(field.python_field, {"obj": datas})
-
+            
                     elif field.field_id.name:
                         string = field.field_id.field_description
                         value = getattr(datas, field.field_id.name)
@@ -62,10 +62,11 @@ class ReportDynamicLabel(models.AbstractModel):
                             bot_dict = {
                                 "string": string,
                                 "value": value,
+                                "bottom": True,
                                 "type": field.type,
                                 "newline": field.newline,
-                                "style":
-                                "font-size:" +
+                                "style":          
+                                    "font-size:" +
                                 str(field.fontsize) + "px;" + pos,
                             }
                     else:
@@ -76,7 +77,7 @@ class ReportDynamicLabel(models.AbstractModel):
                             "value": value,
                             "type": field.type,
                             "newline": field.newline,
-                            "style":
+                            "style": 
                             "font-size:" + str(field.fontsize) + "px;" + pos,
                         }
                         vals.append(vals_dict)
@@ -126,7 +127,6 @@ class ReportDynamicLabel(models.AbstractModel):
         if len(ids) == 1:
             for new_result in range(0, diff):
                 result1.append(temp)
-
         return new_list
 
     @api.model
