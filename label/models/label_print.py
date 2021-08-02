@@ -100,13 +100,17 @@ class LabelPrintField(models.Model):
     def _onchange_python_field(self):
         field_str = self.python_field
         if field_str:
-            python_field = field_str.rpartition(".")[-1]
+            python_field = field_str.split(".")
+            if len(python_field) >=3 :
+                python_field_str = python_field[1] 
+            else:
+                python_field_str = python_field[-1]
             model_id = self.model_id
             fields = self.env[model_id.model].fields_get()
             key_list = []
             for key,v in fields.items():
                 key_list.append(key)
-            if not python_field in key_list:
+            if not python_field_str in key_list:
                 raise ValidationError(_("Please enter valid field."))
         if self.python_field and not self.python_field.startswith("obj."):
             raise ValidationError(_("Python field value is wrong. Please follow proper python expression."))
