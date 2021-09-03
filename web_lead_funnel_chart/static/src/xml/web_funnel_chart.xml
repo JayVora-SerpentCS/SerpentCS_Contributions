@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="FunnelChart">
+        <div id="container">
+        </div>
+    </t>
+</templates>
