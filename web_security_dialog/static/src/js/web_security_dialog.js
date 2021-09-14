@@ -112,7 +112,7 @@ odoo.define("web_security_dialog.SecurityDialog", function (require) {
                     classes: 'btn-primary validate_pincode',
                 },
                 {
-                    text:_t('Canc,el'),
+                    text:_t('Cancel'),
                     close:true,
                 }],
             }).open();
