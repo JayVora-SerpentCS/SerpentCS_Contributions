@@ -186,7 +186,7 @@ class WizDownloadTemplate(models.TransientModel):
                 6,
                 3,
                 4,
-                'Many2many: You can enter "NAME" of the relational'
+                'Many2many: You can enter "ID" of the relational'
                 ' model Seprate by ";"',
             )
             worksheet.write_merge(
@@ -507,10 +507,15 @@ class WizDownloadTemplate(models.TransientModel):
 
                             elif field_type_dict.get(str(key))[0] == "many2many":
                                 ids = []
-                                for line in row[headers_dict[str(key)]].split(";"):
+                                test = []
+                                if isinstance(row[headers_dict[str(key)]],float):
+                                    test = [int(row[headers_dict[str(key)]])]
+                                elif isinstance(row[headers_dict[str(key)]],str):
+                                    test = row[headers_dict[str(key)]].split(";")
+                                for line in test:
                                     search_id = self.env[
                                         "" + str(field_type_dict.get(str(key))[1]) + ""
-                                    ].search([("name", "=", line)])
+                                    ].search([("id", "=", line)])
                                     self.create_m2m = True
                                     if not search_id and self.create_m2m:
                                         ir_model_search = self.env["ir.model"].search(
@@ -549,8 +554,9 @@ class WizDownloadTemplate(models.TransientModel):
                                         ids.append(create_id and create_id.id)
                                         vals.update({str(key): [(6, 0, ids)]})
                                         search_id = create_id.id
-                                    ids.append(search_id and search_id.id)
-                                    vals.update({str(key): [(6, 0, ids)]})
+                                    for search in search_id:
+                                        ids.append(search and search.id)
+                                        vals.update({str(key): [(6, 0, ids)]})
 
                             elif field_type_dict.get(str(key))[0] == "one2many":
                                 vals.update({str(key): False})
