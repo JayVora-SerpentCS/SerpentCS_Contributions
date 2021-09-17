@@ -186,7 +186,7 @@ class WizDownloadTemplate(models.TransientModel):
                 6,
                 3,
                 4,
-                'Many2many: You can enter "ID" of the relational'
+                'Many2many: You can enter "Name" of the relational'
                 ' model Seprate by ";"',
             )
             worksheet.write_merge(
@@ -507,15 +507,10 @@ class WizDownloadTemplate(models.TransientModel):
 
                             elif field_type_dict.get(str(key))[0] == "many2many":
                                 ids = []
-                                test = []
-                                if isinstance(row[headers_dict[str(key)]],float):
-                                    test = [int(row[headers_dict[str(key)]])]
-                                elif isinstance(row[headers_dict[str(key)]],str):
-                                    test = row[headers_dict[str(key)]].split(";")
-                                for line in test:
+                                for line in row[headers_dict[str(key)]].split(";"):
                                     search_id = self.env[
                                         "" + str(field_type_dict.get(str(key))[1]) + ""
-                                    ].search([("id", "=", line)])
+                                    ].search([("name", "=", line)], limit=1, order="id desc")
                                     self.create_m2m = True
                                     if not search_id and self.create_m2m:
                                         ir_model_search = self.env["ir.model"].search(
