@@ -186,7 +186,7 @@ class WizDownloadTemplate(models.TransientModel):
                 6,
                 3,
                 4,
-                'Many2many: You can enter "ID" of the relational'
+                'Many2many: You can enter "Name" of the relational'
                 ' model Seprate by ";"',
             )
             worksheet.write_merge(
@@ -202,13 +202,12 @@ class WizDownloadTemplate(models.TransientModel):
             worksheet.write_merge(10, 10, 3, 4, "")
 
             worksheet.write(row_12, 0, "DocType:", bold)
-            worksheet.write(row_12, 1, self.ir_model.name)
+            worksheet.write(row_12, 1, self.ir_model.model)
             worksheet.write(row_13, 0, "Column Name:", bold)
             worksheet.write(row_14, 0, "Type:", bold)
             worksheet.write(row_15, 0, "Mandatory:", bold)
             worksheet.write(row_16, 0, "Column Labels:", bold)
             worksheet.write(row_17, 0, "Start entering data this line", bold)
-
             if not self.fields_list_ids and not error_value:
                 raise UserError(_("Fields should not be blank!"))
 
@@ -310,7 +309,7 @@ class WizDownloadTemplate(models.TransientModel):
         ctx.update(vals)
         self.env.args = self._cr, self._uid, misc.frozendict(ctx)
         file_id = self.env["wiz.template.file"].create(
-            {"file": buf, "name": self.ir_model.name + ".xls"}
+            {"file": buf, "name": self.ir_model.model + ".xls"}
         )
 
         return {
@@ -360,6 +359,18 @@ class WizDownloadTemplate(models.TransientModel):
                 for rownum in range(sheet.nrows):
                     row_values.append(sheet.row_values(rownum))
                     # headers
+                    if rownum == 12:
+                        # (Checking condition based on Model/DocType: inside the template)
+                        ir_model = [
+                            x.strip().encode().decode("utf-8")
+                            for x in sheet.row_values(rownum)
+                        ]
+                        model = self.ir_model.model
+                        ir_model_model = ir_model[1]
+                        if ir_model_model != model:
+                            raise UserError(_(
+                                    """Selected document model not matched with browsed file!"""
+                            ))
                     if rownum == 13:
                         # converting unicode chars into string
                         header_key = [
@@ -394,22 +405,6 @@ class WizDownloadTemplate(models.TransientModel):
                             list1.append(x)
                         if header_key and list1:
                             flag_dict = dict(zip(header_key, list1))
-
-                    elif rownum == 16:
-                        # converting unicode chars into string
-                        header_list = [
-                            x.strip().encode().decode("utf-8")
-                            for x in sheet.row_values(rownum)
-                        ]
-                        model_name = self.ir_model.name
-                        name_file = "".join(map(str, file_name.split(".xls")))
-                        if model_name != name_file:
-                            raise UserError(
-                                _(
-                                    """Selected document type not matched
-                                    with browsed file name!"""
-                                )
-                            )
 
                         index = []
                         for x in header_list:
@@ -507,15 +502,10 @@ class WizDownloadTemplate(models.TransientModel):
 
                             elif field_type_dict.get(str(key))[0] == "many2many":
                                 ids = []
-                                test = []
-                                if isinstance(row[headers_dict[str(key)]],float):
-                                    test = [int(row[headers_dict[str(key)]])]
-                                elif isinstance(row[headers_dict[str(key)]],str):
-                                    test = row[headers_dict[str(key)]].split(";")
-                                for line in test:
+                                for line in row[headers_dict[str(key)]].split(";"):
                                     search_id = self.env[
                                         "" + str(field_type_dict.get(str(key))[1]) + ""
-                                    ].search([("id", "=", line)])
+                                    ].search([("name", "=", line)], limit=1, order="id desc")
                                     self.create_m2m = True
                                     if not search_id and self.create_m2m:
                                         ir_model_search = self.env["ir.model"].search(
@@ -545,7 +535,7 @@ class WizDownloadTemplate(models.TransientModel):
                                             error_value.append(row)
                                             vals.clear()
                                             break
-
+                                        
                                         create_id = self.env[
                                             ""
                                             + str(field_type_dict.get(str(key))[1])
@@ -553,7 +543,9 @@ class WizDownloadTemplate(models.TransientModel):
                                         ].create({"name": line})
                                         ids.append(create_id and create_id.id)
                                         vals.update({str(key): [(6, 0, ids)]})
-                                        search_id = create_id.id
+                                        search_id = self.env[
+                                        "" + str(field_type_dict.get(str(key))[1]) + ""
+                                        ].search([("id", "=", create_id.id)])
                                     for search in search_id:
                                         ids.append(search and search.id)
                                         vals.update({str(key): [(6, 0, ids)]})
