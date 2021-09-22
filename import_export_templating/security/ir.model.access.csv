@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_wiz_download_template,access_wiz_download_template,model_wiz_download_template,base.group_user,1,1,1,0
+access_wiz_template_file,access_wiz_template_file,model_wiz_template_file,base.group_user,1,1,1,0
