@@ -37,13 +37,9 @@
                     <group></group>
                 </group>
                 <separator string="Options" attrs="{'invisible':[('type', '!=', 'import')]}"/>
-                <!-- <group attrs="{'invisible':[('type', '!=', 'import')]}" colspan="2" col="8">
+                <group attrs="{'invisible':[('type', '!=', 'import')]}">
                     <field name="create_m2o"/>
                     <field name="create_m2m"/>
-                    <field name="update_only"/>
-                    <field name="create_only"/>
-                </group> -->
-                <group attrs="{'invisible':[('type', '!=', 'import')]}">
                     <field name="update_only"/>
                     <field name="create_only"/>
                 </group>
