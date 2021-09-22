@@ -548,7 +548,9 @@ class WizDownloadTemplate(models.TransientModel):
                                         ].create({"name": line})
                                         ids.append(create_id and create_id.id)
                                         vals.update({str(key): [(6, 0, ids)]})
-                                        search_id = create_id.id
+                                        search_id = self.env[
+                                        "" + str(field_type_dict.get(str(key))[1]) + ""
+                                        ].search([("id", "=", create_id.id)])
                                     for search in search_id:
                                         ids.append(search and search.id)
                                         vals.update({str(key): [(6, 0, ids)]})
