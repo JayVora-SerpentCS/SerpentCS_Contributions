@@ -3,4 +3,4 @@
 SerpentCS Contributions
 ============================
 
-This branch contains the contributions of SerpentCS since v8.
+This branch contains the contributions of SerpentCS !
