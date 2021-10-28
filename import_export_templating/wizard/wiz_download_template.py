@@ -197,12 +197,12 @@ class WizDownloadTemplate(models.TransientModel):
                 "One2many: Let this blank! & Download Blank"
                 " Template for displayed comodel to Import!",
             )
-            worksheet.write_merge(8, 8, 3, 4, "")
+            worksheet.write_merge(8, 8, 3, 4, "There should only be one required field in relational model for creation of new record.")
             worksheet.write_merge(9, 9, 3, 4, "")
             worksheet.write_merge(10, 10, 3, 4, "")
 
             worksheet.write(row_12, 0, "DocType:", bold)
-            worksheet.write(row_12, 1, self.ir_model.name)
+            worksheet.write(row_12, 1, self.ir_model.model)
             worksheet.write(row_13, 0, "Column Name:", bold)
             worksheet.write(row_14, 0, "Type:", bold)
             worksheet.write(row_15, 0, "Mandatory:", bold)
@@ -310,7 +310,7 @@ class WizDownloadTemplate(models.TransientModel):
         ctx.update(vals)
         self.env.args = self._cr, self._uid, misc.frozendict(ctx)
         file_id = self.env["wiz.template.file"].create(
-            {"file": buf, "name": self.ir_model.name + ".xls"}
+            {"file": buf, "name": self.ir_model.model + ".xls"}
         )
 
         return {
@@ -360,13 +360,26 @@ class WizDownloadTemplate(models.TransientModel):
                 for rownum in range(sheet.nrows):
                     row_values.append(sheet.row_values(rownum))
                     # headers
+                    if rownum == 12:
+                        # (Checking condition based on Model/DocType: inside the template)
+                        ir_model = [
+                            x.strip().encode().decode("utf-8")
+                            for x in sheet.row_values(rownum)
+                        ]
+                        model = self.ir_model.model
+                        ir_model_model = ir_model[1]
+                        if ir_model_model != model:
+                            raise UserError(_(
+                                    """Selected document model not matched with browsed file!"""
+                            ))
+
                     if rownum == 13:
                         # converting unicode chars into string
                         header_key = [
                             x.strip().encode().decode("utf-8")
                             for x in sheet.row_values(rownum)
                         ]
-
+                    
                     elif rownum == 14:
                         # converting unicode chars into string
                         field_type_list = [
@@ -395,22 +408,18 @@ class WizDownloadTemplate(models.TransientModel):
                         if header_key and list1:
                             flag_dict = dict(zip(header_key, list1))
 
+                        index = []
+                        for x in header_list:
+                            index.append(header_list.index(x))
+                        if header_key and index:
+                            headers_dict = dict(zip(header_key, index))
+
                     elif rownum == 16:
                         # converting unicode chars into string
                         header_list = [
                             x.strip().encode().decode("utf-8")
                             for x in sheet.row_values(rownum)
                         ]
-                        model_name = self.ir_model.name
-                        name_file = "".join(map(str, file_name.split(".xls")))
-                        if model_name != name_file:
-                            raise UserError(
-                                _(
-                                    """Selected document type not matched
-                                    with browsed file name!"""
-                                )
-                            )
-
                         index = []
                         for x in header_list:
                             index.append(header_list.index(x))
@@ -471,7 +480,6 @@ class WizDownloadTemplate(models.TransientModel):
                                     )
                                     .id
                                 )
-
                                 self.create_m2o = True
                                 if not search_id and self.create_m2o:
                                     ir_model_search = self.env["ir.model"].search(
@@ -567,7 +575,10 @@ class WizDownloadTemplate(models.TransientModel):
                                 )
                             vals.update({str(key): False})
                         vals.pop("Column Name:", None)
-
+                    for key in vals:
+                        if not key:
+                            del vals[key]
+                            break
                     model_env = self.env["" + str(self.ir_model.model) + ""]
                     if vals != {}:
                         record_search_id = model_env.search(
