@@ -1,15 +1,16 @@
 # See LICENSE file for full copyright and licensing details.
 
-import xlwt
-from io import BytesIO
 import base64
-from xlrd import open_workbook
 import tempfile
+from datetime import datetime
+from io import BytesIO
 
-from odoo import api, fields, models, _
+import xlwt
+from xlrd import open_workbook
+
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import misc
-from datetime import datetime
 
 
 class WizDownloadTemplate(models.TransientModel):
@@ -60,7 +61,7 @@ class WizDownloadTemplate(models.TransientModel):
 
         self.fields_list_ids = manual_selected + required
         ctx = dict(self._context)
-        ctx.update(({"nodestroy": False}))
+        ctx.update({"nodestroy": False})
         return {
             "context": ctx,
             "view_type": "form",
@@ -77,7 +78,7 @@ class WizDownloadTemplate(models.TransientModel):
             (6, 0, self.field_names_computed.filtered(lambda l: l.name != "id").ids)
         ]
         ctx = dict(self._context)
-        ctx.update(({"nodestroy": False}))
+        ctx.update({"nodestroy": False})
         return {
             "context": ctx,
             "view_type": "form",
@@ -92,7 +93,7 @@ class WizDownloadTemplate(models.TransientModel):
     def button_uncheck(self):
         self.fields_list_ids = [(5, self.field_names_computed.ids)]
         ctx = dict(self._context)
-        ctx.update(({"nodestroy": False}))
+        ctx.update({"nodestroy": False})
         return {
             "context": ctx,
             "view_type": "form",
@@ -197,7 +198,13 @@ class WizDownloadTemplate(models.TransientModel):
                 "One2many: Let this blank! & Download Blank"
                 " Template for displayed comodel to Import!",
             )
-            worksheet.write_merge(8, 8, 3, 4, "There should only be one required field in relational model for creation of new record.")
+            worksheet.write_merge(
+                8,
+                8,
+                3,
+                4,
+                "There should only be one required field in relational model for creation of new record.",
+            )
             worksheet.write_merge(9, 9, 3, 4, "")
             worksheet.write_merge(10, 10, 3, 4, "")
 
@@ -330,7 +337,7 @@ class WizDownloadTemplate(models.TransientModel):
             file_name = str(rec.fname)
 
             # Checking for Suitable File
-            if not datafile or not file_name.lower().endswith((".xls")):
+            if not datafile or not file_name.lower().endswith(".xls"):
                 raise UserError(
                     _(
                         """Please select an (Downloded Blank Template)
@@ -369,9 +376,11 @@ class WizDownloadTemplate(models.TransientModel):
                         model = self.ir_model.model
                         ir_model_model = ir_model[1]
                         if ir_model_model != model:
-                            raise UserError(_(
+                            raise UserError(
+                                _(
                                     """Selected document model not matched with browsed file!"""
-                            ))
+                                )
+                            )
 
                     if rownum == 13:
                         # converting unicode chars into string
@@ -379,7 +388,7 @@ class WizDownloadTemplate(models.TransientModel):
                             x.strip().encode().decode("utf-8")
                             for x in sheet.row_values(rownum)
                         ]
-                    
+
                     elif rownum == 14:
                         # converting unicode chars into string
                         field_type_list = [
@@ -518,7 +527,9 @@ class WizDownloadTemplate(models.TransientModel):
                                 for line in row[headers_dict[str(key)]].split(";"):
                                     search_id = self.env[
                                         "" + str(field_type_dict.get(str(key))[1]) + ""
-                                    ].search([("name", "=", line)], limit=1, order="id desc")
+                                    ].search(
+                                        [("name", "=", line)], limit=1, order="id desc"
+                                    )
                                     self.create_m2m = True
                                     if not search_id and self.create_m2m:
                                         ir_model_search = self.env["ir.model"].search(
@@ -557,7 +568,9 @@ class WizDownloadTemplate(models.TransientModel):
                                         ids.append(create_id and create_id.id)
                                         vals.update({str(key): [(6, 0, ids)]})
                                         search_id = self.env[
-                                        "" + str(field_type_dict.get(str(key))[1]) + ""
+                                            ""
+                                            + str(field_type_dict.get(str(key))[1])
+                                            + ""
                                         ].search([("id", "=", create_id.id)])
                                     for search in search_id:
                                         ids.append(search and search.id)

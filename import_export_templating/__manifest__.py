@@ -2,7 +2,7 @@
 
 {
     "name": "Import / Export Templating",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "license": "LGPL-3",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
@@ -14,8 +14,13 @@
     import-export for non-technical users of ERP.
     """,
     "depends": ["web"],
-    "data": ["security/ir.model.access.csv","wizard/wiz_download_template_view.xml", "views/templates.xml"],
+    "data": ["security/ir.model.access.csv", "wizard/wiz_download_template_view.xml"],
     "installable": True,
     "price": 30.0,
     "currency": "EUR",
+    "assets": {
+        "web.assets_backend": [
+            "/import_export_templating/static/src/js/wizard_action.js",
+        ],
+    },
 }
