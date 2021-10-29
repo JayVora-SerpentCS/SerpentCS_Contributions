@@ -197,7 +197,7 @@ class WizDownloadTemplate(models.TransientModel):
                 "One2many: Let this blank! & Download Blank"
                 " Template for displayed comodel to Import!",
             )
-            worksheet.write_merge(8, 8, 3, 4, "")
+            worksheet.write_merge(8, 8, 3, 4, "There should only be one required field in relational model for creation of new record.")
             worksheet.write_merge(9, 9, 3, 4, "")
             worksheet.write_merge(10, 10, 3, 4, "")
 
@@ -412,6 +412,18 @@ class WizDownloadTemplate(models.TransientModel):
                         if header_key and index:
                             headers_dict = dict(zip(header_key, index))
 
+                    elif rownum == 16:
+                        # converting unicode chars into string
+                        header_list = [
+                            x.strip().encode().decode("utf-8")
+                            for x in sheet.row_values(rownum)
+                        ]
+                        index = []
+                        for x in header_list:
+                            index.append(header_list.index(x))
+                        if header_key and index:
+                            headers_dict = dict(zip(header_key, index))
+
                     # rows data
                     elif rownum >= 17:
                         data_list.append(sheet.row_values(rownum))
@@ -562,7 +574,10 @@ class WizDownloadTemplate(models.TransientModel):
                                 )
                             vals.update({str(key): False})
                         vals.pop("Column Name:", None)
-
+                    for key in vals:
+                        if not key:
+                            del vals[key]
+                            break
                     model_env = self.env["" + str(self.ir_model.model) + ""]
                     if vals != {}:
                         record_search_id = model_env.search(
