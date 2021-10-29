@@ -38,8 +38,6 @@
                 </group>
                 <separator string="Options" attrs="{'invisible':[('type', '!=', 'import')]}"/>
                 <group attrs="{'invisible':[('type', '!=', 'import')]}">
-                    <field name="create_m2o"/>
-                    <field name="create_m2m"/>
                     <field name="update_only"/>
                     <field name="create_only"/>
                 </group>
