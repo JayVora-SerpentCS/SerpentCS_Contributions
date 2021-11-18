@@ -19,7 +19,7 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
             'click #sign_clean': '_on_clear_sign',
         }),
         jsLibs: ['/web_digital_sign/static/lib/jSignature/jSignatureCustom.js'],
-        placeholder: "/web/static/src/img/placeholder.png",
+        placeholder: "/web/static/img/placeholder.png",
         init: function (parent, name, record) {
             this._super.apply(this, arguments);
             this.sign_options = {
@@ -95,10 +95,9 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
                 this.$(".signature").hide();
                 this.$el.prepend($img);
                 $img.on('error', function () {
-                    self.on_clear();
+                    self._clearFile();
                     $img.attr('src', self.placeholder);
-                    self.do_warn(_t("Image"),
-                        _t("Could not display the selected image."));
+                    self.displayNotification({message:_t("Image Could not display the selected image."),type: 'danger'});
                 });
             } else if (this.mode === "edit") {
                 this.$('> img').remove();
