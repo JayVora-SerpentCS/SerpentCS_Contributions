@@ -2,7 +2,7 @@
 
 {
     "name": "Web Digital Signature",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "complexity": "easy",
@@ -19,9 +19,15 @@
         Digital signature can be very usefull for documents.
     """,
     "images": ["static/description/Digital_Signature.jpg"],
-    "data": ["views/web_digital_sign_view.xml", "views/users_view.xml"],
+    "data": [
+        "views/users_view.xml"],
     "website": "http://www.serpentcs.com",
-    "qweb": ["static/src/xml/digital_sign.xml"],
     "installable": True,
     "auto_install": False,
+    'assets': {
+        'web.assets_qweb':[
+            'web_digital_sign/static/src/xml/digital_sign.xml'],
+        'web.assets_backend': [
+            'web_digital_sign/static/src/js/digital_sign.js'],
+    }
 }
