@@ -3,14 +3,12 @@
     <template id="preview_sale_sale_orderument" inherit_id="sale.sale_order_portal_content">
         <td t-if="display_discount" position="replace">
             <t t-if="sale_order.show_discount">
-                <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
-                    <strong t-if="line.discount &gt; 0" class="text-info">
-                        <t t-esc="((line.discount % 1) and '%s' or '%d') % line.discount"/>%
-                    </strong>
+                <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
+                    <span t-field="line.discount" />
                 </td>
             </t>
             <t t-if="not sale_order.show_discount">
-                <td t-if="display_discount" class="text-right">-N.A.-</td>
+                <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">-N.A.-</td>
             </t>
         </td>
         <xpath expr="//table[@id='sales_order_table']/tbody/t[2]/tr/t/td[3]" position="replace">
@@ -52,7 +50,7 @@
                             <td class="text-right">-N.A.-</td>
                         </t>
                     </tr>
-                    <t t-foreach="sale_order.amount_by_group" t-as="amount_by_group">
+                  <!--   <t t-foreach="sale_order.amount_by_group" t-as="amount_by_group">
                         <tr style="border-bottom:1px solid #dddddd;">
                             <t t-if="amount_by_group[3] == 1 and sale_order.amount_untaxed == amount_by_group[2]">
                                 <t t-if="sale_order.show_price">
@@ -84,7 +82,7 @@
                                 </t>
                             </t>
                         </tr>
-                    </t>
+                    </t> -->
                     <tr class="border-black">
                         <td><strong>Total</strong></td>
                         <t t-if="sale_order.show_price">

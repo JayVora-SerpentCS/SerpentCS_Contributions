@@ -5,12 +5,12 @@
         <!-- Discount fields hides from sale quotation report if show and hide price from Quotation -->
         <td t-if="display_discount" position="replace">
             <t t-if="doc.show_discount">
-                <td t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">
+                <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
                     <span t-field="line.discount" />
                 </td>
             </t>
             <t t-if="not doc.show_discount">
-                <td t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">-N.A.-</td>
+                <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">-N.A.-</td>
             </t>
         </td>
         <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[3]" position="replace">
@@ -26,8 +26,8 @@
         <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[last()]" position="replace">
             <t t-if="doc.show_price">
                 <td class="text-right" groups="account.group_show_line_subtotals_tax_excluded">
-                    <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                    <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                     <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                     <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
                 </td>
             </t>
             <t t-if="not doc.show_price">
@@ -50,7 +50,7 @@
                                 <td class="text-right">-N.A.-</td>
                             </t>
                         </tr>
-                        <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
+                       <!--  <t t-foreach="doc.amount_by_group" t-as="amount_by_group">
                             <tr>
                                 <td><span t-esc="amount_by_group[0] or 'Taxes'"/></td>
                                 <t t-if="doc.show_price">
@@ -63,7 +63,7 @@
                                     <td class="text-right">-N.A.-</td>
                                 </t>
                             </tr>
-                        </t>
+                        </t> -->
                         <tr class="border-black">
                             <td><strong>Total</strong></td>
                             <t t-if="doc.show_price">
