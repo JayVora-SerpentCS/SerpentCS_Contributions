@@ -101,6 +101,19 @@ class Applicant(models.Model):
         return res
 
     def create_employee_from_applicant(self):
+        app_med_details_obj=self.env["hr.applicant.medical.details"]
+        attachment_obj= self.env["ir.attachment"]
+        app_prev_occ_obj=self.env["applicant.previous.occupation"]
+        emp_prev_occ_obj=self.env["employee.previous.occupation"]
+        app_rel_obj=self.env["applicant.relative"]
+        emp_rel_obj=self.env["applicant.relative"]
+        app_edu_obj=self.env["applicant.education"]
+        emp_edu_obj=self.env["employee.education"]
+        app_tr_obj=self.env["applicant.previous.travel"]
+        emp_tr_obj=self.env["employee.previous.travel"]
+        app_lan_obj=self.env["applicant.language"]
+        emp_lan_obj=self.env["employee.language"]
+
         res = super(Applicant, self).create_employee_from_applicant()
         data_dict = res.get("context")
         record_emp = self.env['hr.employee'].create({
@@ -116,10 +129,11 @@ class Applicant(models.Model):
         self.write({"emp_id": record_emp.id})
         if res.get("res_id", False):
             for applicant in self:
-                for medical_detail in self.env["hr.applicant.medical.details"].search(
+               
+                for medical_detail in app_med_details_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    medical_id = self.env["hr.employee.medical.details"].create(
+                    medical_id =app_med_details_obj.create(
                         {
                             "medical_examination": medical_detail.medical_examination,
                             "vital_sign": medical_detail.vital_sign,
@@ -141,7 +155,7 @@ class Applicant(models.Model):
                             "good_health": medical_detail.good_health,
                             "serious_illness": medical_detail.serious_illness,
                             "broken_bones": medical_detail.broken_bones,
-                            "medications:": medical_detail.medications,
+                            "medications": medical_detail.medications,
                             "serious_wound": medical_detail.serious_wound,
                             "allergic": medical_detail.allergic,
                             "epilepsy": medical_detail.epilepsy,
@@ -151,7 +165,7 @@ class Applicant(models.Model):
                             "blood_type": medical_detail.blood_type,
                         }
                     )
-                    medical_attachments = self.env["ir.attachment"].search(
+                    medical_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "hr.applicant.medical.details"),
                             ("res_id", "=", medical_detail.id),
@@ -165,10 +179,13 @@ class Applicant(models.Model):
                                 "res_id": medical_id.id,
                             }
                         )
-                for prev_occupation in self.env["applicant.previous.occupation"].search(
+               
+                for prev_occupation in app_prev_occ_obj.search(
                     [("applicant_id", "=", applicant.id)]
+
                 ):
-                    occupation_id = self.env["employee.previous.occupation"].create(
+                    
+                    occupation_id =emp_prev_occ_obj.create(
                         {
                             "from_date": prev_occupation.from_date,
                             "to_date": prev_occupation.to_date,
@@ -181,7 +198,8 @@ class Applicant(models.Model):
                             "email": prev_occupation.email,
                         }
                     )
-                    occupation_attachments = self.env["ir.attachment"].search(
+                   
+                    occupation_attachments =attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.previous.occupation"),
                             ("res_id", "=", prev_occupation.id),
@@ -195,10 +213,12 @@ class Applicant(models.Model):
                                 "res_id": occupation_id.id,
                             }
                         )
-                for relative in self.env["applicant.relative"].search(
+               
+                for relative in app_rel_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    relative_id = self.env["employee.relative"].create(
+                   
+                    relative_id = emp_rel_obj.create(
                         {
                             "relative_type": relative.relative_type,
                             "name": relative.name,
@@ -209,7 +229,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    relative_attachments = self.env["ir.attachment"].search(
+                    relative_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.relative"),
                             ("res_id", "=", relative.id),
@@ -221,10 +241,12 @@ class Applicant(models.Model):
                             {"res_model": "employee.relative",
                                 "res_id": relative_id.id}
                         )
-                for education in self.env["applicant.education"].search(
+               
+                for education in app_edu_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    education_id = self.env["employee.education"].create(
+                   
+                    education_id =emp_edu_obj.create(
                         {
                             "from_date": education.from_date,
                             "to_date": education.to_date,
@@ -241,7 +263,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    education_attachments = self.env["ir.attachment"].search(
+                    education_attachments =attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.education"),
                             ("res_id", "=", education.id),
@@ -255,10 +277,12 @@ class Applicant(models.Model):
                                 "res_id": education_id.id,
                             }
                         )
-                for prev_travel in self.env["applicant.previous.travel"].search(
+              
+                for prev_travel in app_tr_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    prev_travel_id = self.env["employee.previous.travel"].create(
+                    
+                    prev_travel_id = emp_tr_obj.create(
                         {
                             "from_date": prev_travel.from_date,
                             "to_date": prev_travel.to_date,
@@ -267,7 +291,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    prev_travel_attachments = self.env["ir.attachment"].search(
+                    prev_travel_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.previous.travel"),
                             ("res_id", "=", prev_travel.id),
@@ -281,10 +305,12 @@ class Applicant(models.Model):
                                 "res_id": prev_travel_id.id,
                             }
                         )
-                for language in self.env["applicant.language"].search(
+              
+                for language in app_lan_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    language_id = self.env["employee.language"].create(
+                    
+                    language_id =emp_lan_obj.create(
                         {
                             "language": language.language,
                             "read_lang": language.read_lang,
@@ -294,7 +320,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    language_attachments = self.env["ir.attachment"].search(
+                    language_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.language"),
                             ("res_id", "=", language.id),
