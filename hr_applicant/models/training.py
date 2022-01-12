@@ -143,7 +143,6 @@ class TrainingClass(models.Model):
     def action_completed(self):
         for rec in self:
             if not rec.attendees_ids:
-                print("attendees_ids",rec.attendees_ids)
                 raise ValidationError(
                     _("You cannot Approve Any Training with no Attendees!")
                 )
@@ -170,7 +169,6 @@ class TrainingClass(models.Model):
     def action_cancel(self):
         for rec in self:
             for attendee in rec.attendees_ids:
-                print("attendee", attendee)
                 if attendee.state not in [
                     "draft",
                     "awaiting_training_start",
