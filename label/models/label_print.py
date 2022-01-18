@@ -35,7 +35,7 @@ class LabelPrint(models.Model):
             active_model_obj = self.env[self.model_id.model]
             if active_model_obj._inherits:
                 for key, val in active_model_obj._inherits.items():
-                    model_ids = model_obj.search([("model", "=", key)])
+                    model_ids = model_obj.sudo().search([("model", "=", key)])
                     if model_ids:
                         model_list.append(key)
         self.model_list = model_list
