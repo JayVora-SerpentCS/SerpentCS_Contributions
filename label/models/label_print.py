@@ -94,7 +94,7 @@ class LabelPrintField(models.Model):
         "Position",
     )
     nolabel = fields.Boolean("No Label")
-    newline = fields.Boolean("New Line", deafult=True)
+    newline = fields.Boolean("New Line", default=True)
     
     @api.onchange("python_field")
     def _onchange_python_field(self):

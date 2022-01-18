@@ -1,7 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 {
     "name": "Mass Label Reporting",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Tools",
     "license": "AGPL-3",
     "summary": "Generate customised labels of any document",

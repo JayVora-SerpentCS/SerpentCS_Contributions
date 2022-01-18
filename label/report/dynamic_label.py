@@ -21,29 +21,37 @@ class ReportDynamicLabel(models.AbstractModel):
         value_vals = []
         diff = 0
         for datas in active_model_obj.browse(ids):
+           
             for i in range(0, number_of_copy):
                 vals = []
                 bot = False
                 bot_dict = {}
                 for field in label_print_data.field_ids:
+                  
                     string = ""
                     pos = ""
                     if field.python_expression and field.python_field:
+
                         string = field.python_field.split(".")[-1]
+                      
                         value = eval(field.python_field, {"obj": datas})
+                      
             
                     elif field.field_id.name:
                         string = field.field_id.field_description
+                       
                         value = getattr(datas, field.field_id.name)
+                      
 
                     if not value:
                         continue
 
                     if isinstance(value, dict):
                         model_obj = self.env[value._name]
+                      
                         value = eval("obj." + model_obj._rec_name,
                                      {"obj": value})
-
+                     
                     if not value:
                         value = ""
 
@@ -59,6 +67,7 @@ class ReportDynamicLabel(models.AbstractModel):
                             bot = False
                         else:
                             bot = True
+
                             bot_dict = {
                                 "string": string,
                                 "value": value,
@@ -80,6 +89,7 @@ class ReportDynamicLabel(models.AbstractModel):
                             "style": 
                             "font-size:" + str(field.fontsize) + "px;" + pos,
                         }
+                        
                         vals.append(vals_dict)
                 if bot_dict != {}:
                     vals.append(bot_dict)
@@ -99,7 +109,6 @@ class ReportDynamicLabel(models.AbstractModel):
             for value_list in val:
                 for value_print in value_list:
                     list_newdata.append(value_print["value"])
-
         for data in new_list:
             for list_data in data:
                 newlist_len = newlist_len + 1
@@ -118,17 +127,20 @@ class ReportDynamicLabel(models.AbstractModel):
 
         for data_value_vals in value_vals:
             if data_value_vals not in list_newdata:
+            
                 for add_data in range(0, number_of_copy):
+                  
                     remain_data.append(data_value_vals)
-
+                  
         if newlist_len <= number_of_copy:
             diff = number_of_copy - newlist_len
+           
 
         if len(ids) == 1:
             for new_result in range(0, diff):
                 result1.append(temp)
         return new_list
-
+      
     @api.model
     def _get_report_values(self, docids, data=None):
         if not data.get("form") or not self.env.context.get("active_model"):

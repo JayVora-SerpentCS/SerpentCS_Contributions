@@ -1,6 +1,6 @@
-==================
+=====
 Label
-==================
+=====
 
 * This module will let you print particular product name, image and barcode
 
