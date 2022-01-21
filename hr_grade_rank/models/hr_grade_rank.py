@@ -30,7 +30,7 @@ class HrEmployee(models.Model):
     rank_id = fields.Many2one("rank.rank", "Rank")
 
     @api.onchange("grade_id")
-    def onchange_grade(self):
+    def _onchange_grade(self):
         res = {}
         if self.grade_id:
             self.rank_id = False

@@ -1,6 +1,6 @@
-==================
+=============
 HR-Grade Rank
-==================
+=============
 
 * This module is used to add grade of employees.
 * Module provides facility to manage organization hierarchy in box system.
