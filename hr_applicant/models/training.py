@@ -112,7 +112,7 @@ class TrainingClass(models.Model):
     description = fields.Text("Description")
 
     @api.onchange("training_start_date", "course_id")
-    def onchange_start_date(self):
+    def _onchange_start_date(self):
         for rec in self:
             if rec.training_start_date and rec.course_id:
                 end_date = False
@@ -265,7 +265,7 @@ class ListOfAttendees(models.Model):
     )
 
     @api.onchange("class_id")
-    def onchange_start_date(self):
+    def _onchange_start_date(self):
         for rec in self:
             if rec.class_id:
                 rec.training_start_date = self.class_id.training_start_date

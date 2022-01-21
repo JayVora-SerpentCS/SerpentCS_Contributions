@@ -16,7 +16,7 @@ class SelectTraining(models.TransientModel):
         'training.class', string='Training')
 
     @api.onchange("is_triaing_needed")
-    def onchange_training_courses(self):
+    def _onchange_training_courses(self):
         class_obj = self.env["training.class"]
         applicant = self.env["hr.applicant"].browse(
             self._context.get("active_id"))

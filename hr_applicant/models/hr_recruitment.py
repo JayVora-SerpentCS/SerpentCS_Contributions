@@ -101,6 +101,20 @@ class Applicant(models.Model):
         return res
 
     def create_employee_from_applicant(self):
+        app_med_details_obj = self.env["hr.applicant.medical.details"]
+        emp_med_details_obj = self.env["hr.employee.medical.details"]
+        attachment_obj = self.env["ir.attachment"]
+        app_prev_occ_obj = self.env["applicant.previous.occupation"]
+        emp_prev_occ_obj = self.env["employee.previous.occupation"]
+        app_rel_obj = self.env["applicant.relative"]
+        emp_rel_obj = self.env["employee.relative"]
+        app_edu_obj = self.env["applicant.education"]
+        emp_edu_obj = self.env["employee.education"]
+        app_tr_obj = self.env["applicant.previous.travel"]
+        emp_tr_obj = self.env["employee.previous.travel"]
+        app_lan_obj = self.env["applicant.language"]
+        emp_lan_obj = self.env["employee.language"]
+
         res = super(Applicant, self).create_employee_from_applicant()
         data_dict = res.get("context")
         record_emp = self.env['hr.employee'].create({
@@ -116,10 +130,10 @@ class Applicant(models.Model):
         self.write({"emp_id": record_emp.id})
         if res.get("res_id", False):
             for applicant in self:
-                for medical_detail in self.env["hr.applicant.medical.details"].search(
+                for medical_detail in app_med_details_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    medical_id = self.env["hr.employee.medical.details"].create(
+                    medical_id = emp_med_details_obj.create(
                         {
                             "medical_examination": medical_detail.medical_examination,
                             "vital_sign": medical_detail.vital_sign,
@@ -141,17 +155,17 @@ class Applicant(models.Model):
                             "good_health": medical_detail.good_health,
                             "serious_illness": medical_detail.serious_illness,
                             "broken_bones": medical_detail.broken_bones,
-                            "medications:": medical_detail.medications,
+                            "medications": medical_detail.medications,
                             "serious_wound": medical_detail.serious_wound,
                             "allergic": medical_detail.allergic,
                             "epilepsy": medical_detail.epilepsy,
                             "history_drug_use": medical_detail.history_drug_use,
-                            "employee_id": res.get("res_id", False),
+                            # "employee_id": res.get("res_id", False),
                             "blood_name": medical_detail.blood_name,
                             "blood_type": medical_detail.blood_type,
                         }
                     )
-                    medical_attachments = self.env["ir.attachment"].search(
+                    medical_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "hr.applicant.medical.details"),
                             ("res_id", "=", medical_detail.id),
@@ -165,10 +179,10 @@ class Applicant(models.Model):
                                 "res_id": medical_id.id,
                             }
                         )
-                for prev_occupation in self.env["applicant.previous.occupation"].search(
+                for prev_occupation in app_prev_occ_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    occupation_id = self.env["employee.previous.occupation"].create(
+                    occupation_id = emp_prev_occ_obj.create(
                         {
                             "from_date": prev_occupation.from_date,
                             "to_date": prev_occupation.to_date,
@@ -181,7 +195,7 @@ class Applicant(models.Model):
                             "email": prev_occupation.email,
                         }
                     )
-                    occupation_attachments = self.env["ir.attachment"].search(
+                    occupation_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.previous.occupation"),
                             ("res_id", "=", prev_occupation.id),
@@ -195,10 +209,10 @@ class Applicant(models.Model):
                                 "res_id": occupation_id.id,
                             }
                         )
-                for relative in self.env["applicant.relative"].search(
+                for relative in app_rel_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    relative_id = self.env["employee.relative"].create(
+                    relative_id = emp_rel_obj.create(
                         {
                             "relative_type": relative.relative_type,
                             "name": relative.name,
@@ -209,7 +223,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    relative_attachments = self.env["ir.attachment"].search(
+                    relative_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.relative"),
                             ("res_id", "=", relative.id),
@@ -221,10 +235,10 @@ class Applicant(models.Model):
                             {"res_model": "employee.relative",
                                 "res_id": relative_id.id}
                         )
-                for education in self.env["applicant.education"].search(
+                for education in app_edu_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    education_id = self.env["employee.education"].create(
+                    education_id = emp_edu_obj.create(
                         {
                             "from_date": education.from_date,
                             "to_date": education.to_date,
@@ -241,7 +255,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    education_attachments = self.env["ir.attachment"].search(
+                    education_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.education"),
                             ("res_id", "=", education.id),
@@ -255,10 +269,10 @@ class Applicant(models.Model):
                                 "res_id": education_id.id,
                             }
                         )
-                for prev_travel in self.env["applicant.previous.travel"].search(
+                for prev_travel in app_tr_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    prev_travel_id = self.env["employee.previous.travel"].create(
+                    prev_travel_id = emp_tr_obj.create(
                         {
                             "from_date": prev_travel.from_date,
                             "to_date": prev_travel.to_date,
@@ -267,7 +281,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    prev_travel_attachments = self.env["ir.attachment"].search(
+                    prev_travel_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.previous.travel"),
                             ("res_id", "=", prev_travel.id),
@@ -281,10 +295,10 @@ class Applicant(models.Model):
                                 "res_id": prev_travel_id.id,
                             }
                         )
-                for language in self.env["applicant.language"].search(
+                for language in  app_lan_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
-                    language_id = self.env["employee.language"].create(
+                    language_id = emp_lan_obj.create(
                         {
                             "language": language.language,
                             "read_lang": language.read_lang,
@@ -294,7 +308,7 @@ class Applicant(models.Model):
                             "employee_id": res.get("res_id", False),
                         }
                     )
-                    language_attachments = self.env["ir.attachment"].search(
+                    language_attachments = attachment_obj.search(
                         [
                             ("res_model", "=", "applicant.language"),
                             ("res_id", "=", language.id),
@@ -309,376 +323,3 @@ class Applicant(models.Model):
         return res
 
 
-class ApplicantMedicalDetails(models.Model):
-
-    _name = "hr.applicant.medical.details"
-    _description = "Applicant Medical Details"
-    _rec_name = "medical_examination"
-
-    medical_examination = fields.Char("Medical Examination")
-    vital_sign = fields.Char("Vital sign")
-    date = fields.Date(
-        "Date", default=fields.Date.context_today, readonly=True)
-    doc_comment = fields.Char("Doctor’s Comments")
-
-    head_face_scalp = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Head, Face, Scalp"
-    )
-    nose_sinuses = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Nose/Sinuses"
-    )
-    mouth_throat = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Mouth/Throat"
-    )
-    ears_tms = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Ears/TMs"
-    )
-    eyes_pupils_ocular = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")
-         ], "Eyes/Pupils/Ocular Motility"
-    )
-    heart_vascular_system = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Heart/Vascular System"
-    )
-    lungs = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Lungs")
-    abdomen_hernia = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Abdomen/Hernia"
-    )
-    msk_strengh = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "MSK-Strength"
-    )
-    neurological = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")],
-        "Neurological (Reflexes, Sensation)",
-    )
-    glasses_needed = fields.Boolean("Glasses Needed?")
-    urine_drug_serene = fields.Selection(
-        [("Negative", "Negative"), ("Positive", "Positive")], "Urine Drug Serene"
-    )
-    fit_for_full_duty = fields.Boolean("Fully Fit for Duty?")
-
-    good_health = fields.Boolean("Good Health?")
-    serious_illness = fields.Boolean("Series Illness or Disease?")
-    broken_bones = fields.Boolean("Broken Bones or Surgery?")
-    medications = fields.Boolean("Medications at this time?")
-    serious_wound = fields.Boolean("Seriously Wounded?")
-    allergic = fields.Boolean("Allergic to any medication?")
-    epilepsy = fields.Boolean("Epilepsy")
-    history_drug_use = fields.Boolean("Any History of drug use?")
-
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
-    active = fields.Boolean(string="Active", default=True)
-    blood_name = fields.Selection(
-        [("A", "A"), ("B", "B"), ("O", "O"), ("AB", "AB")], "Blood Type"
-    )
-    blood_type = fields.Selection([("+", "+"), ("-", "-")], "Blood Type")
-
-    @api.model
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantMedicalDetails, self).create(vals)
-
-
-class ApplicantPreviousOccupation(models.Model):
-
-    _name = "applicant.previous.occupation"
-    _description = "Recruite Previous Occupation"
-    _order = "to_date desc"
-    _rec_name = "position"
-
-    from_date = fields.Date(string="From Date", required=True)
-    to_date = fields.Date(string="To Date", required=True)
-    position = fields.Char(string="Position", required=True)
-    organization = fields.Char(string="Organization")
-    ref_name = fields.Char(string="Reference Name")
-    ref_position = fields.Char(string="Reference Position")
-    ref_phone = fields.Char(string="Reference Phone")
-    active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
-    email = fields.Char("Email")
-
-    @api.model
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantPreviousOccupation, self).create(vals)
-
-    @api.onchange("from_date", "to_date")
-    def onchange_date(self):
-        if (
-            self.to_date
-            and datetime.strptime(str(self.to_date), DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("To date must be less than today!"),
-            }
-            self.to_date = False
-            return {"warning": warning}
-        if self.from_date and self.to_date and self.from_date > self.to_date:
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("To Date %s must be greater than From Date %s !")
-                % (self.to_date, self.from_date),
-            }
-            self.to_date = False
-            return {"warning": warning}
-
-
-class ApplicantRelative(models.Model):
-
-    _name = "applicant.relative"
-    _description = "Applicant Relatives"
-    _rec_name = "name"
-
-    relative_type = fields.Selection(
-        [
-            ("Aunty", "Aunty"),
-            ("Brother", "Brother"),
-            ("Daughter", "Daughter"),
-            ("Father", "Father"),
-            ("Husband", "Husband"),
-            ("Mother", "Mother"),
-            ("Sister", "Sister"),
-            ("Son", "Son"),
-            ("Uncle", "Uncle"),
-            ("Wife", "Wife"),
-            ("Other", "Other"),
-        ],
-        string="Relative Type",
-        required=True,
-    )
-    name = fields.Char(string="Name", size=128, required=True)
-    birthday = fields.Date(string="Date of Birth")
-    place_of_birth = fields.Char(string="Place of Birth", size=128)
-    occupation = fields.Char(string="Occupation", size=128)
-    gender = fields.Selection(
-        [("Male", "Male"), ("Female", "Female")], string="Gender", required=False
-    )
-    active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
-
-    @api.onchange("birthday")
-    def onchange_birthday(self):
-        if (
-            self.birthday
-            and datetime.strptime(str(self.birthday), DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("Date of Birth must be less than today!"),
-            }
-            self.birthday = False
-            return {"warning": warning}
-
-    @api.onchange("relative_type")
-    def onchange_relative_type(self):
-        if self.relative_type:
-            if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
-                self.gender = "Male"
-            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
-                self.gender = "Female"
-            else:
-                self.gender = ""
-        if self.applicant_id and not self.relative_type:
-            warning = {
-                "title": _("Warning!"),
-                "message": _("Please select Relative Type!"),
-            }
-            return {"gender": False, "warning": warning}
-
-    @api.model
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantRelative, self).create(vals)
-
-
-class ApplicantEducation(models.Model):
-    _name = "applicant.education"
-    _description = "Applicant Education"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
-    _rec_name = "from_date"
-    _order = "from_date"
-
-    from_date = fields.Date(string="From Date")
-    to_date = fields.Date(string="To Date")
-    education_rank = fields.Char("Education Rank")
-    school_name = fields.Char(string="School Name", size=256)
-    grade = fields.Char("Education Field/Major")
-    field = fields.Char(string="Major/Field of Education", size=128)
-    illiterate = fields.Boolean("Illiterate")
-    active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
-    edu_type = fields.Selection(
-        [("Local", "Local"), ("Abroad", "Abroad")],
-        string="School Location",
-        default="Local",
-    )
-    country_id = fields.Many2one("res.country", "Country")
-    state_id = fields.Many2one("res.country.state", "State")
-    province = fields.Char("Province")
-
-    @api.onchange("edu_type")
-    def onchange_edu_type(self):
-        for rec in self:
-            if rec.edu_type == "Local":
-                rec.country_id = False
-            else:
-                rec.province = False
-                rec.state_id = False
-
-    @api.onchange("illiterate")
-    def onchange_illiterate(self):
-        for rec in self:
-            rec.from_date = False
-            rec.to_date = False
-            rec.education_rank = ""
-            rec.school_name = ""
-            rec.grade = ""
-            rec.field = ""
-            rec.edu_type = ""
-            rec.country_id = False
-            rec.state_id = False
-            rec.province = ""
-
-    @api.model
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantEducation, self).create(vals)
-
-    @api.onchange("from_date", "to_date")
-    def onchange_date(self):
-        to_date = self.to_date and datetime.strftime(
-            self.to_date, DEFAULT_SERVER_DATE_FORMAT
-        )
-        if (
-            to_date
-            and datetime.strptime(to_date, DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("To date must be less than today!"),
-            }
-            self.to_date = False
-            return {"warning": warning}
-        if self.from_date and self.to_date and self.from_date > self.to_date:
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("To Date must be greater than From Date !"),
-            }
-            self.to_date = False
-            return {"warning": warning}
-
-
-class ApplicantPreviousTravel(models.Model):
-    _name = "applicant.previous.travel"
-    _description = "Applicant Previous Travel"
-    _rec_name = "from_date"
-    _order = "from_date"
-
-    from_date = fields.Date(string="From Date", required=True)
-    to_date = fields.Date(string="To Date", required=True)
-    location = fields.Char(string="Location", size=128, required=True)
-    reason = fields.Char("Reason", required=True)
-    active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
-
-    @api.model
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantPreviousTravel, self).create(vals)
-
-    @api.onchange("from_date", "to_date")
-    def onchange_date(self):
-        if (
-            self.to_date
-            and datetime.strptime(str(self.to_date), DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("To date must be less than today!"),
-            }
-            self.to_date = False
-            return {"warning": warning}
-        if self.from_date and self.to_date and self.from_date > self.to_date:
-            warning = {
-                "title": _("User Alert !"),
-                "message": _("To Date must be greater than From Date!"),
-            }
-            self.to_date = False
-            return {"warning": warning}
-
-
-class ApplicantLanguage(models.Model):
-    _name = "applicant.language"
-    _description = "Applicant Language"
-    _rec_name = "language"
-
-    language = fields.Char("Language", required=True)
-    read_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Read"
-    )
-    write_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Write"
-    )
-    speak_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Speak"
-    )
-    active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
-    mother_tongue = fields.Boolean("Mother Tongue")
-
-    @api.constrains("mother_tongue")
-    def _check_mother_tongue(self):
-        self.ensure_one()
-        if self.mother_tongue and self.applicant_id:
-            language_rec = self.search(
-                [
-                    ("applicant_id", "=", self.applicant_id.id),
-                    ("mother_tongue", "=", True),
-                    ("id", "!=", self.id),
-                ],
-                limit=1,
-            )
-            if language_rec:
-                raise ValidationError(
-                    _(
-                        "If you want to set '%s' \
-                    as a mother tongue, first you have to uncheck mother \
-                    tongue in '%s' language."
-                    )
-                    % (self.language, language_rec.language)
-                )
-
-    @api.model
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantLanguage, self).create(vals)
