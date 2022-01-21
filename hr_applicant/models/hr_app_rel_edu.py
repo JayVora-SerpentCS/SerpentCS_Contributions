@@ -2,8 +2,6 @@ from datetime import datetime
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
-
 
 
 class ApplicantRelative(models.Model):
@@ -42,7 +40,7 @@ class ApplicantRelative(models.Model):
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
-        if (self.birthday and self.birthday>= fields.Date.today()):
+        if (self.birthday and self.birthday >= fields.Date.today()):
         
             warning = {
                 "title": _("User Alert !"),
