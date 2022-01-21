@@ -42,10 +42,8 @@ class ApplicantRelative(models.Model):
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
-        if (
-            self.birthday
-            and fields.Date.from_string(self.birthday)>= fields.Date.today()
-        ):
+        if (self.birthday and self.birthday>= fields.Date.today()):
+        
             warning = {
                 "title": _("User Alert !"),
                 "message": _("Date of Birth must be less than today!"),
@@ -129,6 +127,7 @@ class ApplicantEducation(models.Model):
 
     @api.model
     def create(self, vals):
+
         if self._context.get("active_model") == "hr.applicant" and self._context.get(
             "active_id"
         ):
@@ -137,11 +136,11 @@ class ApplicantEducation(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-        to_date = self.to_date and fields.Date.to_string(self.to_date)
-        if (
-            to_date
-            and fields.Date.from_string(to_date) >= fields.Date.today()
-        ):
+
+        to_date = self.to_date 
+        if (to_date and self.to_date >= fields.Date.today()):
+            
+       
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),

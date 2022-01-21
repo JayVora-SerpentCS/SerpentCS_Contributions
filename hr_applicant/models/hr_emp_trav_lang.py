@@ -30,11 +30,8 @@ class EmployeePreviousTravel(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-        if (
-            self.to_date
-            and datetime.strptime(str(self.to_date), DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
+        if (self.to_date and self.to_date >= datetime.today()):
+           
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today !"),

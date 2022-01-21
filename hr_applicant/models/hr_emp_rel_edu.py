@@ -41,11 +41,8 @@ class EmployeeRelative(models.Model):
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
-        if (
-            self.birthday
-            and datetime.strptime(str(self.birthday), DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
+        if (self.birthday  and self.birthday >= datetime.today()):
+           
             warning = {
                 "title": _("User Alert !"),
                 "message": _("Date of Birth must be less than today!"),
@@ -134,14 +131,10 @@ class EmployeeEducation(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-        to_date = self.to_date and datetime.strftime(
-            self.to_date, DEFAULT_SERVER_DATE_FORMAT
-        )
-        if (
-            to_date
-            and datetime.strptime(to_date, DEFAULT_SERVER_DATE_FORMAT)
-            >= datetime.today()
-        ):
+        to_date = self.to_date
+        
+        if (self.to_date  and self.to_date >= datetime.today()):
+              
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),

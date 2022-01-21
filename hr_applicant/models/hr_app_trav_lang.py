@@ -22,6 +22,7 @@ class ApplicantPreviousTravel(models.Model):
 
     @api.model
     def create(self, vals):
+        
         if self._context.get("active_model") == "hr.applicant" and self._context.get(
             "active_id"
         ):
@@ -30,10 +31,9 @@ class ApplicantPreviousTravel(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-        if (
-            self.to_date
-            and fields.Date.from_string(self.to_date)>= fields.Date.today()
-        ):
+
+        if (self.to_date  and self.to_date >= fields.Date.today()):
+           
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),
