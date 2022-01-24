@@ -56,8 +56,7 @@ class ApplicantRelative(models.Model):
                 self.gender = "Male"
             elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
                 self.gender = "Female"
-            else:
-                self.gender = ""
+            
         if self.applicant_id and not self.relative_type:
             warning = {
                 "title": _("Warning!"),
@@ -135,10 +134,8 @@ class ApplicantEducation(models.Model):
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
 
-        to_date = self.to_date 
-        if (to_date and self.to_date >= fields.Date.today()):
-            
-       
+        if (self.to_date and self.to_date >= fields.Date.today()
+        ):
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),

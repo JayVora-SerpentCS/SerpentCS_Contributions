@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 
-
 class Applicant(models.Model):
     _inherit = "hr.applicant"
     _description = "Applicant"
