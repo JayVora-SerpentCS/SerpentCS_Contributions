@@ -46,10 +46,10 @@
                                         <t t-if="not e.partner_id">-</t>
                                     </td>
                                     <td>
-                                        <t t-if='e.user_id'>
-                                            <span t-field="e.user_id"/>
+                                        <t t-if='e.user_ids'>
+                                            <span t-field="e.user_ids"/>
                                         </t>
-                                        <t t-if="not e.user_id">-</t>
+                                        <t t-if="not e.user_ids">-</t>
                                     </td>
                                     <td>
                                         <t t-if='e.date_assign'>
