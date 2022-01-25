@@ -1,7 +1,6 @@
 from datetime import datetime
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
 
 
 class ApplicantRelative(models.Model):
@@ -32,8 +31,7 @@ class ApplicantRelative(models.Model):
     place_of_birth = fields.Char(string="Place of Birth", size=128)
     occupation = fields.Char(string="Occupation", size=128)
     gender = fields.Selection(
-        [("Male", "Male"), ("Female", "Female")], string="Gender", required=False
-    )
+        [("Male", "Male"), ("Female", "Female")], string="Gender")
     active = fields.Boolean(string="Active", default=True)
     applicant_id = fields.Many2one(
         "hr.applicant", "Applicant Ref", ondelete="cascade")
@@ -52,6 +50,7 @@ class ApplicantRelative(models.Model):
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
         if self.relative_type:
+            self.gender=""
             if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
                 self.gender = "Male"
             elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
@@ -105,23 +104,12 @@ class ApplicantEducation(models.Model):
             if rec.edu_type == "Local":
                 rec.country_id = False
             else:
-                rec.province = False
-                rec.state_id = False
-
+                rec.province = rec.state_id = False
     @api.onchange("illiterate")
     def _onchange_illiterate(self):
         for rec in self:
-            rec.from_date = False
-            rec.to_date = False
-            rec.education_rank = ""
-            rec.school_name = ""
-            rec.grade = ""
-            rec.field = ""
-            rec.edu_type = ""
-            rec.country_id = False
-            rec.state_id = False
-            rec.province = ""
-
+            rec.from_date = rec.to_date =  rec.country_id =  rec.state_id = False
+            rec.education_rank =  rec.school_name =  rec.grade = rec.field = rec.edu_type =  rec.province = ""
     @api.model
     def create(self, vals):
 

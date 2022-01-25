@@ -1,8 +1,6 @@
 from datetime import datetime
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
-
 
 class ApplicantPreviousTravel(models.Model):
     _name = "applicant.previous.travel"

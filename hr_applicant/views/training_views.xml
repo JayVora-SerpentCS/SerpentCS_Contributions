@@ -134,7 +134,7 @@
         <field name="name">view.list.of.attendees.form</field>
         <field name="model">list.of.attendees</field>
         <field name="arch" type="xml">
-            <form string="Training" version="9.0">
+            <form string="Training">
                 <header>
                     <button name="action_awaiting_training_start" type="object" states="draft" string="Awaiting For Training Start" class="oe_highlight"/>
                     <button name="action_in_training" type="object" states="awaiting_training_start" string="In Training" class="oe_highlight"/>

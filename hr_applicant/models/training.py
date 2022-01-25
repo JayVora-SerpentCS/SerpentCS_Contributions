@@ -1,8 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 
-import datetime
-from odoo import api, fields, models
-from odoo.tools.translate import _
+from datetime import datetime
+from odoo import _, api, fields, models
 from dateutil.relativedelta import relativedelta
 from odoo.exceptions import ValidationError
 

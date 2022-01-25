@@ -4,7 +4,7 @@
         <field name="name">view.hr.employee.medical.details.form</field>
         <field name="model">hr.employee.medical.details</field>
         <field name="arch" type="xml">
-            <form string="Medical Screening" version="9.0">
+            <form string="Medical Screening">
                 <sheet>
                     <group>
                         <field name="medical_examination" tabindex="1" placeholder="Enter Medical Examination" required="1" />

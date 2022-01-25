@@ -1,8 +1,6 @@
 from datetime import datetime
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools.translate import _
-
 
 class EmployeeRelative(models.Model):
 
@@ -51,12 +49,11 @@ class EmployeeRelative(models.Model):
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
         if self.relative_type:
+            self.gender=""
             if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
                 self.gender = "Male"
             elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
                 self.gender = "Female"
-            else:
-                self.gender = ""
         if self.employee_id and not self.relative_type:
             warning = {
                 "title": _("Warning!"),
