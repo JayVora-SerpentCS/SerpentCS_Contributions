@@ -92,10 +92,10 @@
                                                 <t t-if="not t.remaining_hours">00:00</t>
                                             </td>
                                             <td>
-                                                <t t-if='t.user_id'>
-                                                    <span t-field="t.user_id"/>
+                                                <t t-if='t.user_ids'>
+                                                    <span t-field="t.user_ids"/>
                                                 </t>
-                                                <t t-if="not t.user_id">-</t>
+                                                <t t-if="not t.user_ids">-</t>
                                             </td>
                                             <td>
                                                 <t t-if='t.date_assign'>
