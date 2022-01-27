@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <!-- GRADE FORM VIEW -->
@@ -14,7 +13,7 @@
                     <notebook>
                         <page string="Ranks">
                             <field name="rank_ids">
-                                <tree string="Ranks">
+                                <tree>
                                     <field name="name"/>
                                     <field name="salary_range"/>
                                     <field name="description"/>
@@ -33,7 +32,7 @@
         <field name="name">grade.grade.tree</field>
         <field name="model">grade.grade</field>
         <field name="arch" type="xml">
-            <tree string="Grades">
+            <tree>
                 <field name="name"/>
                 <field name="description"/>
             </tree>
@@ -75,7 +74,7 @@
         <field name="name">rank.rank.tree</field>
         <field name="model">rank.rank</field>
         <field name="arch" type="xml">
-            <tree string="Ranks">
+            <tree>
                 <field name="name"/>
                 <field name="salary_range"/>
                 <field name="description"/>
