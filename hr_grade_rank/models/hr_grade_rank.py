@@ -7,9 +7,9 @@ class RankRank(models.Model):
     _name = "rank.rank"
     _description = "Rank"
 
-    name = fields.Char("Name")
-    description = fields.Text("Description")
-    salary_range = fields.Text("Salary Range")
+    name = fields.Char()
+    description = fields.Text()
+    salary_range = fields.Text()
     grade_id = fields.Many2one("grade.grade", "Grade")
 
 
@@ -17,8 +17,8 @@ class GradeGrade(models.Model):
     _name = "grade.grade"
     _description = "Grade"
 
-    name = fields.Char("Name")
-    description = fields.Text("Description")
+    name = fields.Char()
+    description = fields.Text()
     rank_ids = fields.One2many("rank.rank", "grade_id", "Ranks")
 
 
