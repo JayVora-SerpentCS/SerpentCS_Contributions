@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="preview_sale_sale_orderument" inherit_id="sale.sale_order_portal_content">
+    <template id="preview_sale_sale_orderdocument" inherit_id="sale.sale_order_portal_content">
         <td t-if="display_discount" position="replace">
             <t t-if="sale_order.show_discount">
-                <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-sm-table-cell' if report_type == 'html' else '' }}">
-                    <strong t-if="line.discount &gt; 0" class="text-info">
-                        <t t-esc="((line.discount % 1) and '%s' or '%d') % line.discount"/>%
-                    </strong>
+                <td t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">
+                    <span t-field="line.discount" />
                 </td>
             </t>
             <t t-if="not sale_order.show_discount">
-                <td t-if="display_discount" class="text-right">-N.A.-</td>
+                <td t-if="display_discount" class="text-right" groups="product.group_discount_per_so_line">-N.A.-</td>
             </t>
         </td>
         <xpath expr="//table[@id='sales_order_table']/tbody/t[2]/tr/t/td[3]" position="replace">
@@ -52,39 +50,6 @@
                             <td class="text-right">-N.A.-</td>
                         </t>
                     </tr>
-                    <t t-foreach="sale_order.amount_by_group" t-as="amount_by_group">
-                        <tr style="border-bottom:1px solid #dddddd;">
-                            <t t-if="amount_by_group[3] == 1 and sale_order.amount_untaxed == amount_by_group[2]">
-                                <t t-if="sale_order.show_price">
-                                    <td>
-                                        <span t-esc="amount_by_group[0]"/>
-                                        <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/></span>
-                                    </td>
-                                    <td class="text-right">
-                                        <span t-esc="amount_by_group[1]"
-                                            t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
-                                    </td>
-                                </t>
-                                <t t-if="not sale_order.show_price">
-                                    <td class="text-right">-N.A.-</td>
-                                </t>
-                            </t>
-                            <t t-else ="">
-                                <td>
-                                    <span t-esc="amount_by_group[0]"/>
-                                </td>
-                                <t t-if="sale_order.show_price">
-                                    <td class="text-right">
-                                        <span t-esc="amount_by_group[1]"
-                                            t-options='{"widget": "monetary", "display_currency": sale_order.pricelist_id.currency_id}'/>
-                                    </td>
-                                </t>
-                                <t t-if="not sale_order.show_price">
-                                    <td class="text-right">-N.A.-</td>
-                                </t>
-                            </t>
-                        </tr>
-                    </t>
                     <tr class="border-black">
                         <td><strong>Total</strong></td>
                         <t t-if="sale_order.show_price">
