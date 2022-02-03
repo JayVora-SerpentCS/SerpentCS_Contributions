@@ -4,18 +4,13 @@ from odoo import fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = "sale.order"
+    _inherit = 'sale.order'
 
     show_price = fields.Boolean(
-        "Show Price",
-        groups="account.group_account_manager",
+        'Show Price',
         help="If checked, you can see the price in "
-        "report of"
-        "Sales Order / Quotation.",
-    )
+        "report of" "Sales Order / Quotation.")
     show_discount = fields.Boolean(
-        "Show Discount",
-        groups="account.group_account_manager",
+        'Show Discount',
         help="If checked, you can see the discount"
-        " in report of Sales Order/Quotation.",
-    )
+        " in report of Sales Order/Quotation.")
