@@ -38,30 +38,14 @@
             <div class="row" name="total">
                 <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
                     <table class="table table-sm">
-                        <tr class="border-black">
-                            <td><strong>Total Without Taxes</strong></td>
-                            <t t-if="doc.show_price">
-                                <td class="text-right">
-                                    <span t-field="doc.amount_untaxed"
-                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}'/>
-                                </td>
-                            </t>
-                            <t t-if="not doc.show_price">
-                                <td class="text-right">-N.A.-</td>
-                            </t>
-                        </tr>
-                        <tr class="border-black">
-                            <td><strong>Total</strong></td>
-                            <t t-if="doc.show_price">
-                                <td class="text-right">
-                                    <span t-field="doc.amount_total"
-                                          t-options='{"widget": "monetary", "display_currency": doc.pricelist_id.currency_id}' />
-                                </td>
-                            </t>
-                            <t t-if="not doc.show_price">
-                                <td class="text-right">-N.A.-</td>
-                            </t>
-                        </tr>
+                        <t t-set="tax_totals" t-value="json.loads(doc.tax_totals_json)"/>
+                        <t t-if="doc.show_price">  
+                            <t t-call="account.document_tax_totals"/>
+                        </t>
+                        <t t-if="not doc.show_price">
+
+                            <td class="text-right">-N.A.-</td>
+                        </t>
                     </table>
                 </div>
             </div>
