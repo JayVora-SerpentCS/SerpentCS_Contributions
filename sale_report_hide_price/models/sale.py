@@ -8,9 +8,7 @@ class SaleOrder(models.Model):
 
     show_price = fields.Boolean(
         'Show Price',
-        help="If checked, you can see the price in "
-        "report of" "Sales Order / Quotation.")
+        help="If checked, you can see the price in report of Sales Order / Quotation.")
     show_discount = fields.Boolean(
         'Show Discount',
-        help="If checked, you can see the discount"
-        " in report of Sales Order/Quotation.")
+        help="If checked, you can see the discount in report of Sales Order/Quotation.")
