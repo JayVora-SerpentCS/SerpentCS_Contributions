@@ -21,8 +21,8 @@ class SaleOrderTest(common.TransactionCase):
             'show_price': True,
             'show_discount': True,
             'order_line': [
-                (0, 0, {'name': product_1.name, 'product_id': product_1.id,
-                        'product_uom_qty': 2, 'product_uom': product_1.uom_id.id,
-                        'price_unit': product_1.list_price
-                        }) for (_, product_1) in self.products.items()],
+                (0, 0, {'name': record.name, 'product_id': record.id,
+                        'product_uom_qty': 2, 'product_uom': record.uom_id.id,
+                        'price_unit': record.list_price
+                        }) for (_, record) in self.products.items()],
         })
