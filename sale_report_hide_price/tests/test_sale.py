@@ -12,8 +12,8 @@ class SaleOrderTest(common.TransactionCase):
         self.sale_order_obj = self.env['sale.order']
         self.partner = self.env.ref('base.res_partner_2')
         self.products = {
-            'serv_order': self.env.ref('product.product_delivery_01'),
-            'serv_deli': self.env.ref('product.product_order_01'),
+            'serv_order': self.env.ref('product.product_order_01'),          
+            'serv_deli':  self.env.ref('product.product_delivery_01'),
         }
 
         self.sale_order_id = self.sale_order_obj.create({
