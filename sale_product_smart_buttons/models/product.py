@@ -11,8 +11,8 @@ class ProductTemplate(models.Model):
     def _compute_sales_amt(self):
         for product in self:
 
-            product.sales_amt = sum([p.sales_amt
-                                     for p in product.product_variant_ids])
+            product.sales_amt = sum([prod_variant.sales_amt
+                                     for prod_variant in product.product_variant_ids])
            
 
     sales_amt = fields.Float(compute='_compute_sales_amt', string='Sales amt')
