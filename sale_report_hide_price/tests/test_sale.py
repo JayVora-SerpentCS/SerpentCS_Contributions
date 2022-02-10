@@ -16,7 +16,7 @@ class SaleOrderTest(common.TransactionCase):
             'serv_deli': self.env.ref('product.product_order_01'),
         }
 
-        self.order_idA = self.sale_order_obj.create({
+        self.sale_order_id = self.sale_order_obj.create({
             'partner_id': self.partner.id,
             'show_price': True,
             'show_discount': True,
