@@ -88,6 +88,9 @@
         <field name="res_model">rank.rank</field>
         <field name="view_mode">tree,form</field>
     </record>
+   
+
+
 
     <!-- RANK MENU -->
     <menuitem id="menu_rank" parent="hr.menu_human_resources_configuration"
