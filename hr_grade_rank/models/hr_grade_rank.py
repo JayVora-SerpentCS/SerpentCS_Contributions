@@ -10,7 +10,11 @@ class RankRank(models.Model):
     name = fields.Char()
     description = fields.Text()
     salary_range = fields.Text()
-    grade_id = fields.Many2one("grade.grade", "Grade")
+    grade_id = fields.Many2one("grade.grade",  "Grade")
+    active = fields.Boolean('Active',default=True)
+    _sql_constraints=[('name_uniq', 'unique(name)',"Rank should be unique")]
+
+    
 
 
 class GradeGrade(models.Model):
@@ -20,6 +24,9 @@ class GradeGrade(models.Model):
     name = fields.Char()
     description = fields.Text()
     rank_ids = fields.One2many("rank.rank", "grade_id", "Ranks")
+    active = fields.Boolean('Active',default=True)
+
+    
 
 
 class HrEmployee(models.Model):
@@ -28,6 +35,7 @@ class HrEmployee(models.Model):
 
     grade_id = fields.Many2one("grade.grade", "Grade")
     rank_id = fields.Many2one("rank.rank", "Rank")
+    
 
     @api.onchange("grade_id")
     def _onchange_grade(self):
@@ -37,3 +45,9 @@ class HrEmployee(models.Model):
             res["domain"] = {"rank_id": [
                 ("id", "in", self.grade_id.rank_ids.ids)]}
         return res
+
+
+    
+
+            
+
