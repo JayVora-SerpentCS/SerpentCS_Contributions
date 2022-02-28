@@ -1,6 +1,10 @@
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+
 
 class ApplicantPreviousTravel(models.Model):
     _name = "applicant.previous.travel"
@@ -13,8 +17,7 @@ class ApplicantPreviousTravel(models.Model):
     location = fields.Char(string="Location", size=128, required=True)
     reason = fields.Char("Reason", required=True)
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
 
     @api.model
     def create(self, vals):
@@ -28,8 +31,8 @@ class ApplicantPreviousTravel(models.Model):
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
 
-        if (self.to_date and self.to_date >= fields.Date.today()):
-           
+        if self.to_date and self.to_date >= fields.Date.today():
+
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),
@@ -61,8 +64,7 @@ class ApplicantLanguage(models.Model):
         [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Speak"
     )
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
     mother_tongue = fields.Boolean("Mother Tongue")
 
     @api.constrains("mother_tongue")

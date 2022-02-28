@@ -1,6 +1,9 @@
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class ApplicantMedicalDetails(models.Model):
@@ -11,8 +14,7 @@ class ApplicantMedicalDetails(models.Model):
 
     medical_examination = fields.Char("Medical Examination")
     vital_sign = fields.Char("Vital sign")
-    date = fields.Date(
-        "Date", default=fields.Date.context_today, readonly=True)
+    date = fields.Date("Date", default=fields.Date.context_today, readonly=True)
     doc_comment = fields.Char("Doctor’s Comments")
 
     head_face_scalp = fields.Selection(
@@ -28,14 +30,12 @@ class ApplicantMedicalDetails(models.Model):
         [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Ears/TMs"
     )
     eyes_pupils_ocular = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")
-         ], "Eyes/Pupils/Ocular Motility"
+        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Eyes/Pupils/Ocular Motility"
     )
     heart_vascular_system = fields.Selection(
         [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Heart/Vascular System"
     )
-    lungs = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Lungs")
+    lungs = fields.Selection([("Abnormal", "Abnormal"), ("Normal", "Normal")], "Lungs")
     abdomen_hernia = fields.Selection(
         [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Abdomen/Hernia"
     )
@@ -61,8 +61,7 @@ class ApplicantMedicalDetails(models.Model):
     epilepsy = fields.Boolean("Epilepsy")
     history_drug_use = fields.Boolean("Any History of drug use?")
 
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
     active = fields.Boolean(string="Active", default=True)
     blood_name = fields.Selection(
         [("A", "A"), ("B", "B"), ("O", "O"), ("AB", "AB")], "Blood Type"
@@ -93,8 +92,7 @@ class ApplicantPreviousOccupation(models.Model):
     ref_position = fields.Char(string="Reference Position")
     ref_phone = fields.Char(string="Reference Phone")
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
     email = fields.Char("Email")
 
     @api.model
@@ -107,10 +105,9 @@ class ApplicantPreviousOccupation(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-      
 
-        if (self.to_date and self.to_date >= fields.Date.today()):
-          
+        if self.to_date and self.to_date >= fields.Date.today():
+
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),

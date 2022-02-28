@@ -1,6 +1,9 @@
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class ApplicantRelative(models.Model):
@@ -30,16 +33,14 @@ class ApplicantRelative(models.Model):
     birthday = fields.Date(string="Date of Birth")
     place_of_birth = fields.Char(string="Place of Birth", size=128)
     occupation = fields.Char(string="Occupation", size=128)
-    gender = fields.Selection(
-        [("Male", "Male"), ("Female", "Female")], string="Gender")
+    gender = fields.Selection([("Male", "Male"), ("Female", "Female")], string="Gender")
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
-        if (self.birthday and self.birthday >= fields.Date.today()):
-        
+        if self.birthday and self.birthday >= fields.Date.today():
+
             warning = {
                 "title": _("User Alert !"),
                 "message": _("Date of Birth must be less than today!"),
@@ -50,12 +51,12 @@ class ApplicantRelative(models.Model):
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
         if self.relative_type:
-            self.gender=""
+            self.gender = ""
             if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
                 self.gender = "Male"
             elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
                 self.gender = "Female"
-            
+
         if self.applicant_id and not self.relative_type:
             warning = {
                 "title": _("Warning!"),
@@ -75,7 +76,7 @@ class ApplicantRelative(models.Model):
 class ApplicantEducation(models.Model):
     _name = "applicant.education"
     _description = "Applicant Education"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _rec_name = "from_date"
     _order = "from_date"
 
@@ -87,8 +88,7 @@ class ApplicantEducation(models.Model):
     field = fields.Char(string="Major/Field of Education", size=128)
     illiterate = fields.Boolean("Illiterate")
     active = fields.Boolean(string="Active", default=True)
-    applicant_id = fields.Many2one(
-        "hr.applicant", "Applicant Ref", ondelete="cascade")
+    applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
     edu_type = fields.Selection(
         [("Local", "Local"), ("Abroad", "Abroad")],
         string="School Location",
@@ -105,11 +105,15 @@ class ApplicantEducation(models.Model):
                 rec.country_id = False
             else:
                 rec.province = rec.state_id = False
+
     @api.onchange("illiterate")
     def _onchange_illiterate(self):
         for rec in self:
-            rec.from_date = rec.to_date =  rec.country_id =  rec.state_id = False
-            rec.education_rank =  rec.school_name =  rec.grade = rec.field = rec.edu_type =  rec.province = ""
+            rec.from_date = rec.to_date = rec.country_id = rec.state_id = False
+            rec.education_rank = (
+                rec.school_name
+            ) = rec.grade = rec.field = rec.edu_type = rec.province = ""
+
     @api.model
     def create(self, vals):
 
@@ -122,8 +126,7 @@ class ApplicantEducation(models.Model):
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
 
-        if (self.to_date and self.to_date >= fields.Date.today()
-        ):
+        if self.to_date and self.to_date >= fields.Date.today():
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),

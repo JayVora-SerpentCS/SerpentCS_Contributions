@@ -1,6 +1,9 @@
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class EmployeePreviousTravel(models.Model):
@@ -26,8 +29,8 @@ class EmployeePreviousTravel(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-        if (self.to_date and self.to_date >= datetime.today()):
-           
+        if self.to_date and self.to_date >= datetime.today():
+
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today !"),
@@ -40,6 +43,7 @@ class EmployeePreviousTravel(models.Model):
                 "message": _("To Date %s must be greater than From Date %s !")
                 % (self.to_date, self.from_date),
             }
+            print("==self.to_date==",self.to_date)
             self.to_date = False
             return {"warning": warning}
 

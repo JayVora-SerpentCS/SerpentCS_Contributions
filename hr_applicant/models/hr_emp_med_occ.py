@@ -1,6 +1,9 @@
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 
 
 class EmployeeMedicalDetails(models.Model):

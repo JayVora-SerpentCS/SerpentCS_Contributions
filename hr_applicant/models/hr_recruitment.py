@@ -1,8 +1,12 @@
 # See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT 
+from odoo.tools.translate import _
+
 
 
 class Applicant(models.Model):
@@ -73,8 +77,7 @@ class Applicant(models.Model):
     no_of_prev_travel = fields.Integer(
         "No of Previous Travel", compute="_compute_no_of_prev_travel", readonly=True
     )
-    lang_ids = fields.One2many(
-        "applicant.language", "applicant_id", "Language Ref.")
+    lang_ids = fields.One2many("applicant.language", "applicant_id", "Language Ref.")
     no_of_lang = fields.Integer(
         "No of Language", compute="_compute_no_of_lang", readonly=True
     )
@@ -115,15 +118,18 @@ class Applicant(models.Model):
 
         res = super(Applicant, self).create_employee_from_applicant()
         data_dict = res.get("context")
-        record_emp = self.env['hr.employee'].create({
-            'name': data_dict.get("default_name"),
-            'job_id': data_dict.get("default_job_id"),
-            'job_title': data_dict.get("default_job_title"),
-            'address_home_id': data_dict.get("address_home_id"),
-            'department_id': data_dict.get("default_department_id"),
-            'address_id': data_dict.get("default_address_id"),
-            'work_email': data_dict.get("default_work_email"),
-            'work_phone': data_dict.get("default_work_phone")})
+        record_emp = self.env["hr.employee"].create(
+            {
+                "name": data_dict.get("default_name"),
+                "job_id": data_dict.get("default_job_id"),
+                "job_title": data_dict.get("default_job_title"),
+                "address_home_id": data_dict.get("address_home_id"),
+                "department_id": data_dict.get("default_department_id"),
+                "address_id": data_dict.get("default_address_id"),
+                "work_email": data_dict.get("default_work_email"),
+                "work_phone": data_dict.get("default_work_phone"),
+            }
+        )
         res["res_id"] = record_emp.id
         self.write({"emp_id": record_emp.id})
         if res.get("res_id", False):
@@ -158,7 +164,7 @@ class Applicant(models.Model):
                             "allergic": medical_detail.allergic,
                             "epilepsy": medical_detail.epilepsy,
                             "history_drug_use": medical_detail.history_drug_use,
-                            # "employee_id": res.get("res_id", False),
+                            "employee_id": res.get("res_id", False),
                             "blood_name": medical_detail.blood_name,
                             "blood_type": medical_detail.blood_type,
                         }
@@ -230,8 +236,7 @@ class Applicant(models.Model):
                     for relative_attachment in relative_attachments:
                         emp_relative_attachment = relative_attachment.copy()
                         emp_relative_attachment.write(
-                            {"res_model": "employee.relative",
-                                "res_id": relative_id.id}
+                            {"res_model": "employee.relative", "res_id": relative_id.id}
                         )
                 for education in app_edu_obj.search(
                     [("applicant_id", "=", applicant.id)]
@@ -293,7 +298,7 @@ class Applicant(models.Model):
                                 "res_id": prev_travel_id.id,
                             }
                         )
-                for language in  app_lan_obj.search(
+                for language in app_lan_obj.search(
                     [("applicant_id", "=", applicant.id)]
                 ):
                     language_id = emp_lan_obj.create(
@@ -315,9 +320,6 @@ class Applicant(models.Model):
                     for language_attachment in language_attachments:
                         emp_language_attachment = language_attachment.copy()
                         emp_language_attachment.write(
-                            {"res_model": "employee.language",
-                                "res_id": language_id.id}
+                            {"res_model": "employee.language", "res_id": language_id.id}
                         )
         return res
-
-

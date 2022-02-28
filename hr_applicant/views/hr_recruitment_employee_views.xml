@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record model="ir.ui.view" id="view_hr_employee_medical_details_form">
         <field name="name">view.hr.employee.medical.details.form</field>
@@ -7,10 +7,29 @@
             <form string="Medical Screening">
                 <sheet>
                     <group>
-                        <field name="medical_examination" tabindex="1" placeholder="Enter Medical Examination" required="1" />
-                        <field name="vital_sign" tabindex="2" placeholder="Enter Vital Sign" required="1" />
-                        <field name="date" placeholder="Enter Date" tabindex="3" required="1" />
-                        <field name="doc_comment" tabindex="4" placeholder="Enter Doctor's Comment" />
+                        <field
+                            name="medical_examination"
+                            tabindex="1"
+                            placeholder="Enter Medical Examination"
+                            required="1"
+                        />
+                        <field
+                            name="vital_sign"
+                            tabindex="2"
+                            placeholder="Enter Vital Sign"
+                            required="1"
+                        />
+                        <field
+                            name="date"
+                            placeholder="Enter Date"
+                            tabindex="3"
+                            required="1"
+                        />
+                        <field
+                            name="doc_comment"
+                            tabindex="4"
+                            placeholder="Enter Doctor's Comment"
+                        />
                         <field name="employee_id" invisible="1" />
                     </group>
                     <group col="4" colspan="4" string="Details">
@@ -24,7 +43,11 @@
                         <field name="mouth_throat" tabindex="8" required="1" />
                         <field name="ears_tms" tabindex="9" required="1" />
                         <field name="eyes_pupils_ocular" tabindex="10" required="1" />
-                        <field name="heart_vascular_system" tabindex="11" required="1" />
+                        <field
+                            name="heart_vascular_system"
+                            tabindex="11"
+                            required="1"
+                        />
                         <field name="lungs" tabindex="12" required="1" />
                         <field name="abdomen_hernia" tabindex="13" required="1" />
                         <field name="msk_strengh" required="1" tabindex="14" />
@@ -90,13 +113,42 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="4" colspan="4">
-                        <field name="from_date" tabindex="1" placeholder="Enter From Date"/>
-                        <field name="to_date" tabindex="2" placeholder="Enter To Date"/>
-                        <field name="position" tabindex="3" placeholder="Enter Position"/>
-                        <field name="organization" tabindex="4" placeholder="Enter Organization"/>
-                        <field name="ref_name" tabindex="5" placeholder="Enter Reference Name"/>
-                        <field name="ref_position" tabindex="6" placeholder="Enter Reference Position"/>
-                        <field name="email" tabindex="8" placeholder="Enter Email" widget="email"/>
+                        <field
+                            name="from_date"
+                            tabindex="1"
+                            placeholder="Enter From Date"
+                        />
+                        <field
+                            name="to_date"
+                            tabindex="2"
+                            placeholder="Enter To Date"
+                        />
+                        <field
+                            name="position"
+                            tabindex="3"
+                            placeholder="Enter Position"
+                        />
+                        <field
+                            name="organization"
+                            tabindex="4"
+                            placeholder="Enter Organization"
+                        />
+                        <field
+                            name="ref_name"
+                            tabindex="5"
+                            placeholder="Enter Reference Name"
+                        />
+                        <field
+                            name="ref_position"
+                            tabindex="6"
+                            placeholder="Enter Reference Position"
+                        />
+                        <field
+                            name="email"
+                            tabindex="8"
+                            placeholder="Enter Email"
+                            widget="email"
+                        />
                     </group>
                 </sheet>
             </form>
@@ -116,12 +168,12 @@
         <field name="arch" type="xml">
             <tree string="Relative">
                 <field name="employee_id" invisible="1" />
-                <field name="relative_type"/>
-                <field name="name" placeholder="Enter Name"/>
-                <field name="birthday" placeholder="Enter Date of Birth"/>
-                <field name="place_of_birth" placeholder="Enter Place of Birth"/>
-                <field name="occupation" placeholder="Enter Occupation"/>
-                <field name="gender"/>
+                <field name="relative_type" />
+                <field name="name" placeholder="Enter Name" />
+                <field name="birthday" placeholder="Enter Date of Birth" />
+                <field name="place_of_birth" placeholder="Enter Place of Birth" />
+                <field name="occupation" placeholder="Enter Occupation" />
+                <field name="gender" />
             </tree>
         </field>
     </record>
@@ -133,12 +185,33 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="4" colspan="4">
-                        <field name="relative_type" tabindex="1" placeholder="Enter Relative Type"/>
+                        <field
+                            name="relative_type"
+                            tabindex="1"
+                            placeholder="Enter Relative Type"
+                        />
                         <field name="name" placeholder="Enter Name" tabindex="2" />
-                        <field name="birthday" tabindex="4" placeholder="Enter Date of Birth"/>
-                        <field name="place_of_birth" placeholder="Enter Place of Birth" tabindex="5"/>
-                        <field name="occupation" placeholder="Enter Occupation" tabindex="6"/>
-                        <field name="gender" placeholder="Enter Gender" tabindex="7" attrs="{'readonly': [('relative_type', 'not in', ['Other', 'Children'])]}"/>
+                        <field
+                            name="birthday"
+                            tabindex="4"
+                            placeholder="Enter Date of Birth"
+                        />
+                        <field
+                            name="place_of_birth"
+                            placeholder="Enter Place of Birth"
+                            tabindex="5"
+                        />
+                        <field
+                            name="occupation"
+                            placeholder="Enter Occupation"
+                            tabindex="6"
+                        />
+                        <field
+                            name="gender"
+                            placeholder="Enter Gender"
+                            tabindex="7"
+                            attrs="{'readonly': [('relative_type', 'not in', ['Other', 'Children'])]}"
+                        />
                     </group>
                 </sheet>
             </form>
@@ -174,22 +247,65 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="4" colspan="4">
-                        <field name="from_date" tabindex="1" placeholder="Enter From Date" attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}" />
-                        <field name="to_date" tabindex="3" placeholder="Enter To Date" attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}" />
-                        <field name="grade" tabindex="11" placeholder="Enter Education Field/Major" attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}" />
-                        <field name="school_name" tabindex="13" placeholder="Enter School Name" attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}" />
-                        <field name="edu_type" tabindex="19" attrs="{'readonly': [('illiterate', '!=', False)]}"/>
-                        <field name="country_id" tabindex="21" placeholder="Enter Country" attrs="{'invisible': [('edu_type', '!=', 'Abroad')], 'readonly': [('illiterate', '!=', False)]}" />
-                        <field name="state_id" tabindex="23" placeholder="Enter State" attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}" />
-                        <field name="province" tabindex="25" placeholder="Enter Province" attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}" />
+                        <field
+                            name="from_date"
+                            tabindex="1"
+                            placeholder="Enter From Date"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="to_date"
+                            tabindex="3"
+                            placeholder="Enter To Date"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="grade"
+                            tabindex="11"
+                            placeholder="Enter Education Field/Major"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="school_name"
+                            tabindex="13"
+                            placeholder="Enter School Name"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="edu_type"
+                            tabindex="19"
+                            attrs="{'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field
+                            name="country_id"
+                            tabindex="21"
+                            placeholder="Enter Country"
+                            attrs="{'invisible': [('edu_type', '!=', 'Abroad')], 'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field
+                            name="state_id"
+                            tabindex="23"
+                            placeholder="Enter State"
+                            attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field
+                            name="province"
+                            tabindex="25"
+                            placeholder="Enter Province"
+                            attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}"
+                        />
                         <field name="illiterate" tabindex="27" />
                     </group>
                 </sheet>
                 <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                        <field name="activity_ids" widget="mail_activity"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div>    
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -222,10 +338,22 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="4" colspan="4">
-                        <field name="from_date" tabindex="1" placeholder="Enter From Date"/>
-                        <field name="to_date" tabindex="2" placeholder="Enter To Date"/>
-                        <field name="location" tabindex="3" placeholder="Enter Location"/>
-                        <field name="reason" tabindex="4" placeholder="Enter Reason"/>
+                        <field
+                            name="from_date"
+                            tabindex="1"
+                            placeholder="Enter From Date"
+                        />
+                        <field
+                            name="to_date"
+                            tabindex="2"
+                            placeholder="Enter To Date"
+                        />
+                        <field
+                            name="location"
+                            tabindex="3"
+                            placeholder="Enter Location"
+                        />
+                        <field name="reason" tabindex="4" placeholder="Enter Reason" />
                     </group>
                 </sheet>
             </form>
@@ -261,12 +389,31 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="2" colspan="4">
-                        <field name="language" tabindex="1" placeholder="Enter Language"/>
+                        <field
+                            name="language"
+                            tabindex="1"
+                            placeholder="Enter Language"
+                        />
                     </group>
                     <group col="6" colspan="6">
-                        <field name="read_lang" tabindex="2" widget="radio" placeholder="Enter Reading Ability"/>
-                        <field name="write_lang" tabindex="3" widget="radio" placeholder="Enter Writing Ability"/>
-                        <field name="speak_lang" tabindex="4" widget="radio" placeholder="Enter Speaking Ability"/>
+                        <field
+                            name="read_lang"
+                            tabindex="2"
+                            widget="radio"
+                            placeholder="Enter Reading Ability"
+                        />
+                        <field
+                            name="write_lang"
+                            tabindex="3"
+                            widget="radio"
+                            placeholder="Enter Writing Ability"
+                        />
+                        <field
+                            name="speak_lang"
+                            tabindex="4"
+                            widget="radio"
+                            placeholder="Enter Speaking Ability"
+                        />
                     </group>
                     <group string="Mother Tongue" colspan="4">
                         <field name="mother_tongue" tabindex="5" />
@@ -290,23 +437,78 @@
         <field name="inherit_id" ref="hr.view_employee_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="%(action_emp_medical_details_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-medkit" help="Add/Edit/Review Medical details of employee">
-                    <field name="no_of_medical" widget="statinfo" string="Medical Details" />
+                <button
+                    name="%(action_emp_medical_details_list)d"
+                    type="action"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-medkit"
+                    help="Add/Edit/Review Medical details of employee"
+                >
+                    <field
+                        name="no_of_medical"
+                        widget="statinfo"
+                        string="Medical Details"
+                    />
                 </button>
-                <button name="%(action_emp_relatives_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-users" help="Add/Edit/Review Relative details of employee">
+                <button
+                    name="%(action_emp_relatives_list)d"
+                    type="action"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-users"
+                    help="Add/Edit/Review Relative details of employee"
+                >
                     <field name="no_of_relative" widget="statinfo" string="Relatives" />
                 </button>
-                <button name="%(action_emp_prev_occupation_list)d" type="action" style="width:198px !important" class="oe_inline oe_stat_button" icon="fa-history" help="Add/Edit/Review Previous Occupation details of employee">
-                    <field name="no_of_prev_occu" widget="statinfo" string="Previous Occupations" />
+                <button
+                    name="%(action_emp_prev_occupation_list)d"
+                    type="action"
+                    style="width:198px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-history"
+                    help="Add/Edit/Review Previous Occupation details of employee"
+                >
+                    <field
+                        name="no_of_prev_occu"
+                        widget="statinfo"
+                        string="Previous Occupations"
+                    />
                 </button>
-                <button name="%(action_emp_education_list)d" type="action" style="width:197px !important" class="oe_inline oe_stat_button" icon="fa-book" help="Add/Edit/Review Education details of employee">
-                    <field name="no_of_education" widget="statinfo" string="Education Details" />
+                <button
+                    name="%(action_emp_education_list)d"
+                    type="action"
+                    style="width:197px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-book"
+                    help="Add/Edit/Review Education details of employee"
+                >
+                    <field
+                        name="no_of_education"
+                        widget="statinfo"
+                        string="Education Details"
+                    />
                 </button>
-                <button name="%(action_emp_languages_list)d" type="action" class="oe_inline oe_stat_button" icon="fa-font" help="Add/Edit/Review Languages of employee">
+                <button
+                    name="%(action_emp_languages_list)d"
+                    type="action"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-font"
+                    help="Add/Edit/Review Languages of employee"
+                >
                     <field name="no_of_lang" widget="statinfo" string="Languages" />
                 </button>
-                <button name="%(action_emp_travels_list)d" type="action" style="width:145px !important" class="oe_inline oe_stat_button" icon="fa-car" help="Add/Edit/Review Priveous Travel details of employee">
-                    <field name="no_of_prev_travel" widget="statinfo" string="Previous Travels" />
+                <button
+                    name="%(action_emp_travels_list)d"
+                    type="action"
+                    style="width:145px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-car"
+                    help="Add/Edit/Review Priveous Travel details of employee"
+                >
+                    <field
+                        name="no_of_prev_travel"
+                        widget="statinfo"
+                        string="Previous Travels"
+                    />
                 </button>
             </xpath>
         </field>

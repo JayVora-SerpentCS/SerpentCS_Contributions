@@ -1,6 +1,10 @@
 from datetime import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+
 
 class EmployeeRelative(models.Model):
 
@@ -37,8 +41,8 @@ class EmployeeRelative(models.Model):
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
-        if (self.birthday and self.birthday >= datetime.today()):
-           
+        if self.birthday and self.birthday >= datetime.today():
+
             warning = {
                 "title": _("User Alert !"),
                 "message": _("Date of Birth must be less than today!"),
@@ -49,7 +53,7 @@ class EmployeeRelative(models.Model):
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
         if self.relative_type:
-            self.gender=""
+            self.gender = ""
             if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
                 self.gender = "Male"
             elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
@@ -72,7 +76,7 @@ class EmployeeRelative(models.Model):
 
 class EmployeeEducation(models.Model):
     _name = "employee.education"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "Employee Education"
     _rec_name = "from_date"
     _order = "from_date"
@@ -127,9 +131,9 @@ class EmployeeEducation(models.Model):
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
         to_date = self.to_date
-        
-        if (self.to_date  and self.to_date >= datetime.today()):
-              
+
+        if self.to_date and self.to_date >= datetime.today():
+
             warning = {
                 "title": _("User Alert !"),
                 "message": _("To date must be less than today!"),

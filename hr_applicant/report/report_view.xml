@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="paperformat_applicant_profile_report" model="report.paperformat">
         <field name="name">Applicant Profile format</field>
@@ -16,18 +15,14 @@
         <field name="header_spacing">5</field>
         <field name="dpi">90</field>
     </record>
-
     <record id="action_applicant_profile_form_report" model="ir.actions.report">
         <field name="name">Applicant</field>
         <field name="model">hr.applicant</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">hr_applicant.applicant_profile</field>
         <field name="report_file">hr_applicant.applicant_profile</field>
-        <field name="paperformat_id" ref="paperformat_applicant_profile_report"/>
-        <field name="binding_model_id" ref="model_hr_applicant"/>
+        <field name="paperformat_id" ref="paperformat_applicant_profile_report" />
+        <field name="binding_model_id" ref="model_hr_applicant" />
         <field name="binding_type">report</field>
-
     </record>
 </odoo>
-
-
