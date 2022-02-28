@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="applicant_profile">
+        <t t-call='web.html_container'>
+            <t t-call="web.internal_layout">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-3">
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%m-%d-%y %H:%M')"/>
+                        </div>
+                        
+                    </div>
+                </div>
+                <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <table
+                            width="100%"
+                            style="font-size:12px;"
+                            class="table-condensed"
+                        >
+                            <tr>
+                                <td class="text-center" colspan="15">
+                                    <h3>
+                                        <strong>
+                                            <u>Resume</u>
+                                        </strong>
+                                    </h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td
+                                    width="100%"
+                                    colspan="15"
+                                    style="border:1px solid black;"
+                                >
+                                    <table width="100%" class="table-condensed">
+                                        <tr>
+                                            <td width="30%">
+                                                <strong>Subject</strong>
+                                            </td>
+                                            <td width="70%">
+                                                <span t-field="o.name" />
+                                            </td>
+                                        </tr>
+                                        <t t-if="o.partner_name">
+                                            <tr>
+                                                <td>
+                                                    <strong>Applicant's Name</strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.partner_name" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.partner_id or o.email_from">
+                                            <tr>
+                                                <td>
+                                                    <strong>Contact Details</strong>
+                                                </td>
+                                                <td>
+                                                    <t t-if="o.partner_id">
+                                                        <span
+                                                            t-field="o.partner_id.name"
+                                                        />
+                                                    </t>
+                                                    <t t-if="o.email_from">
+                                                        <br />
+                                                        <font color="blue">
+                                                            <span
+                                                                t-field="o.email_from"
+                                                            />
+                                                        </font>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.partner_phone">
+                                            <tr>
+                                                <td>
+                                                    <strong>Phone</strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.partner_phone" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.partner_mobile">
+                                            <tr>
+                                                <td>
+                                                    <strong>Mobile</strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.partner_mobile" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.type_id">
+                                            <tr>
+                                                <td>
+                                                    <strong>Degree</strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.type_id.name" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.job_id">
+                                            <tr>
+                                                <td>
+                                                    <strong>Applied Job</strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.job_id.name" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="o.department_id">
+                                            <tr>
+                                                <td>
+                                                    <strong>Department</strong>
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        t-field="o.department_id.name"
+                                                    />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br />
+                                </td>
+                            </tr>
+                            <t t-if="o.medical_ids">
+                                <tr>
+                                    <td colspan="15" align="center">
+                                        <h4>
+                                            <strong>Medical Details</strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr style="border:1px solid black;">
+                                    <th style="border:1px solid black;">
+                                        <center>Medical Examination</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Vital sign</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Date</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Blood Type</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Head, Face, Scalp</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Nose/ Sinuses</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Mouth/ Throat</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Ears/ TMs</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Eyes/ Pupils/ Ocular Motility</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Heart/ Vascular System</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Lungs</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Abdomen/ Hernia</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>MSK- Strength</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Neurological</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Urine Drug Serene</center>
+                                    </th>
+                                </tr>
+                                <t t-foreach="o.medical_ids" t-as="medical">
+                                    <tr style="border:1px solid black;">
+                                        <td style="border:1px solid black;">
+                                            <span
+                                                t-field="medical.medical_examination"
+                                            />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.vital_sign" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.date" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.blood_name" />
+                                            <span t-field="medical.blood_type" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.head_face_scalp" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.nose_sinuses" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.mouth_throat" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.ears_tms" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span
+                                                t-field="medical.eyes_pupils_ocular"
+                                            />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span
+                                                t-field="medical.heart_vascular_system"
+                                            />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.lungs" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.abdomen_hernia" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.msk_strengh" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.neurological" />
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="medical.urine_drug_serene" />
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="15">
+                                        <br />
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="o.prev_occu_ids">
+                                <tr>
+                                    <td colspan="15" align="center">
+                                        <h4>
+                                            <strong>Previous Occupations</strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>From Date</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>To Date</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Position</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Organization</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Reference Name</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Reference Position</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Reference Phone and Email</center>
+                                    </th>
+                                </tr>
+                                <t t-foreach="o.prev_occu_ids" t-as="prev_occu">
+                                    <tr>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <center>
+                                                <span t-field="prev_occu.from_date" />
+                                            </center>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <center>
+                                                <span t-field="prev_occu.to_date" />
+                                            </center>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="prev_occu.position" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="prev_occu.organization" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="prev_occu.ref_name" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="prev_occu.ref_position" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <span t-field="prev_occu.ref_phone" />
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="15">
+                                        <br />
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="o.relative_ids">
+                                <tr>
+                                    <td colspan="15" align="center">
+                                        <h4>
+                                            <strong>Relatives</strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Relative Type</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="4">
+                                        <center>Name</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Date of Birth</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Place of Birth</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Occupation</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Gender</center>
+                                    </th>
+                                </tr>
+                                <t t-foreach="o.relative_ids" t-as="relative">
+                                    <tr>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <center>
+                                                <span
+                                                    t-field="relative.relative_type"
+                                                />
+                                            </center>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="4">
+                                            <center>
+                                                <span t-field="relative.name" />
+                                            </center>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <span t-field="relative.birthday" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="relative.place_of_birth" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="relative.occupation" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <span t-field="relative.gender" />
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="15">
+                                        <br />
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="o.education_ids">
+                                <tr>
+                                    <td colspan="15" align="center">
+                                        <h4>
+                                            <strong>Education Details</strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>From Date</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>To Date</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Education Rank</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>School Name</center>
+                                    </th>
+                                    <th style="border:1px solid black;">
+                                        <center>Education Field/ Major</center>
+                                    </th>
+                                    <!-- <th style="border:1px solid black;">
+                                        <center>Major/ Field of Education</center>
+                                    </th> -->
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Illiterate</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="2">
+                                        <center>Location</center>
+                                    </th>
+                                </tr>
+                                <t t-foreach="o.education_ids" t-as="education">
+                                    <tr>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <t t-if="not education.illiterate">
+                                                <span t-field="education.from_date" />
+                                            </t>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <t t-if="not education.illiterate">
+                                                <span t-field="education.to_date" />
+                                            </t>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <t t-if="not education.illiterate">
+                                                <span
+                                                    t-field="education.education_rank"
+                                                />
+                                            </t>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <t t-if="not education.illiterate">
+                                                <span t-field="education.school_name" />
+                                            </t>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <t t-if="not education.illiterate">
+                                                <span t-field="education.grade" />
+                                            </t>
+                                        </td>
+                                      <!--   <td style="border:1px solid black;">
+                                            <t t-if="not education.illiterate">
+                                                <span t-field="education.field" />
+                                            </t>
+                                        </td> -->
+                                        <td
+                                            style="border:1px solid black;text-align:center;"
+                                            colspan="2"
+                                        >
+                                            <t t-if="education.illiterate">
+                                                <input type="checkbox" checked="True" />
+                                            </t>
+                                            <t t-if="not education.illiterate">
+                                                <input type="checkbox" />
+                                            </t>
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="2">
+                                            <t t-if="not education.illiterate">
+                                                <span t-field="education.edu_type" />
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="15">
+                                        <br />
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="o.lang_ids">
+                                <tr>
+                                    <td colspan="15" align="center">
+                                        <h4>
+                                            <strong>Languages</strong>
+                                        </h4>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Language</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Read</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Write</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Speak</center>
+                                    </th>
+                                    <th style="border:1px solid black;" colspan="3">
+                                        <center>Mother Tongue</center>
+                                    </th>
+                                </tr>
+                                <t t-foreach="o.lang_ids" t-as="language">
+                                    <tr>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <span t-field="language.language" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <span t-field="language.read_lang" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <span t-field="language.write_lang" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <span t-field="language.speak_lang" />
+                                        </td>
+                                        <td style="border:1px solid black;" colspan="3">
+                                            <center>
+                                                <t t-if="language.mother_tongue">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked="True"
+                                                    />
+                                                </t>
+                                                <t t-if="not language.mother_tongue">
+                                                    <input type="checkbox" />
+                                                </t>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
