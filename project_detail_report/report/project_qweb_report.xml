@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="project_paperformat_qweb" model="report.paperformat">
         <field name="name">Project Details Paper Format</field>
-        <field name="default" eval="True"/>
+        <field name="default" eval="True" />
         <field name="format">A4</field>
         <field name="page_height">0</field>
         <field name="page_width">0</field>
@@ -12,17 +11,17 @@
         <field name="margin_bottom">18</field>
         <field name="margin_left">2</field>
         <field name="margin_right">2</field>
-        <field name="header_line" eval="False"/>
+        <field name="header_line" eval="False" />
         <field name="header_spacing">45</field>
         <field name="dpi">90</field>
     </record>
-
-    <report id="report_project_detail"
-            model="project.project"
-            report_type="qweb-pdf"
-            name="project_detail_report.project_detail_qweb_report"
-            file="project_detail_report.project_detail_qweb_report"
-            paperformat="project_detail_report.project_paperformat_qweb"
-            string="Project Details"/>
-
+    <report
+        id="report_project_detail"
+        model="project.project"
+        report_type="qweb-pdf"
+        name="project_detail_report.project_detail_qweb_report"
+        file="project_detail_report.project_detail_qweb_report"
+        paperformat="project_detail_report.project_paperformat_qweb"
+        string="Project Details"
+    />
 </odoo>

@@ -98,4 +98,3 @@ repos:
       - id: isort
         name: isort except __init__.py
         exclude: /__init__\.py$
-
