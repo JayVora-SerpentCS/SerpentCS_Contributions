@@ -9,19 +9,19 @@
         <record id="menu_about" model="website.menu">
             <field name="name">About iPushp</field>
             <field name="url">/page/iPushp</field>
-            <field name="parent_id" ref="ipushp.menu_website_ipushp" />
+            <field name="parent_id" ref="ipushp.menu_website_ipushp"/>
             <field name="sequence" type="int">11</field>
         </record>
         <record id="menu_registration" model="website.menu">
             <field name="name">Registration</field>
             <field name="url">/page/iPushp#registration_section</field>
-            <field name="parent_id" ref="ipushp.menu_website_ipushp" />
+            <field name="parent_id" ref="ipushp.menu_website_ipushp"/>
             <field name="sequence" type="int">12</field>
         </record>
         <record id="menu_search" model="website.menu">
             <field name="name">Find a fit</field>
             <field name="url">/page/search</field>
-            <field name="parent_id" ref="ipushp.menu_website_ipushp" />
+            <field name="parent_id" ref="ipushp.menu_website_ipushp"/>
             <field name="sequence" type="int">13</field>
         </record>
     </data>

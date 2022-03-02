@@ -10,8 +10,12 @@ class website_ipushp(http.Controller):
         return request.render(
             "ipushp.iPushp",
             {
-                "category_data": request.env["business.category"].sudo().search([]),
-                "relation_data": request.env["relation.relation"].sudo().search([]),
+                "category_data": request.env["business.category"]
+                .sudo()
+                .search([]),
+                "relation_data": request.env["relation.relation"]
+                .sudo()
+                .search([]),
             },
         )
 
@@ -19,10 +23,16 @@ class website_ipushp(http.Controller):
     def search(self, **kwargs):
         return request.render(
             "ipushp.search",
-            {"category_data": request.env["business.category"].sudo().search([])},
+            {
+                "category_data": request.env["business.category"]
+                .sudo()
+                .search([])
+            },
         )
 
-    @http.route(["/page/find_contacts"], type="http", auth="public", website=True)
+    @http.route(
+        ["/page/find_contacts"], type="http", auth="public", website=True
+    )
     def find_contacts(self, **kwargs):
         category_id = kwargs.get("category_id")
         contact_ids = (
@@ -33,7 +43,9 @@ class website_ipushp(http.Controller):
         return request.render(
             "ipushp.find_contacts",
             {
-                "category_data": request.env["business.category"].sudo().search([]),
+                "category_data": request.env["business.category"]
+                .sudo()
+                .search([]),
                 "contact_data": contact_ids,
             },
         )
@@ -47,7 +59,9 @@ class website_ipushp(http.Controller):
         if category_id == -1:
             if kwargs.get("category_name"):
                 vals = {"name": kwargs.get("category_name")}
-                category_id = request.env["business.category"].sudo().create(vals)
+                category_id = (
+                    request.env["business.category"].sudo().create(vals)
+                )
                 category_id = category_id.id
         if kwargs.get("user_id"):
             employee = hr_emp_obj.sudo().search(
