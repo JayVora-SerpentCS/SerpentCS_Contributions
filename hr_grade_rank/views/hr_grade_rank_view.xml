@@ -104,7 +104,7 @@
         <field name="arch" type="xml">
             <field name="job_id" position="after">
                 <field name="grade_id"/>
-                <field name="rank_id"/>
+                <field name="rank_id" options="{'no_open': True, 'no_create': True}"/>
             </field>
         </field>
     </record>
