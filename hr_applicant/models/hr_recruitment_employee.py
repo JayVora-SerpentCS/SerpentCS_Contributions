@@ -1,6 +1,8 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import  api, fields, models
+from odoo.tools.translate import _
+
 
 
 class Employee(models.Model):

@@ -1,6 +1,6 @@
-from datetime import datetime
 
-from odoo import api, fields, models
+from datetime import datetime
+from odoo import _, api, fields, models
 from odoo.tools.translate import _
 
 
@@ -128,6 +128,13 @@ class EmployeeEducation(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+        to_date = self.to_date
+>>>>>>> 5a60690419091ed91b5421d63abda118b3ab2bbc
+>>>>>>> 3c4c014ed230e4ae817f9f84e6946f874348091f
 
         if self.to_date and self.to_date >= datetime.today():
 

@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 from odoo import api, fields, models
+=======
+
+from odoo import _, api, fields, models
+>>>>>>> 3c4c014ed230e4ae817f9f84e6946f874348091f
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
