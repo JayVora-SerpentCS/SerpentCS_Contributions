@@ -20,12 +20,13 @@
         "views/ipushp_search.xml",
         "views/find_contacts.xml",
     ],
-    'assets': {
-        'web.assets_frontend': [
-            'ipushp/static/src/js/custom.js',
-            'ipushp/static/src/css/fix_bg_snippet.css',
-            'ipushp/static/src/css/style.css',
-        ]},
+    "assets": {
+        "web.assets_frontend": [
+            "ipushp/static/src/js/custom.js",
+            "ipushp/static/src/css/fix_bg_snippet.css",
+            "ipushp/static/src/css/style.css",
+        ]
+    },
     "images": ["static/description/page_1.png"],
     "installable": True,
 }
