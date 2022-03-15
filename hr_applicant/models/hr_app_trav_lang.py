@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-from odoo import api, fields, models
-=======
-
 from odoo import _, api, fields, models
->>>>>>> 3c4c014ed230e4ae817f9f84e6946f874348091f
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
@@ -84,9 +79,7 @@ class ApplicantLanguage(models.Model):
             if language_rec:
                 raise ValidationError(
                     _(
-                        "If you want to set '%s' \
-                    as a mother tongue, first you have to uncheck mother \
-                    tongue in '%s' language."
+                        "If you want to set '%s' as a mother tongue, first you have to uncheck mother tongue in '%s' language."
                     )
                     % (self.language, language_rec.language)
                 )

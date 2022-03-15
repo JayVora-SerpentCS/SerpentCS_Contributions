@@ -1,4 +1,3 @@
-
 from odoo import _, api, fields, models
 from odoo.tools.translate import _
 
