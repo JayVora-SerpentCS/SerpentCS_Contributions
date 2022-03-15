@@ -1,7 +1,4 @@
-
-
-from odoo import , api, fields, models
-from odoo.tools.translate import _
+from odoo import api, fields, models
 
 
 class EmployeeMedicalDetails(models.Model):

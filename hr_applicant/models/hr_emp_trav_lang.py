@@ -1,18 +1,10 @@
 from datetime import datetime
-<<<<<<< HEAD
 
 from odoo import api, fields, models
-=======
-from odoo import _, api, fields, models
->>>>>>> 3c4c014ed230e4ae817f9f84e6946f874348091f
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3c4c014ed230e4ae817f9f84e6946f874348091f
 class EmployeePreviousTravel(models.Model):
     _name = "employee.previous.travel"
     _description = "Employee Previous Travel"
@@ -49,10 +41,6 @@ class EmployeePreviousTravel(models.Model):
                 "title": _("User Alert !"),
                 "message": _("To Date  must be greater than From Date  !"),
             }
-<<<<<<< HEAD
-=======
-            print("==self.to_date==",self.to_date)
->>>>>>> 3c4c014ed230e4ae817f9f84e6946f874348091f
             self.to_date = False
             return {"warning": warning}
 
@@ -92,9 +80,8 @@ class EmployeeLanguage(models.Model):
             if language_rec:
                 raise ValidationError(
                     _(
-                        "If you want to set '%s' \
-                    as a mother tongue, first you have to uncheck mother \
-                    tongue in '%s' language."
+                        "If you want to set '%s' as a mothertongue "
+                        "first uncheck mothertongue in '%s' language"
                     )
                     % (self.language, language_rec.language)
                 )

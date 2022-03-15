@@ -266,6 +266,12 @@
                             attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
                         />
                         <field
+                            name="education_rank"
+                            tabindex="11"
+                            placeholder="Enter Education Rank"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
                             name="grade"
                             tabindex="11"
                             placeholder="Enter Education Field/Major"
@@ -540,6 +546,9 @@
                         string="Medical Details"
                     />
                 </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="attrs">{'required':True} </attribute>
             </xpath>
             <button name="create_employee_from_applicant" position="replace">
                 <button

@@ -1,7 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, fields, models
-from odoo.tools.translate import _
+from odoo import api, fields, models
 
 
 class Applicant(models.Model):
