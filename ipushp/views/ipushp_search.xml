@@ -1,17 +1,29 @@
 <odoo>
     <template id="ipushp.search" name="iPushp Search">
         <t t-call="website.layout">
-            <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden"/>
+            <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden" />
             <section class="container mt64 mb64">
                 <div class="col-md-8 col-md-offset-2">
                     <h2>Choose your Category</h2>
-                    <input id="myInput" onkeyup="myFunction()" placeholder="Search for category.." title="Type in a name" type="text"/>
+                    <input
+                        id="myInput"
+                        onkeyup="myFunction()"
+                        placeholder="Search for category.."
+                        title="Type in a name"
+                        type="text"
+                    />
                     <ul id="myUL">
                         <t t-as="categ" t-foreach="category_data">
                             <li class="alternet_bg">
-                                <input name="category_id" t-att-value="categ.id" type="hidden"/>
-                                <a t-attf-href="/page/find_contacts?category_id=#{categ.id}">
-                                    <t t-esc="categ.name"/>
+                                <input
+                                    name="category_id"
+                                    t-att-value="categ.id"
+                                    type="hidden"
+                                />
+                                <a
+                                    t-attf-href="/page/find_contacts?category_id=#{categ.id}"
+                                >
+                                    <t t-esc="categ.name" />
                                 </a>
                             </li>
                         </t>

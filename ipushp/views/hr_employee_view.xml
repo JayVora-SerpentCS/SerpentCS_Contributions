@@ -2,27 +2,27 @@
     <record id="ipushp_hr_employee_form_view" model="ir.ui.view">
         <field name="name">hr.employee.form.view.ipushp</field>
         <field name="model">hr.employee</field>
-        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="inherit_id" ref="hr.view_employee_form" />
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page name="iPushp" string="iPushp">
                     <field name="ipushp_ids">
                         <tree name="iPushp">
-                            <field name="name"/>
-                            <field name="phone"/>
-                            <field name="email"/>
-                            <field name="description"/>
-                            <field name="relation" widget="selection"/>
-                            <field name="category_id" widget="selection"/>
+                            <field name="name" />
+                            <field name="phone" />
+                            <field name="email" />
+                            <field name="description" />
+                            <field name="relation" widget="selection" />
+                            <field name="category_id" widget="selection" />
                         </tree>
                         <form name="iPushp">
                             <group>
-                                <field name="name"/>
-                                <field name="phone"/>
-                                <field name="email"/>
-                                <field name="description"/>
-                                <field name="relation" widget="selection"/>
-                                <field name="category_id" widget="selection"/>
+                                <field name="name" />
+                                <field name="phone" />
+                                <field name="email" />
+                                <field name="description" />
+                                <field name="relation" widget="selection" />
+                                <field name="category_id" widget="selection" />
                             </group>
                         </form>
                     </field>
@@ -37,15 +37,15 @@
             <form string="Business Details">
                 <sheet>
                     <group colspan="4" col="4">
-                        <field name="name"/>
-                        <field name="phone"/>
-                        <field name="email"/>
-                        <field name="relation"/>
-                        <field name="category_id"/>
-                        <field name="employee_id" string="Referrer"/>
+                        <field name="name" />
+                        <field name="phone" />
+                        <field name="email" />
+                        <field name="relation" />
+                        <field name="category_id" />
+                        <field name="employee_id" string="Referrer" />
                     </group>
                     <group colspan="4" string="Description">
-                        <field name="description" nolabel="1"/>
+                        <field name="description" nolabel="1" />
                     </group>
                 </sheet>
             </form>
@@ -56,12 +56,12 @@
         <field name="model">business.line</field>
         <field name="arch" type="xml">
             <tree name="Business">
-                <field name="name"/>
-                <field name="phone"/>
-                <field name="email"/>
-                <field name="relation"/>
-                <field name="category_id"/>
-                <field name="employee_id" string="Referrer"/>
+                <field name="name" />
+                <field name="phone" />
+                <field name="email" />
+                <field name="relation" />
+                <field name="category_id" />
+                <field name="employee_id" string="Referrer" />
             </tree>
         </field>
     </record>
@@ -70,13 +70,23 @@
         <field name="model">business.line</field>
         <field name="arch" type="xml">
             <search string="Business">
-                <field name="name"/>
-                <field name="phone"/>
-                <field name="email"/>
-                <field name="category_id"/>
-                <field name="employee_id"/>
-                <filter context="{'group_by': 'category_id'}" domain="[]" name="category_filter" string="Business Category"/>
-                <filter context="{'group_by': 'employee_id'}" domain="[]" name="referrer_filter" string="Referrer"/>
+                <field name="name" />
+                <field name="phone" />
+                <field name="email" />
+                <field name="category_id" />
+                <field name="employee_id" />
+                <filter
+                    context="{'group_by': 'category_id'}"
+                    domain="[]"
+                    name="category_filter"
+                    string="Business Category"
+                />
+                <filter
+                    context="{'group_by': 'employee_id'}"
+                    domain="[]"
+                    name="referrer_filter"
+                    string="Referrer"
+                />
             </search>
         </field>
     </record>
@@ -88,5 +98,11 @@
         <field name="context">{'search_default_survey_filter':1}</field>
     </record>
     <!-- Menu Creation -->
-    <menuitem action="business_line_action" id="ipushp_buissness_menu" name="iPushp" parent="hr.menu_hr_root" sequence="50"/>
+    <menuitem
+        action="business_line_action"
+        id="ipushp_buissness_menu"
+        name="iPushp"
+        parent="hr.menu_hr_root"
+        sequence="50"
+    />
 </odoo>
