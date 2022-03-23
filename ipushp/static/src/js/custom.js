@@ -1,10 +1,7 @@
 odoo.define('ipushp.ipushp', function (require) {
     "use strict";
-    var ajax = require('web.ajax');
     $( document ).ready(function () {
-        console.log("Ready page");
         function myFunction () {
-            console.log("function called");
             var input, filter, ul, li, a, i;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
@@ -21,12 +18,11 @@ odoo.define('ipushp.ipushp', function (require) {
         }
     });
     $(document).on("change", ".select_business_categ", function () {
-        if ($(this).val() === -1) {
-            $(".form_so_new_shipp").removeClass("hidden");
+        if ($(this).val() == -1) {
+            $(".form_so_new_shipp").removeClass("d-none");
             $(".form_so_new_shipp input").prop('required', true);
-        }
-        else {
-            $(".form_so_new_shipp").addClass("hidden");
+        } else {
+            $(".form_so_new_shipp").addClass("d-none");
             $(".form_so_new_shipp input").prop('required', false);
         }
     });
