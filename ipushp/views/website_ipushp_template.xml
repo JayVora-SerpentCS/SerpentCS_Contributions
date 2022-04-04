@@ -187,7 +187,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form_so_new_shipp hidden">
+                                        <div class="form_so_new_shipp d-none">
                                             <div
                                                 class="form-group form-field o_website_form_required_custom"
                                             >
@@ -368,7 +368,31 @@
                                 >&amp;times;</button></div>
                         </div>
                         <div class="col-md-4">
-                            <t t-call="website.company_description" />
+                            <!-- <t t-call="website.company_description"/> -->
+                            <address
+                                itemscope="itemscope"
+                                itemtype="http://schema.org/Organization"
+                            >
+                                <!-- TODO widget contact must add itemprop attributes -->
+                                <div
+                                    t-field="res_company.partner_id"
+                                    t-options='{
+                                        "widget": "contact",
+                                        "fields": ["name", "address", "phone", "mobile", "email"]}'
+                                />
+                                <t t-if="not res_company.google_map_img()">
+                                    <span
+                                        class="fa fa-map-marker fa-fw mt16"
+                                        role="img"
+                                        aria-label="Address"
+                                        title="Address"
+                                    />
+                                    <a
+                                        t-att-href="res_company.google_map_link()"
+                                        target="_BLANK"
+                                    > Google Maps</a>
+                                </t>
+                            </address>
                         </div>
                     </div>
                 </div>
