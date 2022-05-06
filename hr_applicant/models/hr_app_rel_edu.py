@@ -5,7 +5,6 @@ from odoo.tools.translate import _
 class ApplicantRelative(models.Model):
     _name = "applicant.relative"
     _description = "Applicant Relatives"
-    # _rec_name = "name"
 
     relative_type = fields.Selection(
         [
