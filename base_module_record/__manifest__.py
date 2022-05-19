@@ -2,7 +2,7 @@
 
 {
     "name": "Record and Create Modules",
-    "version": "14.0.1.0.0",
+    "version": "15.0.1.0.0",
     "category": "Tools",
     "license": "AGPL-3",
     "author": "Serpent Consulting Services Pvt. Ltd.",

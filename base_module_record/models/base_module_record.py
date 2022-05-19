@@ -132,6 +132,8 @@ class BaseModuleRecord(models.Model):
                     field.setAttribute("model", fields[key]["relation"])
                     fld_nm = relation_pool._rec_name
                     val = relation_pool.browse(val)
+                    if not fld_nm:
+                        continue
                     name = val.read([fld_nm])[0][fld_nm] or False
                     field.setAttribute("search", str([(str(fld_nm), "=", name)]))
                 else:
