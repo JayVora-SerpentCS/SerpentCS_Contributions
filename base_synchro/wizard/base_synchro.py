@@ -284,7 +284,7 @@ class BaseSynchro(models.TransientModel):
             else:
                 model_obj = pool_src.env[obj_model]
                 names = model_obj.browse([res_id]).name_get()[0][1]
-                res = pool_dest.env[obj_model].name_search(names, [], "like")
+                res = pool_dest.get(obj_model).name_search(names, [], "like")
             _logger.debug("name_get in src: %s", names)
             _logger.debug("name_search in dest: %s", res)
             if res:
