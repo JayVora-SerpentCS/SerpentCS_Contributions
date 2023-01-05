@@ -1,8 +1,8 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Web Security Dialog v13.0',
-    'version': '13.0.1.0.0',
+    'name': 'Web Security Dialog',
+    'version': '14.0.1.0.0',
     'category': 'Web',
     'summary': 'Web Security Dialog',
     'description': """
@@ -19,7 +19,7 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'license': 'AGPL-3',
     'website': 'https://www.serpentcs.com',
-    'depends': ['base', 'web'],
+    'depends': ['web'],
     'data': [
         'views/res_company_security.xml',
         'views/templates.xml'

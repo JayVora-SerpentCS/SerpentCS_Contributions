@@ -1,29 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- vim:fdn=3:-->
 <odoo>
-    <data>
-        <record id="res_company_security_dialog" model="ir.ui.view">
-            <field name="name">res.company.form.inherit</field>
-            <field name="model">res.company</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="base.view_company_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='vat']" position="before">
-                    <field name="security_key" password="True"/>
-                </xpath>
-            </field>
-        </record>
 
-        <record id="inherited_res_users_form_view" model="ir.ui.view">
-            <field name="name">res.users.form.extend</field>
-            <field name="model">res.users</field>
-            <field name="inherit_id" ref="base.view_users_form" />
-            <field name="arch" type="xml">
-                <xpath expr="//button[@name='action_show_rules']" position="attributes">
-                    <attribute name="confirm">Do you want to change Record Rules?</attribute>
-                    <attribute name="options">{"security":"security_key"}</attribute>
-                </xpath>
-            </field>
-       </record>
-    </data>
+    <record id="res_company_security_dialog" model="ir.ui.view">
+        <field name="name">res.company.form.inherit</field>
+        <field name="model">res.company</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="security_key" password="True"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherited_res_users_form_view" model="ir.ui.view">
+        <field name="name">res.users.form.extend</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_show_rules']" position="attributes">
+                <attribute name="confirm">Do you want to change Record Rules?</attribute>
+                <attribute name="options">{"security":"security_key"}</attribute>
+            </xpath>
+        </field>
+   </record>
+
 </odoo>

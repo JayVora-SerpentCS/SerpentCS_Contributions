@@ -3,20 +3,14 @@
 from odoo import fields, models
 
 
-class SecurityDialog(models.Model):
-
+class ResCompany(models.Model):
     _inherit = 'res.company'
 
     security_key = fields.Char('Security Code')
 
     def check_security(self, vals):
-        fields = vals.get('field').encode('ascii', 'ignore')
-        fields = fields.decode('utf-8')
-        result = self.search_read(
-            [('id', '=', vals.get('companyId'))],
-            [fields])
-        for record in result:
-            if(record and record.get(fields or '') == vals.get('password')):
-                return True
-            else:
-                return False
+        fields = vals.get('field', False)
+        company = self.browse(vals.get('companyId', False)).exists()
+        if company and fields and company[fields] and company[fields] == vals.get('password', ''):
+            return True
+        return False
