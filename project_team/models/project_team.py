@@ -16,6 +16,4 @@ class ProjectProject(models.Model):
 
     @api.onchange('team_id')
     def _get_team_members(self):
-        self.update({"members_ids": [(6, 0,
-                                     self.team_id.team_members_ids.ids)]})
-        
+        self.update({"members_ids": [(6, 0, self.team_id.team_members_ids.ids)]})

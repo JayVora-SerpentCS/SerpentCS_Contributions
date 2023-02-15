@@ -8,16 +8,17 @@ class ProjectProjectTestCase(common.TransactionCase):
         super(ProjectProjectTestCase, self).setup()
 
     def test_project_action(self):
-        self.team = self.env.ref('base.user_root')
-        self.team1 = self.env.ref('base.user_demo')
+        user_1 = self.env.ref('base.user_root')
+        user_2 = self.env.ref('base.user_demo')
 
-        self.team = self.env['crm.team'].sudo().create({
+        team = self.env['crm.team'].sudo().create({
             'name': 'Test Project Team',
-            'user_id': self.team.id,
+            'user_id': user_1.id,
             'type_team': 'sale',
-            'team_members': [(6, 0, [self.team.id,
-                                     self.team1.id])]})
-        self.project = self.env['project.project'].create({
+            'team_members_ids': [(6, 0, [user_1.id, user_2.id])]})
+        project = self.env['project.project'].sudo().create({
             'name': 'Test Project',
-            'team_id': self.team.id})
-        self.project.get_team_members()
+            'team_id': team.id
+        })
+        project._get_team_members()
+        self.assertEqual(team.name, project.team_id.name)
