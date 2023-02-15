@@ -6,8 +6,8 @@
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Project Team Management',
     'category': 'Project Management',
-    'website': 'http://www.serpentcs.com',
-    'version': '15.0.1.0.0',
+    'website': 'https://www.serpentcs.com',
+    'version': '16.0.1.0.0',
     'license': 'AGPL-3',
     'depends': [
         'project',
