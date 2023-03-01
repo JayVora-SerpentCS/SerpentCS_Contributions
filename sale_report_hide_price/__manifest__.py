@@ -10,13 +10,13 @@
     'license': 'AGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'depends': [
-        'sale'
+        'sale_management'
     ],
     'images': ['static/description/icon.png'],
     'data': [
-        'views/sale_view.xml',
+        'wizard/sale_wizard.xml',
+        'security/ir.model.access.csv',
         'views/report_saleorder.xml',
-        'views/preview_sale_order.xml'
     ],
     'installable': True,
 }
