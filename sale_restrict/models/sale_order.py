@@ -5,9 +5,12 @@ from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
+    """Inherited the sale order model."""
+
     _inherit = "sale.order"
 
     def action_confirm(self):
+        """overridden the method to check sale order line having zero unit price."""
         zero_price = [
             x.product_id.name for x in self.order_line if not x.price_unit > 0.0
         ]

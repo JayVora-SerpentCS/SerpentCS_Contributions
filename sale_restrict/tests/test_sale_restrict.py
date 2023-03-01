@@ -5,7 +5,7 @@ from odoo.tests import common
 
 class SaleOrder(common.TransactionCase):
     def setup(self):
-        super(SaleOrder, self).setup()
+        return super(SaleOrder, self).setup()
 
     def test_sale_action(self):
         self.partner = self.ref("base.res_partner_2")
