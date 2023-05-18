@@ -6,8 +6,8 @@
     "version": "16.0.1.0.0",
     "category": "Sales Management",
     "sequence": "1",
-    "summary": """Product Image for Quatation/Sale Reports.""",
-    "description": """Product Image for Quatation/Sale Reports.""",
+    "summary": """Product Image for Quotation/Sale Reports.""",
+    "description": """Product Image for Quotation/Sale Reports.""",
     "license": "LGPL-3",
     # Author
     "author": "Serpent Consulting Services Pvt. Ltd.",
