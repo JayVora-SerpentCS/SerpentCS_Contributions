@@ -10,6 +10,9 @@
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "website": "https://www.serpentcs.com",
     "depends": ["sale_management"],
+    "data": [
+        'security/sale_restrict_security.xml',
+    ],
     "images": ["static/description/PriceCheck.png"],
     "installable": True,
 }

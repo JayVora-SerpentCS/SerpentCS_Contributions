@@ -14,10 +14,9 @@ class SaleOrder(models.Model):
         zero_price = [
             x.product_id.name for x in self.order_line if not x.price_unit > 0.0
         ]
-
-        if zero_price:
+        if zero_price and self.env.user.has_group('sale_restrict.group_sales_restrict_user_validation'):
             message = (
-                _("Please specify unit price for " "the following products:") + "\n"
+                    _("Please specify unit price for the following products:") + "\n"
             )
             message += "\n".join(map(str, zero_price))
             raise UserError(message.rstrip())
