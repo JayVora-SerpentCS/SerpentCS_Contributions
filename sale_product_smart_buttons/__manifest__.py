@@ -2,7 +2,7 @@
 
 {
     "name": "Sale Product Smart Buttons",
-    "version": "15.0.0.0.1",
+    "version": "16.0.0.0.1",
     "sequence": 1,
     "author": "Serpent Consulting Services Pvt. Ltd.",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",

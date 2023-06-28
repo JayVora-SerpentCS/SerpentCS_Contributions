@@ -2,33 +2,30 @@
 
 from odoo import api, fields, models
 
-
 class ProductTemplate(models.Model):
     _inherit = "product.template"
+
+    sales_amt = fields.Float(compute="_compute_sales_amt", string="Sales amt")
 
     @api.depends("product_variant_ids.sales_amt")
     def _compute_sales_amt(self):
         for product in self:
-
             product.sales_amt = sum(
-                [prod_variant.sales_amt for prod_variant in product.product_variant_ids]
-            )
-
-    sales_amt = fields.Float(compute="_compute_sales_amt", string="Sales amt")
-
+                product.product_variant_ids.mapped("sales_amt"))
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    sales_amt = fields.Float(
+        compute="_compute_sales_amt", string="# Sales amt")
+
     @api.depends("product_tmpl_id.sales_amt")
     def _compute_sales_amt(self):
         res = {}
-        domain = [
+        order_lines = self.env["sale.order.line"].search([
             ("order_id.state", "in", ["sale", "done"]),
             ("product_id", "in", self.ids),
-        ]
-
-        order_lines = self.env["sale.order.line"].search(domain)
+        ])
         for line in order_lines:
             if res.get(line.product_id.id):
                 res.get(line.product_id.id).update(
@@ -44,5 +41,3 @@ class ProductProduct(models.Model):
             product.sales_amt = 0.0
             if res and res.get(product.id):
                 product.sales_amt = res.get(product.id).get("amt", 0)
-
-    sales_amt = fields.Float(compute="_compute_sales_amt", string="# Sales amt")
