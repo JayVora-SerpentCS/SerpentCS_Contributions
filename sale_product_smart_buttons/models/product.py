@@ -2,6 +2,7 @@
 
 from odoo import api, fields, models
 
+
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
@@ -12,6 +13,20 @@ class ProductTemplate(models.Model):
         for product in self:
             product.sales_amt = sum(
                 product.product_variant_ids.mapped("sales_amt"))
+
+    def action_view_sales_total(self):
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "sale.report_all_channels_sales_action")
+        action['domain'] = [('product_tmpl_id', 'in', self.ids)]
+        action['context'] = {
+            'pivot_measures': ['price_total'],
+            'active_id': self._context.get('active_id'),
+            'search_default_Sales': 1,
+            'active_model': 'sale.report',
+            'search_default_filter_order_date': 1,
+        }
+        return action
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"

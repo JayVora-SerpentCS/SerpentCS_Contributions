@@ -18,7 +18,7 @@
     """,
     "category": "Products",
     "license": "LGPL-3",
-    "depends": ["sale_management"],
+    "depends": ["sale_management",'product'],
     "data": ["views/product_view.xml"],
     "installable": True,
     "application": False,
