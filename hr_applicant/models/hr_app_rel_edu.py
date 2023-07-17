@@ -49,7 +49,6 @@ class ApplicantRelative(models.Model):
                 self.gender = "Male"
             elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
                 self.gender = "Female"
-
         if self.applicant_id and not self.relative_type:
             warning = {
                 "title": _("Warning!"),

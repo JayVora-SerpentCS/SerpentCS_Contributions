@@ -15,15 +15,15 @@ HR Applicant
   Details,Previous Occupation,Education Details,Relatives,Languages,Pervious Travel and Profile Report
 
 Usage
-=====
+===========
 
 Bug Tracker
 ===========
 
 Credits
-=======
+===========
 
 Contributors
-------------
+===========
 
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>

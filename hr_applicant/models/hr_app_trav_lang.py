@@ -74,10 +74,8 @@ class ApplicantLanguage(models.Model):
             if language_rec:
                 raise ValidationError(
                     _(
-
                         "If you want to set '%s' as a mothertongue "
                         "first uncheck mothertongue in '%s' language"
-
                     )
                     % (self.language, language_rec.language)
                 )
