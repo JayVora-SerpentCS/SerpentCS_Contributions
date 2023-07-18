@@ -148,17 +148,16 @@ class TrainingClass(models.Model):
                 if len(rec.attendees_ids.ids) > rec.training_attendees:
                     raise ValidationError(
                         _(
-                            "List of attendees are greater than \
-                           Training Attendees!"
+                            "List of attendees are greater than Training Attendees!"
                         )
                     )
                 for attendee in rec.attendees_ids:
                     if attendee.state not in ("train_completed", "in_complete"):
                         raise ValidationError(
                             _(
-                                "You can not Mark the training as Completed \
-                                   till any of attendee is not in \
-                                   Training Completed or Training incomplete!"
+                                "You can not Mark the training as Completed "
+                                "till any of attendee is not in "
+                                "Training Completed or Training incomplete!"
                             )
                         )
         rec.state = "completed"
@@ -173,9 +172,9 @@ class TrainingClass(models.Model):
                 ]:
                     raise ValidationError(
                         _(
-                            "You can not cancel the Training Class if \
-                           all attendees are not in Draft, Awaiting \
-                           Training Start or In complete state!"
+                            "You can not cancel the Training Class if "
+                            "all attendees are not in Draft, Awaiting "
+                            "Training Start or In complete state!"
                         )
                     )
         self.state = "cancel"
@@ -198,11 +197,10 @@ class ListOfAttendees(models.Model):
                 raise ValidationError(
                     _("End Date should be greater than Start date of Training!")
                 )
-            if rec.date_of_arrival and rec.date_of_arrival <= rec.training_start_date:
+            if rec.date_of_arrival and rec.date_of_arrival > rec.training_start_date:
                 raise ValidationError(
                     _(
-                        "Arrival Date should be less or equal than "
-                        "Start date of Training!"
+                        "Arrival Date should be less or equal than Start date of Training!"
                     )
                 )
 
