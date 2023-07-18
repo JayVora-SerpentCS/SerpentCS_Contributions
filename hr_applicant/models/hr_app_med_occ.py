@@ -1,4 +1,3 @@
-from logging import warning
 from odoo import api, fields, models
 from odoo.tools.translate import _
 

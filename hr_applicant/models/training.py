@@ -1,9 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
-
-from datetime import datetime
-
 from dateutil.relativedelta import relativedelta
-
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -63,7 +59,7 @@ class TrainingClass(models.Model):
             raise ValidationError(_("You can't create past training!"))
         if self.training_start_date > self.training_end_date:
             raise ValidationError(
-                _("End Date should be greated than Start date of Training!")
+                _("End Date should be greater than Start date of Training!")
             )
 
     course_id = fields.Many2one("training.courses", string="Course Name", required=True)
@@ -72,13 +68,13 @@ class TrainingClass(models.Model):
     )
     job_id = fields.Many2one(
         related="course_id.job_id",
-        comodel="hr.job",
+        comodel_name="hr.job",
         string="Applied Job",
         readonly=True,
     )
     course_categ_id = fields.Many2one(
         related="course_id.course_type_id",
-        comodel="course.type",
+        comodel_name="course.type",
         string="Course Type",
         readonly=True,
     )
@@ -117,7 +113,7 @@ class TrainingClass(models.Model):
             if rec.training_start_date and rec.course_id:
                 end_date = False
                 if rec.course_id.duration and rec.course_id.duration_type == "day":
-                    end_date = rec.training_start_date + datetime.timedelta(
+                    end_date = rec.training_start_date + relativedelta(
                         days=rec.course_id.duration - 1
                     )
 
@@ -195,7 +191,6 @@ class ListOfAttendees(models.Model):
         "class_id", "training_start_date", "training_end_date", "date_of_arrival"
     )
     def _check_training_dup(self):
-        # self.ensure_one()
         for rec in self:
             if rec.training_start_date < fields.Date.context_today(rec):
                 raise ValidationError(_("You can't create past training!"))
@@ -203,11 +198,11 @@ class ListOfAttendees(models.Model):
                 raise ValidationError(
                     _("End Date should be greater than Start date of Training!")
                 )
-            if rec.date_of_arrival and rec.date_of_arrival < rec.training_start_date:
+            if rec.date_of_arrival and rec.date_of_arrival <= rec.training_start_date:
                 raise ValidationError(
                     _(
-                        "Arrival Date should be less or equal than \
-                        Start date of Training!"
+                        "Arrival Date should be less or equal than "
+                        "Start date of Training!"
                     )
                 )
 

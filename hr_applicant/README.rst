@@ -12,7 +12,7 @@ HR Applicant
 
 * This application allows you to keep description for details of Applicant and Employee like Attachment of Subsections,Medical
 
-  Details,Previous Occupation,Education Details,Relatives,Languages,Pervious Travel and Profile Report
+  Details,Previous Occupation,Education Details,Relatives,Languages,Previous Travel and Profile Report
 
 Usage
 ===========

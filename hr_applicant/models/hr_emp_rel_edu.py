@@ -52,7 +52,7 @@ class EmployeeRelative(models.Model):
             self.gender = ""
             if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
                 self.gender = "Male"
-            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
+            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty", "Daughter"):
                 self.gender = "Female"
         if self.employee_id and not self.relative_type:
             warning = {
