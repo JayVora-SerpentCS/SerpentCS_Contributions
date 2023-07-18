@@ -1,0 +1,5 @@
+ .product_image_variant 
+ 	{
+		max-height: 60px;
+		overflow-y: scroll;
+}

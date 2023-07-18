@@ -56,14 +56,18 @@
                         <!-- Indicators -->
                         <ol class='carousel-indicators'>
                             <li>
-                                <img onclick="pro_img_click(this)" itemprop="image"
-                                     class="image_thumb img-responsive"
-                                     t-att-src="'data:image/jpeg;base64,%s' %product.image"/>
+                                <t t-if="product.image">
+                                    <img onclick="pro_img_click(this)" itemprop="image"
+                                         class="image_thumb img-responsive"
+                                         t-att-src="'data:image/jpeg;base64, %s' %product.image.decode('ascii')"/>
+                                </t>
                             </li>
                             <t t-foreach="product.images" t-as="i">
                                 <li>
-                                    <img onclick="pro_img_click(this)" class="image_thumb img-responsive"
-                                         t-att-src="'data:image/jpeg;base64,%s' %i.image"/>
+                                    <t t-if="i.image">
+                                        <img onclick="pro_img_click(this)" class="image_thumb img-responsive"
+                                             t-att-src="'data:image/jpeg;base64, %s' %i.image.decode('ascii')"/>
+                                    </t>
                                 </li>
                             </t>
                         </ol>

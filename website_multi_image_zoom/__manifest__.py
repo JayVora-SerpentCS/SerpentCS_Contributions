@@ -17,6 +17,7 @@
         'security/ir.model.access.csv',
         'views/product_images.xml',
         'views/templates.xml',
+        'views/website_multi_image_zoom.xml',
     ],
     'images': ['static/description/MultiImageZoom.png'],
     'installable': True,
