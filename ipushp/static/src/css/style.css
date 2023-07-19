@@ -31,15 +31,47 @@ a {
   max-width: 100%;
 }*/
 
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, auto);
+}
+
 .cd-img-replace {
-    /* replace text with image */
     color: transparent;
     white-space: nowrap;
     text-indent: 100%;
     overflow: hidden;
 }
 
-#top_menu > li > a.dropdown-toggle {
+button:not(:disabled):not(.o_wysiwyg_loader), [type="button"]:not(:disabled):not(.o_wysiwyg_loader), [type="reset"]:not(:disabled):not(.o_wysiwyg_loader), [type="submit"]:not(:disabled):not(.o_wysiwyg_loader) {
+    cursor: pointer;
+}
+
+button.close {
+    background-color: transparent;
+    -webkit-appearance: none;
+    border: 0;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000000;
+    text-shadow: 0 1px 0 #FFFFFF;
+    opacity: .5;
+}
+
+@media (max-width: 1200px)
+.close {
+    font-size: calc(1.275rem + 0.3vw);
+}
+
+#top_menu>li>a.dropdown-toggle {
     color: rgba(0, 0, 0, 0.5);
     padding-right: 0.5rem;
     padding-left: 0.5rem;
@@ -337,11 +369,13 @@ Main Components
         width: 76vh;
         height: 76vh;
     }
+
     .cd-project-mask .mask .mask-border-top,
     .cd-project-mask .mask .mask-border-bottom {
         /* height -> 50vh - 38vh + 10px */
         height: calc(12vh + 10px);
     }
+
     .cd-project-mask .mask .mask-border-left,
     .cd-project-mask .mask .mask-border-right {
         width: calc(50vw - 38vh + 10px);
@@ -352,18 +386,22 @@ Main Components
     .cd-project-mask h1 {
         font-size: 3rem;
     }
+
     .cd-project-mask .mask {
         width: 480px;
         height: 480px;
     }
+
     .cd-project-mask .mask .mask-border-top,
     .cd-project-mask .mask .mask-border-bottom {
         height: calc(50vh - 240px + 10px);
     }
+
     .cd-project-mask .mask .mask-border-left,
     .cd-project-mask .mask .mask-border-right {
         width: calc(50vw - 240px + 10px);
     }
+
     .cd-project-mask .project-trigger {
         font-size: 2rem;
     }
@@ -374,11 +412,13 @@ Main Components
         width: 76vh;
         height: 76vh;
     }
+
     .cd-project-mask .mask .mask-border-top,
     .cd-project-mask .mask .mask-border-bottom {
         /* height -> 50vh - 38vh + 10px */
         height: calc(12vh + 10px);
     }
+
     .cd-project-mask .mask .mask-border-left,
     .cd-project-mask .mask .mask-border-right {
         width: calc(50vw - 38vh + 10px);
@@ -389,6 +429,7 @@ Main Components
     .cd-project-mask h1 {
         font-size: 4.3rem;
     }
+
     /*  .cd-project-mask.center-title h1 {
     font-size: 6rem;
   }*/
@@ -396,14 +437,17 @@ Main Components
         width: 640px;
         height: 640px;
     }
+
     .cd-project-mask .mask .mask-border-top,
     .cd-project-mask .mask .mask-border-bottom {
         height: calc(50vh - 320px + 10px);
     }
+
     .cd-project-mask .mask .mask-border-left,
     .cd-project-mask .mask .mask-border-right {
         width: calc(50vw - 320px + 10px);
     }
+
     .cd-project-mask .project-trigger {
         font-size: 2.4rem;
     }
@@ -414,11 +458,13 @@ Main Components
         width: 76vh;
         height: 76vh;
     }
+
     .cd-project-mask .mask .mask-border-top,
     .cd-project-mask .mask .mask-border-bottom {
         /* height -> 50vh - 38vh + 10px */
         height: calc(12vh + 10px);
     }
+
     .cd-project-mask .mask .mask-border-left,
     .cd-project-mask .mask .mask-border-right {
         width: calc(50vw - 38vh + 10px);
@@ -546,7 +592,7 @@ Main Components
     background-color: white;
 }
 
-.cd-project-info .content-wrapper > * {
+.cd-project-info .content-wrapper>* {
     width: 90%;
     max-width: 800px;
     margin: 0 auto;
@@ -571,7 +617,8 @@ Main Components
     .cd-project-info .content-wrapper {
         padding: 4em 0;
     }
-    .cd-project-info .content-wrapper > * {
+
+    .cd-project-info .content-wrapper>* {
         font-size: 2rem;
         line-height: 1.8;
     }
@@ -583,22 +630,27 @@ Keyframes
 
 -------------------------------- */
 @-webkit-keyframes cd-translate {
+
     0%,
     100% {
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
     }
+
     50% {
         -webkit-transform: translateY(10px) translateX(-50%);
         transform: translateY(10px) translateX(-50%);
     }
 }
+
 @keyframes cd-translate {
+
     0%,
     100% {
         -webkit-transform: translateX(-50%);
         transform: translateX(-50%);
     }
+
     50% {
         -webkit-transform: translateY(10px) translateX(-50%);
         transform: translateY(10px) translateX(-50%);
@@ -630,7 +682,8 @@ Keyframes
 
 #myUL li a {
     border: 1px solid #ddd;
-    margin-top: -1px; /* Prevent double borders */
+    margin-top: -1px;
+    /* Prevent double borders */
     //  background-color: #f6f6f6;
     padding: 12px;
     text-decoration: none;
@@ -647,6 +700,7 @@ Keyframes
 .alternet_bg {
     background: #ffffff;
 }
+
 .alternet_bg:nth-child(odd) {
     background: #f6f6f6;
 }

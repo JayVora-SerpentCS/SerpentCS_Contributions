@@ -6,7 +6,7 @@
     "category": "Human Resource",
     "website": "http://www.serpentcs.com",
     "summary": "iPushp",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "description": "iPushp - Employee Business Directory",
     "depends": ["hr", "website"],
