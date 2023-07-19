@@ -13,7 +13,7 @@ odoo.define("pos_security_dialog.SecurityDialog", function (require) {
             if (!this.hasManualDiscount && mode === 'discount') {
                 return;
             }
-            if(mode === 'price' || mode === 'discount') {
+            if(this.env.pos.config.enable_security_dialog && (mode === 'price' || mode === 'discount')) {
                 this.openSecurityDialog(mode);
             }else {
                 this.trigger('set-numpad-mode', { mode });

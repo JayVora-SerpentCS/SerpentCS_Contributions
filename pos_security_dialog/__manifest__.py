@@ -12,6 +12,7 @@
     'website': 'https://www.serpentcs.com',
     'depends': ['point_of_sale', 'web_security_dialog'],
     'data': [
+        'views/pos_config_view.xml',
         'views/templates.xml'
     ],
     'installable': True,
