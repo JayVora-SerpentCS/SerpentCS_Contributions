@@ -44,7 +44,10 @@ a {
     overflow: hidden;
 }
 
-button:not(:disabled):not(.o_wysiwyg_loader), [type="button"]:not(:disabled):not(.o_wysiwyg_loader), [type="reset"]:not(:disabled):not(.o_wysiwyg_loader), [type="submit"]:not(:disabled):not(.o_wysiwyg_loader) {
+button:not(:disabled):not(.o_wysiwyg_loader),
+[type="button"]:not(:disabled):not(.o_wysiwyg_loader),
+[type="reset"]:not(:disabled):not(.o_wysiwyg_loader),
+[type="submit"]:not(:disabled):not(.o_wysiwyg_loader) {
     cursor: pointer;
 }
 
@@ -66,8 +69,7 @@ button.close {
     opacity: .5;
 }
 
-@media (max-width: 1200px)
-.close {
+@media (max-width: 1200px) .close {
     font-size: calc(1.275rem + 0.3vw);
 }
 
@@ -424,6 +426,19 @@ Main Components
         width: calc(50vw - 38vh + 10px);
     }
 }
+
+.error-message {
+    background-color: #ffffff;
+    color: #ff0000;
+    border: 1px solid #ff8787;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 58%;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
 
 @media only screen and (min-width: 1170px) {
     .cd-project-mask h1 {

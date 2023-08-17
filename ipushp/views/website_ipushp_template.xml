@@ -140,13 +140,13 @@
                                         <div class="form-group form-field">
                                             <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="phone">Phone Number</label>
                                             <div class="col-md-7 col-sm-8">
-                                                <input class="form-control o_website_form_input" name="phone" t-att-value="request.params.get('phone', '')" type="text" />
+                                                <input class="form-control o_website_form_input" name="phone" t-att-value="request.params.get('phone', '')" type="text" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" />
                                             </div>
                                         </div>
                                         <div class="form-group form-field o_website_form_required_custom">
                                             <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="email">Email</label>
                                             <div class="col-md-7 col-sm-8">
-                                                <input class="form-control o_website_form_input" name="email" required="" t-att-value="request.params.get('email_from', '')" type="text" />
+                                                <input class="form-control o_website_form_input" name="email" required="" t-att-value="request.params.get('email_from', '')" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" />
                                             </div>
                                         </div>
                                         <div class="form-group form-field o_website_form_required_custom">
@@ -161,6 +161,11 @@
                                                 <button class="btn btn-primary" type="submit">Submit</button>
                                             </div>
                                         </div>
+                                        <t t-if='error_msg'>
+                                            <div class="error-message">
+                                                <span>The Category Already Exists!</span>
+                                            </div>
+                                        </t>
                                     </form>
                                 </div>
                             </div>
@@ -216,5 +221,21 @@
                 <div class="oe_structure" />
             </div>
         </t>
+    </template>
+
+    <template id="ipushp_aboutus" inherit_id="website.footer_custom">
+        <xpath expr="//div[@class='col-lg-2 pt24 pb24'][1]/ul[@class='list-unstyled'][1]/li[2]" position="replace">
+            <li>
+                <a href="/page/iPushp">About us</a>
+            </li>
+        </xpath>
+        <xpath expr="//li[4]" position="replace">
+            <li>
+                <li>
+                    <a href="/page/search">Services</a>
+                </li>
+            </li>
+        </xpath>
+
     </template>
 </odoo>
