@@ -36,17 +36,23 @@
         <field name="arch" type="xml">
             <form string="Business Details">
                 <sheet>
-                    <group colspan="4" col="4">
-                        <field name="name" />
-                        <field name="phone" />
-                        <field name="email" />
-                        <field name="relation" />
-                        <field name="category_id" />
-                        <field name="employee_id" string="Referrer" />
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="email" />
+                            <field name="category_id" />
+                        </group>
+                        <group>
+                            <field name="phone" />
+                            <field name="relation" />
+                            <field name="employee_id" string="Referrer" />
+                        </group>
                     </group>
-                    <group colspan="4" string="Description">
-                        <field name="description" nolabel="1" />
-                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" string="description" />
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -75,18 +81,8 @@
                 <field name="email" />
                 <field name="category_id" />
                 <field name="employee_id" />
-                <filter
-                    context="{'group_by': 'category_id'}"
-                    domain="[]"
-                    name="category_filter"
-                    string="Business Category"
-                />
-                <filter
-                    context="{'group_by': 'employee_id'}"
-                    domain="[]"
-                    name="referrer_filter"
-                    string="Referrer"
-                />
+                <filter context="{'group_by': 'category_id'}" domain="[]" name="category_filter" string="Business Category" />
+                <filter context="{'group_by': 'employee_id'}" domain="[]" name="referrer_filter" string="Referrer" />
             </search>
         </field>
     </record>
@@ -98,11 +94,5 @@
         <field name="context">{'search_default_survey_filter':1}</field>
     </record>
     <!-- Menu Creation -->
-    <menuitem
-        action="business_line_action"
-        id="ipushp_buissness_menu"
-        name="iPushp"
-        parent="hr.menu_hr_root"
-        sequence="50"
-    />
+    <menuitem action="business_line_action" id="ipushp_buissness_menu" name="iPushp" parent="hr.menu_hr_root" sequence="50" />
 </odoo>
