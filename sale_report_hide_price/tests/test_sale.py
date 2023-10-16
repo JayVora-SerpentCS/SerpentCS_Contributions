@@ -18,13 +18,14 @@ class SaleOrderTest(common.TransactionCase):
 
         self.sale_order_id = self.sale_order_obj.create({
             'partner_id': self.partner.id,
+            'show_price': True,
+            'show_discount': True,
             'order_line': [
                 (0, 0, {'name': record.name, 'product_id': record.id,
                         'product_uom_qty': 2, 'product_uom': record.uom_id.id,
                         'price_unit': record.list_price
                         }) for (_, record) in self.products.items()],
         })
-        
         self.wizard = self.env['hide.price.discount'].sudo().create({
         	'show_price': True,
         	'show_discount': True

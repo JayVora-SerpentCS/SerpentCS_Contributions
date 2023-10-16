@@ -7,7 +7,7 @@
     'category': 'Sales Management',
     'website': 'https://www.serpentcs.com',
     'version': '16.0.1.0.1',
-    'license': 'AGPL-3',
+    'license': 'LGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'depends': [
         'sale_management'
@@ -17,6 +17,8 @@
         'wizard/sale_wizard.xml',
         'security/ir.model.access.csv',
         'views/report_saleorder.xml',
+        'views/sale_view.xml',
+        'views/preview_sale_order.xml'
     ],
     'installable': True,
 }
