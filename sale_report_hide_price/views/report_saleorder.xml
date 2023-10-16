@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="report_sale_document_inherits" inherit_id="sale.report_saleorder_document">
+        <!-- Discount fields hides from sale quotation report if show and hide price from Quotation -->
+        <td t-if="display_discount" position="replace">
+            <t t-if="doc.show_discount">
+                <td t-if="display_discount" class="text-end">
+                    <span t-field="line.discount" />
+                </td>
+            </t>
+            <t t-if="not doc.show_discount">
+                <td t-if="display_discount" class="text-end"  groups="product.group_discount_per_so_line">-N.A.-</td>
+            </t>
+        </td>
+        <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[3]" position="replace">
+            <t t-if="doc.show_price">
+                <td class="text-end">
+                    <span t-field="line.price_unit" />
+                </td>
+            </t>
+            <t t-if="not doc.show_price">
+                <td class="text-end">-N.A.-</td>
+            </t>
+        </xpath>
+        <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[last()]" position="replace">
+            <t t-if="doc.show_price">
+                <td class="text-end" groups="account.group_show_line_subtotals_tax_excluded">
+                     <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                     <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                </td>
+            </t>
+            <t t-if="not doc.show_price">
+                <td class="text-end" groups="account.group_show_line_subtotals_tax_excluded">-N.A.-</td>
+            </t>
+        </xpath>
+        <xpath expr="//div[@name='total']" position="replace">
+            <div class="row" name="total">
+                <div t-attf-class="#{'col-4' if report_type != 'html' else 'col-sm-7 col-md-5'} ml-auto">
+                    <table class="table table-sm">
+                        <t t-set="tax_totals" t-value="doc.tax_totals"/>
+                        <t t-if="doc.show_price">
+                            <t t-call="account.document_tax_totals"/>
+                        </t>
+                        <t t-if="not doc.show_price">
+
+                            <td class="text-right">-N.A.-</td>
+                        </t>
+                    </table>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>
