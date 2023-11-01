@@ -56,3 +56,4 @@ class ServiceLine(models.Model):
     business_id = fields.Many2one("business.line", "Business")
     descriptions = fields.Text("Description")
     feedback = fields.Text("Feedback")
+    rating = fields.Selection([('0', 'Bad'), ('1', 'Very Low'), ('2', 'Low'), ('3', 'Normal'),('4', 'High'),('5', 'Excellent')], string='Priority')

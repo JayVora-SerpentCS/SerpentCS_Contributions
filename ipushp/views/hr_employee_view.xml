@@ -39,12 +39,12 @@
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="email" />
+                            <field name="email" widget="email"/>
                             <field name="category_id" />
                             <field name="attachment_ids" widget="many2many_binary"/>
                         </group>
                         <group>
-                            <field name="phone" />
+                            <field name="phone" widget="phone"/>
                             <field name="relation" />
                             <field name="employee_id" string="Referrer" />
                         </group>
@@ -60,6 +60,7 @@
                                     <field name="emp_id" string="Employee"/>
                                     <field name="descriptions" string="Description" />
                                     <field name="feedback" string="Feedback" />
+                                    <field name="rating" string="Rating" widget="priority"/>
                                 </tree>
                             </field>
                         </page>
