@@ -4,3 +4,4 @@ access_business_category_user,business.category.user,model_business_category,bas
 access_relation_relation_manager,relation.relation.manager,model_relation_relation,hr.group_hr_manager,1,1,1,1
 access_business_category_manager,business.category.manager,model_business_category,hr.group_hr_manager,1,1,1,1
 access_business_line_employee,business.line.employee,model_business_line,base.group_user,1,1,1,1
+ipushp.access_service_history_line,access_service_history_line,ipushp.model_service_history_line,base.group_user,1,1,1,1
