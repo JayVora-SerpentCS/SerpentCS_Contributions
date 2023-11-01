@@ -2,6 +2,7 @@
 
 from odoo import http
 from odoo.http import request
+from odoo.exceptions import ValidationError
 
 
 class WebsiteIpushp(http.Controller):
@@ -42,11 +43,19 @@ class WebsiteIpushp(http.Controller):
     def contact_ipushp(self, **kwargs):
         hr_emp_obj = request.env["hr.employee"]
         category_id = kwargs.get("business_categ_id")
+
         if not isinstance(category_id, int):
             category_id = int(category_id)
-        if category_id == -1:
-            if kwargs.get("category_name"):
-                vals = {"name": kwargs.get("category_name")}
+            if category_id == -1:
+                if kwargs.get("category_name"):
+                    category_name = kwargs.get("category_name").strip()  # Remove leading/trailing spaces
+                    existing_category = request.env["business.category"].sudo().search([("name", "=ilike", category_name)])
+                    if existing_category:
+                        
+                        error_msg = "A Business Category with the same name already exists."
+
+                        return request.render("ipushp.iPushp", {'error_msg': error_msg})
+                vals = {"name": category_name}
                 category_id = request.env["business.category"].sudo().create(vals)
                 category_id = category_id.id
         if kwargs.get("user_id"):
@@ -62,4 +71,13 @@ class WebsiteIpushp(http.Controller):
                 "category_id": category_id,
             }
             employee.sudo().write({"ipushp_ids": [(0, 0, contact_details)]})
+        return request.redirect('/thankyoupage')
+    
+
+    @http.route(["/thankyoupage"], type="http", auth="public", website=True)
+    def thankyoupage(self, **kwargs):
+
         return request.render("ipushp.ipushp_thanks", {})
+
+
+    
