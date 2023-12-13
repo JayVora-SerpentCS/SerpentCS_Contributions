@@ -7,7 +7,7 @@ class CrmTeamInherit(models.Model):
     _inherit = 'crm.team'
 
     type_team = fields.Selection([('sale', 'Sale'), ('project', 'Project')],
-                                 "Type", default="sale")
+                                 string="Team Type", default="sale")
     team_members_ids = fields.Many2many('res.users', 'project_team_user_rel',
                                         'team_id', 'user_id', 'Project Members',
                                         help="""Project's members are users who

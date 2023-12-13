@@ -1,11 +1,10 @@
 <odoo>
-
     <record id="sales_team.crm_team_action_config" model="ir.actions.act_window">
         <field name="domain">[('type_team','=','sale')]</field>
         <field name="context">{'default_type_team':'sale'}</field>
     </record>
-    <record id="projects_team_form_view" model="ir.ui.view">
-        <field name="name">crm.team.form</field>
+    <record id="projects_team_view_form" model="ir.ui.view">
+         <field name="name">crm.team.form</field>
         <field name="model">crm.team</field>
         <field name="arch" type="xml">
             <form string="Project Team">
@@ -21,7 +20,7 @@
                     <group>
                         <group name="left" string="Team Details">
                             <field name="user_id" widget="many2one_avatar_user"  domain="[('share', '=', False)]"/>
-                            <field name="type_team" invisible="1"/>
+                            <field name="type_team" invisible="1" string="Team Type"/>
                         </group>
                     </group>
                      <notebook>
@@ -77,7 +76,6 @@
             </tree>
         </field>
     </record>
-
     <record id="project_team_action_tree" model="ir.actions.act_window">
         <field name="name">Projects Team</field>
         <field name="res_model">crm.team</field>
@@ -97,10 +95,9 @@
 
     <record id="project_team_action_form_view" model="ir.actions.act_window.view">
         <field name="view_mode">form</field>
-        <field name="view_id" ref="projects_team_form_view"/>
+        <field name="view_id" ref="projects_team_view_form"/>
         <field name="act_window_id" ref="project_team_action_tree"/>
     </record>
-
 
     <menuitem id="project_team_menu" action="project_team_action_tree"
               parent="project.menu_project_config"/>
@@ -116,12 +113,11 @@
         <field name="arch" type="xml">
             <field name="privacy_visibility" position="after">
                 <field name="team_id"
-                       context="{'form_view_ref': 'project_team.projects_team_form_view', 'default_type_team':'project'}"/>
+                       context="{'form_view_ref': 'project_team.projects_team_view_form', 'default_type_team':'project'}"/>
             </field>
             <page name="settings" position="after">
                 <page string="Team">
-                    <field name="members_ids" widget="many2many"
-                           context="{'form_view_ref': 'project_team.projects_team_form_view', 'default_type_team':'project'}">
+                    <field name="members_ids" widget="many2many">
                         <kanban quick_create="false" create="true" delete="true">
                             <field name="id"/>
                             <field name="name"/>
