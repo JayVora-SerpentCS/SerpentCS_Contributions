@@ -7,7 +7,6 @@ from odoo.exceptions import UserError, ValidationError
 
 class LabelPrint(models.Model):
     _name = "label.print"
-
     _description = "Label Print"
 
     name = fields.Char("Name", size=64, required=True, index=True)
@@ -63,9 +62,9 @@ class LabelPrint(models.Model):
         return True
 
     def unlink_action(self):
-        for template in self:
-            if template.ref_ir_act_report.id:
-                template.ref_ir_act_report.unlink()
+        actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
+        for action in actions_to_unlink:
+            action.unlink()
         return True
 
 

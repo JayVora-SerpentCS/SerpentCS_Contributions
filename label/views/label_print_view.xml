@@ -12,28 +12,34 @@
                         <field name="model_id"/>
                         <field invisible="1" name="model_list"/>
                     </group>
-                    <notebook colspan="4">
+                    <notebook>
                         <page string="Fields">
-                            <field colspan="4" name="field_ids" nolabel="1">
+                            <field name="field_ids" nolabel="1">
                                 <form string="Fields">
-                                    <group col="4" colspan="4">
+                                    <group>
                                         <field name="sequence"/>
                                         <field name="type"/>
                                         <field name="fontsize"/>
-                                        <field attrs="{'invisible':[('type','=','normal')]}" name="position"/>
+                                        <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
                                         <field name="newline"/>
                                         <field name="nolabel"/>
                                         <field name="python_expression"/>
                                         <field invisible="1" name="model_id"/>
-                                        <field attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}" context="{'model_list':parent.model_list}" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']),                                                ('model_id','=',model_id)]" name="field_id"/>
-                                        <field attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}" name="python_field"/>
+                                        <field attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
+                                               context="{'model_list':parent.model_list}"
+                                               domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']), ('model_id','=',model_id)]"
+                                               name="field_id"/>
+                                        <field attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"
+                                               name="python_field"/>
                                         <newline/>
-                                        <label class="o_form_label" colspan="4" for="python_field" string="Python expression field must be start with obj. e.g:- obj.M2O_field.field_name"/>
+                                        <label class="o_form_label" colspan="4" for="python_field"
+                                               string="Python expression field must be start with obj. e.g:- obj.M2O_field.field_name"/>
                                     </group>
                                 </form>
                                 <tree string="Fields">
                                     <field name="sequence"/>
-                                    <field domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]" name="field_id"/>
+                                    <field domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function'])]"
+                                           name="field_id"/>
                                     <field name="python_field"/>
                                     <field name="type"/>
                                 </tree>
@@ -41,9 +47,14 @@
                         </page>
                         <page string="Advance">
                             <group col="2" colspan="2">
-                                <button attrs="{'invisible':[('ref_ir_act_report','!=',False)]}" colspan="2" help="Display a button in the sidebar of related documents to open a composition wizard" icon="fa-plus" name="create_action" string="Add sidebar button" type="object"/>
-                                <field attrs="{'invisible':[('ref_ir_act_report','=',False)]}" name="ref_ir_act_report"/>
-                                <button attrs="{'invisible':[('ref_ir_act_report','=',False)]}" colspan="2" icon="fa-trash-o" name="unlink_action" string="Remove sidebar button" type="object"/>
+                                <button attrs="{'invisible':[('ref_ir_act_report','!=',False)]}" colspan="2"
+                                        help="Display a button in the sidebar of related documents to open a composition wizard"
+                                        icon="fa-plus" name="create_action" string="Add sidebar button" type="object"/>
+                                <field attrs="{'invisible':[('ref_ir_act_report','=',False)]}"
+                                       name="ref_ir_act_report"/>
+                                <button attrs="{'invisible':[('ref_ir_act_report','=',False)]}" colspan="2"
+                                        icon="fa-trash-o" name="unlink_action" string="Remove sidebar button"
+                                        type="object"/>
                             </group>
                         </page>
                     </notebook>
