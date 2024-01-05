@@ -52,7 +52,7 @@ class ServiceLine(models.Model):
     def _default_emp(self):
         return self.env.user.employee_id
 
-    emp_id = fields.Many2one("hr.employee", "Employee", default=_default_emp, required="True")
+    emp_id = fields.Many2one("hr.employee", "Employee", default=_default_emp, required=True)
     business_id = fields.Many2one("business.line", "Business")
     descriptions = fields.Text("Description")
     feedback = fields.Text("Feedback")

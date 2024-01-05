@@ -39,7 +39,7 @@ class WebsiteIpushp(http.Controller):
             },
         )
 
-    @http.route(["/contact_ipushp"], type="http", auth="public", website=True)
+    @http.route(["/contact_ipushp/<string:model_name>"], type="http", auth="public", website=True)
     def contact_ipushp(self, **kwargs):
         hr_emp_obj = request.env["hr.employee"]
         category_id = kwargs.get("business_categ_id")

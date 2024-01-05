@@ -89,7 +89,7 @@
                                     <h4 class="text-center o_default_snippet_text mt16">Here, we will publish a program where everyone can subscribe and register their family/familyperson business and get the benefit</h4>
                                 </div>
                                 <div class="col-md-12 mt32 mb64 s-signup">
-                                    <form action="/contact_ipushp" class="s_website_form form-horizontal container-fluid mt32" method="post">
+                                    <form action="/contact_ipushp/" data-mark="*" data-model_name="ipushp.iPushp" class="s_website_form form-horizontal container-fluid mt32" method="post">
                                         <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden" />
                                         <input id="user_id" name="user_id" t-att-value="uid" type="hidden" />
                                         <div class="form-group form-field o_website_form_required_custom">
@@ -224,7 +224,7 @@
     </template>
 
     <template id="ipushp_aboutus" inherit_id="website.footer_custom">
-        <xpath expr="//div[@class='col-lg-2 pt24 pb24'][1]/ul[@class='list-unstyled'][1]/li[2]" position="replace">
+        <xpath expr="//ul[hasclass('list-unstyled')][1]/li[2]" position="replace">
             <li>
                 <a href="/page/iPushp">About us</a>
             </li>
