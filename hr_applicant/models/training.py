@@ -1,9 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
-
-import datetime
-from odoo import api, fields, models
-from odoo.tools.translate import _
 from dateutil.relativedelta import relativedelta
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -40,13 +37,12 @@ class Trainingcourses(models.Model):
     name = fields.Char(string="Course Name", required=True)
     course_type_id = fields.Many2one("course.type", string="Course Category")
     job_id = fields.Many2one("hr.job", "Applied Job")
-    department = fields.Char(related="job_id.name",
-                             string="Department", readonly=True)
+    department = fields.Char(related="job_id.name", string="Department", readonly=True)
     training_location = fields.Char("Training Location")
     duration = fields.Integer("Course Duration", required=True)
     duration_type = fields.Selection(
-        [("day", "Days"), ("week", "Weeks"),
-         ("month", "Months")], required=True)
+        [("day", "Days"), ("week", "Weeks"), ("month", "Months")], required=True
+    )
     local_short_description = fields.Text("Course Short Description")
 
 
@@ -63,38 +59,38 @@ class TrainingClass(models.Model):
             raise ValidationError(_("You can't create past training!"))
         if self.training_start_date > self.training_end_date:
             raise ValidationError(
-                _("End Date should be greated than Start date of Training!")
+                _("End Date should be greater than Start date of Training!")
             )
 
-    course_id = fields.Many2one(
-        "training.courses", string="Course Name", required=True)
+    course_id = fields.Many2one("training.courses", string="Course Name", required=True)
     department = fields.Char(
         related="course_id.department", string="Department", readonly=True
     )
     job_id = fields.Many2one(
         related="course_id.job_id",
-        comodel="hr.job",
+        comodel_name="hr.job",
         string="Applied Job",
         readonly=True,
     )
     course_categ_id = fields.Many2one(
         related="course_id.course_type_id",
-        comodel="course.type",
+        comodel_name="course.type",
         string="Course Type",
         readonly=True,
     )
     training_location = fields.Char(
-        related="course_id.training_location", string="Training Location",
-        readonly=True
+        related="course_id.training_location", string="Training Location", readonly=True
     )
     training_attendees = fields.Integer("Training Attendees", required=True)
     training_start_date = fields.Date(
-        "Training Start Date", readonly=True,
-        states={"draft": [("readonly", False)]}, required=True
+        "Training Start Date",
+        readonly=True,
+        states={"draft": [("readonly", False)]},
+        required=True,
     )
     training_end_date = fields.Date(
-        "Training End Date", readonly=True,
-        states={"draft": [("readonly", False)]})
+        "Training End Date", readonly=True, states={"draft": [("readonly", False)]}
+    )
     attendees_ids = fields.One2many(
         "list.of.attendees", "class_id", string="List of Local Attendees"
     )
@@ -112,21 +108,24 @@ class TrainingClass(models.Model):
     description = fields.Text("Description")
 
     @api.onchange("training_start_date", "course_id")
-    def onchange_start_date(self):
+    def _onchange_start_date(self):
         for rec in self:
             if rec.training_start_date and rec.course_id:
                 end_date = False
                 if rec.course_id.duration and rec.course_id.duration_type == "day":
-                    end_date = rec.training_start_date + \
-                        datetime.timedelta(days=rec.course_id.duration - 1)
+                    end_date = rec.training_start_date + relativedelta(
+                        days=rec.course_id.duration - 1
+                    )
 
                 elif rec.course_id.duration and rec.course_id.duration_type == "week":
-                    end_date = rec.training_start_date + \
-                        relativedelta(weeks=rec.course_id.duration, days=-1)
+                    end_date = rec.training_start_date + relativedelta(
+                        weeks=rec.course_id.duration, days=-1
+                    )
 
                 elif rec.course_id.duration and rec.course_id.duration_type == "month":
-                    end_date = rec.training_start_date + \
-                        relativedelta(months=rec.course_id.duration, days=-1)
+                    end_date = rec.training_start_date + relativedelta(
+                        months=rec.course_id.duration, days=-1
+                    )
 
                 rec.training_end_date = end_date
 
@@ -136,8 +135,7 @@ class TrainingClass(models.Model):
     def action_approve(self):
         for rec in self:
             if not rec.training_attendees:
-                raise ValidationError(
-                    _("Training Attendees should not be Zero!"))
+                raise ValidationError(_("Training Attendees should not be Zero!"))
             rec.state = "approved"
 
     def action_completed(self):
@@ -150,38 +148,25 @@ class TrainingClass(models.Model):
                 if len(rec.attendees_ids.ids) > rec.training_attendees:
                     raise ValidationError(
                         _(
-                            "List of attendees are greater than \
-                           Training Attendees!"
+                            "List of attendees are greater than Training Attendees!"
                         )
                     )
-                    for attendee in rec.attendees_ids:
-                        if attendee.state not in ("train_completed",
-                                                  "in_complete"):
-                            raise ValidationError(
-                                _(
-                                    "You can not Mark the training as Completed \
-                                   till any of attendee is not in \
-                                   Training Completed or Training incomplete!"
-                                )
+                for attendee in rec.attendees_ids:
+                    if attendee.state not in ("train_completed", "in_complete"):
+                        raise ValidationError(
+                            _(
+                                "You can not Mark the training as Completed "
+                                "till any of attendee is not in "
+                                "Training Completed or Training incomplete!"
                             )
+                        )
         rec.state = "completed"
 
     def action_cancel(self):
         for rec in self:
-            for attendee in rec.attendees_ids:
-                if attendee.state not in [
-                    "draft",
-                    "awaiting_training_start",
-                    "in_complete",
-                ]:
-                    raise ValidationError(
-                        _(
-                            "You can not cancel the Training Class if \
-                           all attendees are not in Draft, Awaiting \
-                           Training Start or In complete state!"
-                        )
-                    )
-        self.state = "cancel"
+            if any(attendee.state not in ["draft", "awaiting_training_start", "in_complete"] for attendee in rec.attendees_ids):
+                raise ValidationError(_("You cannot cancel the Training Class if all attendees are not in Draft, Awaiting Training Start, or Incomplete state!"))
+        rec.state = "cancel"
 
 
 class ListOfAttendees(models.Model):
@@ -191,23 +176,20 @@ class ListOfAttendees(models.Model):
     _description = "List Of Attendees"
 
     @api.constrains(
-        "class_id", "training_start_date",
-        "training_end_date", "date_of_arrival")
+        "class_id", "training_start_date", "training_end_date", "date_of_arrival"
+    )
     def _check_training_dup(self):
-        # self.ensure_one()
         for rec in self:
             if rec.training_start_date < fields.Date.context_today(rec):
-                raise ValidationError(
-                    _("You can't create past training!"))
+                raise ValidationError(_("You can't create past training!"))
             if rec.training_start_date > rec.training_end_date:
                 raise ValidationError(
                     _("End Date should be greater than Start date of Training!")
                 )
-            if rec.date_of_arrival and rec.date_of_arrival < rec.training_start_date:
+            if rec.date_of_arrival and rec.date_of_arrival > rec.training_start_date:
                 raise ValidationError(
                     _(
-                        "Arrival Date should be less or equal than \
-                        Start date of Training!"
+                        "Arrival Date should be less or equal than Start date of Training!"
                     )
                 )
 
@@ -226,8 +208,7 @@ class ListOfAttendees(models.Model):
         readonly=True,
         states={"draft": [("readonly", False)]},
     )
-    attendees_image = fields.Binary(
-        related="employee_id.image_1920", string="Image")
+    attendees_image = fields.Binary(related="employee_id.image_1920", string="Image")
     training_start_date = fields.Date(
         "Training Start Date",
         required=True,
@@ -265,7 +246,7 @@ class ListOfAttendees(models.Model):
     )
 
     @api.onchange("class_id")
-    def onchange_start_date(self):
+    def _onchange_start_date(self):
         for rec in self:
             if rec.class_id:
                 rec.training_start_date = self.class_id.training_start_date
