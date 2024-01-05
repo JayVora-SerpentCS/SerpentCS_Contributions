@@ -1,19 +1,19 @@
 /*  global Highcharts*/
 odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function (require) {
     "use strict";
-
     var core = require("web.core");
     var AbstractAction = require("web.AbstractAction");
+    var QWeb = core.qweb;
     var ajax = require('web.ajax');
     var Session = require('web.session');
 
     var _t = core._t;
-
     var web_lead_funnel_chart = AbstractAction.extend( {
-        template: "FunnelChart",
+        contentTemplate: "FunnelChart",
         xmlDependencies:
         ['web_lead_funnel_chart/static/src/xml/web_funnel_chart.xml'],
         start: function () {
+            QWeb.add_template("web_lead_funnel_chart/static/src/xml/web_funnel_chart.xml");
             var self = this;
             var emp_child = [];
             ajax.jsonRpc('/web/dataset/call_kw', 'call', {
@@ -41,24 +41,20 @@ odoo.define("web_lead_funnel_chart.web_lead_funnel_chart", function (require) {
                                 (Highcharts.theme &&
                                     Highcharts.theme.contrastTextColor) ||
                                     "black",
-                                softConnector: true,
+                                    softConnector: true,
                             },
-                            neckWidth: "30%",
-                            neckHeight: "25%",
-
-                            //  Other available options
-                            //  Height: pixels or percent
-                            //  Width: pixels or percent
+                                neckWidth: "30%",
+                                neckHeight: "25%",
+                            },
                         },
-                    },
-                    legend: {
-                        enabled: false,
-                    },
-                    series: [ {
-                        name: _t("Number Of Leads"),
-                        data: callbacks,
-                    }],
-                });
+                        legend: {
+                            enabled: false,
+                        },
+                        series: [ {
+                            name: _t("Number Of Leads"),
+                            data: callbacks,
+                        }],
+                    });
                 var funnel_container = self.CrmFunnelChart.container;
                 return self._rpc({route: '/web/action/load',
                     params: {action_id: "crm.crm_lead_action_pipeline",
