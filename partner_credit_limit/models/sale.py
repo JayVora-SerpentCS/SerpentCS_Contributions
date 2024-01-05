@@ -16,9 +16,10 @@ class SaleOrder(models.Model):
         if user_id and not user_id.has_group('base.group_portal') or not \
                 user_id:
             moveline_obj = self.env['account.move.line']
+
             movelines = moveline_obj.search(
                 [('partner_id', '=', partner.id),
-                 ('account_id.user_type_id.name', 'in',
+                 ('account_id.account_type', 'in',
                     ['Receivable', 'Payable']),
                  ('parent_state','!=','cancel')]
             )
