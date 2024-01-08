@@ -7,7 +7,7 @@
     'summary': 'Project Team Management',
     'category': 'Project Management',
     'website': 'https://www.serpentcs.com',
-    'version': '16.0.1.0.0',
+    'version': '17.0.1.0.0',
     'license': 'AGPL-3',
     'depends': [
         'project',
