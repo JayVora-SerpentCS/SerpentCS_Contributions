@@ -17,12 +17,15 @@
         <field name="dpi">90</field>
     </record>
 
-    <report id="report_project_detail"
-            model="project.project"
-            report_type="qweb-pdf"
-            name="project_detail_report.project_detail_qweb_report"
-            file="project_detail_report.project_detail_qweb_report"
-            paperformat="project_detail_report.project_paperformat_qweb"
-            string="Project Details"/>
+    <record id="report_project_detail" model="ir.actions.report">
+        <field name="name">Project Details</field>
+        <field name="model">project.project</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">project_detail_report.project_detail_qweb_report</field>
+        <field name="report_file">project_detail_report.project_detail_qweb_report</field>
+        <field name="paperformat_id" ref="project_detail_report.project_paperformat_qweb"/>
+        <field name="binding_type">report</field>
+        <field name="binding_model_id" ref="project.model_project_project"/>
+    </record>
 
 </odoo>

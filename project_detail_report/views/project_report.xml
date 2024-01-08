@@ -76,9 +76,9 @@
                                             <t t-if="not t.name">-</t>
                                         </td>
                                         <td>
-                                            <t t-if='t.planned_hours'>
-                                                <t t-esc="'%02d:%02d' % (int(t.planned_hours), t.planned_hours % 1 * 60)"/></t>
-                                            <t t-if="not t.planned_hours">00:00</t>
+                                            <t t-if='t.allocated_hours'>
+                                                <t t-esc="'%02d:%02d' % (int(t.allocated_hours), t.allocated_hours % 1 * 60)"/></t>
+                                            <t t-if="not t.allocated_hours">00:00</t>
                                         </td>
                                         <td>
                                             <t t-if='t.effective_hours'>

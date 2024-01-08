@@ -2,7 +2,7 @@
 
 {
     "name": "Project Report",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Project Management",
     "license": "AGPL-3",
     "summary": """Print Project Detail report with task
