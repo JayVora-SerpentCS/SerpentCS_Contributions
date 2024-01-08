@@ -3,48 +3,50 @@
         <t t-call="website.layout">
             <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden" />
             <section class="container mt64 mb64">
-                <div class="col-md-8 col-md-offset-2">
-                    <h2>Choose your Category</h2>
-                    <input
-                        id="myInput"
-                        onkeyup="myFunction()"
-                        placeholder="Search for category.."
-                        title="Type in a name"
-                        type="text"
-                    />
-                    <ul id="myUL">
-                        <t t-as="categ" t-foreach="category_data">
-                            <li class="alternet_bg">
-                                <input
-                                    name="category_id"
-                                    t-att-value="categ.id"
-                                    type="hidden"
-                                />
-                                <a
-                                    t-attf-href="/page/find_contacts?category_id=#{categ.id}"
-                                >
-                                    <t t-esc="categ.name" />
-                                </a>
-                            </li>
-                        </t>
-                    </ul>
+                <div class="categ_container">
+                    <div class="conainer col-md-8 col-md-offset-2 rounded">
+                        <h2>Find by Category</h2>
+                        <input
+                            id="myInput"
+                            onkeyup="myFunction()"
+                            placeholder="Search for category.."
+                            title="Type in a name"
+                            type="text"
+                        />
+                        <ul id="myUL">
+                            <t t-as="categ" t-foreach="category_data">
+                                <li class="alternet_bg">
+                                    <input
+                                        name="category_id"
+                                        t-att-value="categ.id"
+                                        type="hidden"
+                                    />
+                                    <a
+                                        t-attf-href="/page/find_contacts?category_id=#{categ.id}"
+                                    >
+                                        <t t-esc="categ.name" />
+                                    </a>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
                 </div>
             </section>
             <script>function myFunction() {
-                    var input, filter, ul, li, a, i;
-                    input = document.getElementById(&quot;myInput&quot;);
-                    filter = input.value.toUpperCase();
-                    ul = document.getElementById(&quot;myUL&quot;);
-                    li = ul.getElementsByTagName(&quot;li&quot;);
-                    for (i = 0; i &lt; li.length; i++) {
-                        a = li[i].getElementsByTagName(&quot;a&quot;)[0];
-                        if (a.innerHTML.toUpperCase().indexOf(filter) &gt; -1) {
-                            li[i].style.display = &quot;&quot;;
-                        } else {
-                            li[i].style.display = &quot;none&quot;;
+                var input, filter, ul, li, a, i;
+                input = document.getElementById(&quot;myInput&quot;);
+                filter = input.value.toUpperCase();
+                ul = document.getElementById(&quot;myUL&quot;);
+                li = ul.getElementsByTagName(&quot;li&quot;);
+                for (i = 0; i &lt; li.length; i++) {
+                a = li[i].getElementsByTagName(&quot;a&quot;)[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) &gt; -1) {
+                li[i].style.display = &quot;&quot;;
+                } else {
+                li[i].style.display = &quot;none&quot;;
 
-                        }
-                    }
+                }
+                }
                 }
             </script>
         </t>

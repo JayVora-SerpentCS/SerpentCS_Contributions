@@ -2,7 +2,6 @@
     <data noupdate="1">
         <record id="menu_website_ipushp" model="website.menu">
             <field name="name">iPushp</field>
-            <field name="url">/page/iPushp</field>
             <field name="parent_id" ref="website.main_menu" />
             <field name="sequence" type="int">58</field>
         </record>

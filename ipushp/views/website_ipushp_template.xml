@@ -53,26 +53,27 @@
                 </section>
                 <section class="teamblock">
                     <div class="container">
-                        <div class="row ">
+                        <div class="row team-container">
                             <div class="col-md-12 mb16 text-center">
                                 <h1 style="text-shadow: 3px 1px wheat;">Program Teams</h1>
                                 <div class="divider" />
                             </div>
-                            <div class="col-md-5 col-lg-5 col-sm-12 pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-left" style="margin:3%" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                            <div class="col-md-5 col-lg-5 col-sm-12 pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-left team-member">
                                 <span class="icon bg-df circle">
-                                    <i class="fa fa-male" />
+                                    <i class="fa fa-male"></i>
                                 </span>
                                 <h4>Vinay Vandara</h4>
-                                <div class="divider clearfix" />
+                                <div class="divider clearfix"></div>
                                 <p>vinay.vandra@serpentcs.com</p>
                                 <p>+91 9909913165</p>
                             </div>
-                            <div class=" col-md-5 col-lg-5 col-sm-12 pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-right" style="margin:3%" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
+                        
+                            <div class="col-md-5 col-lg-5 col-sm-12 pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-right team-member">
                                 <span class="icon bg-df circle">
-                                    <i class="fa fa-female" />
+                                    <i class="fa fa-female"></i>
                                 </span>
                                 <h4>Dhwani Vora</h4>
-                                <div class="divider clearfix" />
+                                <div class="divider clearfix"></div>
                                 <p>d.vasavada.serpentcs@gmail.com</p>
                                 <p>+91 9662768877</p>
                             </div>
@@ -82,19 +83,20 @@
                 <div id="registration_section" />
                 <t t-if="request.session.uid">
                     <section class="s_title mt64" id="">
-                        <div class="container">
+                        <div class="container_new">
                             <div class="row">
                                 <div class="col-md-12 text-center">
-                                    <h1 style="text-shadow: 3px 1px wheat;">Program Registration</h1>
-                                    <h4 class="text-center o_default_snippet_text mt16">Here, we will publish a program where everyone can subscribe and register their family/familyperson business and get the benefit</h4>
+                                    <h1>Program Registration</h1>
+                                    <h4 class="text-center mt16">Here, we will publish a program where everyone can subscribe and register their family/family person business and get the benefit</h4>
                                 </div>
                                 <div class="col-md-12 mt32 mb64 s-signup">
                                     <form action="/contact_ipushp/" data-mark="*" data-model_name="ipushp.iPushp" class="s_website_form form-horizontal container-fluid mt32" method="post">
+                                        <!-- Your form fields here -->
                                         <input name="csrf_token" t-att-value="request.csrf_token()" type="hidden" />
                                         <input id="user_id" name="user_id" t-att-value="uid" type="hidden" />
-                                        <div class="form-group form-field o_website_form_required_custom">
-                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="business_categ_id">Business Category</label>
-                                            <div class="col-md-7 col-sm-8">
+                                        <div class="form-group form-field o_website_form_required_custom row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="business_categ_id">Business Category</label>
+                                            <div class="col-md-9 col-sm-8">
                                                 <select class="select_business_categ form-control o_website_form_input" name="business_categ_id" required="True" title="Business Category">
                                                     <option class="default_option" default="default" label="" />
                                                     <option t-att-selected="error and len(error) &gt; 0 and new_category_id == -1" value="-1">-- Create a new Category --</option>
@@ -109,16 +111,16 @@
                                             </div>
                                         </div>
                                         <div class="form_so_new_shipp d-none">
-                                            <div class="form-group form-field o_website_form_required_custom">
-                                                <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="">Category Name</label>
-                                                <div class="col-md-7 col-sm-8">
+                                            <div class="form-group form-field o_website_form_required_custom row">
+                                                <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="">Category Name</label>
+                                                <div class="col-md-9 col-sm-8">
                                                     <input class="form-control o_website_form_input" name="category_name" type="text" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group form-field o_website_form_required_custom">
-                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="relation_id">Your Relation</label>
-                                            <div class="col-md-7 col-sm-8">
+                                        <div class="form-group form-field o_website_form_required_custom row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="relation_id">Your Relation</label>
+                                            <div class="col-md-9 col-sm-8">
                                                 <select class="select_relation form-control o_website_form_input" name="relation_id" required="True" title="Your Relation">
                                                     <option class="default_option" default="default" label="" />
                                                     <t t-if="relation_data">
@@ -131,34 +133,35 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group form-field o_website_form_required_custom">
-                                            <label class="col-md-3 col-sm-4 mt16  mb16 control-label" for="name">Name</label>
-                                            <div class="col-md-7 col-sm-8">
+                                        <div class="form-group form-field o_website_form_required_custom row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="name">Name</label>
+                                            <div class="col-md-9 col-sm-8">
                                                 <input class="form-control o_website_form_input" name="name" required="" t-att-value="request.params.get('contact_name', '')" type="text" />
                                             </div>
                                         </div>
-                                        <div class="form-group form-field">
-                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="phone">Phone Number</label>
-                                            <div class="col-md-7 col-sm-8">
+                                        
+                                        <div class="form-group form-field row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="phone">Phone Number</label>
+                                            <div class="col-md-9 col-sm-8">
                                                 <input class="form-control o_website_form_input" name="phone" t-att-value="request.params.get('phone', '')" type="text" pattern="[0-9]{10}" title="Please enter a 10-digit phone number" />
                                             </div>
                                         </div>
-                                        <div class="form-group form-field o_website_form_required_custom">
-                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="email">Email</label>
-                                            <div class="col-md-7 col-sm-8">
+                                        <div class="form-group form-field o_website_form_required_custom row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="email">Email</label>
+                                            <div class="col-md-9 col-sm-8">
                                                 <input class="form-control o_website_form_input" name="email" required="" t-att-value="request.params.get('email_from', '')" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Please enter a valid email address" />
                                             </div>
                                         </div>
-                                        <div class="form-group form-field o_website_form_required_custom">
-                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="description">Description</label>
-                                            <div class="col-md-7 col-sm-8">
+                                        <div class="form-group form-field o_website_form_required_custom row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="description">Description</label>
+                                            <div class="col-md-9 col-sm-8">
                                                 <textarea class="form-control o_website_form_input" name="description" required="" />
                                             </div>
                                         </div>
-                                        <div class="form-group form-field">
-                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label" for="description" />
-                                            <div class="col-md-7 col-sm-8">
-                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                        <div class="form-group form-field row">
+                                            <label class="col-md-3 col-sm-4 mt16 mb16 control-label " for="description" />
+                                            <div class="col-md-9 col-sm-8">
+                                                <button class="btn btn-primary check_required_fields" type="submit">Submit</button>
                                             </div>
                                         </div>
                                         <t t-if='error_msg'>

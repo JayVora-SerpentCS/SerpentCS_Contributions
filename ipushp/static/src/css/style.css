@@ -31,11 +31,7 @@ a {
   max-width: 100%;
 }*/
 
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, auto);
-}
+
 
 .cd-img-replace {
     color: transparent;
@@ -69,9 +65,9 @@ button.close {
     opacity: .5;
 }
 
-@media (max-width: 1200px) .close {
+@media (max-width: 1200px) {close {
     font-size: calc(1.275rem + 0.3vw);
-}
+}}
 
 #top_menu>li>a.dropdown-toggle {
     color: rgba(0, 0, 0, 0.5);
@@ -699,7 +695,7 @@ Keyframes
     border: 1px solid #ddd;
     margin-top: -1px;
     /* Prevent double borders */
-    //  background-color: #f6f6f6;
+    /* background-color: #f6f6f6; */
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
@@ -708,7 +704,7 @@ Keyframes
 }
 
 #myUL li a:hover:not(.header) {
-    //  background-color: #eee;
+    /* background-color: #eee; */
     border-left: 5px solid green;
 }
 
@@ -718,4 +714,239 @@ Keyframes
 
 .alternet_bg:nth-child(odd) {
     background: #f6f6f6;
+}
+
+
+
+
+
+.container_new h1 {
+    text-shadow: 3px 1px wheat;
+    color: #007bff;
+}
+
+.container_new h4 {
+    color: #6c757d;
+}
+
+.container_new form {
+    background: linear-gradient(to bottom, rgba(186, 205, 251, 0.8), rgba(243, 155, 158, 0.8));
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container_new .form-group {
+    margin-bottom: 16px;
+}
+
+
+.container_new .form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.container_new select.form-control {
+    height: 38px;
+}
+
+.container_new textarea.form-control {
+    resize: vertical;
+}
+
+.container_new .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.container_new .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.container_new .error-message {
+    color: #dc3545;
+}
+
+
+.check_required_fields {
+    margin-top: 5%;
+    background: linear-gradient(45deg, #f2a042, #f24484);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    /* transition: transform 0.3s ease-in-out; */
+}
+
+.check_required_fields:hover {
+    transform: translateY(-3px); /* Move the button 3 pixels up on hover */
+    animation: pulse 1s infinite; /* Add a pulse animation */
+    /* background-color: #0056b3; Change the background color on hover */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.check_required_fields:hover {
+    transform: rotate(6deg);
+    /* Rotate the button on hover */
+}
+
+
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.team-member {
+    width: calc(50% - 6%);
+    margin: 3%;
+    padding: 30px 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+}
+
+.team-member:hover {
+    transform: scale(1.05);
+}
+
+.team-member .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -20px;
+    left: 45%;
+    /* transform: translateX(-50%); */
+    /* padding: 15px; */
+    font-size: 30px;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.team-member h4 {
+    margin-top: 15px;
+    font-size: 20px;
+    color: #333;
+}
+
+.team-member p {
+    margin: 10px 0;
+    color: #777;
+}
+
+.categ_container{
+    width: 70%;
+    padding: 50px;
+    background: linear-gradient(to bottom, rgba(186, 205, 251, 0.8), rgba(243, 155, 158, 0.8));
+    border-radius: 7px;
+}
+
+.conainer h2{
+    font-family: Papyrus;   
+}
+
+
+/* CSS for desktop */
+@media (min-width: 992px) {
+    /* Your styles here */    
+    .container_new {
+        max-width: 50%;
+        margin: 0 auto;
+    }
+    .control-label {
+        font-weight: bold;
+        color: #495057;
+        text-align: end;
+    }
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, auto);
+    }
+    
+}
+
+/* CSS for tablets */
+@media (max-width: 991px) and (min-width: 768px) {
+    /* Your styles here */
+
+    .container_new {
+        max-width: 70%;
+        margin: 0 auto;
+    }
+    .control-label {
+        font-weight: bold;
+        color: #495057;
+        text-align: start;
+    }
+    .team-member .icon {
+        top: -24px;
+        /* transform : none; */
+        left: 42%;
+        margin-bottom: 4%;
+    }
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+    }
+    
+}
+
+/* CSS for mobile */
+@media (max-width: 767px) {
+    /* Your styles here */
+    .container_new {
+        max-width: 95%;
+        margin: 0 auto;
+    }
+    .control-label {
+        font-weight: bold;
+        color: #495057;
+        text-align: start;
+    }
+    .team-member {
+        width: 100%;
+        margin: 3% 0;
+    }
+
+    .team-member .icon {
+        top: -24px;
+        transform: none;
+        left: 44%;
+    }
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(1, auto);
+    }
+    
 }
