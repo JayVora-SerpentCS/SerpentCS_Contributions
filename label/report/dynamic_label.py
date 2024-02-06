@@ -51,14 +51,15 @@ class ReportDynamicLabel(models.AbstractModel):
                         string = ""
                     else:
                         string += " :- "
-
                     if field.type == "image" or field.type == "barcode":
                         string = ""
                         if field.position != "bottom":
                             pos = "float:" + str(field.position) + ";"
                             bot = False
+                            print("\n\n\n111111111111111",value)
                         else:
                             bot = True
+                            print("\n\n\n222222222222222",value)
                             bot_dict = {
                                 "string": string,
                                 "value": value,
