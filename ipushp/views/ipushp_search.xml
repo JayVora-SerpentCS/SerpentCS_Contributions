@@ -28,27 +28,11 @@
                                     </a>
                                 </li>
                             </t>
+                            <div id="noResultsMessage" style="display: none;">No Category Found !</div>
                         </ul>
                     </div>
                 </div>
             </section>
-            <script>function myFunction() {
-                var input, filter, ul, li, a, i;
-                input = document.getElementById(&quot;myInput&quot;);
-                filter = input.value.toUpperCase();
-                ul = document.getElementById(&quot;myUL&quot;);
-                li = ul.getElementsByTagName(&quot;li&quot;);
-                for (i = 0; i &lt; li.length; i++) {
-                a = li[i].getElementsByTagName(&quot;a&quot;)[0];
-                if (a.innerHTML.toUpperCase().indexOf(filter) &gt; -1) {
-                li[i].style.display = &quot;&quot;;
-                } else {
-                li[i].style.display = &quot;none&quot;;
-
-                }
-                }
-                }
-            </script>
         </t>
     </template>
 </odoo>

@@ -3,25 +3,32 @@
         <record id="menu_website_ipushp" model="website.menu">
             <field name="name">iPushp</field>
             <field name="parent_id" ref="website.main_menu" />
+            <field name="website_id" ref="website.default_website" />
             <field name="sequence" type="int">58</field>
         </record>
         <record id="menu_about" model="website.menu">
             <field name="name">About iPushp</field>
             <field name="url">/page/iPushp</field>
             <field name="parent_id" ref="ipushp.menu_website_ipushp" />
+            <field name="website_id" ref="website.default_website" />
             <field name="sequence" type="int">11</field>
         </record>
         <record id="menu_registration" model="website.menu">
             <field name="name">Registration</field>
             <field name="url">/page/iPushp#registration_section</field>
             <field name="parent_id" ref="ipushp.menu_website_ipushp" />
-            <field name="sequence" type="int">12</field>
+            <field name="website_id" ref="website.default_website" />
+            <field name="sequence" type="int">18</field>
         </record>
         <record id="menu_search" model="website.menu">
             <field name="name">Find a fit</field>
             <field name="url">/page/search</field>
             <field name="parent_id" ref="ipushp.menu_website_ipushp" />
-            <field name="sequence" type="int">13</field>
+            <field name="website_id" ref="website.default_website" />
+            <field name="sequence" type="int">25</field>
+        </record>
+        <record id="ipushp.menu_website_ipushp" model="website.menu">
+            <field name="child_id" eval="[(4, ref('ipushp.menu_search')),(4, ref('ipushp.menu_about')), (4, ref('ipushp.menu_registration'))]"/>
         </record>
     </data>
 </odoo>

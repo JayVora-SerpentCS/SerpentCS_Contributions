@@ -1,6 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 
 from odoo import http
+import json
 from odoo.http import request
 from odoo.exceptions import ValidationError
 
@@ -39,7 +40,7 @@ class WebsiteIpushp(http.Controller):
             },
         )
 
-    @http.route(["/contact_ipushp/<string:model_name>"], type="http", auth="public", website=True)
+    @http.route(["/contact/ipushp","/contact/ipushp/<string:model_name>"], type="http", auth="public", website=True)
     def contact_ipushp(self, **kwargs):
         hr_emp_obj = request.env["hr.employee"]
         category_id = kwargs.get("business_categ_id")

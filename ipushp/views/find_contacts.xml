@@ -5,28 +5,31 @@
                 <div class="row team-container">
                     <h2 class="text-center mt64 mb64">List of Contacts</h2>
                     <div class="col-md-12 wrapper">
-                    <t t-as="contacts" t-foreach="contact_data">
-                        <div class="col-md-5 col-lg-5 col-sm-12 pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-right team-member" style="width:90%" data-animation-effect="fadeInDownSmall" data-effect-delay="100">
-                            <span class="icon bg-df circle">
-                                <i class="fa fa-user" />
-                            </span>
-                            <h4>
-                                <t t-esc="contacts.name" />
-                            </h4>
-                            <div class="divider clearfix" />
-                            <p>
-                                <t t-esc="contacts.email" />
-                            </p>
-                            <p>
-                                <t t-esc="contacts.phone" />
-                            </p>
-                            <p>Referrer:
-                                <t t-esc="contacts.employee_id.name" />
-                            </p>
-                        </div>
-                    </t>
+                        <t t-as="contacts" t-foreach="contact_data">
+                            <div
+                                class="col-md-5 col-lg-5 col-sm-12 pv-30 ph-20 service-block bordered shadow text-center object-non-visible animated object-visible fadeInDownSmall float-right team-member"
+                                style="width:90%" data-animation-effect="fadeInDownSmall"
+                                data-effect-delay="100">
+                                <span class="icon bg-df circle">
+                                    <i class="fa fa-user" />
+                                </span>
+                                <h4>
+                                    <t t-esc="contacts.name" />
+                                </h4>
+                                <div class="divider clearfix" />
+                                <p>
+                                    <t t-esc="contacts.email" />
+                                </p>
+                                <p>
+                                    <t t-esc="contacts.phone" />
+                                </p>
+                                <p>Referrer: <t t-esc="contacts.employee_id.name" />
+                                </p>
+                            </div>
+                        </t>
                         <t t-if="not contact_data">
-                            <h4 class="text-center mt64 mb32" style="font-style: italic;">No results found!</h4>
+                            <h4 class="text-center mt64 mb32" style="font-style: italic;">No results
+                                found!</h4>
                         </t>
                     </div>
                     <div class=" col-md-12 mt64 mb32 text-center">
