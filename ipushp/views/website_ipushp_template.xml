@@ -158,7 +158,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="business_categ_id"
                                             >Business Category</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <select
                                                     class="select_business_categ form-control o_website_form_input"
                                                     name="business_categ_id"
@@ -200,7 +200,7 @@
                                                     class="col-md-3 col-sm-4 control-label"
                                                     for=""
                                                 >Category Name</label>
-                                                <div class="col-md-7 col-sm-8">
+                                                <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                     <input
                                                         class="form-control o_website_form_input"
                                                         name="category_name"
@@ -216,7 +216,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="relation_id"
                                             >Your Relation</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <select
                                                     class="select_relation form-control o_website_form_input"
                                                     name="relation_id"
@@ -253,7 +253,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="name"
                                             >Name</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <input
                                                     class="form-control o_website_form_input"
                                                     name="name"
@@ -268,7 +268,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="phone"
                                             >Phone Number</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <input
                                                     class="form-control o_website_form_input"
                                                     name="phone"
@@ -284,7 +284,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="email"
                                             >Email</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <input
                                                     class="form-control o_website_form_input"
                                                     name="email"
@@ -301,7 +301,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="description"
                                             >Description</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <textarea
                                                     class="form-control o_website_form_input"
                                                     name="description"
@@ -314,7 +314,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="description"
                                             />
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <button
                                                     class="btn btn-primary"
                                                     type="submit"
@@ -358,12 +358,6 @@
         <t t-call="website.layout">
             <div id="wrap">
                 <div class="oe_structure" />
-                <link rel="stylesheet"
-                    href="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/default_thank_you.css" />
-                <script
-                    src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/jquery-1.9.1.min.js"></script>
-                <script
-                    src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/html5shiv.js"></script>
                 <div class="container">
                     <header class="thanks_header" id="header">
                         <h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU!</h1>
