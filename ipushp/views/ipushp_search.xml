@@ -22,7 +22,7 @@
                                         type="hidden"
                                     />
                                     <a
-                                        t-attf-href="/page/find_contacts?category_id=#{categ.id}"
+                                        t-attf-href="/iPushp/contacts?category_id=#{categ.id}"
                                     >
                                         <t t-esc="categ.name" />
                                     </a>

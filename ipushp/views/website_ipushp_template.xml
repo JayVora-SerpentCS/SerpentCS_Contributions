@@ -281,12 +281,6 @@
         <t t-call="website.layout">
             <div id="wrap">
                 <div class="oe_structure" />
-                <link rel="stylesheet"
-                    href="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/default_thank_you.css" />
-                <script
-                    src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/jquery-1.9.1.min.js"></script>
-                <script
-                    src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/html5shiv.js"></script>
                 <div class="container">
                     <header class="thanks_header" id="header">
                         <h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU!</h1>
@@ -308,13 +302,13 @@
     <template id="ipushp_aboutus" inherit_id="website.footer_custom">
         <xpath expr="//ul[hasclass('list-unstyled')][1]/li[2]" position="replace">
             <li>
-                <a href="/page/iPushp">About us</a>
+                <a href="/iPushp">About us</a>
             </li>
         </xpath>
         <xpath expr="//li[4]" position="replace">
             <li>
                 <li>
-                    <a href="/page/search">Services</a>
+                    <a href="/iPushp/search">Services</a>
                 </li>
             </li>
         </xpath>

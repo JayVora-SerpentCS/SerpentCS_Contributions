@@ -6,6 +6,9 @@
         <record id="relation_mother" model="relation.relation">
             <field name="name">Mother</field>
         </record>
+        <record id="relation_spouse" model="relation.relation">
+            <field name="name">Spouse</field>
+        </record>
         <record id="relation_sister" model="relation.relation">
             <field name="name">Sister</field>
         </record>

@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 
 
 class WebsiteIpushp(http.Controller):
-    @http.route(["/page/iPushp"], type="http", auth="public", website=True)
+    @http.route(["/iPushp"], type="http", auth="public", website=True)
     def ipushp(self, **kwargs):
         return request.render(
             "ipushp.iPushp",
@@ -17,14 +17,14 @@ class WebsiteIpushp(http.Controller):
             },
         )
 
-    @http.route(["/page/search"], type="http", auth="public", website=True)
+    @http.route(["/iPushp/search"], type="http", auth="public", website=True)
     def search(self, **kwargs):
         return request.render(
             "ipushp.search",
             {"category_data": request.env["business.category"].sudo().search([])},
         )
 
-    @http.route(["/page/find_contacts"], type="http", auth="public", website=True)
+    @http.route(["/iPushp/contacts"], type="http", auth="public", website=True)
     def find_contacts(self, **kwargs):
         category_id = kwargs.get("category_id")
         contact_ids = (
@@ -44,7 +44,8 @@ class WebsiteIpushp(http.Controller):
     def contact_ipushp(self, **kwargs):
         hr_emp_obj = request.env["hr.employee"]
         category_id = kwargs.get("business_categ_id")
-
+        if not category_id:
+            return request.redirect("/iPushp")
         if not isinstance(category_id, int):
             category_id = int(category_id)
             if category_id == -1:
