@@ -6,6 +6,17 @@
     position: relative;
     padding: 0;
 }
+.error-message {
+    background-color: #ffffff;
+    color: #ff0000;
+    border: 1px solid #ff8787;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 58%;
+    font-size: 16px;
+    margin-top: 10px;
+}
 
 .s_fix_bg_snippet {
     background-repeat: no-repeat;
