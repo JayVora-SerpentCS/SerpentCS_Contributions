@@ -130,22 +130,27 @@
                                     >Here, we will publish a program where everyone can subscribe and register their family/familyperson business and get the benefit</h4>
                                 </div>
                                 <div class="col-md-12 mt32 mb64 s-signup">
-                                    <form
-                                        action="/contact_ipushp"
-                                        class="s_website_form form-horizontal container-fluid mt32"
-                                        method="post"
-                                    >
+                                    <form id="contact_ipushp_form" action="/contact_ipushp/"
+                                        method="post" enctype="multipart/form-data"
+                                        class="o_mark_required" data-mark="*"
+                                        data-model_name="ipushp.iPushp" data-success-mode="redirect"
+                                        data-success-page="/thankyoupage">
                                         <input
-                                            name="csrf_token"
-                                            t-att-value="request.csrf_token()"
-                                            type="hidden"
+                                        name="csrf_token"
+                                        t-att-value="request.csrf_token()"
+                                        type="hidden"
                                         />
                                         <input
-                                            id="user_id"
-                                            name="user_id"
-                                            t-att-value="uid"
-                                            type="hidden"
+                                        id="user_id"
+                                        name="user_id"
+                                        t-att-value="uid"
+                                        type="hidden"
                                         />
+                                        <t t-if='error_msg'>
+                                            <div class="error-message">
+                                                <span><t t-esc="error_msg"/></span>
+                                            </div>
+                                        </t>
                                         <div
                                             class="form-group form-field o_website_form_required_custom"
                                         >
@@ -153,7 +158,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="business_categ_id"
                                             >Business Category</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <select
                                                     class="select_business_categ form-control o_website_form_input"
                                                     name="business_categ_id"
@@ -195,7 +200,7 @@
                                                     class="col-md-3 col-sm-4 control-label"
                                                     for=""
                                                 >Category Name</label>
-                                                <div class="col-md-7 col-sm-8">
+                                                <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                     <input
                                                         class="form-control o_website_form_input"
                                                         name="category_name"
@@ -211,7 +216,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="relation_id"
                                             >Your Relation</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <select
                                                     class="select_relation form-control o_website_form_input"
                                                     name="relation_id"
@@ -248,7 +253,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="name"
                                             >Name</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <input
                                                     class="form-control o_website_form_input"
                                                     name="name"
@@ -263,7 +268,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="phone"
                                             >Phone Number</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <input
                                                     class="form-control o_website_form_input"
                                                     name="phone"
@@ -279,7 +284,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="email"
                                             >Email</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <input
                                                     class="form-control o_website_form_input"
                                                     name="email"
@@ -296,7 +301,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="description"
                                             >Description</label>
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <textarea
                                                     class="form-control o_website_form_input"
                                                     name="description"
@@ -309,7 +314,7 @@
                                                 class="col-md-3 col-sm-4 control-label"
                                                 for="description"
                                             />
-                                            <div class="col-md-7 col-sm-8">
+                                            <div class="col-md-7 col-sm-8" style="margin: auto;">
                                                 <button
                                                     class="btn btn-primary"
                                                     type="submit"
@@ -354,46 +359,16 @@
             <div id="wrap">
                 <div class="oe_structure" />
                 <div class="container">
-                    <h1>Thanks!</h1>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div
-                                class="alert alert-success"
-                            >Your details has been sent successfully.
+                    <header class="thanks_header" id="header">
+                        <h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU!</h1>
+                    </header>
 
-                                <button
-                                    class="close"
-                                    data-dismiss="alert"
-                                    type="button"
-                                >&amp;times;</button></div>
-                        </div>
-                        <div class="col-md-4">
-                            <!-- <t t-call="website.company_description"/> -->
-                            <address
-                                itemscope="itemscope"
-                                itemtype="http://schema.org/Organization"
-                            >
-                                <!-- TODO widget contact must add itemprop attributes -->
-                                <div
-                                    t-field="res_company.partner_id"
-                                    t-options='{
-                                        "widget": "contact",
-                                        "fields": ["name", "address", "phone", "mobile", "email"]}'
-                                />
-                                <t t-if="not res_company.google_map_img()">
-                                    <span
-                                        class="fa fa-map-marker fa-fw mt16"
-                                        role="img"
-                                        aria-label="Address"
-                                        title="Address"
-                                    />
-                                    <a
-                                        t-att-href="res_company.google_map_link()"
-                                        target="_BLANK"
-                                    > Google Maps</a>
-                                </t>
-                            </address>
-                        </div>
+                    <div class="main-content" style="margin-bottom: 50px;">
+                        <i class="fa fa-check main-content__checkmark" id="checkmark"></i>
+                        <p class="main-content__body" data-lead-id="main-content-body">Your Details
+                            has been successfully submitted to iPushp,</p>
+                        <p class="main-content__body" data-lead-id="main-content-body">We appreciate
+                            your cooperation.</p>
                     </div>
                 </div>
                 <div class="oe_structure" />
