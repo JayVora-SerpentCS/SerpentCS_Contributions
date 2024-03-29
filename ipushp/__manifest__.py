@@ -23,4 +23,6 @@
     ],
     "images": ["static/description/page_1.png"],
     "installable": True,
+    "currency": "EUR",
+    "price": 19
 }
