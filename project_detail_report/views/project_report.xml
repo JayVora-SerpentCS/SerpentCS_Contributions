@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="project_detail_qweb_report">
+    <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="e">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="container">
+                    <tr>
+                        <th>
+                            <t t-if="e.name">
+                                <h2>
+                                    <b>
+                                        <span t-field="e.name"/>
+                                    </b>
+                                </h2>
+                            </t>
+                        </th>
+                    </tr>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Customer</th>
+                                <th class="text-start">Project Manager</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <t t-if='e.partner_id'>
+                                        <span t-field="e.partner_id"/>
+                                    </t>
+                                    <t t-if="not e.partner_id">-
+                                        </t>
+                                </td>
+                                <td>
+                                    <t t-if='e.user_id'>
+                                        <span t-field="e.user_id"/>
+                                    </t>
+                                    <t t-if="not e.user_id">-</t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <t t-if="e.tasks">
+                        <br/>
+                        <div>
+                            <tr>
+                                <th>
+                                    <h2>
+                                        <b>Tasks:</b>
+                                    </h2>
+                                </th>
+                            </tr>
+                        </div>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th class="text-start">Task Name</th>
+                                    <th class="text-start">Planned Hours</th>
+                                    <th class="text-start">Spent Hours</th>
+                                    <th class="text-start">Remaining Hours</th>
+                                    <th class="text-start">Assigned To</th>
+                                    <th class="text-start">Assigning Date</th>
+                                    <th class="text-start">Deadline</th>
+                                    <th class="text-start">Stage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="e.tasks" t-as="t">
+                                    <tr style="page-break-inside: avoid;">
+                                        <td>
+                                            <t t-if='t.name'>
+                                                <span t-field="t.name"/>
+                                            </t>
+                                            <t t-if="not t.name">-</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.allocated_hours'>
+                                                <t t-esc="'%02d:%02d' % (int(t.allocated_hours), t.allocated_hours % 1 * 60)"/></t>
+                                            <t t-if="not t.allocated_hours">00:00</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.effective_hours'>
+                                                <t t-esc="'%02d:%02d' % (int(t.effective_hours), t.effective_hours % 1 * 60)"/></t>
+                                            <t t-if="not t.effective_hours">00:00</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.remaining_hours'>
+                                                <t t-esc="'%02d:%02d' % (int(t.remaining_hours), t.remaining_hours % 1 * 60)"/></t>
+                                            <t t-if="not t.remaining_hours">00:00</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.user_ids'>
+                                                <span t-field="t.user_ids"/>
+                                            </t>
+                                            <t t-if="not t.user_ids">-</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.date_assign'>
+                                                <span t-field="t.date_assign"/>
+                                            </t>
+                                            <t t-if="not t.date_assign">-</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.date_deadline'>
+                                                <span t-field="t.date_deadline"/>
+                                            </t>
+                                            <t t-if="not t.date_deadline">-</t>
+                                        </td>
+                                        <td>
+                                            <t t-if='t.stage_id'>
+                                                <span t-field="t.stage_id"/>
+                                            </t>
+                                            <t t-if="not t.stage_id">-</t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </t>
+    </t>
+</template>
+</odoo>
