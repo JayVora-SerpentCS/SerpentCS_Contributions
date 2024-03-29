@@ -22,6 +22,8 @@
         'views/find_contacts.xml',
     ],
     'images': ['static/description/page_1.png'],
-    'installable': True,
-    'auto_install': False
+    'auto_install': False,
+    "installable": True,
+    "currency": "EUR",
+    "price": 19
 }
