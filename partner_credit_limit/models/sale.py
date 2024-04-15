@@ -1,6 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
 
-
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
@@ -16,12 +15,11 @@ class SaleOrder(models.Model):
         if user_id and not user_id.has_group('base.group_portal') or not \
                 user_id:
             moveline_obj = self.env['account.move.line']
-
             movelines = moveline_obj.search(
                 [('partner_id', '=', partner.id),
                  ('account_id.account_type', 'in',
-                    ['Receivable', 'Payable']),
-                 ('parent_state','!=','cancel')]
+                  ['Receivable', 'Payable']),
+                 ('parent_state', '!=', 'cancel')]
             )
             confirm_sale_order = self.search(
                 [('partner_id', '=', partner.id),
@@ -35,14 +33,14 @@ class SaleOrder(models.Model):
                 credit += line.credit
                 debit += line.debit
             partner_credit_limit = (
-                debit + amount_total) - credit
+                                           debit + amount_total) - credit
             available_credit_limit = round(
                 partner.credit_limit - partner_credit_limit, 2)
             if partner_credit_limit > partner.credit_limit and \
                     partner.credit_limit > 0.0:
                 if not partner.over_credit:
                     msg = 'Your available credit limit' \
-                          ' Amount = %s \nCheck "%s" Accounts or Credit ' \
+                              ' Amount = %s \nCheck "%s" Accounts or Credit ' \
                           'Limits.' % (available_credit_limit,
                                        self.partner_id.name)
                     raise UserError(_('You can not confirm Sale '
