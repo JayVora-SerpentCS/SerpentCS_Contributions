@@ -4,7 +4,7 @@
     "name": "Project - Status by Recent Activities",
     "version": "16.0.1.0.0",
     "author": "Serpent Consulting Services Pvt. Ltd.",
-    "license": "AGPL-3",
+    "license": "LGPL-3",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "website": "http://www.serpentcs.com",
     "category": "Project Management",
