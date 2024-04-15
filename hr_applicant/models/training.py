@@ -1,7 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 from dateutil.relativedelta import relativedelta
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class IrAttachement(models.Model):
@@ -18,7 +18,11 @@ class CoursesType(models.Model):
     name = fields.Char("Name", required=True)
     code = fields.Char("Code", required=True)
 
-
+    _sql_constraints = [
+        ('code_unique', 'unique (code,name)', 'The code of must be unique per course !')
+    ]
+    
+    
 class Trainingcourses(models.Model):
 
     _name = "training.courses"
@@ -135,7 +139,7 @@ class TrainingClass(models.Model):
     def action_approve(self):
         for rec in self:
             if not rec.training_attendees:
-                raise ValidationError(_("Training Attendees should not be Zero!"))
+                raise UserError(_("Training Attendees should not be Zero!"))
             rec.state = "approved"
 
     def action_completed(self):

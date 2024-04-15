@@ -1,5 +1,7 @@
 from odoo import api, fields, models
 from odoo.tools.translate import _
+from odoo.exceptions import UserError
+from datetime import datetime
 
 
 class ApplicantRelative(models.Model):
@@ -113,17 +115,25 @@ class ApplicantEducation(models.Model):
             vals.update({"applicant_id": self._context.get("active_id")})
         return super(ApplicantEducation, self).create(vals)
 
-    @api.onchange("from_date", "to_date")
-    def _onchange_date(self):
-        '''Give user alert for from date and to date'''
-        warning = {
-            "title": _("User Alert !"),
-        }
-        message = False
-        if self.to_date and self.to_date >= fields.Date.today():
-            message = _("To date must be less than today!")
-        elif self.from_date and self.to_date and self.from_date > self.to_date:
-            message = _("To Date must be greater than From Date!")
-        if message:
-            warning.update({"message": message})
-            return {"warning": warning}
+    # @api.onchange("from_date", "to_date")
+    # def _onchange_date(self):
+    #     '''Give user alert for from date and to date'''
+    #     warning = {
+    #         "title": _("User Alert !"),
+    #     }
+    #     message = False
+    #     if self.to_date and self.to_date >= fields.Date.today():
+    #         message = _("To date must be less than today!")
+    #     elif self.from_date and self.to_date and self.from_date > self.to_date:
+    #         message = _("To Date must be greater than From Date!")
+    #     if message:
+    #         warning.update({"message": message})
+    #         return {"warning": warning}
+
+    @api.constrains('from_date', 'to_date')
+    def check_date(self):
+        for rec in self:
+            if (rec.from_date and rec.to_date) >= (fields.Date.today()):
+                raise UserError(_("To date must be less than today!"))
+            elif (rec.from_date and rec.to_date) and (rec.from_date > rec.to_date):
+                raise UserError(_("To Date must be greater than From Date !"))

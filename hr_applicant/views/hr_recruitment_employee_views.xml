@@ -34,10 +34,10 @@
                     </group>
                     <group string="Details">
                         <group>
-                            <label for="blood_name" />
-                            <div>
-                                <field name="blood_name" tabindex="5" required="1" />
-                                <field name="blood_type" tabindex="5" required="1" />
+                            <label for="blood_name"/>
+                            <div class="o_row">
+                                <field name="blood_name" class="o_hr_narrow_field" required="1"/>
+                                <field name="blood_type" class="o_hr_narrow_field" required="1"/>
                             </div>
                             <field name="nose_sinuses" tabindex="7" required="1" />
                             <field name="ears_tms" tabindex="9" required="1" />

@@ -2,6 +2,7 @@ from datetime import datetime
 
 from odoo import api, fields, models
 from odoo.tools.translate import _
+from odoo.exceptions import UserError
 
 
 class EmployeeRelative(models.Model):
@@ -129,3 +130,4 @@ class EmployeeEducation(models.Model):
         if message:
             warning.update({"message": message})
             return {"warning": warning}
+
