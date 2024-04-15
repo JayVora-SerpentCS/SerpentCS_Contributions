@@ -17,22 +17,28 @@
                             <field name="field_ids" nolabel="1">
                                 <form string="Fields">
                                     <group>
-                                        <field name="sequence"/>
-                                        <field name="type"/>
-                                        <field name="fontsize"/>
-                                        <field name="position" attrs="{'invisible':[('type','=','normal')]}"/>
-                                        <field name="newline"/>
-                                        <field name="nolabel"/>
-                                        <field name="python_expression"/>
-                                        <field invisible="1" name="model_id"/>
-                                        <field attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
-                                               context="{'model_list':parent.model_list}"
-                                               domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']), ('model_id','=',model_id)]"
-                                               name="field_id"/>
-                                        <field attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"
-                                               name="python_field"/>
-                                        <newline/>
-                                        <label class="o_form_label" colspan="4" for="python_field"
+                                        <group>
+                                            <field name="sequence"/>
+                                            <field name="fontsize"/>
+                                            <field name="newline"/>
+                                            <field name="python_expression"/>
+                                            <field invisible="1" name="model_id"/>
+                                            <field attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"
+                                                   name="python_field"/>
+                                            <newline/>
+                                        </group>
+                                        <group>
+                                            <field name="type"/>
+                                            <field name="position" attrs="{'invisible': [('type', '=', 'normal')]}" />
+                                            <field name="nolabel"/>
+                                            <field attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
+                                                   context="{'model_list':parent.model_list}"
+                                                   domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']), ('model_id','=',model_id)]"
+                                                   name="field_id"/>
+                                        </group>
+                                    </group>
+                                    <group>
+                                         <label class="o_form_label" colspan="4" for="python_field"
                                                string="Python expression field must be start with obj. e.g:- obj.M2O_field.field_name"/>
                                     </group>
                                 </form>

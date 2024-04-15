@@ -94,20 +94,20 @@ class LabelPrintField(models.Model):
     )
     nolabel = fields.Boolean("No Label")
     newline = fields.Boolean("New Line", deafult=True)
-    
+
     @api.onchange("python_field")
     def _onchange_python_field(self):
         field_str = self.python_field
         if field_str:
             python_field = field_str.split(".")
-            if len(python_field) >=3 :
-                python_field_str = python_field[1] 
+            if len(python_field) >= 3:
+                python_field_str = python_field[1]
             else:
                 python_field_str = python_field[-1]
             model_id = self.model_id
             fields = self.env[model_id.model].fields_get()
             key_list = []
-            for key,v in fields.items():
+            for key, v in fields.items():
                 key_list.append(key)
             if not python_field_str in key_list:
                 raise ValidationError(_("Please enter valid field."))
