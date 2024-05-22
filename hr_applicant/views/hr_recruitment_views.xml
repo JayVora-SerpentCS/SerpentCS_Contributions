@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_hr_applicant_medical_details_form">
+        <field name="name">view.hr.applicant.medical.details.form</field>
+        <field name="model">hr.applicant.medical.details</field>
+        <field name="arch" type="xml">
+            <form string="Medical Screening">
+                <sheet>
+                    <group>
+                        <field
+                            name="medical_examination"
+                            tabindex="1"
+                            placeholder="Enter Medical Examination"
+                            required="1"
+                        />
+                        <field
+                            name="vital_sign"
+                            tabindex="2"
+                            placeholder="Enter Vital Sign"
+                            required="1"
+                        />
+                        <field
+                            name="date"
+                            placeholder="Enter Date"
+                            tabindex="3"
+                            required="1"
+                        />
+                        <field
+                            name="doc_comment"
+                            tabindex="4"
+                            placeholder="Enter Doctor's Comment"
+                        />
+                        <field name="applicant_id" invisible="1" />
+                    </group>
+                    <group string="Details">
+                        <group>
+                            <label for="blood_name"/>
+                            <div class="o_row">
+                                <field name="blood_name" class="o_hr_narrow_field" required="1"/>
+                                <field name="blood_type" class="o_hr_narrow_field" required="1"/>
+                            </div>
+                            <field name="nose_sinuses" tabindex="7" required="1" />
+                            <field name="ears_tms" tabindex="9" required="1" />
+                            <field
+                            name="heart_vascular_system"
+                            tabindex="11"
+                            required="1"
+                            />
+                            <field name="abdomen_hernia" tabindex="13" required="1" />
+                            <field name="neurological" required="1" tabindex="15" />
+                            <field name="urine_drug_serene" required="1" tabindex="19" />
+                        </group>
+                        <group>
+                            <field name="head_face_scalp" tabindex="6" required="1" />
+                            <field name="mouth_throat" tabindex="8" required="1" />
+                            <field name="eyes_pupils_ocular" tabindex="10" required="1" />
+                            <field name="lungs" tabindex="12" required="1" />
+                            <field name="msk_strengh" required="1" tabindex="14" />
+                            <field name="glasses_needed" tabindex="18" />
+                            <field name="fit_for_full_duty" tabindex="20" />
+                        </group>
+                    </group>
+                    <group string="Medical History">
+                        <group>
+                            <field name="good_health" tabindex="21" />
+                            <field name="broken_bones" tabindex="23" />
+                            <field name="serious_wound" tabindex="25" />
+                            <field name="history_drug_use" tabindex="27" />
+                        </group>
+                        <group>
+                            <field name="serious_illness" tabindex="22" />
+                            <field name="medications" tabindex="24" />
+                            <field name="allergic" tabindex="26" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_hr_applicant_medical_details_tree">
+        <field name="name">view.hr.applicant.medical.details.tree</field>
+        <field name="model">hr.applicant.medical.details</field>
+        <field name="arch" type="xml">
+            <tree string="Medical Screening">
+                <field name="applicant_id" invisible="1" />
+                <field name="medical_examination" />
+                <field name="vital_sign" />
+                <field name="date" />
+            </tree>
+        </field>
+    </record>
+    <!-- Action Of Form & Tree Views Of Medical Details Button -->
+    <record id="action_medical_details_list" model="ir.actions.act_window">
+        <field name="name">Medical Details</field>
+        <field name="res_model">hr.applicant.medical.details</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hr_applicant_medical_details_tree" />
+        <field name="domain">[('applicant_id', '=', active_id)]</field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_previous_occupation_tree">
+        <field name="name">view.applicant.previous.occupation.tree</field>
+        <field name="model">applicant.previous.occupation</field>
+        <field name="arch" type="xml">
+            <tree string="Prev. Occupation">
+                <field name="applicant_id" invisible="1" />
+                <field name="from_date" />
+                <field name="to_date" />
+                <field name="position" />
+                <field name="organization" />
+                <field name="ref_name" />
+                <field name="ref_position" />
+                <field name="ref_phone" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_previous_occupation_form">
+        <field name="name">view.applicant.previous.occupation.form</field>
+        <field name="model">applicant.previous.occupation</field>
+        <field name="arch" type="xml">
+            <form string="Previous Occupation" version="9.0">
+                <sheet>
+                    <field name="applicant_id" invisible="1" />
+                    <group col="4" colspan="4">
+                        <field
+                            name="from_date"
+                            tabindex="1"
+                            placeholder="Enter From Date"
+                        />
+                        <field
+                            name="to_date"
+                            tabindex="2"
+                            placeholder="Enter To Date"
+                        />
+                        <field
+                            name="position"
+                            tabindex="3"
+                            placeholder="Enter Position"
+                        />
+                        <field
+                            name="organization"
+                            tabindex="4"
+                            placeholder="Enter Organization"
+                        />
+                        <field
+                            name="ref_name"
+                            tabindex="5"
+                            placeholder="Enter Reference Name"
+                        />
+                        <field
+                            name="ref_position"
+                            tabindex="6"
+                            placeholder="Enter Reference Position"
+                        />
+                        <field
+                            name="ref_phone"
+                            tabindex="7"
+                            placeholder="Enter Reference Phone"
+                            widget="phone"
+                        />
+                        <field
+                            name="email"
+                            tabindex="8"
+                            placeholder="Enter Email"
+                            widget="email"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action Of Form & Tree Views Of Prev. Occupation Button -->
+    <record id="action_prev_occupation_list" model="ir.actions.act_window">
+        <field name="name">Previous Occupation</field>
+        <field name="res_model">applicant.previous.occupation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_applicant_previous_occupation_tree" />
+        <field name="domain">[('applicant_id', '=', active_id)]</field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_relative_tree">
+        <field name="name">view.applicant.relative.tree</field>
+        <field name="model">applicant.relative</field>
+        <field name="arch" type="xml">
+            <tree string="Relative">
+                <field name="applicant_id" invisible="1" />
+                <field name="relative_type" />
+                <field name="name" placeholder="Enter Name" />
+                <field name="birthday" placeholder="Enter Date of Birth" />
+                <field name="place_of_birth" placeholder="Enter Place of Birth" />
+                <field name="occupation" placeholder="Enter Occupation" />
+                <field name="gender" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_relative_form">
+        <field name="name">view.applicant.relative.form</field>
+        <field name="model">applicant.relative</field>
+        <field name="arch" type="xml">
+            <form string="Relative" version="9.0">
+                <sheet>
+                    <field name="applicant_id" invisible="1" />
+                    <group col="4" colspan="4">
+                        <field
+                            name="relative_type"
+                            tabindex="1"
+                            placeholder="Enter Relative Type"
+                        />
+                        <field name="name" placeholder="Enter Name" tabindex="2" />
+                        <field
+                            name="birthday"
+                            tabindex="4"
+                            placeholder="Enter Date of Birth"
+                        />
+                        <field
+                            name="place_of_birth"
+                            placeholder="Enter Place of Birth"
+                            tabindex="5"
+                        />
+                        <field
+                            name="occupation"
+                            placeholder="Enter Occupation"
+                            tabindex="6"
+                        />
+                        <field
+                            name="gender"
+                            placeholder="Enter Gender"
+                            tabindex="7"
+                            attrs="{'readonly': [('relative_type', 'not in', ['Other', 'Children'])]}"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action Of Form & Tree Views Of Relatives Button -->
+    <record id="action_relatives_list" model="ir.actions.act_window">
+        <field name="name">Relatives</field>
+        <field name="res_model">applicant.relative</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_applicant_relative_tree" />
+        <field name="domain">[('applicant_id', '=', active_id)]</field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_education_tree">
+        <field name="name">view.applicant.education.tree</field>
+        <field name="model">applicant.education</field>
+        <field name="arch" type="xml">
+            <tree string="Education">
+                <field name="applicant_id" invisible="1" />
+                <field name="from_date" />
+                <field name="to_date" />
+                <field name="grade" />
+                <field name="school_name" />
+                <field name="illiterate" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_education_form">
+        <field name="name">view.applicant.education.form</field>
+        <field name="model">applicant.education</field>
+        <field name="arch" type="xml">
+            <form string="Education" version="9.0">
+                <sheet>
+                    <field name="applicant_id" invisible="1" />
+                    <group col="4" colspan="4">
+                        <field
+                            name="from_date"
+                            tabindex="1"
+                            placeholder="Enter From Date"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="to_date"
+                            tabindex="3"
+                            placeholder="Enter To Date"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="education_rank"
+                            tabindex="11"
+                            placeholder="Enter Education Rank"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="grade"
+                            tabindex="11"
+                            placeholder="Enter Education Field/Major"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="school_name"
+                            tabindex="13"
+                            placeholder="Enter School Name"
+                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
+                        />
+                        <field
+                            name="edu_type"
+                            tabindex="19"
+                            attrs="{'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field
+                            name="country_id"
+                            tabindex="21"
+                            placeholder="Enter Country"
+                            attrs="{'invisible': [('edu_type', '!=', 'Abroad')], 'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field
+                            name="state_id"
+                            tabindex="23"
+                            placeholder="Enter State"
+                            attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field
+                            name="province"
+                            tabindex="25"
+                            placeholder="Enter Province"
+                            attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}"
+                        />
+                        <field name="illiterate" tabindex="27" />
+                    </group>
+                </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <!-- Action Of Form & Tree Views Of Medical Button -->
+    <record id="action_education_list" model="ir.actions.act_window">
+        <field name="name">Education Details</field>
+        <field name="res_model">applicant.education</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_applicant_education_tree" />
+        <field name="domain">[('applicant_id', '=', active_id)]</field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_previous_travel_tree">
+        <field name="name">view.applicant.previous.travel.tree</field>
+        <field name="model">applicant.previous.travel</field>
+        <field name="arch" type="xml">
+            <tree string="Previous Travel">
+                <field name="applicant_id" invisible="1" />
+                <field name="from_date" />
+                <field name="to_date" />
+                <field name="location" />
+                <field name="reason" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_previous_travel_form">
+        <field name="name">view.applicant.previous.travel.form</field>
+        <field name="model">applicant.previous.travel</field>
+        <field name="arch" type="xml">
+            <form string="Previous Travel" version="9.0">
+                <sheet>
+                    <field name="applicant_id" invisible="1" />
+                    <div class="oe_form_view_fields">
+                        <group col="4" colspan="4">
+                            <field
+                                name="from_date"
+                                tabindex="1"
+                                placeholder="Enter From Date"
+                            />
+                            <field
+                                name="to_date"
+                                tabindex="2"
+                                placeholder="Enter To Date"
+                            />
+                            <field
+                                name="location"
+                                tabindex="3"
+                                placeholder="Enter Location"
+                            />
+                            <field
+                                name="reason"
+                                tabindex="4"
+                                placeholder="Enter Reason"
+                            />
+                        </group>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action Of Form & Tree Views Of Travels Button -->
+    <record id="action_travels_list" model="ir.actions.act_window">
+        <field name="name">Previous Travels</field>
+        <field name="res_model">applicant.previous.travel</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_applicant_previous_travel_tree" />
+        <field name="domain">[('applicant_id', '=', active_id)]</field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_language_tree">
+        <field name="name">view.applicant.language.tree</field>
+        <field name="model">applicant.language</field>
+        <field name="arch" type="xml">
+            <tree string="Employee Language">
+                <field name="applicant_id" invisible="1" />
+                <field name="language" />
+                <field name="read_lang" />
+                <field name="write_lang" />
+                <field name="speak_lang" />
+                <field name="mother_tongue" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_applicant_language_form">
+        <field name="name">view.applicant.language.form</field>
+        <field name="model">applicant.language</field>
+        <field name="arch" type="xml">
+            <form string="Employee Language" version="9.0">
+                <sheet>
+                    <field name="applicant_id" invisible="1" />
+                    <group col="2" colspan="4">
+                        <field
+                            name="language"
+                            tabindex="1"
+                            placeholder="Enter Language"
+                        />
+                    </group>
+                    <group col="6" colspan="6">
+                        <field
+                            name="read_lang"
+                            tabindex="2"
+                            widget="radio"
+                            placeholder="Enter Reading Ability"
+                        />
+                        <field
+                            name="write_lang"
+                            tabindex="3"
+                            widget="radio"
+                            placeholder="Enter Writing Ability"
+                        />
+                        <field
+                            name="speak_lang"
+                            tabindex="4"
+                            widget="radio"
+                            placeholder="Enter Speaking Ability"
+                        />
+                    </group>
+                    <group string="Mother Tongue" colspan="4">
+                        <field name="mother_tongue" tabindex="5" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action Of Form & Tree Views Of languages Button -->
+    <record id="action_languages_list" model="ir.actions.act_window">
+        <field name="name">Languages</field>
+        <field name="res_model">applicant.language</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_applicant_language_tree" />
+        <field name="domain">[('applicant_id', '=', active_id)]</field>
+    </record>
+    <!-- Inherited view of hr.applicant to add buttons -->
+    <record id="view_hr_applicant_inherited" model="ir.ui.view">
+        <field name="name">hr.applicant.form.inherited</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <newline />
+                <button
+                    name="%(action_medical_details_list)d"
+                    type="action"
+                    attrs="{'invisible': [('emp_id', '!=', False)]}"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-medkit"
+                    help="Add/Edit/Review Medical details of applicant"
+                >
+                    <field
+                        name="no_of_medical"
+                        widget="statinfo"
+                        string="Medical Details"
+                    />
+                </button>
+                <button
+                    name="%(action_prev_occupation_list)d"
+                    type="action"
+                    style="width:198px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-history"
+                    help="Add/Edit/Review Previous Occupation details of applicant"
+                >
+                    <field
+                        name="no_of_prev_occu"
+                        widget="statinfo"
+                        string="Previous Occupations"
+                    />
+                </button>
+                <button
+                    name="%(action_education_list)d"
+                    type="action"
+                    style="width:197px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-book"
+                    help="Add/Edit/Review Education details of applicant"
+                >
+                    <field
+                        name="no_of_education"
+                        widget="statinfo"
+                        string="Education Details"
+                    />
+                </button>
+                <button
+                    name="%(action_relatives_list)d"
+                    type="action"
+                    style="width:119px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-users"
+                    help="Add/Edit/Review Relative details of applicant"
+                >
+                    <field name="no_of_relative" widget="statinfo" string="Relatives" />
+                </button>
+                <button
+                    name="%(action_languages_list)d"
+                    type="action"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-font"
+                    help="Add/Edit/Review Languages of applicant"
+                >
+                    <field name="no_of_lang" widget="statinfo" string="Languages" />
+                </button>
+                <button
+                    name="%(action_travels_list)d"
+                    type="action"
+                    style="width:145px !important"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-car"
+                    help="Add/Edit/Review Priveous Travel details of applicant"
+                >
+                    <field
+                        name="no_of_prev_travel"
+                        widget="statinfo"
+                        string="Previous Travels"
+                    />
+                </button>
+                <button
+                    name="%(action_medical_details_list)d"
+                    type="action"
+                    attrs="{'invisible': [('emp_id', '=', False)]}"
+                    class="oe_inline oe_stat_button"
+                    icon="fa-medkit"
+                    help="Add/Edit/Review Medical details of applicant"
+                >
+                    <field
+                        name="no_of_medical1"
+                        widget="statinfo"
+                        string="Medical Details"
+                    />
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="attrs">{'required':True} </attribute>
+            </xpath>
+            <button name="create_employee_from_applicant" position="replace">
+                <button
+                    string="Create Employee"
+                    name="%(action_select_training_wizard)d"
+                    type="action"
+                    class="oe_highlight"
+                    attrs="{'invisible': ['|',('emp_id', '!=', False),('active', '=', False)]}"
+                />
+            </button>
+        </field>
+    </record>
+</odoo>
