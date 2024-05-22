@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_saleorder_document_inherit" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//table[hasclass('o_main_table')]/thead/tr/th[1]" position="before">
+            <t t-if="doc.print_image and doc.image_sizes in ('image', 'image_medium', 'image_small') ">
+                <th style="width:15%;">Product Image</th>
+            </t>
+        </xpath>
+        <xpath expr="//table/tbody[hasclass('sale_tbody')]/t[2]/tr/t/td[1]" position="before">
+            <t t-if="doc.image_sizes == 'image' and doc.print_image ">
+                <td class="text-center">
+                    <img t-if="line.product_id.image_1920" t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="resize:both;width:95%;height:auto"/>
+                </td>
+            </t>
+            <t t-if="doc.image_sizes == 'image_medium' and doc.print_image">
+                <td class="text-center">
+                    <img t-if="line.product_id.image_1920" t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="resize:both;width:70%;height:auto"/>
+                </td>
+            </t>
+            <t t-if="doc.image_sizes == 'image_small' and doc.print_image ">
+                <td class="text-center">
+                    <img t-if="line.product_id.image_1920" t-attf-src="data:image/*;base64,{{line.product_id.image_1920}}" style="resize:both;width:50%;height:auto"/>
+                </td>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
