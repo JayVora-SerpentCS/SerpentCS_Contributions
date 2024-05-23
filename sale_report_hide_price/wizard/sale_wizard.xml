@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="show_price" groups="account.group_show_line_subtotals_tax_excluded,account.group_show_line_subtotals_tax_included "/>
+                    <field name="show_price"/>
                     <field name="show_discount" groups="product.group_discount_per_so_line"/>
                 </group>
                 <footer>
@@ -17,7 +17,6 @@
         </field>
     </record>
 
-
     <record id="action_sale_order_hide_price_discount" model="ir.actions.act_window">
         <field name="name">Hide Price and Discount</field>
         <field name="res_model">hide.price.discount</field>
@@ -27,6 +26,5 @@
         <field name="binding_model_id" ref="sale.model_sale_order"/>
         <field name="binding_view_types">form</field>
     </record>
-
 </odoo>
 
