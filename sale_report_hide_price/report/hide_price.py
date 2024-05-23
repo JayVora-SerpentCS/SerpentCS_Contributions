@@ -1,8 +1,9 @@
-from odoo import api, fields, models, _
+from odoo import api, models, _
 
 
 class HidePriceReport(models.AbstractModel):
     """Report Sale Order model."""
+
     _name = 'report.sale.report_saleorder'
     _description = "Report Sale Order"
 
@@ -21,5 +22,4 @@ class HidePriceReport(models.AbstractModel):
             'discount': show_discount,
             'price': show_price
         }
-
         return docargs
