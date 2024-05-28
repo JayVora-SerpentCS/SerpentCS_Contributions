@@ -1,5 +1,5 @@
-# © 2016 Serpent Consulting Services Pvt. Ltd. <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# © 2024 Serpent Consulting Services Pvt. Ltd.
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from . import wizard
 from . import report
