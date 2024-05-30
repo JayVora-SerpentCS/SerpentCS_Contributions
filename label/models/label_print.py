@@ -7,7 +7,6 @@ from odoo.exceptions import UserError, ValidationError
 
 class LabelPrint(models.Model):
     _name = "label.print"
-
     _description = "Label Print"
 
     name = fields.Char("Name", size=64, required=True, index=True)
@@ -63,9 +62,9 @@ class LabelPrint(models.Model):
         return True
 
     def unlink_action(self):
-        for template in self:
-            if template.ref_ir_act_report.id:
-                template.ref_ir_act_report.unlink()
+        actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
+        for action in actions_to_unlink:
+            action.unlink()
         return True
 
 
@@ -95,20 +94,20 @@ class LabelPrintField(models.Model):
     )
     nolabel = fields.Boolean("No Label")
     newline = fields.Boolean("New Line", deafult=True)
-    
+
     @api.onchange("python_field")
     def _onchange_python_field(self):
         field_str = self.python_field
         if field_str:
             python_field = field_str.split(".")
-            if len(python_field) >=3 :
-                python_field_str = python_field[1] 
+            if len(python_field) >= 3:
+                python_field_str = python_field[1]
             else:
                 python_field_str = python_field[-1]
             model_id = self.model_id
             fields = self.env[model_id.model].fields_get()
             key_list = []
-            for key,v in fields.items():
+            for key, v in fields.items():
                 key_list.append(key)
             if not python_field_str in key_list:
                 raise ValidationError(_("Please enter valid field."))
