@@ -9,7 +9,6 @@
             <field name="partner_id" position="after">
                 <field name="write_date" readonly="1"/>
                 <field name="recent_date"/>
-                <field name="__last_update" invisible="1"/>
             </field>
         </field>
     </record>
@@ -33,7 +32,6 @@
                     <a>
                         Recent Log Date:
                         <field name="recent_date" string="Recent Date"/>
-                        <field name="__last_update" invisible="1"/>
                     </a>
                 </div>
             </div>
