@@ -46,7 +46,7 @@ class LabelPrintWizard(models.TransientModel):
             return False
         total_record = len(self._context.get("active_ids", []))
         datas = {}
-        for data in self.browse(self.ids):
+        for data in self:
             column = float(210) / float(data.name.width or 1)
             total_row = math.ceil(float(total_record) / (column or 1))
             no_row_per_page = int(297 / data.name.height)

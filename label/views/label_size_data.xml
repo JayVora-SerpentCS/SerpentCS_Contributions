@@ -17,6 +17,7 @@
             <field name="label_main_id" ref="b1"/>
             <field name="name">A4 - 2 ( 210 x 148 ) mm</field>
             <field name="height">148.0</field>
+            <field name="height">148.0</field>
             <field name="width">210.0</field>
         </record>
 

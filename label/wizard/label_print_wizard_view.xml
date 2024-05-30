@@ -14,12 +14,14 @@
                     <field invisible="1" name="is_image"/>
                 </group>
                 <group col="4" colspan="4">
-                    <group attrs="{'invisible': [('is_image','=', False)]}" colspan="2" string="Image height and width.">
+                    <group attrs="{'invisible': [('is_image','=', False)]}" colspan="2"
+                           string="Image height and width.">
                         <field name="image_height"/>
                         <field name="image_width"/>
                     </group>
                     <field invisible="1" name="is_barcode"/>
-                    <group attrs="{'invisible': [('is_barcode', '=', False)]}" colspan="2" string="Barcode height and width.">
+                    <group attrs="{'invisible': [('is_barcode', '=', False)]}" colspan="2"
+                           string="Barcode height and width.">
                         <field name="barcode_height"/>
                         <field name="barcode_width"/>
                     </group>
@@ -27,8 +29,9 @@
                 <separator colspan="4"/>
                 <footer>
                     <button class="oe_highlight" default_focus="1" name="print_report" string="Print" type="object"/>or
-                    
-                    <button class="btn-default" special="cancel" string="Cancel"/></footer>
+
+                    <button class="btn-default" special="cancel" string="Cancel"/>
+                </footer>
             </form>
         </field>
     </record>
