@@ -129,9 +129,9 @@
                                 <tr>
                                     <td>Initial Planned Hours :</td>
                                     <td style="width:50%">
-                                        <t t-if="e.planned_hours">
-                                            <t t-esc="'%02d:%02d' % (int(e.planned_hours), e.planned_hours % 1 * 60)"/></t>
-                                        <t t-if="not e.planned_hours">00:00</t>
+                                        <t t-if="e.allocated_hours">
+                                            <t t-esc="'%02d:%02d' % (int(e.allocated_hours), e.allocated_hours % 1 * 60)"/></t>
+                                        <t t-if="not e.allocated_hours">00:00</t>
                                     </td>
                                 </tr>
                                 <tr>
@@ -142,7 +142,7 @@
                                         <span class="col-lg-10"/>
                                         <t t-if="e.effective_hours">
                                             <t t-esc="'%02d:%02d' % (int(e.effective_hours), e.effective_hours % 1 * 60)"/></t>
-                                            <t t-if="not e.effective_hours">00:00</t>
+                                        <t t-if="not e.effective_hours">00:00</t>
                                     </td>
                                 </tr>
                                 <tr>
