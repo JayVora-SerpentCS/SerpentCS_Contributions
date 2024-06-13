@@ -47,5 +47,34 @@
                 </div>
             </div>
         </xpath>
+        <xpath expr="//table[@name='table_optional_products']/thead/tr/td[@name='th_option_name']" position="after">
+            <th name="th_quantity" class="text-start">Quantity</th>
+        </xpath>
+        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_name']" position="after">
+            <td name="td_quantity" class="text-start">
+                <span t-field="option.quantity"></span>
+                <span t-field="line.product_uom">units</span>
+            </td>
+        </xpath>
+        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_discount']" position="replace">
+            <t t-if="discount == None or discount == True">
+                <td t-if="display_discount" class="text-end">
+                    <span t-field="option.discount" />
+                </td>
+            </t>
+            <t t-if="discount == False">
+                <td t-if="display_discount" class="text-end" groups="product.group_discount_per_so_line">-N.A.-</td>
+            </t>
+        </xpath>
+        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_price_unit']" position="replace">
+            <t t-if="price == None or price == True">
+                <td class="text-end">
+                    <span t-field="option.price_unit" />
+                </td>
+            </t>
+            <t t-if="price == False">
+                <td class="text-end">-N.A.-</td>
+            </t>
+        </xpath>
     </template>
 </odoo>
