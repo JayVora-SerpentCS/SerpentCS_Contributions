@@ -16,5 +16,7 @@
         'security/ir.model.access.csv',
         'views/report_saleorder.xml',
     ],
+    'price': '15',
+    'currency': 'EUR',
     'installable': True,
 }
