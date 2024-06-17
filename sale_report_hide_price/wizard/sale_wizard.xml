@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="hide_price_discount_form" model="ir.ui.view">
+        <field name="name">hide.price.discount.wizard</field>
+        <field name="model">hide.price.discount</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="show_price"/>
+                    <field name="show_discount" groups="product.group_discount_per_so_line"/>
+                </group>
+                <footer>
+                    <button name="hide_price_discount_report" string="Report" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_order_hide_price_discount" model="ir.actions.act_window">
+        <field name="name">Hide Price and Discount</field>
+        <field name="res_model">hide.price.discount</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hide_price_discount_form"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">form</field>
+    </record>
+</odoo>
+
