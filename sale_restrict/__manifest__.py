@@ -13,6 +13,8 @@
     "data": [
         'security/sale_restrict_security.xml',
     ],
+    'price': '7',
+    'currency': 'EUR',
     "images": ["static/description/PriceCheck.png"],
     "installable": True,
 }
