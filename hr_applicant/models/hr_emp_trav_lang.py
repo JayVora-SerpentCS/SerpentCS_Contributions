@@ -3,6 +3,7 @@ from datetime import datetime
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
+from .hr_app_trav_lang import SELECTION_LANGUAGE
 
 
 class EmployeePreviousTravel(models.Model):
@@ -19,12 +20,13 @@ class EmployeePreviousTravel(models.Model):
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.employee" and self._context.get(
             "active_id"
         ):
-            vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeePreviousTravel, self).create(vals)
+            for vals in vals_list:
+                vals.update({"employee_id": self._context.get("active_id")})
+        return super(EmployeePreviousTravel, self).create(vals_list)
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
@@ -44,22 +46,17 @@ class EmployeePreviousTravel(models.Model):
 class EmployeeLanguage(models.Model):
     _name = "employee.language"
     _description = "Employee Language"
-    _rec_name = "language"
     _order = "id desc"
+    _rec_name = "language"
 
     language = fields.Char("Language", required=True)
-    read_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Read"
-    )
-    write_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Write"
-    )
-    speak_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Speak"
-    )
+
+    read_lang = fields.Selection(SELECTION_LANGUAGE, "Read")
+    write_lang = fields.Selection(SELECTION_LANGUAGE, "Write")
+    speak_lang = fields.Selection(SELECTION_LANGUAGE, "Speak")
     active = fields.Boolean(string="Active", default=True)
-    employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
     mother_tongue = fields.Boolean("Mother Tongue")
+    employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
 
     @api.constrains("mother_tongue")
     def _check_mother_tongue(self):
@@ -83,9 +80,8 @@ class EmployeeLanguage(models.Model):
                 )
 
     @api.model_create_multi
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.employee" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeLanguage, self).create(vals)
+    def create(self, vals_list):
+        if self._context.get("active_model") == "hr.applicant" and self._context.get("active_id"):
+            for vals in vals_list:
+                vals.update({"employee_id": self._context.get("active_id")})
+        return super(EmployeeLanguage, self).create(vals_list)

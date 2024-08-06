@@ -2,7 +2,6 @@ from datetime import datetime
 
 from odoo import api, fields, models
 from odoo.tools.translate import _
-from odoo.exceptions import UserError
 
 
 class EmployeeRelative(models.Model):
@@ -63,12 +62,13 @@ class EmployeeRelative(models.Model):
             return {"gender": False, "warning": warning}
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.employee" and self._context.get(
                 "active_id"
         ):
-            vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeRelative, self).create(vals)
+            for vals in vals_list:
+                vals.update({"employee_id": self._context.get("active_id")})
+        return super(EmployeeRelative, self).create(vals_list)
 
 
 class EmployeeEducation(models.Model):
@@ -108,12 +108,13 @@ class EmployeeEducation(models.Model):
             rec.education_rank = rec.school_name = rec.grade = rec.field = rec.edu_type = rec.province = ""
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.employee" and self._context.get(
                 "active_id"
         ):
-            vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeEducation, self).create(vals)
+            for vals in vals_list:
+                vals.update({"employee_id": self._context.get("active_id")})
+        return super(EmployeeEducation, self).create(vals_list)
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):

@@ -532,7 +532,7 @@
                     style="width:145px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-car"
-                    help="Add/Edit/Review Priveous Travel details of applicant"
+                    help="Add/Edit/Review Previous Travel details of applicant"
                 >
                     <field
                         name="no_of_prev_travel"
