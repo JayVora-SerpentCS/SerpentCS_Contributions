@@ -2,6 +2,8 @@ from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
+SELECTION_LANGUAGE = [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")]
+
 
 class ApplicantPreviousTravel(models.Model):
     _name = "applicant.previous.travel"
@@ -17,16 +19,17 @@ class ApplicantPreviousTravel(models.Model):
     applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.applicant" and self._context.get(
             "active_id"
         ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantPreviousTravel, self).create(vals)
+            for vals in vals_list:
+                vals.update({"applicant_id": self._context.get("active_id")})
+        return super(ApplicantPreviousTravel, self).create(vals_list)
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
-        '''Give user alert for from date and to date'''
+        """Give user alert for from date and to date"""
         warning = {
             "title": _("User Alert !"),
         }
@@ -44,17 +47,13 @@ class ApplicantLanguage(models.Model):
     _name = "applicant.language"
     _description = "Applicant Language"
     _rec_name = "language"
-
+    
     language = fields.Char("Language", required=True)
-    read_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Read"
-    )
-    write_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Write"
-    )
-    speak_lang = fields.Selection(
-        [("Excellent", "Excellent"), ("Good", "Good"), ("Poor", "Poor")], string="Speak"
-    )
+
+    read_lang = fields.Selection(SELECTION_LANGUAGE, "Read")
+    write_lang = fields.Selection(SELECTION_LANGUAGE, "Write")
+    speak_lang = fields.Selection(SELECTION_LANGUAGE, "Speak")
+
     active = fields.Boolean(string="Active", default=True)
     applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
     mother_tongue = fields.Boolean("Mother Tongue")
@@ -74,16 +73,15 @@ class ApplicantLanguage(models.Model):
             if language_rec:
                 raise ValidationError(
                     _(
-                        "If you want to set '%s' as a mothertongue "
-                        "first uncheck mothertongue in '%s' language"
+                        "If you want to set '%s' as a mother tongue "
+                        "first uncheck mother tongue in '%s' language"
                     )
                     % (self.language, language_rec.language)
                 )
 
     @api.model_create_multi
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantLanguage, self).create(vals)
+    def create(self, vals_list):
+        if self._context.get("active_model") == "hr.applicant" and self._context.get("active_id"):
+            for vals in vals_list:
+                vals.update({"applicant_id": self._context.get("active_id")})
+        return super(ApplicantLanguage, self).create(vals_list)
