@@ -21,7 +21,7 @@ class CoursesType(models.Model):
     _sql_constraints = [
         ('code_unique', 'unique (code,name)', 'The code of must be unique per course !')
     ]
-    
+
     
 class Trainingcourses(models.Model):
 

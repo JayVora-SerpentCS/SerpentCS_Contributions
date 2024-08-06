@@ -1,7 +1,6 @@
 from odoo import api, fields, models
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
-from datetime import datetime
 
 
 class ApplicantRelative(models.Model):
@@ -49,7 +48,7 @@ class ApplicantRelative(models.Model):
             self.gender = ""
             if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
                 self.gender = "Male"
-            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty"):
+            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty", "Daughter"):
                 self.gender = "Female"
         if self.applicant_id and not self.relative_type:
             warning = {
@@ -59,12 +58,13 @@ class ApplicantRelative(models.Model):
             return {"gender": False, "warning": warning}
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.applicant" and self._context.get(
             "active_id"
         ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantRelative, self).create(vals)
+            for vals in vals_list:
+                vals.update({"applicant_id": self._context.get("active_id")})
+        return super(ApplicantRelative, self).create(vals_list)
 
 
 class ApplicantEducation(models.Model):
@@ -91,7 +91,6 @@ class ApplicantEducation(models.Model):
     country_id = fields.Many2one("res.country", "Country")
     state_id = fields.Many2one("res.country.state", "State")
     province = fields.Char("Province")
-    
 
     @api.onchange("edu_type")
     def _onchange_edu_type(self):
@@ -108,12 +107,13 @@ class ApplicantEducation(models.Model):
             ) = rec.grade = rec.field = rec.edu_type = rec.province = ""
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.applicant" and self._context.get(
             "active_id"
         ):
-            vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantEducation, self).create(vals)
+            for vals in vals_list:
+                vals.update({"applicant_id": self._context.get("active_id")})
+        return super(ApplicantEducation, self).create(vals_list)
 
     @api.constrains('from_date', 'to_date')
     def check_date(self):

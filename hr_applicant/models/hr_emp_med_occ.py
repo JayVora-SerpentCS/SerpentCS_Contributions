@@ -1,4 +1,6 @@
 from odoo import api, fields, models
+from .hr_app_med_occ import STATUS_SELECTION
+
 
 class EmployeeMedicalDetails(models.Model):
 
@@ -11,38 +13,19 @@ class EmployeeMedicalDetails(models.Model):
     date = fields.Date("Date", default=fields.Date.context_today, readonly=True)
     doc_comment = fields.Char("Doctor’s Comments")
 
-    head_face_scalp = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Head, Face, Scalp"
-    )
-    nose_sinuses = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Nose/Sinuses"
-    )
-    mouth_throat = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Mouth/Throat"
-    )
-    ears_tms = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Ears/TMs"
-    )
-    eyes_pupils_ocular = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Eyes/Pupils/Ocular Motility"
-    )
-    heart_vascular_system = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Heart/Vascular System"
-    )
-    lungs = fields.Selection([("Abnormal", "Abnormal"), ("Normal", "Normal")], "Lungs")
-    abdomen_hernia = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "Abdomen/Hernia"
-    )
-    msk_strengh = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")], "MSK-Strength"
-    )
-    neurological = fields.Selection(
-        [("Abnormal", "Abnormal"), ("Normal", "Normal")],
-        "Neurological (Reflexes, Sensation)",
-    )
+    head_face_scalp = fields.Selection(STATUS_SELECTION, "Head, Face, Scalp")
+    nose_sinuses = fields.Selection(STATUS_SELECTION, "Nose/Sinuses")
+    mouth_throat = fields.Selection( STATUS_SELECTION, "Mouth/Throat")
+    ears_tms = fields.Selection(STATUS_SELECTION, "Ears/TMs")
+    eyes_pupils_ocular = fields.Selection( STATUS_SELECTION, "Eyes/Pupils/Ocular Motility")
+    heart_vascular_system = fields.Selection(STATUS_SELECTION, "Heart/Vascular System")
+    lungs = fields.Selection(STATUS_SELECTION, "Lungs")
+    abdomen_hernia = fields.Selection(STATUS_SELECTION, "Abdomen/Hernia")
+    msk_strengh = fields.Selection(STATUS_SELECTION, "MSK-Strength")
+    neurological = fields.Selection(STATUS_SELECTION, "Neurological (Reflexes, Sensation)")
     glasses_needed = fields.Boolean("Glasses Needed?")
     urine_drug_serene = fields.Selection(
-        [("Negative", "Negetive"), ("Positive", "Positive")], "Urine Drug Serene"
+        [("Negative", "Negative"), ("Positive", "Positive")], "Urine Drug Serene"
     )
     fit_for_full_duty = fields.Boolean("Fully Fit for Duty?")
 
@@ -54,7 +37,6 @@ class EmployeeMedicalDetails(models.Model):
     allergic = fields.Boolean("Allergic to any medication?")
     epilepsy = fields.Boolean("Epilepsy")
     history_drug_use = fields.Boolean("Any History of drug use?")
-
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
     active = fields.Boolean(string="Active", default=True)
     blood_name = fields.Selection(
@@ -63,18 +45,17 @@ class EmployeeMedicalDetails(models.Model):
     blood_type = fields.Selection([("+", "+"), ("-", "-")], "Blood Type")
 
     @api.model_create_multi
-    def create(self, vals):
-        if self._context.get("active_model") == "hr.employee" and self._context.get(
-            "active_id"
-        ):
-            vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeMedicalDetails, self).create(vals)
+    def create(self, vals_list):
+        if self._context.get("active_model") == "hr.applicant" and self._context.get("active_id"):
+            for vals in vals_list:
+                vals.update({"employee_id": self._context.get("active_id")})
+        return super(EmployeeMedicalDetails, self).create(vals_list)
 
 
 class EmployeePreviousOccupation(models.Model):
 
     _name = "employee.previous.occupation"
-    _description = "Recruite Previous Occupation"
+    _description = "Employees Previous Occupation"
     _order = "to_date desc"
     _rec_name = "position"
 
@@ -90,9 +71,10 @@ class EmployeePreviousOccupation(models.Model):
     email = fields.Char("Email")
 
     @api.model_create_multi
-    def create(self, vals):
+    def create(self, vals_list):
         if self._context.get("active_model") == "hr.employee" and self._context.get(
             "active_id"
         ):
-            vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeePreviousOccupation, self).create(vals)
+            for vals in vals_list:
+                vals.update({"employee_id": self._context.get("active_id")})
+        return super(EmployeePreviousOccupation, self).create(vals_list)
