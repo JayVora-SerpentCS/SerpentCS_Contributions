@@ -1,22 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<templates id="template" xml:space="preserve">
-   <t t-name="FieldSignature">
-       <t t-if="widget.mode != 'readonly'">
-           <div class="note-editor panel panel-default mt16 mb0 oe_edit_only" id="drawsign">
-                <div class="note-toolbar panel-heading p-2">
-                    <div class="pull-right">
-                        <a id="sign_clean" class="btn btn-xs oe_edit_only">Clear</a>
-                        <a class="oe_edit_only save_sign"></a>
-                    </div>
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="web_digital_sign.FieldSignature" owl="1">
+        <div class="note-editor panel panel-default mt16 mb0 oe_edit_only" id="drawsign"
+            t-ref="drawsign">
+            <t t-if="props.mode != 'readonly'">
+                <div
+                    class="note-toolbar panel-heading p-2 d-flex justify-content-between align-items-center">
                     <strong>Draw your signature</strong>
+                    <div class="btn-group">
+                        <button t-on-click="sign_clean" class="btn btn-xs btn-danger oe_edit_only">
+                            Clear</button>
+                    </div>
                 </div>
-                <div class="signature"></div>
-            </div>
-       </t>
-       <t t-if="widget.mode == 'readonly'">
-           <div class="panel panel-default mt16 mb0 " id="drawsign">
-                <div class="signature"></div>
-            </div>
-       </t>
+                <div class="signature border p-2 bg-light" aria-label="Signature drawing area"></div>
+            </t>
+            <t t-if="props.mode == 'readonly'">
+                <div class="signature border p-2 bg-light" aria-label="Read-only signature area"></div>
+            </t>
+        </div>
     </t>
 </templates>
