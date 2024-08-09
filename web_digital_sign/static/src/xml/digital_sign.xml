@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <t t-name="web_digital_sign.FieldSignature" owl="1">
+        <div class="note-editor panel panel-default mt16 mb0 oe_edit_only" id="drawsign"
+            t-ref="drawsign">
+            <t t-if="props.mode != 'readonly'">
+                <div
+                    class="note-toolbar panel-heading p-2 d-flex justify-content-between align-items-center">
+                    <strong>Draw your signature</strong>
+                    <div class="btn-group">
+                        <button t-on-click="sign_clean" class="btn btn-xs btn-danger oe_edit_only">
+                            Clear</button>
+                    </div>
+                </div>
+                <div class="signature border p-2 bg-light" aria-label="Signature drawing area"></div>
+            </t>
+            <t t-if="props.mode == 'readonly'">
+                <div class="signature border p-2 bg-light" aria-label="Read-only signature area"></div>
+            </t>
+        </div>
+    </t>
+</templates>
