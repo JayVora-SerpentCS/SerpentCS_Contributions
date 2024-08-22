@@ -18,5 +18,8 @@
                 <div class="signature border p-2 bg-light" aria-label="Read-only signature area"></div>
             </t>
         </div>
+        <div class="d-none other-type-input">
+            <input type="props.type" class="o_input" t-att-value="props.value" />
+        </div>
     </t>
 </templates>

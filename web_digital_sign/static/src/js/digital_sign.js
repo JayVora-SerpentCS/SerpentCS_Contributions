@@ -1,8 +1,8 @@
 /** @odoo-module */
 
-import { BinaryField } from "@web/views/fields/binary/binary_field";
 import { registry } from "@web/core/registry";
-import { onWillStart, onMounted, useRef } from "@odoo/owl";
+import { BinaryField, binaryField } from "@web/views/fields/binary/binary_field";
+import { onWillStart, onMounted } from "@odoo/owl";
 import { loadJS } from "@web/core/assets";
 import { isBinarySize, toBase64Length } from "@web/core/utils/binary";
 import { useService } from "@web/core/utils/hooks";
@@ -20,20 +20,17 @@ export class FieldSignature extends BinaryField {
             'width': '550',
         };
         this.orm = useService("orm");
-        this.drawsign = useRef("drawsign")
-
+        
         onWillStart(async () => {
             await loadJS("/web_digital_sign/static/lib/jSignature/jSignatureCustom.js");
         });
-
         onMounted(async () => {
-            let $signature = $(this.drawsign.el).find('.signature')
             this.renderSignature();
-            $signature.jSignature("init", this.sign_options);
-            $signature.change(() => {
+            $(".signature").jSignature("init", this.sign_options);
+            $(".signature").change(() => {
                 this.save_sign()
             });
-            this.empty_sign = $signature.jSignature("getData",
+            this.empty_sign = $(".signature").jSignature("getData",
                 'image');
         })
     }
@@ -123,4 +120,9 @@ export class FieldSignature extends BinaryField {
 }
 FieldSignature.template = "web_digital_sign.FieldSignature";
 
-registry.category("fields").add("digital_signature", FieldSignature);
+export const FieldSignatureField = {
+    ...binaryField,
+    component: FieldSignature,
+};
+
+registry.category("fields").add("digital_signature", FieldSignatureField);
