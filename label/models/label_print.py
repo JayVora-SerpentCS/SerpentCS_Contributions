@@ -61,6 +61,12 @@ class LabelPrint(models.Model):
             "ref_ir_act_report", False).id})
         return True
 
+    def unlink(self):
+        actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
+        for action in actions_to_unlink:
+            action.unlink()
+        return super().unlink()
+
     def unlink_action(self):
         actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
         for action in actions_to_unlink:

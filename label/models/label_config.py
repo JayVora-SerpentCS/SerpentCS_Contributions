@@ -31,11 +31,12 @@ class LabelConfig(models.Model):
     label_main_id = fields.Many2one("label.brand", "Label")
  
 
-    @api.model
-    def create(self,vals):
-        if vals.get('height') == 0.0 or vals.get('width') == 0.0:
-            raise ValidationError(_("Height/Width value must be non zero."))
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('height') == 0.0 or vals.get('width') == 0.0:
+                raise ValidationError(_("Height/Width value must be non zero."))
+        return super().create(vals_list)
 
     def write(self,vals):
         if vals.get('height') == 0.0 or vals.get('width') == 0.0:
