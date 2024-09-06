@@ -17,6 +17,8 @@
     "depends": ["sale_management"],
     # Views
     "data": ["views/sale_product_view.xml", "views/report_saleorder.xml"],
+    # Odoo App Store Specific
+    "images": ["static/description/Banner-sales_report_product_image.png"],
     # Techical
     "installable": True,
     "auto_install": False,
