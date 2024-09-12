@@ -20,6 +20,8 @@
         "views/training_views.xml",
         "views/applicant_profile_report_view.xml",
     ],
+    # Odoo App Store Specific
+    "images": ["static/description/Banner_hr_applicant.png"],
     "installable": True,
     "application": True,
 }
