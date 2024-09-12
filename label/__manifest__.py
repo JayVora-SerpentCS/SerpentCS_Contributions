@@ -22,7 +22,7 @@
         "report/dynamic_label.xml",
     ],
     "uninstall_hook": "uninstall_hook",
-    "images": ["static/description/Label.png"],
+    "images": ["static/description/Banner_Label.png"],
     "installable": True,
     "auto_install": False,
 }
