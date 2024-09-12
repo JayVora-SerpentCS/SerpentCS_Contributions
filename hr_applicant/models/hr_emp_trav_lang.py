@@ -11,6 +11,7 @@ class EmployeePreviousTravel(models.Model):
     _description = "Employee Previous Travel"
     _rec_name = "from_date"
     _order = "from_date"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     from_date = fields.Date(string="From Date", required=True)
     to_date = fields.Date(string="To Date", required=True)
@@ -19,15 +20,6 @@ class EmployeePreviousTravel(models.Model):
     active = fields.Boolean(string="Active", default=True)
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.employee" and self._context.get(
-            "active_id"
-        ):
-            for vals in vals_list:
-                vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeePreviousTravel, self).create(vals_list)
-
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
         warning = {
@@ -35,9 +27,9 @@ class EmployeePreviousTravel(models.Model):
         }
         message = False
         if self.to_date and self.to_date >= datetime.today().date():
-            message = _("To date must be less than today!")
+            message = _("To date should be prior to the current date!")
         elif self.from_date and self.to_date and self.from_date > self.to_date:
-            message = _("To Date must be greater than From Date!")
+            message = _("From Date should be prior to the To Date!")
         if message:
             warning.update({"message": message})
             return {"warning": warning}
@@ -48,8 +40,9 @@ class EmployeeLanguage(models.Model):
     _description = "Employee Language"
     _order = "id desc"
     _rec_name = "language"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    language = fields.Char("Language", required=True)
+    language = fields.Many2one("res.lang", required=True)
 
     read_lang = fields.Selection(SELECTION_LANGUAGE, "Read")
     write_lang = fields.Selection(SELECTION_LANGUAGE, "Write")
@@ -78,10 +71,3 @@ class EmployeeLanguage(models.Model):
                     )
                     % (self.language, language_rec.language)
                 )
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get("active_id"):
-            for vals in vals_list:
-                vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeLanguage, self).create(vals_list)

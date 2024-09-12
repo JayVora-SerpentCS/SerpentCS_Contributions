@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 class ApplicantRelative(models.Model):
     _name = "applicant.relative"
     _description = "Applicant Relatives"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     relative_type = fields.Selection(
         [
@@ -37,18 +38,20 @@ class ApplicantRelative(models.Model):
         if self.birthday and self.birthday >= fields.Date.today():
             warning = {
                 "title": _("User Alert !"),
-                "message": _("Date of Birth should be less then Today\'s Date!"),
+                "message": _("Date of Birth should be prior of current Date!"),
             }
             self.birthday = False
             return {"warning": warning}
 
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
+        male_relative = {"Brother", "Father", "Husband", "Son", "Uncle"}
+        female_relative = {"Mother", "Sister", "Wife", "Aunty", "Daughter"}
         if self.relative_type:
             self.gender = ""
-            if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
+            if self.relative_type in male_relative:
                 self.gender = "Male"
-            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty", "Daughter"):
+            elif self.relative_type in female_relative:
                 self.gender = "Female"
         if self.applicant_id and not self.relative_type:
             warning = {
@@ -56,16 +59,7 @@ class ApplicantRelative(models.Model):
                 "message": _("Please select Relative Type!"),
             }
             return {"gender": False, "warning": warning}
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            for vals in vals_list:
-                vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantRelative, self).create(vals_list)
-
+            
 
 class ApplicantEducation(models.Model):
     _name = "applicant.education"
@@ -78,8 +72,8 @@ class ApplicantEducation(models.Model):
     to_date = fields.Date(string="To Date")
     education_rank = fields.Char("Education Rank")
     school_name = fields.Char(string="School Name")
-    grade = fields.Char("Education Field/Major")
-    field = fields.Char(string="Major/Field of Education")
+    grade = fields.Char("Education Field")
+    field = fields.Char(string="Field of Education")
     illiterate = fields.Boolean("Illiterate")
     active = fields.Boolean(string="Active", default=True)
     applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
@@ -106,19 +100,10 @@ class ApplicantEducation(models.Model):
                 rec.school_name
             ) = rec.grade = rec.field = rec.edu_type = rec.province = ""
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get(
-            "active_id"
-        ):
-            for vals in vals_list:
-                vals.update({"applicant_id": self._context.get("active_id")})
-        return super(ApplicantEducation, self).create(vals_list)
-
     @api.constrains('from_date', 'to_date')
     def check_date(self):
         for rec in self:
             if (rec.from_date and rec.to_date) >= (fields.Date.today()):
-                raise UserError(_("To date must be less than today!"))
+                raise UserError(_("To date should be prior to the current date!"))
             elif (rec.from_date and rec.to_date) and (rec.from_date > rec.to_date):
-                raise UserError(_("To Date must be greater than From Date !"))
+                raise UserError(_("From Date should be prior to the To Date!"))

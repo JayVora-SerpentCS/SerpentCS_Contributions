@@ -74,6 +74,16 @@
                         </group>
                     </group>
                 </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -82,7 +92,7 @@
         <field name="model">hr.employee.medical.details</field>
         <field name="arch" type="xml">
             <tree string="Medical Screening">
-                <field name="employee_id" invisible="1" />
+                <field name="employee_id" column_invisible="1" />
                 <field name="medical_examination" />
                 <field name="vital_sign" />
                 <field name="date" />
@@ -102,7 +112,7 @@
         <field name="model">employee.previous.occupation</field>
         <field name="arch" type="xml">
             <tree string="Prev. Occupation">
-                <field name="employee_id" invisible="1" />
+                <field name="employee_id" column_invisible="1" />
                 <field name="from_date" />
                 <field name="to_date" />
                 <field name="position" />
@@ -120,45 +130,70 @@
             <form string="Previous Occupation" version="9.0">
                 <sheet>
                     <field name="employee_id" invisible="1" />
-                    <group col="4" colspan="4">
-                        <field
-                            name="from_date"
-                            tabindex="1"
-                            placeholder="Enter From Date"
-                        />
-                        <field
-                            name="to_date"
-                            tabindex="2"
-                            placeholder="Enter To Date"
-                        />
-                        <field
-                            name="position"
-                            tabindex="3"
-                            placeholder="Enter Position"
-                        />
-                        <field
-                            name="organization"
-                            tabindex="4"
-                            placeholder="Enter Organization"
-                        />
-                        <field
-                            name="ref_name"
-                            tabindex="5"
-                            placeholder="Enter Reference Name"
-                        />
-                        <field
-                            name="ref_position"
-                            tabindex="6"
-                            placeholder="Enter Reference Position"
-                        />
-                        <field
-                            name="email"
-                            tabindex="8"
-                            placeholder="Enter Email"
-                            widget="email"
-                        />
+                    <group>
+                        <group>
+                            <field
+                                name="organization"
+                                tabindex="3"
+                                placeholder="Enter Organization"
+                            />
+                            <field
+                                name="ref_name"
+                                tabindex="5"
+                                placeholder="Enter Reference Name"
+                            />
+                            <field
+                                name="ref_phone"
+                                tabindex="7"
+                                placeholder="Enter Reference Phone"
+                                widget="phone"
+                            />
+                            <label string="Duration" for="from_date"/>
+                            <div>
+                                <field
+                                    name="from_date"
+                                    tabindex="1"
+                                    widget="daterange"
+                                    options="{'end_date_field': 'to_date'}"
+                                />
+                                <field
+                                    name="to_date"
+                                    tabindex="2"
+                                    placeholder="Enter To Date"
+                                    invisible="1"
+                                />
+                            </div>
+                        </group>
+                        <group>
+                            <field
+                                name="position"
+                                tabindex="4"
+                                placeholder="Enter Position"
+                            />
+                            <field
+                                name="ref_position"
+                                tabindex="6"
+                                placeholder="Enter Reference Position"
+                            />
+                            <field
+                                name="email"
+                                tabindex="8"
+                                placeholder="Enter Email"
+                                widget="email"
+                            />
+                        </group>
                     </group>
                 </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -175,7 +210,7 @@
         <field name="model">employee.relative</field>
         <field name="arch" type="xml">
             <tree string="Relative">
-                <field name="employee_id" invisible="1" />
+                <field name="employee_id" column_invisible="1" />
                 <field name="relative_type" />
                 <field name="name" placeholder="Enter Name" />
                 <field name="birthday" placeholder="Enter Date of Birth" />
@@ -192,36 +227,51 @@
             <form string="Relative" version="9.0">
                 <sheet>
                     <field name="employee_id" invisible="1" />
-                    <group col="4" colspan="4">
-                        <field
-                            name="relative_type"
-                            tabindex="1"
-                            placeholder="Enter Relative Type"
-                        />
-                        <field name="name" placeholder="Enter Name" tabindex="2" />
-                        <field
-                            name="birthday"
-                            tabindex="4"
-                            placeholder="Enter Date of Birth"
-                        />
-                        <field
-                            name="place_of_birth"
-                            placeholder="Enter Place of Birth"
-                            tabindex="5"
-                        />
-                        <field
-                            name="occupation"
-                            placeholder="Enter Occupation"
-                            tabindex="6"
-                        />
-                        <field
-                            name="gender"
-                            placeholder="Enter Gender"
-                            tabindex="7"
-                            attrs="{'readonly': [('relative_type', 'not in', ['Other', 'Children'])]}"
-                        />
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Enter Name" tabindex="2" />
+                            <field
+                                name="birthday"
+                                tabindex="4"
+                                placeholder="Enter Date of Birth"
+                            />
+                            <field
+                                name="place_of_birth"
+                                placeholder="Enter Place of Birth"
+                                tabindex="5"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                name="relative_type"
+                                tabindex="1"
+                                placeholder="Enter Relative Type"
+                            />
+                            <field
+                                name="gender"
+                                placeholder="Enter Gender"
+                                tabindex="7"
+                                readonly="relative_type not in ('Other', 'Children')"
+                                force_save="1"
+                            />
+                            <field
+                                name="occupation"
+                                placeholder="Enter Occupation"
+                                tabindex="6"
+                            />
+                        </group>
                     </group>
                 </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -238,7 +288,7 @@
         <field name="model">employee.education</field>
         <field name="arch" type="xml">
             <tree string="Education">
-                <field name="employee_id" invisible="1" />
+                <field name="employee_id" column_invisible="1" />
                 <field name="from_date" />
                 <field name="to_date" />
                 <field name="grade" />
@@ -254,55 +304,86 @@
             <form string="Education" version="9.0">
                 <sheet>
                     <field name="employee_id" invisible="1" />
-                    <group col="4" colspan="4">
-                        <field
-                            name="from_date"
-                            tabindex="1"
-                            placeholder="Enter From Date"
-                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
-                        />
-                        <field
-                            name="to_date"
-                            tabindex="3"
-                            placeholder="Enter To Date"
-                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
-                        />
-                        <field
-                            name="grade"
-                            tabindex="11"
-                            placeholder="Enter Education Field/Major"
-                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
-                        />
-                        <field
-                            name="school_name"
-                            tabindex="13"
-                            placeholder="Enter School Name"
-                            attrs="{'readonly': [('illiterate', '!=', False)], 'required': [('illiterate', '=', False)]}"
-                        />
-                        <field
-                            name="edu_type"
-                            tabindex="19"
-                            attrs="{'readonly': [('illiterate', '!=', False)]}"
-                        />
-                        <field
-                            name="country_id"
-                            tabindex="21"
-                            placeholder="Enter Country"
-                            attrs="{'invisible': [('edu_type', '!=', 'Abroad')], 'readonly': [('illiterate', '!=', False)]}"
-                        />
-                        <field
-                            name="state_id"
-                            tabindex="23"
-                            placeholder="Enter State"
-                            attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}"
-                        />
-                        <field
-                            name="province"
-                            tabindex="25"
-                            placeholder="Enter Province"
-                            attrs="{'invisible': [('edu_type', '!=', 'Local')], 'readonly': [('illiterate', '!=', False)]}"
-                        />
-                        <field name="illiterate" tabindex="27" />
+                    <div class="oe_title mb24">
+                        <label for="illiterate" string="Is Illiterate?"/>
+                        <field string="Is Illiterate?" name="illiterate" tabindex="27" class="oe_inline"/>
+                    </div>
+                    <group>
+                        <group>    
+                            <field
+                                name="school_name"
+                                tabindex="13"
+                                placeholder="Enter School Name"
+                                readonly="illiterate != False"
+                                required="illiterate == False"
+                            />
+                            <label for="edu_type" string="School Location"/>
+                            <div class="o_address_format">
+                                <field
+                                    name="edu_type"
+                                    tabindex="19"
+                                    readonly="illiterate != False"
+                                />
+                                <field
+                                    name="country_id"
+                                    tabindex="21"
+                                    placeholder="Enter Country"
+                                    invisible="edu_type != 'Abroad'"
+                                    readonly="illiterate != False"
+                                    class="o_address_country"
+                                />
+                                <field
+                                    name="state_id"
+                                    tabindex="23"
+                                    placeholder="Enter State"
+                                    invisible="edu_type != 'Local'"
+                                    readonly="illiterate != False"
+                                    class="o_address_state"
+                                />
+                                <field
+                                    name="province"
+                                    tabindex="25"
+                                    placeholder="Enter Province"
+                                    invisible="edu_type != 'Local'"
+                                    readonly="illiterate != False"
+                                />
+                            </div>
+                            <label for="from_date" string="Duration"/>
+                            <div>
+                                <field
+                                    name="from_date"
+                                    tabindex="1"
+                                    readonly="illiterate != False"
+                                    required="illiterate == False"
+                                    widget="daterange"
+                                    options="{'end_date_field': 'to_date'}"
+                                />
+                                <field
+                                    name="to_date"
+                                    tabindex="3"
+                                    placeholder="Enter To Date"
+                                    readonly="illiterate != False"
+                                    required="illiterate == False"
+                                    invisible="1"
+                                />
+                            </div>
+                        </group>
+                        <group>
+                            <field
+                                name="education_rank"
+                                tabindex="11"
+                                placeholder="Enter Education Rank"
+                                readonly="illiterate != False"
+                                required="illiterate == False"
+                            />
+                            <field
+                                name="grade"
+                                tabindex="11"
+                                placeholder="Enter Education Field"
+                                readonly="illiterate != False"
+                                required="illiterate == False"
+                            />
+                        </group>
                     </group>
                 </sheet>
                 <div class="oe_chatter">
@@ -330,7 +411,7 @@
         <field name="model">employee.previous.travel</field>
         <field name="arch" type="xml">
             <tree string="Previous Travel">
-                <field name="employee_id" invisible="1" />
+                <field name="employee_id" column_invisible="1" />
                 <field name="from_date" />
                 <field name="to_date" />
                 <field name="location" />
@@ -346,16 +427,21 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="4" colspan="4">
-                        <field
-                            name="from_date"
-                            tabindex="1"
-                            placeholder="Enter From Date"
-                        />
-                        <field
-                            name="to_date"
-                            tabindex="2"
-                            placeholder="Enter To Date"
-                        />
+                        <label string="Duration" for="from_date"/>
+                        <div>
+                            <field
+                                name="from_date"
+                                tabindex="1"
+                                widget="daterange"
+                                options="{'end_date_field': 'to_date'}"
+                            />
+                            <field
+                                name="to_date"
+                                tabindex="2"
+                                placeholder="Enter To Date"
+                                invisible="1"
+                            />
+                        </div>
                         <field
                             name="location"
                             tabindex="3"
@@ -364,6 +450,16 @@
                         <field name="reason" tabindex="4" placeholder="Enter Reason" />
                     </group>
                 </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -380,7 +476,7 @@
         <field name="model">employee.language</field>
         <field name="arch" type="xml">
             <tree string="Employee Language">
-                <field name="employee_id" invisible="1" />
+                <field name="employee_id" column_invisible="1" />
                 <field name="language" />
                 <field name="read_lang" />
                 <field name="write_lang" />
@@ -450,6 +546,7 @@
                     type="action"
                     class="oe_inline oe_stat_button"
                     icon="fa-medkit"
+                    context="{'default_employee_id':active_id}"
                     help="Add/Edit/Review Medical details of employee"
                 >
                     <field
@@ -463,6 +560,7 @@
                     type="action"
                     class="oe_inline oe_stat_button"
                     icon="fa-users"
+                    context="{'default_employee_id':active_id}"
                     help="Add/Edit/Review Relative details of employee"
                 >
                     <field name="no_of_relative" widget="statinfo" string="Relatives" />
@@ -473,6 +571,7 @@
                     style="width:198px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-history"
+                    context="{'default_employee_id':active_id}"
                     help="Add/Edit/Review Previous Occupation details of employee"
                 >
                     <field
@@ -487,6 +586,7 @@
                     style="width:197px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-book"
+                    context="{'default_employee_id':active_id}"
                     help="Add/Edit/Review Education details of employee"
                 >
                     <field
@@ -500,6 +600,7 @@
                     type="action"
                     class="oe_inline oe_stat_button"
                     icon="fa-font"
+                    context="{'default_employee_id':active_id}"
                     help="Add/Edit/Review Languages of employee"
                 >
                     <field name="no_of_lang" widget="statinfo" string="Languages" />
@@ -510,6 +611,7 @@
                     style="width:145px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-car"
+                    context="{'default_employee_id':active_id}"
                     help="Add/Edit/Review Priveous Travel details of employee"
                 >
                     <field
