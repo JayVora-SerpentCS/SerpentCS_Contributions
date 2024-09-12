@@ -75,22 +75,22 @@ class Applicant(models.Model):
         "No of Language", compute="_compute_no_of_lang", readonly=True
     )
 
-    @api.model
-    def get_views(self, views, options=None):
-        ir_actions_report = self.env["ir.actions.report"]
-        res = super().get_views(views, options)
-        reports = ir_actions_report.search(
-            [("report_name", "=", "hr_applicant.applicant_profile")]
-        )
+    # @api.model
+    # def get_views(self, views, options=None):
+    #     ir_actions_report = self.env["ir.actions.report"]
+    #     res = super().get_views(views, options)
+    #     reports = ir_actions_report.search(
+    #         [("report_name", "=", "hr_applicant.applicant_profile")]
+    #     )
 
-        if 'list' in res['views']:
-            new_reports = []
-            for rec in res['views']['list'].get('toolbar', {}).get("print", []):
-                if rec.get("id", False) not in reports.ids:
-                    new_reports.append(rec)
-            res['views']['list'].get('toolbar')["print"] = new_reports
+    #     if 'list' in res['views']:
+    #         new_reports = []
+    #         for rec in res['views']['list'].get('toolbar', {}).get("print", []):
+    #             if rec.get("id", False) not in reports.ids:
+    #                 new_reports.append(rec)
+    #         res['views']['list'].get('toolbar')["print"] = new_reports
 
-        return res
+    #     return res
 
     def create_employee_from_applicant(self):
         app_med_details_obj = self.env["hr.applicant.medical.details"]
@@ -108,211 +108,198 @@ class Applicant(models.Model):
         emp_lan_obj = self.env["employee.language"]
 
         res = super(Applicant, self).create_employee_from_applicant()
-        data_dict = res.get("context")
-        record_emp = self.env["hr.employee"].create(
-            {
-                "name": data_dict.get("default_name"),
-                "job_id": data_dict.get("default_job_id"),
-                "job_title": data_dict.get("default_job_title"),
-                "address_home_id": data_dict.get("address_home_id"),
-                "department_id": data_dict.get("default_department_id"),
-                "address_id": data_dict.get("default_address_id"),
-                "work_email": data_dict.get("default_work_email"),
-                "work_phone": data_dict.get("default_work_phone"),
-            }
-        )
-        res["res_id"] = record_emp.id
-        self.write({"emp_id": record_emp.id})
-        if res.get("res_id", False):
-            for applicant in self:
-                for med_detail in app_med_details_obj.search(
-                    [("applicant_id", "=", applicant.id)]
+        for applicant in self:
+            for med_detail in app_med_details_obj.search(
+                [("applicant_id", "=", applicant.id)]
+            ):
+                medical_id = emp_med_details_obj.create(
+                    {
+                        "medical_examination": med_detail.medical_examination,
+                        "vital_sign": med_detail.vital_sign,
+                        "date": med_detail.date,
+                        "doc_comment": med_detail.doc_comment,
+                        "head_face_scalp": med_detail.head_face_scalp,
+                        "nose_sinuses": med_detail.nose_sinuses,
+                        "mouth_throat": med_detail.mouth_throat,
+                        "ears_tms": med_detail.ears_tms,
+                        "eyes_pupils_ocular": med_detail.eyes_pupils_ocular,
+                        "heart_vascular_system": med_detail.heart_vascular_system,
+                        "lungs": med_detail.lungs,
+                        "abdomen_hernia": med_detail.abdomen_hernia,
+                        "msk_strengh": med_detail.msk_strengh,
+                        "neurological": med_detail.neurological,
+                        "glasses_needed": med_detail.glasses_needed,
+                        "urine_drug_serene": med_detail.urine_drug_serene,
+                        "fit_for_full_duty": med_detail.fit_for_full_duty,
+                        "good_health": med_detail.good_health,
+                        "serious_illness": med_detail.serious_illness,
+                        "broken_bones": med_detail.broken_bones,
+                        "medications": med_detail.medications,
+                        "serious_wound": med_detail.serious_wound,
+                        "allergic": med_detail.allergic,
+                        "epilepsy": med_detail.epilepsy,
+                        "history_drug_use": med_detail.history_drug_use,
+                        "employee_id": res.get("res_id", False),
+                        "blood_name": med_detail.blood_name,
+                        "blood_type": med_detail.blood_type,
+                    }
+                )
+                for medical_attachment in attachment_obj.search(
+                    [
+                        ("res_model", "=", "hr.applicant.medical.details"),
+                        ("res_id", "=", med_detail.id),
+                    ]
                 ):
-                    medical_id = emp_med_details_obj.create(
-                        {
-                            "medical_examination": med_detail.medical_examination,
-                            "vital_sign": med_detail.vital_sign,
-                            "date": med_detail.date,
-                            "doc_comment": med_detail.doc_comment,
-                            "head_face_scalp": med_detail.head_face_scalp,
-                            "nose_sinuses": med_detail.nose_sinuses,
-                            "mouth_throat": med_detail.mouth_throat,
-                            "ears_tms": med_detail.ears_tms,
-                            "eyes_pupils_ocular": med_detail.eyes_pupils_ocular,
-                            "heart_vascular_system": med_detail.heart_vascular_system,
-                            "lungs": med_detail.lungs,
-                            "abdomen_hernia": med_detail.abdomen_hernia,
-                            "msk_strengh": med_detail.msk_strengh,
-                            "neurological": med_detail.neurological,
-                            "glasses_needed": med_detail.glasses_needed,
-                            "urine_drug_serene": med_detail.urine_drug_serene,
-                            "fit_for_full_duty": med_detail.fit_for_full_duty,
-                            "good_health": med_detail.good_health,
-                            "serious_illness": med_detail.serious_illness,
-                            "broken_bones": med_detail.broken_bones,
-                            "medications": med_detail.medications,
-                            "serious_wound": med_detail.serious_wound,
-                            "allergic": med_detail.allergic,
-                            "epilepsy": med_detail.epilepsy,
-                            "history_drug_use": med_detail.history_drug_use,
-                            "employee_id": res.get("res_id", False),
-                            "blood_name": med_detail.blood_name,
-                            "blood_type": med_detail.blood_type,
-                        }
-                    )
-                    medical_attachments = attachment_obj.search(
-                        [
-                            ("res_model", "=", "hr.applicant.medical.details"),
-                            ("res_id", "=", med_detail.id),
-                        ]
-                    )
-                    for medical_attachment in medical_attachments:
-                        emp_medical_attachment = medical_attachment.copy()
+                    emp_medical_attachment = medical_attachment.copy()
 
-                        emp_medical_attachment.write(
-                            {
-                                "res_model": "hr.employee.medical.details",
-                                "res_id": medical_id.id,
-                            }
-                        )
+                    emp_medical_attachment.write(
+                        {
+                            "res_model": "hr.employee.medical.details",
+                            "res_id": medical_id.id,
+                        }
+                    )
 
-                for prev_occupation in app_prev_occ_obj.search(
-                    [("applicant_id", "=", applicant.id)]
+            for prev_occupation in app_prev_occ_obj.search(
+                [("applicant_id", "=", applicant.id)]
+            ):
+                occupation_id = emp_prev_occ_obj.create(
+                    {
+                        "from_date": prev_occupation.from_date,
+                        "to_date": prev_occupation.to_date,
+                        "position": prev_occupation.position,
+                        "organization": prev_occupation.organization,
+                        "ref_name": prev_occupation.ref_name,
+                        "ref_position": prev_occupation.ref_position,
+                        "ref_phone": prev_occupation.ref_phone,
+                        "employee_id": res.get("res_id", False),
+                        "email": prev_occupation.email,
+                    }
+                )
+
+                for occupation_attachment in attachment_obj.search(
+                    [
+                        ("res_model", "=", "applicant.previous.occupation"),
+                        ("res_id", "=", prev_occupation.id),
+                    ]
                 ):
-                    occupation_id = emp_prev_occ_obj.create(
+                    emp_occupation_attachment = occupation_attachment.copy()
+                    emp_occupation_attachment.write(
                         {
-                            "from_date": prev_occupation.from_date,
-                            "to_date": prev_occupation.to_date,
-                            "position": prev_occupation.position,
-                            "organization": prev_occupation.organization,
-                            "ref_name": prev_occupation.ref_name,
-                            "ref_position": prev_occupation.ref_position,
-                            "ref_phone": prev_occupation.ref_phone,
-                            "employee_id": res.get("res_id", False),
-                            "email": prev_occupation.email,
+                            "res_model": "employee.previous.occupation",
+                            "res_id": occupation_id.id,
                         }
                     )
-                    occupation_attachments = attachment_obj.search(
-                        [
-                            ("res_model", "=", "applicant.previous.occupation"),
-                            ("res_id", "=", prev_occupation.id),
-                        ]
-                    )
-                    for occupation_attachment in occupation_attachments:
-                        emp_occupation_attachment = occupation_attachment.copy()
-                        emp_occupation_attachment.write(
-                            {
-                                "res_model": "employee.previous.occupation",
-                                "res_id": occupation_id.id,
-                            }
-                        )
-                for relative in app_rel_obj.search(
-                    [("applicant_id", "=", applicant.id)]
+
+            for relative in app_rel_obj.search(
+                [("applicant_id", "=", applicant.id)]
+            ):
+                relative_id = emp_rel_obj.create(
+                    {
+                        "relative_type": relative.relative_type,
+                        "name": relative.name,
+                        "birthday": relative.birthday,
+                        "place_of_birth": relative.place_of_birth,
+                        "occupation": relative.occupation,
+                        "gender": relative.gender,
+                        "employee_id": res.get("res_id", False),
+                    }
+                )
+
+                for relative_attachment in attachment_obj.search(
+                    [
+                        ("res_model", "=", "applicant.relative"),
+                        ("res_id", "=", relative.id),
+                    ]
                 ):
-                    relative_id = emp_rel_obj.create(
+                    emp_relative_attachment = relative_attachment.copy()
+                    emp_relative_attachment.write(
+                        {"res_model": "employee.relative", "res_id": relative_id.id}
+                    )
+
+            for education in app_edu_obj.search(
+                [("applicant_id", "=", applicant.id)]
+            ):
+                education_id = emp_edu_obj.create(
+                    {
+                        "from_date": education.from_date,
+                        "to_date": education.to_date,
+                        "education_rank": education.education_rank,
+                        "school_name": education.school_name,
+                        "grade": education.grade,
+                        "field": education.field,
+                        "illiterate": education.illiterate,
+                        "edu_type": education.edu_type,
+                        "country_id": education.country_id
+                                      and education.country_id.id,
+                        "state_id": education.state_id and education.state_id.id,
+                        "province": education.province,
+                        "employee_id": res.get("res_id", False),
+                    }
+                )
+
+                for education_attachment in attachment_obj.search(
+                    [
+                        ("res_model", "=", "applicant.education"),
+                        ("res_id", "=", education.id),
+                    ]
+                ):
+                    emp_education_attachment = education_attachment.copy()
+                    emp_education_attachment.write(
                         {
-                            "relative_type": relative.relative_type,
-                            "name": relative.name,
-                            "birthday": relative.birthday,
-                            "place_of_birth": relative.place_of_birth,
-                            "occupation": relative.occupation,
-                            "gender": relative.gender,
-                            "employee_id": res.get("res_id", False),
+                            "res_model": "employee.education",
+                            "res_id": education_id.id,
                         }
                     )
-                    relative_attachments = attachment_obj.search(
-                        [
-                            ("res_model", "=", "applicant.relative"),
-                            ("res_id", "=", relative.id),
-                        ]
-                    )
-                    for relative_attachment in relative_attachments:
-                        emp_relative_attachment = relative_attachment.copy()
-                        emp_relative_attachment.write(
-                            {"res_model": "employee.relative", "res_id": relative_id.id}
-                        )
-                for education in app_edu_obj.search(
-                    [("applicant_id", "=", applicant.id)]
+
+            for prev_travel in app_tr_obj.search(
+                [("applicant_id", "=", applicant.id)]
+            ):
+                prev_travel_id = emp_tr_obj.create(
+                    {
+                        "from_date": prev_travel.from_date,
+                        "to_date": prev_travel.to_date,
+                        "location": prev_travel.location,
+                        "reason": prev_travel.reason,
+                        "employee_id": res.get("res_id", False),
+                    }
+                )
+                for prev_travel_attachment in attachment_obj.search(
+                    [
+                        ("res_model", "=", "applicant.previous.travel"),
+                        ("res_id", "=", prev_travel.id),
+                    ]
                 ):
-                    education_id = emp_edu_obj.create(
+                    emp_prev_travel_attachment = prev_travel_attachment.copy()
+                    emp_prev_travel_attachment.write(
                         {
-                            "from_date": education.from_date,
-                            "to_date": education.to_date,
-                            "education_rank": education.education_rank,
-                            "school_name": education.school_name,
-                            "grade": education.grade,
-                            "field": education.field,
-                            "illiterate": education.illiterate,
-                            "edu_type": education.edu_type,
-                            "country_id": education.country_id
-                                          and education.country_id.id,
-                            "state_id": education.state_id and education.state_id.id,
-                            "province": education.province,
-                            "employee_id": res.get("res_id", False),
+                            "res_model": "employee.previous.travel",
+                            "res_id": prev_travel_id.id,
                         }
                     )
-                    education_attachments = attachment_obj.search(
-                        [
-                            ("res_model", "=", "applicant.education"),
-                            ("res_id", "=", education.id),
-                        ]
-                    )
-                    for education_attachment in education_attachments:
-                        emp_education_attachment = education_attachment.copy()
-                        emp_education_attachment.write(
-                            {
-                                "res_model": "employee.education",
-                                "res_id": education_id.id,
-                            }
-                        )
-                for prev_travel in app_tr_obj.search(
-                    [("applicant_id", "=", applicant.id)]
+
+            for language in app_lan_obj.search(
+                [("applicant_id", "=", applicant.id)]
+            ):
+                language_id = emp_lan_obj.create(
+                    {
+                        "language": language.language,
+                        "read_lang": language.read_lang,
+                        "write_lang": language.write_lang,
+                        "speak_lang": language.speak_lang,
+                        "mother_tongue": language.mother_tongue,
+                        "employee_id": res.get("res_id", False),
+                    }
+                )
+
+                for language_attachment in attachment_obj.search(
+                    [
+                        ("res_model", "=", "applicant.language"),
+                        ("res_id", "=", language.id),
+                    ]
                 ):
-                    prev_travel_id = emp_tr_obj.create(
-                        {
-                            "from_date": prev_travel.from_date,
-                            "to_date": prev_travel.to_date,
-                            "location": prev_travel.location,
-                            "reason": prev_travel.reason,
-                            "employee_id": res.get("res_id", False),
-                        }
+                    emp_language_attachment = language_attachment.copy()
+                    emp_language_attachment.write(
+                        {"res_model": "employee.language", "res_id": language_id.id}
                     )
-                    prev_travel_attachments = attachment_obj.search(
-                        [
-                            ("res_model", "=", "applicant.previous.travel"),
-                            ("res_id", "=", prev_travel.id),
-                        ]
-                    )
-                    for prev_travel_attachment in prev_travel_attachments:
-                        emp_prev_travel_attachment = prev_travel_attachment.copy()
-                        emp_prev_travel_attachment.write(
-                            {
-                                "res_model": "employee.previous.travel",
-                                "res_id": prev_travel_id.id,
-                            }
-                        )
-                for language in app_lan_obj.search(
-                    [("applicant_id", "=", applicant.id)]
-                ):
-                    language_id = emp_lan_obj.create(
-                        {
-                            "language": language.language,
-                            "read_lang": language.read_lang,
-                            "write_lang": language.write_lang,
-                            "speak_lang": language.speak_lang,
-                            "mother_tongue": language.mother_tongue,
-                            "employee_id": res.get("res_id", False),
-                        }
-                    )
-                    language_attachments = attachment_obj.search(
-                        [
-                            ("res_model", "=", "applicant.language"),
-                            ("res_id", "=", language.id),
-                        ]
-                    )
-                    for language_attachment in language_attachments:
-                        emp_language_attachment = language_attachment.copy()
-                        emp_language_attachment.write(
-                            {"res_model": "employee.language", "res_id": language_id.id}
-                        )
+
         return res

@@ -6,11 +6,14 @@
         <field name="arch" type="xml">
             <form string="Need Training">
                 <group>
-                    <field name="is_triaing_needed" />
+                    <field name="is_training_needed" />
+                    <field name="applicant_id" invisible="1"/>
+                    <field name="job_id" invisible="1"/>
                     <field
                         name="training_courses_ids"
-                        attrs="{'invisible': [('is_triaing_needed', '!=', True)]}"
                         widget="many2many_checkboxes"
+                        invisible="is_training_needed != True"
+                        domain="[('state','!=','cancel'), ('job_id','=',job_id)]"
                     />
                 </group>
                 <footer>
@@ -36,5 +39,6 @@
         <field name="res_model">select.training</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
+        <field name="context">{"default_applicant_id":active_id}</field>
     </record>
 </odoo>

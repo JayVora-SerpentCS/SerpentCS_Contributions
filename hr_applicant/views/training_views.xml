@@ -42,17 +42,21 @@
             <form string="Training Courses">
                 <sheet>
                     <group>
-                        <field name="name" required="1" />
-                        <field name="course_type_id" required="1" />
-                        <field name="job_id" required="1" />
-                        <field name="department" />
-                        <label for="duration" />
-                        <div>
-                            <field name="duration" required="1" />
-                            <field name="duration_type" required="1" />
-                        </div>
-                        <field name="training_location" />
-                        <field name="local_short_description"/>
+                        <group>
+                            <field name="name" required="1" />
+                            <field name="course_type_id" required="1" />
+                            <field name="job_id" required="1" />
+                        </group>
+                        <group>
+                            <field name="department" />
+                            <label for="duration" />
+                            <div>
+                                <field name="duration" required="1" class="oe_inline"/>
+                                <field name="duration_type" required="1" class="oe_inline"/>
+                            </div>
+                            <field name="training_location" />
+                        </group>
+                        <field name="local_short_description" placeholder="Add the Course Description"/>
                     </group>
                 </sheet>
             </form>
@@ -85,30 +89,34 @@
                     <button
                         name="action_to_be_approve"
                         type="object"
-                        states="draft"
                         string="Send for Approval"
                         class="oe_highlight"
+                        invisible="state != 'draft'"
                     />
+                        <!-- states="draft" -->
                     <button
                         name="action_approve"
                         type="object"
-                        states="to_be_approved"
                         string="Approve"
                         class="oe_highlight"
+                        invisible="state != 'to_be_approved'"
                     />
+                        <!-- states="to_be_approved" -->
                     <button
                         name="action_completed"
                         type="object"
-                        states="approved"
                         string="Mark as Complete"
                         class="oe_highlight"
+                        invisible="state != 'approved'"
                     />
+                        <!-- states="approved" -->
                     <button
                         name="action_cancel"
                         type="object"
                         string="Cancel"
-                        states="draft,to_be_approved,approved"
+                        invisible="state == 'cancel'"
                     />
+                        <!-- states="draft,to_be_approved,approved" -->
                     <field
                         name="state"
                         widget="statusbar"
@@ -117,22 +125,33 @@
                     />
                 </header>
                 <sheet>
-                    <group col="4" colspan="4">
-                        <field
-                            name="course_id"
-                            required="1"
-                            attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}"
-                        />
-                        <field name="department" />
-                        <field name="job_id" />
-                        <field name="course_categ_id" />
-                        <field name="training_location" />
-                        <field name="training_start_date" />
-                        <field
-                            name="training_attendees"
-                            attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}"
-                        />
-                        <field name="training_end_date" />
+                    <group>
+                        <group>
+                            <field
+                                name="course_id"
+                                required="1"
+                                readonly="state in ('approved', 'completed', 'cancel')"
+                                tabindex='1'
+                            />
+                                <!-- attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}" -->
+                            <field name="department" tabindex="3"/>
+                            <label string="Training Date" for="training_start_date"/>
+                            <div>
+                                <field name="training_start_date" readonly="state not in ('draft','to_be_approved')" tabindex="5" widget="daterange" required="training_start_date or training_end_date" options="{'end_date_field': 'training_end_date'}"/>
+                                <field name="training_end_date" force_save='1' tabindex="6"  invisible="1"/>
+                            </div>
+                            <field name="training_location" tabindex="7"/>
+                        </group>
+                        <group>
+                            <field name="course_categ_id" tabindex="2"/>
+                            <field name="job_id" tabindex="4"/>
+                            <field
+                                name="training_attendees"
+                                readonly="state in ('approved', 'completed', 'cancel')"
+                                tabindex="8"
+                            />
+                                <!-- attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}" -->
+                        </group>
                     </group>
                     <notebook>
                         <page string="List of Attendees" name="list_of_attendees">
@@ -140,14 +159,25 @@
                                 name="attendees_ids"
                                 colspan="4"
                                 nolabel="1"
-                                attrs="{'readonly': [('state', 'in', ['draft', 'to_be_approved', 'completed', 'cancel'])]}"
+                                readonly="state in ('draft', 'to_be_approved', 'completed', 'cancel')"
                             />
+                                <!-- attrs="{'readonly': [('state', 'in', ['draft', 'to_be_approved', 'completed', 'cancel'])]}" -->
                         </page>
                         <page string="Description" name="description">
                             <field name="description" nolabel="1" colspan="4" />
                         </page>
                     </notebook>
                 </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>
@@ -187,37 +217,42 @@
                     <button
                         name="action_awaiting_training_start"
                         type="object"
-                        states="draft"
                         string="Awaiting For Training Start"
                         class="oe_highlight"
+                        invisible="state != 'draft'"
                     />
+                        <!-- states="draft" -->
                     <button
                         name="action_in_training"
                         type="object"
-                        states="awaiting_training_start"
                         string="In Training"
                         class="oe_highlight"
+                        invisible="state not in ('awaiting_training_start', 'in_complete')"
                     />
+                        <!-- states="awaiting_training_start" -->
                     <button
                         name="action_training_completed"
                         type="object"
-                        states="in_training"
                         string="Training Completed"
                         class="oe_highlight"
+                        invisible="state != 'in_training'"
                     />
+                        <!-- states="in_training" -->
                     <button
                         name="action_in_complete"
                         type="object"
-                        states="in_training"
                         string="Training Incomplete"
                         class="oe_highlight"
+                        invisible="state != 'in_training'"
                     />
+                        <!-- states="in_training" -->
                     <button
                         name="action_cancel"
                         type="object"
                         string="Cancel"
-                        states="draft,awaiting_training_start,to_be_approved,approved"
+                        invisible="state != ('draft','awaiting_training_start', 'to_be_approved', 'approved')"
                     />
+                        <!-- states="draft,awaiting_training_start,to_be_approved,approved" -->
                     <field
                         name="state"
                         widget="statusbar"
@@ -228,7 +263,7 @@
                 <sheet>
                     <group col="4" colspan="4">
                         <group col="2" colspan="2">
-                            <field name="employee_id" required="1" />
+                            <field name="employee_id" required="1" readonly="state != 'draft'"/>
                         </group>
                         <group col="2" colspan="2">
                             <field
@@ -242,28 +277,27 @@
                         </group>
                     </group>
                     <group col="4" colspan="4">
-                        <field name="training_start_date" />
+                        <field name="training_start_date" readonly="state not in ('draft','in_complete')"/>
                         <field
                             name="date_of_arrival"
-                            attrs="{'required': [('state', '=', 'awaiting_training_start')]}"
+                            required="state == 'awaiting_training_start'"
+                            readonly="state not in 'awaiting_training_start'"
                         />
-                        <field name="training_end_date" />
+                            <!-- attrs="{'required': [('state', '=', 'awaiting_training_start')]}" -->
+                        <field name="training_end_date" readonly="state not in ('draft','in_complete')"/>
                         <field name="class_id" invisible="1" />
                     </group>
-                    <notebook>
-                        <page string="Attachments" name="attachment_ids">
-                            <field
-                                name="attachment_ids"
-                                colspan="4"
-                                nolabel="1"
-                                attrs="{'readonly': [('state', 'in', ['in_complete','train_completed'])]}"
-                            />
-                        </page>
-                        <page string="Comments" name="comments">
-                            <field name="comments" nolabel="1" colspan="4" />
-                        </page>
-                    </notebook>
                 </sheet>
+                <div class="o_attachment_preview" />
+                <div class="oe_chatter" style="display:block;">
+                    <field
+                        name="message_follower_ids"
+                        widget="mail_followers"
+                        groups="base.group_user"
+                    />
+                    <field name="activity_ids" widget="mail_activity" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
             </form>
         </field>
     </record>

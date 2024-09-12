@@ -36,18 +36,18 @@ class Trainingcourses(models.Model):
                 _("You can not enter duration more than three digits!")
             )
         if self.duration <= 0:
-            raise ValidationError(_("Duration must be greater than 0!"))
+            raise ValidationError(_("Duration must be positive value or 1!"))
 
     name = fields.Char(string="Course Name", required=True)
     course_type_id = fields.Many2one("course.type", string="Course Category")
     job_id = fields.Many2one("hr.job", "Applied Job")
     department = fields.Char(related="job_id.name", string="Department", readonly=True)
     training_location = fields.Char("Training Location")
-    duration = fields.Integer("Course Duration", required=True)
+    duration = fields.Integer("Course Duration", required=True, default="1")
     duration_type = fields.Selection(
         [("day", "Days"), ("week", "Weeks"), ("month", "Months")], required=True
     )
-    local_short_description = fields.Text("Course Short Description")
+    local_short_description = fields.Text("Course Description")
 
 
 class TrainingClass(models.Model):
@@ -55,16 +55,18 @@ class TrainingClass(models.Model):
     _name = "training.class"
     _rec_name = "course_id"
     _description = "Training Class"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    @api.constrains("training_start_date", "training_end_date")
-    def _check_training_dup(self):
-        self.ensure_one()
-        if self.training_start_date < fields.Date.context_today(self):
-            raise ValidationError(_("You can't create past training!"))
-        if self.training_start_date > self.training_end_date:
-            raise ValidationError(
-                _("End Date should be greater than Start date of Training!")
-            )
+    # @api.constrains("training_start_date", "training_end_date")
+    # def _check_training_dup(self):
+    #     self.ensure_one()
+    #     if self.training_start_date < fields.Date.context_today(self):
+    #         raise ValidationError(_("You can't create past training!"))
+    #     print("self.training_end_date:::::::::::::::::::::::::::::::::::::::::::::::::::::::::",self.training_end_date)
+    #     if self.training_start_date > self.training_end_date:
+    #         raise ValidationError(
+    #             _("End Date should be greater than Start date of Training!")
+    #         )
 
     course_id = fields.Many2one("training.courses", string="Course Name", required=True)
     department = fields.Char(
@@ -88,12 +90,13 @@ class TrainingClass(models.Model):
     training_attendees = fields.Integer("Training Attendees", required=True)
     training_start_date = fields.Date(
         "Training Start Date",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        # readonly=True,
+        # states={"draft": [("readonly", False)]},
         required=True,
     )
     training_end_date = fields.Date(
-        "Training End Date", readonly=True, states={"draft": [("readonly", False)]}
+        "Training End Date", readonly=True, 
+        # states={"draft": [("readonly", False)]}
     )
     attendees_ids = fields.One2many(
         "list.of.attendees", "class_id", string="List of Local Attendees"
@@ -108,6 +111,7 @@ class TrainingClass(models.Model):
         ],
         "State",
         default="draft",
+        tracking=True
     )
     description = fields.Text("Description")
 
@@ -133,6 +137,24 @@ class TrainingClass(models.Model):
 
                 rec.training_end_date = end_date
 
+    def write(self, vals_list):
+        res = super(TrainingClass, self).write(vals_list)
+        if self.training_attendees:
+            for rec in self:
+                if len(rec.attendees_ids.ids) > rec.training_attendees:
+                    raise ValidationError(
+                        _(
+                            "List of attendees are greater than Training Attendees!"
+                        )
+                    )
+        return res
+
+    @api.constrains("training_start_date", "training_end_date")
+    def _check_training_dup(self):
+        self.ensure_one()
+        if self.training_start_date < fields.Date.context_today(self):
+            raise ValidationError(_("You can't create past training!"))
+
     def action_to_be_approve(self):
         self.state = "to_be_approved"
 
@@ -149,12 +171,6 @@ class TrainingClass(models.Model):
                     _("You cannot Approve Any Training with no Attendees!")
                 )
             else:
-                if len(rec.attendees_ids.ids) > rec.training_attendees:
-                    raise ValidationError(
-                        _(
-                            "List of attendees are greater than Training Attendees!"
-                        )
-                    )
                 for attendee in rec.attendees_ids:
                     if attendee.state not in ("train_completed", "in_complete"):
                         raise ValidationError(
@@ -178,6 +194,7 @@ class ListOfAttendees(models.Model):
     _name = "list.of.attendees"
     _rec_name = "class_id"
     _description = "List Of Attendees"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     @api.constrains(
         "class_id", "training_start_date", "training_end_date", "date_of_arrival"
@@ -188,12 +205,12 @@ class ListOfAttendees(models.Model):
                 raise ValidationError(_("You can't create past training!"))
             if rec.training_start_date > rec.training_end_date:
                 raise ValidationError(
-                    _("End Date should be greater than Start date of Training!")
+                    _("Start date should be prior to End Date of Training!")
                 )
             if rec.date_of_arrival and rec.date_of_arrival > rec.training_start_date:
                 raise ValidationError(
                     _(
-                        "Arrival Date should be less or equal than Start date of Training!"
+                        "Arrival Date should be prior or same to the Start date of Training!"
                     )
                 )
 
@@ -209,29 +226,29 @@ class ListOfAttendees(models.Model):
     employee_id = fields.Many2one(
         "hr.employee",
         "Employee",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        # readonly=True,
+        # states={"draft": [("readonly", False)]},
     )
     attendees_image = fields.Binary(related="employee_id.image_1920", string="Image")
     training_start_date = fields.Date(
         "Training Start Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        # readonly=True,
+        # states={"draft": [("readonly", False)]},
     )
     training_end_date = fields.Date(
         "Training End Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
+        # readonly=True,
+        # states={"draft": [("readonly", False)]},
     )
     date_of_arrival = fields.Date(
         "Date of Arrival in Training Location",
-        readonly=True,
-        states={
-            "draft": [("readonly", False)],
-            "awaiting_training_start": [("readonly", False)],
-        },
+        readonly=False,
+        # states={
+        #     "draft": [("readonly", False)],
+        #     "awaiting_training_start": [("readonly", False)],
+        # },
     )
     comments = fields.Text("Comments")
     attachment_ids = fields.One2many(
@@ -247,6 +264,7 @@ class ListOfAttendees(models.Model):
         ],
         string="State",
         default="draft",
+        tracking=True
     )
 
     @api.onchange("class_id")
@@ -263,7 +281,7 @@ class ListOfAttendees(models.Model):
         for rec in self:
             if not rec.date_of_arrival:
                 raise ValidationError(_("Please add Date of arrival!"))
-            rec.state = "train_completed"
+            rec.state = "in_training"
 
     def action_training_completed(self):
         self.state = "train_completed"

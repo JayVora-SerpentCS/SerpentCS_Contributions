@@ -7,6 +7,7 @@ class EmployeeMedicalDetails(models.Model):
     _name = "hr.employee.medical.details"
     _description = "Employee Medical Details"
     _rec_name = "medical_examination"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     medical_examination = fields.Char("Medical Examination")
     vital_sign = fields.Char("Vital sign")
@@ -44,13 +45,6 @@ class EmployeeMedicalDetails(models.Model):
     )
     blood_type = fields.Selection([("+", "+"), ("-", "-")], "Blood Type")
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.applicant" and self._context.get("active_id"):
-            for vals in vals_list:
-                vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeMedicalDetails, self).create(vals_list)
-
 
 class EmployeePreviousOccupation(models.Model):
 
@@ -58,6 +52,7 @@ class EmployeePreviousOccupation(models.Model):
     _description = "Employees Previous Occupation"
     _order = "to_date desc"
     _rec_name = "position"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     from_date = fields.Date(string="From Date", required=True)
     to_date = fields.Date(string="To Date", required=True)
@@ -68,13 +63,6 @@ class EmployeePreviousOccupation(models.Model):
     ref_phone = fields.Char(string="Reference Phone")
     active = fields.Boolean(string="Active", default=True)
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
-    email = fields.Char("Email")
+    email = fields.Char("Reference Email")
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.employee" and self._context.get(
-            "active_id"
-        ):
-            for vals in vals_list:
-                vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeePreviousOccupation, self).create(vals_list)
+    

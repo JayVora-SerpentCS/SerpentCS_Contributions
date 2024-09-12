@@ -8,6 +8,7 @@ class EmployeeRelative(models.Model):
     _name = "employee.relative"
     _description = "Employee Relatives"
     _rec_name = "name"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     relative_type = fields.Selection(
         [
@@ -41,18 +42,20 @@ class EmployeeRelative(models.Model):
         if self.birthday and self.birthday >= datetime.today().date():
             warning = {
                 "title": _("User Alert !"),
-                "message": _("Date of Birth must be less than today!"),
+                "message": _("Date of birth should be prior to the current date!"),
             }
             self.birthday = False
             return {"warning": warning}
 
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
+        male_relative = {"Brother", "Father", "Husband", "Son", "Uncle"}
+        female_relative = {"Mother", "Sister", "Wife", "Aunty", "Daughter"}
         if self.relative_type:
             self.gender = ""
-            if self.relative_type in ("Brother", "Father", "Husband", "Son", "Uncle"):
+            if self.relative_type in male_relative:
                 self.gender = "Male"
-            elif self.relative_type in ("Mother", "Sister", "Wife", "Aunty", "Daughter"):
+            elif self.relative_type in female_relative:
                 self.gender = "Female"
         if self.employee_id and not self.relative_type:
             warning = {
@@ -60,15 +63,6 @@ class EmployeeRelative(models.Model):
                 "message": _("Please select Relative Type!"),
             }
             return {"gender": False, "warning": warning}
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.employee" and self._context.get(
-                "active_id"
-        ):
-            for vals in vals_list:
-                vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeRelative, self).create(vals_list)
 
 
 class EmployeeEducation(models.Model):
@@ -82,8 +76,8 @@ class EmployeeEducation(models.Model):
     to_date = fields.Date(string="To Date")
     education_rank = fields.Char("Education Rank")
     school_name = fields.Char(string="School Name")
-    grade = fields.Char("Education Field/Major")
-    field = fields.Char(string="Major/Field of Education")
+    grade = fields.Char("Education Field")
+    field = fields.Char(string="Field of Education")
     illiterate = fields.Boolean("Illiterate")
     active = fields.Boolean(string="Active", default=True)
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
@@ -107,15 +101,6 @@ class EmployeeEducation(models.Model):
             rec.from_date = rec.to_date = rec.country_id = rec.state_id = False
             rec.education_rank = rec.school_name = rec.grade = rec.field = rec.edu_type = rec.province = ""
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        if self._context.get("active_model") == "hr.employee" and self._context.get(
-                "active_id"
-        ):
-            for vals in vals_list:
-                vals.update({"employee_id": self._context.get("active_id")})
-        return super(EmployeeEducation, self).create(vals_list)
-
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
         warning = {
@@ -123,9 +108,9 @@ class EmployeeEducation(models.Model):
         }
         message = False
         if self.to_date and self.to_date >= datetime.today().date():
-            message = _("To date must be less than today!")
+            message = _("To date should be prior to the current date!")
         elif self.from_date and self.to_date and self.from_date > self.to_date:
-            message = _("To Date must be greater than From Date !")
+            message = _("From Date should be prior to the To Date! ")
         if message:
             warning.update({"message": message})
             return {"warning": warning}
