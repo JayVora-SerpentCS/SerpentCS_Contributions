@@ -1,372 +1,843 @@
-<section style="padding-bottom:10px;background:#dcdcdc;padding-top:2px;padding-left: 0px;padding-right: 0px;">
-
-<section class="oe_container" style="font-family:Times New Roman">
-    <div class="oe_spaced">
-        <h2 class="oe_slogan" style="font-family:Times New Roman;font-size:25px;" >This module provides
-        functionality of mass label printing
-        </h2>
-        <p class='oe_mt32 text-justify' style="margin-left: 20px;font-family:Times New Roman;
-        font-size:18px;">
-            Install these libs:
-        </p>
-        <ul><li style="margin-left: 50px;font-family:Times New Roman;
-        font-size:18px;">sudo pip install pyBarcode</li></ul>
-        <ul><li style="margin-left: 50px;font-family:Times New Roman;
-        font-size:18px;">sudo pip install utils</li></ul>
-        <ul><li style="margin-left: 50px;font-family:Times New Roman;
-        font-size:18px;">sudo pip install cairosvg</li></ul>
-    </div>
-</section>
-<section class="oe_container">
-    <section class="s_features">
-        <div class="container">
-            <div class="row mt12 mb12">
-            <div class="col-md-3 col-sm-3 col-xs-3 text-center">
-                <a style="color:#7c7bad" href="https://www.youtube.com/watch?v=Fps5FWfcLwo"
-                class="fa fa-youtube-play fa-3x" target="_blank"> </a>
-                <a href ="https://www.youtube.com/watch?v=Fps5FWfcLwo">
-                <h3 style="color:gray;font-family:Times New Roman;"
-                class="mt8 mb0 o_default_snippet_text">Watch Video</h3></a>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 text-center">
-                <a href ="#config_label"><span class="fa fa-cogs fa-3x"
-                style="color:#7c7bad"/></a>
-                <a href ="#config_label"><h3 style="color:gray;font-family:Times New Roman;" class="mt8 mb0 o_default_snippet_text">Configure Label</h3></a>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 text-center">
-                <a href="#advance"><i class="fa fa-plus-square fa-3x" style="color:#7c7bad"></i></a>
-                <a href="#advance"><h3 style="color:gray;font-family:Times New Roman;" class="mt8 mb0 o_default_snippet_text">Create Action</h3></a>
-            </div>
-            <div class="col-md-3 col-sm-3 col-xs-3 text-center">
-                <a href="#print_report"><i class="fa fa-print fa-3x" style="color:#7c7bad"></i>
-                <h3 style="color:gray;font-family:Times New Roman;" class="mt8 mb0 o_default_snippet_text">Print Label</h3></a>
+<div class="container">
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~ HEADER ~~~~~~~~~~~~~~~~~~~~~~~~-->
+        <!-- SerpentCS Logo -->
+        <div class="row">
+            <div class="col-md-12 mt32 mb32">
+                <a class="float-right" href="https://www.serpentcs.com" target="_blank">
+                    <img src="header-logo.png" alt="SerpentCS Logo"/>
+                </a>
             </div>
         </div>
-      </div>
-    </section>
-</section>
-<section class="oe_container" style="font-family:Times New Roman" id="config_label">
-    <div class="oe_spaced">
-        <h4 class="oe_slogan" style="font-family:Times New Roman;">
-            <span class="label fa fa-cogs" style="background:#875A7B;">
-                Label Configuration
-            </span>
-        </h4>
-        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
-            <p>
-                As you can see in the image which is displayed below. You will have list of famous
-                stationary vendors.
-            </p>
-            <p>
-                Once you click on any of them, you will have list of demo data for the label printing.
-            </p>
-        </div>
-        <div class="oe_spaced">
-            <img class="img img-responsive center-block" src="v14_label_1.png">
-            <img class="img img-responsive center-block" src="v14_label_9.png">
-        </div>
-    </div>
-</section>
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman">
-            <p>
-                Now when you click on any of the above given stationary vendors, you will have list of
-                demo data which are nothing but a type of various types of label.
-            </p>
-        </div>
-        <div class="oe_spaced">
-            <img class="img img-responsive center-block" src="v14_label_2.png">
-            <img class="img img-responsive center-block" src="v14_label_3.png">
-        </div>
-    </div>
-</section>
-<section class="oe_container oe_dark">
-    <div class="oe_row oe_spaced">
-         <h4 class="oe_slogan" style="font-family:Times New Roman;">
-            <span class="label fa fa-print" style="background:#875A7B;">
-                Label Printing
-            </span>
-        </h4>
-        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
-            <p>
-                In this screen you will be able see the details like name of label,
-                object of the model will be selected for the printing of that particular
-                label and reset of the information shall be selected which type of name
-                and fields you would like to display on the label.
-            </p>
-            <div class="oe_spaced">
-                <img class="img img-responsive center-block" src="v14_label_4.png">
+        <!-- Heading and Available Version links New SCS-->
+        <section class="oe_container">
+            <div class="row o_equal_col_sm position-relative overflow-hidden shadow"
+                 style="margin:0 auto;background-color: #C3282D;padding-bottom:0;border-radius:10px;">
+                <div class="container position-relative"
+                     style="display:block;margin:0 auto;text-align:center;color:#fff">
+                    <div class="row">
+                        <div class="col-lg-12 align-items-top d-inline-flex align-items-top px-5 mt64 mb32">
+                            <div class="text-left">
+                                <h2 style="letter-spacing:2px;font-weight:900;color:#fff;text-transform:uppercase;font-family:'Montserrat', sans-serif">
+                                    This module provides functionality of mass label printing.
+                                </h2>
+                                <h4 style="font-size: 16px;"><font style="color:#fff;">
+                                    As you can see in the image which is displayed below. You will have list of famous stationary vendors.
+                                    Once you click on any of them, you will have list of demo data for the label printing.
+                                </font></h4>
+                                <span class="o_gradient"
+                                      style="width:150px;height:1px;background-color:#ffffff!important;display:inline-block;border-radius:2px;"></span>
+                                <div class="mt16 mb16">
+                                    <ul class="navbar-nav flex-row ml-md-auto"
+                                        style="color:#ffffff;font-size:16px;font-weight:bold;font-family:'Montserrat', sans-serif;">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p style="font-size: 18px;font-family:Times New Roman;">
-                You can also maintain the sequence of each selected fields.
-            </p>
-            <p style="font-size: 18px;font-family:Times New Roman;" id="advance">
-                Now if you go onto Advance tab, you will have one sidebar button,which would add the particular action on the product and with the help of it you will be able to print
-                the label by going into products - more - there you would have the option of printing the label.
-            </p>
-        </div>
-        <div class="oe_spaced" id="advance">
-            <img class="img img-responsive center-block" src="v14_label_5.png">
-        </div>
-
-        <div class="oe_spaced" id="advance">
-            <img class="img img-responsive center-block" src="v14_label_6.png">
-            <img class="img img-responsive center-block" src="v14_label_7.png">
-        </div>
-    </div>
-</section>
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
-            <p>
-                In order to add the items for the label printing menu, you
-                must have to fill some necessary details which are mentioned
-                in this given wizard like:
-            </p>
-            <ul>
-                <li>In sequence, you would like to keep the fields on label.</li>
-                <li>In type, you will have three option like Normal, Image and Barcode.</li>
-                <li>Font size would represent the size of font user want to display.</li>
-                <li>No Label for whether you want to display label or not while printing the module.</li>
-                <li>New line for if user want to display information on new line or not.</li>
-                <li>Position allow you to select the position of label on which position you want to print the label.</li>
-                <li>Fields would allow you to select the fields to display on the label.</li>
-            </ul>
-        </div>
-        <div class="oe_spaced">
-             <img class="img img-responsive center-block" src="v14_label_8.png">
-         </div>
-    </div>
-</section>
-<section class="oe_container" id="print_report">
-    <div class="oe_spaced">
-        <h4 class="oe_slogan" style="font-family:Times New Roman;">
-            <span class="fa fa-bars label" style="background:#875A7B;">
-                Label In Sidebar
-            </span>
-        </h4>
-        <div class="oe_span12 text-justify" style="font-size: 15px;">
-            <p style="font-size: 18px;font-family:Times New Roman;">
-                Once the sidebar button / action is added, you will be able to see the label print option in the more
-                which we have highlighted. Once you click on it you will have one wizard.
-            </p>
-        </div>
-        <div class="oe_spaced">
-            <img class="img img-responsive center-block" src="v14_label_11.png">
-        </div>
-    </div>
-</section>
-<section class="oe_container oe_dark" id="print_report">
-    <div class="oe_row oe_spaced">
-        <h4 class="oe_slogan" style="font-family:Times New Roman;">
-            <span class="fa fa-print label" style="background:#875A7B;">
-                Print Report
-            </span>
-        </h4>
-        <div class="oe_span12 text-justify" style="font-size: 18px;font-family:Times New Roman;">
-            <p>
-                Once you click on the print button you would have this wizard in which you have to fill up the necessary
-                informations such as Brand name, Label size, Number of copy, Height -Width of Image and
-                Barcode Height-Width information will be selected here.
-            </p>
-        </div>
-        <div class="oe_spaced" id="print_report">
-            <img class="img img-responsive center-block" src="v14_label_10.png">
-        </div>
-
-    </div>
-</section>
-</section>
-<table style="font-family: 'Helvetica Neue', Helvetica, Arial,
-sans-serif;" cellpadding="0" cellspacing="0" border="0" width="100%">
-
-    <tbody>
-        <tr>
-            <td colspan="2" style="font-size:16px; color:#d74930; font-weight:bold;" width="100%" align="center">
-            <span class="fa fa-certificate fa-1x" style="color:#1f2327;">Check out our various Odoo Services below</span>
-
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="border-bottom:#d74930 solid 1px; line-height:10px;">&nbsp;
-             </td>
-        </tr>
-        <tr>
-            <td  colspan="2">
-                <table style="font-size:11px; color:#697582; line-height:20px;" cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tbody>
-                        <tr>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/odoo-openerp-services/consulting"
-style="color:#697582; text-decoration:none;">Odoo Consulting</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/odoo-openerp-services/gap-analysis"
-style="color:#697582; text-decoration:none;">Gap Analysis and BPR</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/odoo-openerp-services/implementation"
-style="color:#697582; text-decoration:none;">Odoo Implementation</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/ecommerce-integrations/magento-integration"
-style="color:#697582; text-decoration:none;">Integration with E-Commerce</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/trainings/openerp-odoo-technical-training"
-style="color:#697582; text-decoration:none;">Odoo Technical Training</a></span></td>
-                        </tr>
-                        <tr>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/odoo-openerp-services/offshore-development-partnership"
-style="color:#697582; text-decoration:none;">Offshore & Onsite Development</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/odoo-packages/odoo-support-package"
-style="color:#697582; text-decoration:none;">Support and Maintenance</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/odoo-openerp-services/hire-odoo-openerp-developer"
-style="color:#697582; text-decoration:none;">Hire Dedicated Odoo Developer</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/ecommerce-integrations/paymentech-elavon-paypal-integration"
-style="color:#697582; text-decoration:none;">Payment Gateway Integrations</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/trainings/openerpodoo-functional-training"
-style="color:#697582; text-decoration:none;">Odoo Functional Training</a></span></td>
-                        </tr>
-                        <tr>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/community/aios-mobile-client"
-style="color:#697582; text-decoration:none;">Odoo Mobile App Development</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.odooqa.com/page/manual-functional-testing"
-style="color:#697582; text-decoration:none;">Odoo Manual Testing</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.odooqa.com/page/automated-functional-testing"
-style="color:#697582; text-decoration:none;">Odoo Automated Testing</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/ecommerce-integrations/fedex-ups-usps-integration"
-style="color:#697582; text-decoration:none;">Integration with Shipping API</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com/services/odoo-openerp-services/installation-and-hosting"
-style="color:#697582; text-decoration:none;">Installation & Hosting</a></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="border-bottom:#d74930 solid 1px; line-height:10px;">&nbsp;
-             </td>
-        </tr>
-
-
-        <tr>
-            <td colspan="2" style="font-size:16px; color:#d74930; font-weight:bold;" width="100%" align="center">
-            <span class="fa fa-certificate fa-1x" style="color:#1f2327;">Check out our various Odoo Based Products</span>
-
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="border-bottom:#d74930 solid 1px; line-height:10px;">&nbsp;
-             </td>
-        </tr>
-        <tr>
-            <td  colspan="2">
-                <table style="font-size:11px; color:#697582; line-height:20px;" cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tbody>
-                        <tr>
-                            <td width="20%"><span class="fa fa-coffee fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/restaurant-management-system"
-style="color:#697582; text-decoration:none;">Restaurant Management</a></span></td>
-                            <td width="20%"><span class="fa fa-building fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/property-management-system"
-style="color:#697582; text-decoration:none;">Property Management</a></span></td>
-                            <td width="20%"><span class="fa fa-plane fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/visa-management-system"
-style="color:#697582; text-decoration:none;">Visa Agency Management</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/odoo-singapore-localization"
-style="color:#697582; text-decoration:none;">Singapore Localization</a></span></td>
-                            <td width="20%"><span class="fa fa-graduation-cap fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/education-management-system"
-style="color:#697582; text-decoration:none;">School, University Management</a></span></td>
-                        </tr>
-                        <tr>
-                            <td width="20%"><span class="fa fa-cubes fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/construction-management-system"
-style="color:#697582; text-decoration:none;">Construction Management</a></span></td>
-                            <td width="20%"><span class="fa fa-bus fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/fleet-management-systems"
-style="color:#697582; text-decoration:none;">Fleet Management</a></span></td>
-                            <td width="20%"><span class="fa fa-stethoscope fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/healthcare-management-software"
-style="color:#697582; text-decoration:none;">Medical ERP</a></span></td>
-                            <td width="20%"><span class="fa fa-hotel fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/hotel-management-system"
-style="color:#697582; text-decoration:none;">Hotel Management</a></span></td>
-                            <td width="20%"><span class="fa fa-users fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/human-resource-management-system"
-style="color:#697582; text-decoration:none;">Human Resource Management</a></span></td>
-                        </tr>
-                        <tr>
-                            <td width="20%"><span class="fa fa-map-marker fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/odoo-fieldstaff-tracking-system"
-style="color:#697582; text-decoration:none;">Field Service Management</a></span></td>
-                            <td width="20%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/spa-salon-management-system"
-style="color:#697582; text-decoration:none;">Spa & Salone Management</a></span></td>
-                            <td width="20%"><span class="fa fa-phone fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/odoo-ringcentral-integration"
-style="color:#697582; text-decoration:none;">Ringcentral telephone integration</a></span></td>
-                            <td width="20%"><span class="fa fa-heart fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/customer-relationship-management"
-style="color:#697582; text-decoration:none;">Customer Relationship</a></span></td>
-                            <td width="20%"><span class="fa fa-user fa-1x" style="color:#697582;"> <a href="http://serpentcs.in/product/talent-management-system"
-style="color:#697582; text-decoration:none;">Talent Management</a></span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" style="border-bottom:#d74930 solid 1px; line-height:10px;">&nbsp;
-             </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" style="font-size:16px; color:#d74930; font-weight:bold;" width="100%" align="center">
-            <span class="fa fa-certificate fa-1x" style="color:#1f2327;">For any questions, support and development contact us.</span>
-
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="border-bottom:#d74930 solid 1px; line-height:10px;">&nbsp;
-             </td>
-        </tr>
-
-        <tr>
-            <td  colspan="2">
-                <table style="font-size:11px; color:#697582; line-height:20px;" cellpadding="0" cellspacing="0" border="0" width="100%">
-                    <tbody>
-                        <tr>
-                            <td width="38%"><span class="fa fa-whatsapp fa-1x" style="color:#697582;"> (+91) 98793-54457, (+91) 90334-72982 </span>
-                            <span class="fa fa-phone fa-1x" style="color:#697582;"> +91-79-2975-0867</span></td>
-                            <td width="17%"><span class="fa fa-envelope fa-1x" style="color:#697582;"> <a href="mailto:contact@serpentcs.com"
-style="color:#697582; text-decoration:none;">contact@serpentcs.com</a></span></td>
-                            <td width="15%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.com"
-style="color:#697582; text-decoration:none;">www.serpentcs.com</a></span></td>
-                            <td width="15%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.serpentcs.in"
-style="color:#697582; text-decoration:none;">www.serpentcs.in</a></span></td>
-                            <td width="15%"><span class="fa fa-globe fa-1x" style="color:#697582;"> <a href="http://www.odooqa.com"
-style="color:#697582; text-decoration:none;">www.odooqa.com</a></span></td>
-                        </tr>
-                        <tr>
-                            <td width="38%"><span class="fa fa-hand-pointer-o fa-1x" style="color:#697582;"> WhatsApp, Telegram or Call 24X7</span></td>
-                            <td width="17%"><span class="fa fa-hand-pointer-o fa-1x" style="color:#697582;"> Help! Send Mail</span></td>
-                            <td width="15%"><span class="fa fa-hand-pointer-o fa-1x" style="color:#697582;"> Browse our Services</span></td>
-                            <td width="15%"><span class="fa fa-hand-pointer-o fa-1x" style="color:#697582;"> Browse our Products</span></td>
-                            <td width="15%"><span class="fa fa-hand-pointer-o fa-1x" style="color:#697582;"> QA Services</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        <tr colspan="2">
-            <td  colspan="2" style="border-bottom:#d74930 solid 1px; line-height:10px;">&nbsp;
-            </td>
-        </tr>
-        <tr colspan="2">
-            <td  colspan="2" style="padding-top:9px;" align="center">
-                <a href="https://www.facebook.com/Serpent-Consulting-Services-Pvt-Ltd-299017730141795/" style="text-decoration:none;"><img src="fb.jpg" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="https://twitter.com/Serpent_CS" style="text-decoration:none;"><img src="twitter.jpg" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="https://www.linkedin.com/company-beta/2435682/" style="text-decoration:none;"><img src="in.jpg" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="https://www.youtube.com/user/husendaudi123/videos" style="text-decoration:none;"><img src="youtube.jpg" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="https://www.instagram.com/explore/tags/serpentcs/"style="text-decoration:none;"><img src="insta.jpg" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="http://www.serpentcs.com"style="text-decoration:none;"><img src="serpent32.png" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="http://www.serpentcs.in"style="text-decoration:none;"><img src="serpent32.png" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-                <a href="http://www.odooqa.com"style="text-decoration:none;"><img src="odooqa32.png" style="vertical-align:middle; border-radius: 50%;" width="25">
-                </a>
-            </td>
-        </tr>
-        <tr colspan="2">
-            <td  colspan="2" style="font-size:8px; color:#697582; line-height:15px;padding-top:10px; text-align:justify;">
-            </td>
-        </tr>
-    </tbody>
-</table>
+        </section>
+        <!-- App Featured Screenshots -->
+        <section class="oe_container mt32">
+            <div class="row o_equal_col_sm position-relative overflow-hidden" style="margin:0 auto;padding-bottom:0;">
+                <div class="container position-relative mt8" style="display:block;margin:0 auto;">
+                    <div class="row">
+                        <div class="col-lg-12 align-items-top d-inline-flex align-items-top px-5">
+                            <div class="text-left" style="width:100%;">
+                                <h3 style="letter-spacing:2px;font-weight:900;color:#000;text-transform:uppercase;font-family:'Montserrat', sans-serif">
+                                    Featured Screenshots
+                                </h3>
+                                <span class="o_gradient"
+                                      style="width:150px;height:2px;background-image:linear-gradient(90deg, #e52d27 20%, #b31217 80%)!important;display:inline-block;border-radius:2px;">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="container px-5">
+                            <div class="container position-relative">
+                                <div class="row bg-white">
+                                    <div class="col-md-12 p-0 overflow-hidden">
+                                        <div>
+                                            <div id="carousel_bridges" class="carousel slide oe_spaced"
+                                                 data-bs-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    <!-- Carousel Item 1 -->
+                                                    <div class="carousel-item active" style="min-height:190.4px;">
+                                                        <!-- Must set active class in first slide -->
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_1.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label Configuration"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <h4 class="oe_slogan" style="font-family:Times New Roman;">Label Configuration
+                                                                    </h4>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 2 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_9.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label Configuration"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <li class="mb8">As you can see in the image which is displayed below. You will have list of famous stationary vendors.
+                                                                    </li>
+                                                                    <li class="mb8">Once you click on any of them, you will have list of demo data for the label printing.
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 3 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_2.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Types of label"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <li class="mb8">Now when you click on any of the above given stationary vendors, you will have list of demo data which are nothing but a type of various types of label.
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 4 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_3.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Types of label"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 5 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_4.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label Printing"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <h4 class="oe_slogan" style="font-family:Times New Roman;">Label Printing
+                                                                    </h4>
+                                                                    <li class="mb8">In this screen you will be able see the details like name of label, object of the model will be selected for the printing of that particular label and reset of the information shall be selected which type of name and fields you would like to display on the label.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 6 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_5.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label Printing"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <li class="mb8">You can also maintain the sequence of each selected fields.</li>
+                                                                    <li class="mb8">Now if you go onto Advance tab, you will have one sidebar button,which would add the particular action on the product and with the help of it you will be able to print the label by going into products - more - there you would have the option of printing the label.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 7 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_6.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label Printing"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 8 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_7.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label Printing"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 9 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_8.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="printing menu"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <p>In order to add the items for the label printing menu, you must have to fill some necessary details which are mentioned in this given wizard like:
+                                                                    </p>
+                                                                    <li>In sequence, you would like to keep the fields on label.</li>
+                                                                    <li>In type, you will have three option like Normal, Image and Barcode.</li>
+                                                                    <li>Font size would represent the size of font user want to display.</li>
+                                                                    <li>No Label for whether you want to display label or not while printing the module.</li>
+                                                                    <li>New line for if user want to display information on new line or not.</li>
+                                                                    <li>Position allow you to select the position of label on which position you want to print the label.</li>
+                                                                    <li>Fields would allow you to select the fields to display on the label.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 10 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_11.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Label In Sidebar"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <li class="mb8">Once the sidebar button / action is added, you will be able to see the label print option in the more which we have highlighted. Once you click on it you will have one wizard.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 11 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto px-5">
+                                                                <div class="mt16 mb16">
+                                                                    <img src="v14_label_10.png"
+                                                                         class="img img-responsive center-block shadow"
+                                                                         alt="Print Report"
+                                                                         style="max-width:95%;display:block;margin:auto;border:10px solid #dee2e6;border-radius:10px;">
+                                                                </div>
+                                                                <ul class="mb32"
+                                                                style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;">
+                                                                    <li class="mb8">Once you click on the print button you would have this wizard in which you have to fill up the necessary informations such as Brand name, Label size, Number of copy, Height -Width of Image and Barcode Height-Width information will be selected here.</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Control left, right button -->
+                                                <a class="carousel-control-prev" href="#carousel_bridges" role="button"
+                                                   data-bs-slide="prev"
+                                                   style="justify-content:flex-start;-webkit-justify-content:flex-start;width:8%;">
+                                                    <span>
+                                                        <img class="img" src="arrow_img-left.png" alt="arrow-left"/>
+                                                    </span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carousel_bridges" role="button"
+                                                   data-bs-slide="next"
+                                                   style="justify-content: flex-end;-webkit-justify-content:flex-end;right:15px;width:8%;">
+                                                    <span>
+                                                        <img class="img" src="arrow_img-right.png" alt="arrow-right"/>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Suggested Apps -->
+        <section class="oe_container mt32 mb64">
+            <div class="row o_equal_col_sm position-relative overflow-hidden" style="margin:0 auto;padding-bottom:0;">
+                <!--<img src="div-bg.png" class="img position-absolute w-100 h-100 bg-none" alt="background image">-->
+                <div class="container position-relative" style="display:block;margin:0 auto;">
+                    <div class="row mt32 mb32">
+                        <div class="col-lg-12 align-items-top d-inline-flex align-items-top px-5">
+                            <div class="text-left" style="width:100%;color:#f8f8f8;">
+                                <h3 style="letter-spacing:2px;font-weight:900;color:#000;text-transform:uppercase;font-family:'Montserrat', sans-serif">
+                                    Suggested Apps
+                                </h3>
+                                <span class="o_gradient"
+                                      style="width:150px;height:2px;background-image:linear-gradient(90deg, #e52d27 20%, #b31217 80%)!important;display:inline-block;border-radius:2px;"></span>
+                            </div>
+                        </div>
+                        <div class="container mb32">
+                            <div class=" position-relative">
+                                <div class="row">
+                                    <div class="col-md-12   overflow-hidden">
+                                        <div>
+                                            <div id="carousel_suggested" class="carousel slide oe_spaced"
+                                                 data-bs-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    <!-- Carousel Item 1 -->
+                                                    <div class="carousel-item active" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold;font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/14.0/odoo_office365_calendar/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/calendar-icon.png"
+                                                                                 alt="Odoo Office365 Calendar Integration"/>
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>Odoo Office365<br>Calendar<br>Integration</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold; font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/17.0/odoo_microsoft_account/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/Microsof-Azure-icon.png"
+                                                                                 alt="Microsoft Azure SSO Integration">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>Microsoft Azure<br>SSO Integration</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold; font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/16.0/hr_attendances_overtime/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/HR-Attendance-OverTime-Icon.png"
+                                                                                 alt="HR Attendance OverTime">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>HR Attendance<br>OverTime</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 2 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold;font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/17.0/ringcentral/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/Ringcentral-icon.png"
+                                                                                 alt="Odoo RingCentral Integration"/>
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>Odoo<br>RingCentral<br>Integration</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold; font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/16.0/popup_reminder/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/popup-icon.png" alt="Pop-up Reminder">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>Pop-up<br>Reminder</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold; font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/14.0/sale_dost/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/Delivery-Order-Signed-Tracked-icon.png"
+                                                                                 alt="DOST-Delivery Order Signed and Tracked">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>DOST-Delivery<br>Order Signed<br>and Tracked</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold; font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/17.0/user_mailbox/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/User-mailbox-icon.png"
+                                                                                 alt="User Mailbox">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>User Mailbox</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Carousel Item 3 -->
+                                                    <div class="carousel-item" style="min-height:190.4px;">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold;font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/16.0/scs_currency_revaluation/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/multi-currency-icon.png"
+                                                                                 alt="Multi Currency RE-Evaluation Unrealized Gain Loss">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>Multi Currency<br>RE-Evaluation<br>Unrealized<br>Gain Loss</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <div class="d-flex flex-column" style="width:max-content">
+                                                                    <h3 class="mt16"
+                                                                        style="font-weight: bold; font-family:'Montserrat', sans-serif">
+                                                                        <a style="color:#000;"
+                                                                           href="https://apps.odoo.com/apps/modules/15.0/web_email/"
+                                                                           target="_blank"
+                                                                           style="font-family:'Montserrat', sans-serif;">
+                                                                            <img class="img m-auto shadow"
+                                                                                 style="width:100px;font-size:16px"
+                                                                                 src="images/Odoo-as-Inbox-icon.png"
+                                                                                 alt="Odoo as Inbox Email Interface">
+                                                                            <div class="text-center mt-4"
+                                                                                 style="font-size:16px;">
+                                                                                <b>Odoo as<br>Inbox Email<br>Interfaces</b>
+                                                                            </div>
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Carousel Control left, right button -->
+                                                <a class="carousel-control-prev" href="#carousel_suggested" role="button"
+                                                   data-bs-slide="prev"
+                                                   style="justify-content:flex-start;-webkit-justify-content:flex-start;width:8%;">
+                                                        <span>
+                                                            <img class="img"
+                                                                 src="arrow_img-left.png"
+                                                                 alt="arrow-left"/>
+                                                        </span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carousel_suggested" role="button"
+                                                   data-bs-slide="next"
+                                                   style="justify-content:flex-end;-webkit-justify-content:flex-end;width:8%;">
+                                                        <span>
+                                                            <img class="img"
+                                                                 src="arrow_img-right.png"
+                                                                 alt="arrow-right"/>
+                                                        </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>      
+        <!-- Business Solutions -->
+        <section class="oe_container mt32 mb64">
+            <div class="row o_equal_col_sm position-relative overflow-hidden" style="margin:0 auto;padding-bottom:0;">
+                <div class="container position-relative"
+                     style="display:block;margin:0 auto;text-align:center;">
+                    <div class="row">
+                        <div class="col-lg-12 align-items-top d-inline-flex align-items-top">
+                            <div class="text-left" style="width:100%;">
+                                <h3 style="letter-spacing:2px;font-weight:900;color:#000;text-transform:uppercase;font-family:'Montserrat', sans-serif">
+                                    Business Solutions
+                                </h3>
+                                <span class="o_gradient"
+                                      style="width: 150px;height:2px;background-image: linear-gradient(90deg, #e52d27 20%, #b31217 80%) !important; display: inline-block;border-radius: 2px;"></span>
+                                <div class="row">
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/15.0/school/" target="_blank"
+                                               style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/education.png" alt="Education" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight: bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Education Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/16.0/property/"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/property.png" alt="Property" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Property Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/browse?search=Singapore"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/singapore.png" alt="Singapore" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Singapore Localization
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/17.0/gym_management_system/"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/gym.png" alt="Gym" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Gym Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/15.0/servisa/" target="_blank"
+                                               style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/visa.png" alt="Visa" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Visa Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://www.youtube.com/watch?v=eTETD5lma3w&t=97s" target="_blank"
+                                               style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/biometrics.png" alt="Biometrics" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Biometrics
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://www.youtube.com/watch?v=VQK8v-FAHRU&list=PL4Wugt3LKrSTjlgmyiwEDdkSGyb008QNX&index=2"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/FSM.png" alt="FSM" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Field Serviceman Mangement
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/12.0/scs_hr_interview/"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/HRMS.png" alt="HR" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    HR Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/13.0/spa_salon_portal/"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/spa-salon.png" alt="Spa Salon" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Salon and Spa Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/16.0/fleet_operations/"
+                                               target="_blank" style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/fleet.png" alt="Fleet" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Fleet Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/15.0/hotel/" target="_blank"
+                                               style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/hotel.png" alt="Hotel" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Hotel Management
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <a href="https://apps.odoo.com/apps/modules/17.0/ringcentral/" target="_blank"
+                                               style="font-family:'Montserrat', sans-serif;">
+                                                <img src="images/ring.png" alt="Ring Central" width="100" height="100"/>
+                                                <h3 class="mt16"
+                                                    style="font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                    Ring Central
+                                                </h3>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Our Odoo Services -->
+        <section class="oe_container mb64">
+            <div class="row o_equal_col_sm position-relative overflow-hidden" style="margin:0 auto;padding-bottom:0;">
+                <img src="div-bg.png" class="img position-absolute w-100 h-100 bg-none"/>
+                <div class="container position-relative" style="display:block; margin:0 auto;">
+                    <div class="mt32 mb32">
+                        <div class="col-lg-12 align-items-top d-inline-flex align-items-top px-5">
+                            <div class="text-left" style="width:100%;">
+                                <h3 style="letter-spacing:2px;font-weight:900;color:#000;text-transform:uppercase;font-family:'Montserrat', sans-serif">
+                                    Our Odoo Services
+                                </h3>
+                                <span class="o_gradient"
+                                      style="width:150px;height:2px;background-image:linear-gradient(90deg, #e52d27 20%, #b31217 80%)!important;display:inline-block;border-radius:2px;"></span>
+                            </div>
+                        </div>
+                        <div class="col-12 mb32">
+                            <div class="position-relative">
+                                <div class="row">
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <img src="customise.png" alt="Odoo Customization" width="100" height="100">
+                                            <h3 class="mt16"
+                                                style="font-weight:bold;font-size:17px;font-family:'Montserrat', sans-serif">
+                                                Odoo Customization
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <img src="implementation.png" alt="Odoo Implementation" width="100"
+                                                 height="100">
+                                            <h3 class="mt16"
+                                                style="font-weight:bold;font-size:17px;font-family:'Montserrat', sans-serif">
+                                                Odoo Implementation
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <img src="integration.png" alt="Odoo Integration" width="100" height="100">
+                                            <h3 class="mt16"
+                                                style="font-weight:bold;font-size:17px;font-family:'Montserrat', sans-serif">
+                                                Odoo Integration
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <img src="support.png" alt="Odoo Support" width="100" height="100">
+                                            <h3 class="mt16"
+                                                style="font-weight:bold;font-size:17px;font-family:'Montserrat', sans-serif">
+                                                Odoo Support
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col mb16">
+                                        <div class="text-center pt16 pb16">
+                                            <img src="hire.png" alt="Hire Odoo Developer" width="100" height="100">
+                                            <h3 class="mt16"
+                                                style="font-weight:bold;font-size:17px;font-family:'Montserrat', sans-serif">
+                                                Hire Odoo Developers
+                                            </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <section class="oe_container mt32 mb-4">
+            <div class="row o_equal_col_sm position-relative overflow-hidden shadow"
+                 style="margin:0 auto;background-color:#F5F5F5;padding-bottom:0;border-radius:10px;">
+                <div class="container position-relative"
+                     style="display:block;margin:0 auto;text-align:center;">
+                    <div class="row">
+                        <div class="col-lg-12 align-items-top d-inline-flex align-items-top px-5 mt32 mb32">
+                            <div class="text-left" style="width:100%;">
+                                <h3 style="letter-spacing:2px;font-weight:900;color:#000;text-transform:uppercase;font-family:'Montserrat', sans-serif">
+                                    Help And Support
+                                </h3>
+                                <span class="o_gradient"
+                                      style="width:150px;height:2px;background-image:linear-gradient(90deg, #e52d27 20%, #b31217 80%)!important;display:inline-block;border-radius:2px;"></span>
+                                <div class="row">
+                                    <div class="col-md-4 mt16">
+                                        <a class="s_figure_link"
+                                           style="font-size:16px;font-weight:bold;padding:8px 16px;display:inline-block;background-color: #C3282D;color:#fff;border-radius:7px;margin:14px 0px;font-family:'Montserrat', sans-serif;"
+                                           href="mailto:contact@serpentcs.com">
+                                            <i class="fa fa-question-circle" style="padding-right:3px"></i>
+                                            For any Query
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mt16 mt16">
+                                        <a class="s_figure_link" style="font-size: 16px;font-weight:bold;padding:8px 16px;display:inline-block;
+                                        background-color: #C3282D;color:#fff;border-radius:7px;margin:14px 0px;font-family:'Montserrat', sans-serif;"
+                                           href="https://apps.odoo.com/apps/modules/browse?author=Serpent%20Consulting%20Services%20Pvt.%20Ltd."
+                                           target="_blank">
+                                            <i class="fa fa-eye" style="padding-right:3px"></i>
+                                            Checkout our Apps
+                                        </a>
+                                    </div>
+                                    <div class="col-md-4 mt16 mt16">
+                                        <a class="s_figure_link" style="font-size:16px;font-weight:bold;padding:8px 16px;display:inline-block;
+                                       background-color: #C3282D;color:#fff;border-radius:7px;margin:14px 0px;font-family:'Montserrat', sans-serif;"
+                                           href="https://www.youtube.com/channel/UCendM9esn5UiKhgHMO5IS9A/videos"
+                                           target="_blank">
+                                            <i class="fa fa-youtube-play" style="padding-right:3px"></i>
+                                            Check App Demo
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="padding-left:0;">
+                                    <hr style="border-color:gray;"/>
+                                </div>
+                                <div class="row">
+                                    <!-- Email Text -->
+                                    <div class="col-md-3 mt8 mb8">
+                                        <p style="color:#555;font-weight:bold;font-size:15px;font-family:'Montserrat', sans-serif;">
+                                            Write a mail to us:</p>
+                                        <a href="mailto:contact@serpentcs.com" class="font-weight-bold text-primary"
+                                           style="font-size:16px;font-family:'Montserrat', sans-serif;">contact@serpentcs.com</a>
+                                    </div>
+                                    <!-- WhatsApp Number -->
+                                    <div class="col-md-5 mt8 mb8">
+                                        <p style="color: #555;font-weight:bold;font-size:15px;font-family:'Montserrat', sans-serif;">
+                                            Write a text to us on WhatsApp:</p>
+                                        <a href="tel:919879354457" class="font-weight-bold text-primary"
+                                           style="font-size:16px;font-family:'Montserrat', sans-serif;">(+91)
+                                            98793-54457</a>
+                                        <a href="tel:919033472982" class="font-weight-bold text-primary"
+                                           style="font-size:16px;font-family:'Montserrat', sans-serif;">(+91)
+                                            90334-72982</a>
+                                    </div>
+                                    <!-- Visit Website -->
+                                    <div class="col-md-4 mt8 mb8">
+                                        <p style="color: #555;font-weight:bold;font-size:15px;font-family:'Montserrat', sans-serif;">
+                                            Visit Our Website:</p>
+                                        <a href="https://www.serpentcs.com/" class="font-weight-bold text-primary"
+                                           style="font-size:16px;font-family:'Montserrat', sans-serif;">www.serpentcs.com</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</div>

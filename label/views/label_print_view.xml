@@ -23,18 +23,14 @@
                                             <field name="newline"/>
                                             <field name="python_expression"/>
                                             <field invisible="1" name="model_id"/>
-                                            <field attrs="{'invisible': [('python_expression','=',False)], 'required': [('python_expression','=',True)]}"
-                                                   name="python_field"/>
+                                            <field name="python_field" invisible="python_expression == False" required="python_expression == True"/>
                                             <newline/>
                                         </group>
                                         <group>
                                             <field name="type"/>
-                                            <field name="position" attrs="{'invisible': [('type', '=', 'normal')]}" />
+                                            <field name="position" invisible="type == 'normal'"/>
                                             <field name="nolabel"/>
-                                            <field attrs="{'invisible': [('python_expression','=',True)], 'required': [('python_expression','=',False)]}"
-                                                   context="{'model_list':parent.model_list}"
-                                                   domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']), ('model_id','=',model_id)]"
-                                                   name="field_id"/>
+                                            <field name="field_id" context="{'model_list':parent.model_list}" domain="[('ttype', 'not in', ['one2many', 'refenrence', 'function']), ('model_id','=',model_id)]" invisible="python_expression == True" required="python_expression == False"/>
                                         </group>
                                     </group>
                                     <group>
@@ -53,14 +49,9 @@
                         </page>
                         <page string="Advance">
                             <group col="2" colspan="2">
-                                <button attrs="{'invisible':[('ref_ir_act_report','!=',False)]}" colspan="2"
-                                        help="Display a button in the sidebar of related documents to open a composition wizard"
-                                        icon="fa-plus" name="create_action" string="Add sidebar button" type="object"/>
-                                <field attrs="{'invisible':[('ref_ir_act_report','=',False)]}"
-                                       name="ref_ir_act_report"/>
-                                <button attrs="{'invisible':[('ref_ir_act_report','=',False)]}" colspan="2"
-                                        icon="fa-trash-o" name="unlink_action" string="Remove sidebar button"
-                                        type="object"/>
+                                <button invisible="ref_ir_act_report == True" colspan="2" help="Display a button in the sidebar of related documents to open a composition wizard" icon="fa-plus" name="create_action" string="Add sidebar button" type="object"/>
+                                <field invisible="ref_ir_act_report == False" name="ref_ir_act_report"/>
+                                <button invisible="ref_ir_act_report == False" colspan="2" icon="fa-trash-o" name="unlink_action" string="Remove sidebar button" type="object"/>
                             </group>
                         </page>
                     </notebook>

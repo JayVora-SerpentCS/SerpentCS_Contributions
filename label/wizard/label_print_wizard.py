@@ -78,7 +78,6 @@ class LabelPrintWizard(models.TransientModel):
                 "label_print"), "datas": datas}
         )
         self.env.args = cr, uid, misc.frozendict(context)
-
         data = {"ids": self.ids, "model": "label.config", "form": datas}
         return (
             self.env.ref("label.dynamic_label")

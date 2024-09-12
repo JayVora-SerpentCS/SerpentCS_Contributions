@@ -14,14 +14,12 @@
                     <field invisible="1" name="is_image"/>
                 </group>
                 <group col="4" colspan="4">
-                    <group attrs="{'invisible': [('is_image','=', False)]}" colspan="2"
-                           string="Image height and width.">
+                    <group invisible="is_image == False" colspan="2" string="Image height and width.">
                         <field name="image_height"/>
                         <field name="image_width"/>
                     </group>
                     <field invisible="1" name="is_barcode"/>
-                    <group attrs="{'invisible': [('is_barcode', '=', False)]}" colspan="2"
-                           string="Barcode height and width.">
+                    <group invisible="is_barcode == False" colspan="2" string="Barcode height and width.">
                         <field name="barcode_height"/>
                         <field name="barcode_width"/>
                     </group>
