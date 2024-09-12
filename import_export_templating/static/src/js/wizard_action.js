@@ -1,57 +1,49 @@
-odoo.define('import_export_templating.ImportExport', function (require) {
-"use strict";
+/** @odoo-module **/
 
-var Bus = require('web.Bus');
-var FormController = require('web.FormController');
-var ListController = require('web.ListController');
-var ActionManager = require('web.ActionManager');
-var Dialog = require('web.Dialog');
-var dom = require('web.dom');
-var core = require('web.core');
-var Sidebar = require('web.Sidebar');
+import { registry } from '@web/core/registry';
+import { FormController } from "@web/views/form/form_controller";
+import { ListController } from "@web/views/list/list_controller";
+import { actionService } from "@web/webclient/actions/action_service";
+import { Dialog } from '@web/core/dialog/dialog';
+import { _t } from "@web/core/l10n/translation";
 
-var _t = core._t;
-
-FormController.include({
-    /**
-     * @override
-     */
-    renderSidebar: function ($node) {
-        var self = this;
+export class ImportExportTemplatingForm extends FormController {
+    setup() {
         if (this.hasSidebar) {
-            var otherItems = [];
+            console.log('const this.hasSidebar:::::::::::::::::::::::::::::::::::::::::',this.hasSidebar)
+            const otherItems = [];
             if (this.archiveEnabled && this.initialState.data.active !== undefined) {
-                var classname = "o_sidebar_item_archive" + (this.initialState.data.active ? "" : " o_hidden")
+                const classname = `o_sidebar_item_archive${this.initialState.data.active ? "" : " o_hidden"}`;
                 otherItems.push({
-                    label: _t("Archive"),
-                    callback: function () {
-                        Dialog.confirm(self, _t("Are you sure that you want to archive this record?"), {
-                            confirm_callback: self._toggleArchiveState.bind(self, true),
+                    label: this.env._t("Archive"),
+                    callback: () => {
+                        Dialog.confirm(this, this.env._t("Are you sure that you want to archive this record?"), {
+                            confirm_callback: () => this._toggleArchiveState(true),
                         });
                     },
-                    classname: classname,
+                    classname,
                 });
-                classname = "o_sidebar_item_unarchive" + (this.initialState.data.active ? " o_hidden" : "")
+                classname = `o_sidebar_item_unarchive${this.initialState.data.active ? " o_hidden" : ""}`;
                 otherItems.push({
-                    label: _t("Unarchive"),
-                    callback: this._toggleArchiveState.bind(this, false),
-                    classname: classname,
+                    label: this.env._t("Unarchive"),
+                    callback: () => this._toggleArchiveState(false),
+                    classname,
                 });
             }
             if (this.is_action_enabled('delete')) {
                 otherItems.push({
-                    label: _t('Delete'),
+                    label: this.env._t('Delete'),
                     callback: this._onDeleteRecord.bind(this),
                 });
             }
             if (this.is_action_enabled('create') && this.is_action_enabled('duplicate')) {
                 otherItems.push({
-                    label: _t('Duplicate'),
+                    label: this.env._t('Duplicate'),
                     callback: this._onDuplicateRecord.bind(this),
                 });
             }
             otherItems.push({
-                label: _t('Import / Export Tools'),
+                label: this.env._t('Import / Export Tools'),
                 callback: this._onActionCall.bind(this),
             });
             this.sidebar = new Sidebar(this, {
@@ -62,17 +54,16 @@ FormController.include({
                     activeIds: this.getSelectedIds(),
                     model: this.modelName,
                 },
-                actions: _.extend(this.toolbarActions, {other: otherItems}),
+                actions: {...this.toolbarActions, other: otherItems},
             });
-            return this.sidebar.appendTo($node).then(function() {
-                 // Show or hide the sidebar according to the view mode
-                self._updateSidebar();
+            return this.sidebar.appendTo($node).then(() => {
+                this._updateSidebar();
             });
         }
         return Promise.resolve();
-    },
+    }
 
-    _onActionCall: function (event) {
+    _onActionCall(event) {
         this.do_action({
             name:'Import / Export Tools',
             type: 'ir.actions.act_window',
@@ -81,22 +72,19 @@ FormController.include({
             context: {'active_model':this.modelName, 'nodestroy': true},
             target: 'new'
         });
-    },
+    }
 
-});
-
-
-ListController.include({
-    /**
-     * @override
-     */
-    renderSidebar: function ($node) {
-        var self = this;
+};
+export class ImportExportTemplatingList extends ListController {
+    setup() {
+        const self = this;
+        console.log("self:::::::::::::::::::::::::::::::::::::::::::::::::::",self)
         if (this.hasSidebar) {
-            var other = [{
+            const other = [{
                 label: _t("Export"),
-                callback: this._onExportData.bind(this)
+                // callback: this._onExportData.bind(this)
             }];
+            console.log('const other:::::::::::::::::::::::::::::::::::::::::',other)
             other.push({
                 label: _t('Import / Export Tools'),
                 callback: this._onActionCall.bind(this),
@@ -128,16 +116,26 @@ ListController.include({
                     activeIds: this.getSelectedIds(),
                     model: this.modelName,
                 },
-                actions: _.extend(this.toolbarActions, {other: other}),
+                actions: {...this.toolbarActions, other},
             });
             return this.sidebar.appendTo($node).then(function() {
                 self._toggleSidebar();
             });
         }
         return Promise.resolve();
-    },
+    }
 
-    _onActionCall: function (event) {
+    // _onActionCall: function (event) {
+    //     this.do_action({
+    //         name:'Import / Export Tools',
+    //         type: 'ir.actions.act_window',
+    //         res_model: 'wiz.download.template',
+    //         views: [[false, 'form']],
+    //         context: {'active_model':this.modelName, 'nodestroy': true},
+    //         target: 'new'
+    //     });
+    // },
+    _onActionCall(event) {
         this.do_action({
             name:'Import / Export Tools',
             type: 'ir.actions.act_window',
@@ -146,9 +144,8 @@ ListController.include({
             context: {'active_model':this.modelName, 'nodestroy': true},
             target: 'new'
         });
-    },
-
-});
+    }
+};
 
 ActionManager.include({
     /**
@@ -224,7 +221,7 @@ ActionManager.include({
     _executeCloseAction: function (action, options) {
         var result;
         if (!this.currentDialogController) {
-            result = options.on_close(action.infos);
+            result = options.onClose(action.infos);
             if(action && action.context && action.context.close_previous_dialog){
                 if(this.precurrentDialogController){
                     if (this.precurrentDialogController) {
@@ -247,4 +244,4 @@ ActionManager.include({
 
 });
 
-});
+// });

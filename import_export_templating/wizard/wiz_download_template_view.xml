@@ -14,55 +14,56 @@
                         nolabel="1"
                     />
                 </group>
-                <p attrs="{'invisible':[('type', '!=', 'export')]}">
+                <p invisible = "type != 'export'">
                     <b>Export Template!</b>
                 </p>
-                <p attrs="{'invisible':[('type', '!=', 'export')]}">
+                <p invisible = "type != 'export'">
                     To import or update record, you must first download the template for importing!
                 </p>
-                <p attrs="{'invisible':[('type', '!=', 'import')]}">
+                <p invisible = "type != 'import'">
                     <b>Import!</b>
                 </p>
-                <p attrs="{'invisible':[('type', '!=', 'import')]}">
+                <p invisible = "type != 'import'">
                     Update the template and save in .xls format before attaching!
                 </p>
                 <label
                     string="Select Type Of Document To Download"
                     for="ir_model"
-                    attrs="{'invisible':[('type', 'not in', ['export','import'])]}"
+                    invisible = "type not in ['export','import']"
                 />
                 <br />
-                <group attrs="{'invisible':[('type', '=', False)]}">
+                <group >
                     <field
                         name="ir_model"
                         nolabel="1"
-                        attrs="{'required':[('type', 'in', ['export','import'])]}"
+                        required = "type in ['export','import']"
+                        invisible = "type not in ['export','import']"
                     />
                     <group />
                 </group>
                 <label
                     string="Browse file!"
                     for="upload_file"
-                    attrs="{'invisible':[('type', '!=', 'import')]}"
+                    invisible = "type != 'import'"
                 />
-                <group attrs="{'invisible':[('type', '!=', 'import')]}">
+                <group invisible = "type != 'import'">
                     <field name="upload_file" nolabel="1" filename="fname" />
                     <field name="fname" invisible="1" />
                     <group />
                 </group>
                 <separator
                     string="Options"
-                    attrs="{'invisible':[('type', '!=', 'import')]}"
+                    invisible = "type != 'import'"
                 />
-                <group attrs="{'invisible':[('type', '!=', 'import')]}">
+                <group invisible = "type != 'import'">
                     <field name="update_only" />
                     <field name="create_only" />
                 </group>
-                <b attrs="{'invisible':[('type', '!=', 'export')]}">
+                <b invisible = "type != 'export'">
                     Click on relevant buttons to choose fields of the document written above!</b>
                 <br />
                 <br />
-                <div attrs="{'invisible':[('type', '!=', 'export')]}">
+                <div invisible = "type != 'export'">
                     <button
                         name="button_required"
                         class="oe_button oe_form_button oe_highlight"
@@ -91,16 +92,18 @@
                     />
                         <br /><br />
                 </div>
-                <notebook attrs="{'invisible':[('type', '!=', 'export')]}">
+                <notebook invisible = "type != 'export'">
                     <page string="Fields">
                         <field
                             name="fields_list_ids"
-                            attrs="{'readonly':[('field_names_computed', '=', [])]}"
+                            readonly = "field_names_computed == []"
                         />
+                            <!-- attrs="{'readonly':[('field_names_computed', '=', [])]}" -->
                         <field
                             name="field_names_computed"
-                            attrs="{'invisible':[('ir_model', '!=', True)]}"
+                            invisible = "ir_model != True"
                         />
+                            <!-- attrs="{'invisible':[('ir_model', '!=', True)]}" -->
                     </page>
                 </notebook>
                 <footer>
@@ -109,19 +112,21 @@
                         class="oe_button oe_form_button oe_highlight"
                         string="Download Blank Template"
                         type="object"
-                        attrs="{'invisible':[('type', '!=', 'export')]}"
+                        invisible = "type != 'export'"
                         icon="fa-file-excel-o"
                         help="It helps to download blank template based on fields selection!"
                     />
+                        <!-- attrs="{'invisible':[('type', '!=', 'export')]}" -->
                     <button
                         name="import_data"
                         class="oe_button oe_form_button oe_highlight"
                         string="Import"
                         type="object"
-                        attrs="{'invisible':[('type', '!=', 'import')]}"
+                        invisible = "type != 'import'"
                         icon="fa-file"
                         help="It helps to import data to selection of model and downloaded template!"
                     />
+                        <!-- attrs="{'invisible':[('type', '!=', 'import')]}" -->
                     <button
                         special="cancel"
                         context='{"close_previous_dialog": True}'
