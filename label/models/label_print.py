@@ -10,17 +10,13 @@ class LabelPrint(models.Model):
     _description = "Label Print"
 
     name = fields.Char("Name", size=64, required=True, index=True)
-    model_id = fields.Many2one("ir.model", "Model", required=True, index=True,
-                               ondelete='cascade')
+    model_id = fields.Many2one(
+        "ir.model", "Model", required=True, index=True, ondelete='cascade')
     field_ids = fields.One2many(
         "label.print.field", "report_id", string="Fields")
     ref_ir_act_report = fields.Many2one(
-        "ir.actions.act_window",
-        "Sidebar action",
-        readonly=True,
-        help="""Sidebar action to make this
-                                        template available on records
-                                        of the related document model""",
+        "ir.actions.act_window", "Sidebar action", readonly=True,
+        help="""Sidebar action to make this template available on records of the related document model""",
     )
     model_list = fields.Char("Model List", size=256)
 
@@ -57,8 +53,9 @@ class LabelPrint(models.Model):
                     "binding_type": "action",
                 }
             )
-        self.write({"ref_ir_act_report": vals.get(
-            "ref_ir_act_report", False).id})
+        self.write({
+            "ref_ir_act_report": vals.get("ref_ir_act_report", False).id
+        })
         return True
 
     def unlink(self):
@@ -84,20 +81,20 @@ class LabelPrintField(models.Model):
     field_id = fields.Many2one("ir.model.fields", "Fields", required=False)
     report_id = fields.Many2one("label.print", "Report")
     model_id = fields.Many2one(related="report_id.model_id", string="Model")
-    type = fields.Selection(
-        [("normal", "Normal"), ("barcode", "Barcode"), ("image", "Image")],
-        "Type",
-        required=True,
-        default="normal",
-    )
+    type = fields.Selection([
+        ("normal", "Normal"),
+        ("barcode", "Barcode"),
+        ("image", "Image")
+    ], "Type", required=True, default="normal")
     python_expression = fields.Boolean("Python Expression")
     python_field = fields.Char("Fields", size=52)
     fontsize = fields.Float("Font Size", default=8.0)
-    position = fields.Selection(
-        [("left", "Left"), ("right", "Right"),
-         ("top", "Top"), ("bottom", "Bottom")],
-        "Position",
-    )
+    position = fields.Selection([
+        ("left", "Left"),
+        ("right", "Right"),
+        ("top", "Top"),
+        ("bottom", "Bottom")
+    ], "Position")
     nolabel = fields.Boolean("No Label")
     newline = fields.Boolean("New Line", deafult=True)
 
