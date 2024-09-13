@@ -15,6 +15,8 @@
     """,
     "depends": ["web"],
     "data": ["security/ir.model.access.csv", "wizard/wiz_download_template_view.xml"],
+    # Odoo App Store Specific
+    "images": ["static/description/Banner_import_export_templating_17.png"],
     "installable": True,
     "price": 30.0,
     "currency": "EUR",
