@@ -12,5 +12,6 @@
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "depends": ["hr_timesheet"],
     "data": ["views/project_report.xml", "report/project_qweb_report.xml"],
+    "images": ["static/description/Banner_project_detail_report.png"],
     "installable": True,
 }
