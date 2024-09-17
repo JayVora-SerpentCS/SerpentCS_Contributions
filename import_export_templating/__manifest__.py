@@ -20,9 +20,4 @@
     "installable": True,
     "price": 30.0,
     "currency": "EUR",
-    # "assets": {
-    #     "web.assets_backend": [
-    #         # "import_export_templating/static/src/js/wizard_action.js",
-    #     ],
-    # },
 }
