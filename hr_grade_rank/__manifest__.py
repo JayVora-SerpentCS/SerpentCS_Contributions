@@ -11,7 +11,7 @@
     "website": "https://www.serpentcs.com",
     "depends": ["hr"],
     "data": ["security/ir.model.access.csv", "views/hr_grade_rank_view.xml"],
-    "images": ["static/description/HRGradeRank.png"],
+    "images": ["static/description/Banner_hr_grade_rank.png"],
     "sequence": 1,
     "installable": True,
 }
