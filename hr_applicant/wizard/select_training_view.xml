@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="select_training_wizard_form_view">
+        <field name="name">select.training.wizard.form.view</field>
+        <field name="model">select.training</field>
+        <field name="arch" type="xml">
+            <form string="Need Training">
+                <group>
+                    <field name="is_training_needed" />
+                    <field name="applicant_id" invisible="1"/>
+                    <field name="job_id" invisible="1"/>
+                    <field
+                        name="training_courses_ids"
+                        widget="many2many_checkboxes"
+                        invisible="is_training_needed != True"
+                        domain="[('state','!=','cancel'), ('job_id','=',job_id)]"
+                    />
+                </group>
+                <footer>
+                    <button
+                        icon="fa-check"
+                        name="action_done"
+                        string="Ok"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button
+                        icon="fa-times"
+                        string="Cancel"
+                        class="oe_link"
+                        special="cancel"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_select_training_wizard" model="ir.actions.act_window">
+        <field name="name">Need Training</field>
+        <field name="res_model">select.training</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{"default_applicant_id":active_id}</field>
+    </record>
+</odoo>
