@@ -22,6 +22,10 @@ class LabelPrint(models.Model):
 
     @api.onchange("model_id")
     def onchange_model(self):
+        """
+        Updates the model_list field when the model_id field changes.
+        This method retrieves the current model and its inherited models, and updates the model_list field with the corresponding model names.
+        """          
         model_list = []
         if self.model_id:
             model_obj = self.env["ir.model"]

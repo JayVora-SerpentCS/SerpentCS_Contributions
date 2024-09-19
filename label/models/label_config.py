@@ -23,22 +23,21 @@ class LabelConfig(models.Model):
     name = fields.Char("Name", size=64, required=True, index=True)
     height = fields.Float("Height (in mm)", required=True)
     width = fields.Float("Width (in mm)", required=True)
-    top_margin = fields.Float("Top Margin (in mm)", default=0.0)
-    bottom_margin = fields.Float("Bottom Margin  (in mm)", default=0.0)
-    left_margin = fields.Float("Left Margin (in mm)", default=0.0)
-    right_margin = fields.Float("Right Margin (in mm)", default=0.0)
+    top_margin = fields.Float("Top Margin (in mm)")
+    bottom_margin = fields.Float("Bottom Margin  (in mm)")
+    left_margin = fields.Float("Left Margin (in mm)")
+    right_margin = fields.Float("Right Margin (in mm)")
     cell_spacing = fields.Float("Cell Spacing", default=1.0)
     label_main_id = fields.Many2one("label.brand", "Label")
  
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get('height') == 0.0 or vals.get('width') == 0.0:
-                raise ValidationError(_("Height/Width value must be non zero."))
-        return super().create(vals_list)
-
-    def write(self,vals):
-        if vals.get('height') == 0.0 or vals.get('width') == 0.0:
-            raise ValidationError(_("Height/Width value must be non zero."))
-        return super().write(vals)
+    @api.constrains('height', 'width')
+    def _check_positive_label(self):
+        """
+        Constraint to ensure that the height and width of a label are positive values.
+        
+        Raises: ValidationError: If the height or width is less than 0.0.
+        """
+        for label in self:
+            if label.height < 0.0 or label.width < 0.0:
+                raise ValidationError(_("Height/Width value must be Positive."))
