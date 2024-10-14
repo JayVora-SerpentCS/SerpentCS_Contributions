@@ -41,8 +41,8 @@ class WizDownloadTemplate(models.TransientModel):
 
     @api.onchange("type")
     def _get_active_model(self):
-        model = self._context.get("active_model")
-        if model:
+        if self._context and self._context.get("active_model"):
+            model = self._context.get("active_model")
             ir_model = self.env["ir.model"].search([("model", "=", model)])
             self.ir_model = ir_model.id
             return {"domain": {"ir_model": [("id", "=", ir_model.id)]}}
@@ -220,56 +220,94 @@ class WizDownloadTemplate(models.TransientModel):
                 raise UserError(_("Fields should not be blank!"))
 
             if self.fields_list_ids:
-                col_index = 0
                 for line in self.fields_list_ids:
-                    col_index += 1        
-                    worksheet.col(col_index + 1).width = 9900
-                    worksheet.write(row_13, col_index, line.name)
-                    field_info = f"{line.ttype} Relation: {line.relation}"
-                    worksheet.write(row_14, col_index, field_info)
-                    # Check for delegated field!
-                    is_delegated = (
-                        (line.ttype == "many2one" and line.relation in [x.model for x in self.ir_model.inherited_model_ids] and not line.related)
-                        or line.ttype == "one2many"
+                    count += 1
+                    worksheet.col(count + 1).width = 9900
+                    worksheet.write(row_13, col, line.name)
+                    worksheet.write(
+                        row_14,
+                        col,
+                        line.ttype + " " + "Relation: " + str(line.relation) + "",
                     )
+                    # Check for delegated field!
+                    delegated = False
+                    data = "No"
+                    if (
+                        line.ttype == "many2one"
+                        and line.relation
+                        in [x.model for x in self.ir_model.inherited_model_ids]
+                        and not line.related
+                        or line.ttype == "one2many"
+                    ):
+                        delegated = True
                     # Check for all fields and its required attribute!
-                    is_required = "Yes" if line.required and not is_delegated else "No"
-                    worksheet.write(row_15, col_index, is_required)        
-                    worksheet.write(row_16, col_index, line.field_description, label_header)
-                
-            elif row_values and error_value:
-                column_headers = ["Column Name:", "Type:", "Mandatory:", "Column Labels:"]
-                row_indices = [row_13, row_14, row_15, row_16]
+                    if line.required and not delegated:
+                        data = "Yes"
+                    worksheet.write(row_15, col, str(data))
+                    worksheet.write(row_16, col, line.field_description, label_header)
+                    col += 1
 
-                for count, line in enumerate(row_values, start=13):
-                    if count in (13, 14, 15, 16):
-                        header = column_headers[count - 13]
-                        if header in line:
-                            i = line.index(header)
-                            del line[i]
-                            for col, data in enumerate(line, start=1):
-                                worksheet.col(col).width = 9900  
-                                worksheet.write(row_indices[count - 13], col, data, label_header if count == 16 else None)
-                            
-                        if count == 16:
-                            worksheet.write(row_16, len(line) + 0, "REASONS: (NOT CREATED RECORD)", label_header)
-                        else:
-                            continue
+            elif row_values and error_value:
+                for line in row_values:
+                    count += 1
+                    worksheet.col(count + 1).width = 9900
+                    if count == 13:
+                        i = line.index("Column Name:")
+                        del line[i]
+                        for data in line:
+                            worksheet.write(row_13, col, data)
+                            col += 1
+                        col = 1
+                    elif count == 14:
+                        i = line.index("Type:")
+                        del line[i]
+                        for data in line:
+                            worksheet.write(row_14, col, data)
+                            col += 1
+                        col = 1
+
+                    elif count == 15:
+                        i = line.index("Mandatory:")
+                        del line[i]
+                        for data in line:
+                            worksheet.write(row_15, col, str(data))
+                            col += 1
+                        col = 1
+
+                    elif count == 16:
+                        i = line.index("Column Labels:")
+                        del line[i]
+                        for data in line:
+                            worksheet.write(row_16, col, data, label_header)
+                            col += 1
+                        worksheet.write(
+                            row_16, col, "REASONS: (NOT CREATED RECORD)", label_header
+                        )
+                        col += 1
+                        col = 1
 
                     elif count == 17:
                         for each_error in error_value:
                             del each_error[0]
                             reason = set(each_error) & set(error_reason)
-                            for col, value in enumerate(each_error, start=1):
-                                worksheet.col(col).width = 9900  
+                            for value in each_error:
                                 worksheet.write(row_17, col, str(value))
+                                col += 1
                             worksheet.write(
                                 row_17,
-                                len(each_error) + 1,
-                                f"{str(reason)}: Value not found in Database! Please create it first. Once created, remove (REASON) column for IMPORT!"
+                                col,
+                                (
+                                    str(reason) + ": Value not found in Database!"
+                                    " Please create it"
+                                    " first. once create"
+                                    " value in database."
+                                    " remove (REASON)"
+                                    " column for IMPORT!"
+                                ),
                             )
+                            col += 1
                             row_17 += 1
-
+                            col = 1
 
         workbook.save(fl)
         fl.seek(0)
