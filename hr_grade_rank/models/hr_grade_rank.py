@@ -43,7 +43,6 @@ class GradeGrade(models.Model):
 
 
 class HrEmployee(models.Model):
-
     _inherit = "hr.employee"
 
     grade_id = fields.Many2one("grade.grade", "Grade")
