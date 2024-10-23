@@ -6,12 +6,15 @@ Project Detail Report
 
 * Helps to Print Project Detail report with task list and task details.
 
+=====
 Usage
 =====
 
+===========
 Bug Tracker
 ===========
 
+=======
 Credits
 =======
 
