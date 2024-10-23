@@ -15,23 +15,22 @@ class CrmTeamInherit(models.Model):
                                      can have an access to the tasks related
                                      to this project.""")
 
+
 class IrModule(models.Model):
     _inherit = "ir.module.module"
 
     def remove_action(self, action_data):
         domain_lst = ast.literal_eval(action_data.domain)
         return [domain for domain in domain_lst if domain[0] != 'type_team']
-    
+
     def module_uninstall(self):
         action_references = [
             'sales_team.crm_team_action_sales',
             'sales_team.crm_team_action_config'
         ]
-        
         for ref in action_references:
             action_data = self.env.ref(ref)
             if action_data and action_data.domain:
                 action_data.write({'domain': self.remove_action(action_data)})
-    
+
         return super().module_uninstall()
-        
