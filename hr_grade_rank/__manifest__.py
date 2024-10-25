@@ -14,7 +14,7 @@
         "security/ir.model.access.csv",
         "views/hr_grade_rank_view.xml"
     ],
-    "images": ["static/description/Banner_hr_grade_rank.png"],
+    "images": ["static/description/Banner_hr_grade_rank-18.png"],
     "sequence": 1,
     "installable": True,
 }
