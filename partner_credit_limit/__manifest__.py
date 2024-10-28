@@ -6,7 +6,7 @@
     'category': 'Partner',
     'license': 'LGPL-3',
     'author': 'Tiny, Serpent Consulting Services Pvt. Ltd.',
-    'website': 'http://www.serpentcs.com',
+    'website': 'https://www.serpentcs.com',
     'maintainer': 'Serpent Consulting Services Pvt. Ltd.',
     'summary': 'Set credit limit warning',
     'depends': [
@@ -16,5 +16,4 @@
         'views/partner_view.xml',
     ],
     'installable': True,
-    'auto_install': False,
 }

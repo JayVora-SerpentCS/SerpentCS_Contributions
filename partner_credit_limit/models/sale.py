@@ -52,9 +52,9 @@ class SaleOrder(models.Model):
         for order in self:
             order.check_limit()
 
-    @api.model
-    def create(self, vals):
-        res = super(SaleOrder, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(SaleOrder, self).create(vals_list)
         if res.partner_id.credit_limit > 0.0 and \
                 not res.partner_id.over_credit:
             res.check_limit()
