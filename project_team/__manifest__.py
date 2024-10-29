@@ -17,7 +17,7 @@
         'views/project_team_view.xml',
     ],
     'images': [
-        'static/description/ProjectTeam.png',
+        'static/description/Banner_project_team_18.png',
     ],
     'installable': True,
 }
