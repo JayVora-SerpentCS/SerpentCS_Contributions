@@ -6,7 +6,7 @@
     "license": "LGPL-3",
     "summary": "Generate customised labels of any document",
     "author": "Serpent Consulting Services Pvt. Ltd.",
-    "website": "http://www.serpentcs.com",
+    "website": "https://www.serpentcs.com",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "depends": ["base"],
     "data": [
@@ -24,5 +24,4 @@
     "uninstall_hook": "uninstall_hook",
     "images": ["static/description/Banner_Label.png"],
     "installable": True,
-    "auto_install": False,
 }

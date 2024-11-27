@@ -4,8 +4,9 @@
 import math
 
 # 2:  imports of odoo
-from odoo import api, fields, models
+from odoo import api, fields, models,_
 from odoo.tools import misc
+from odoo.exceptions import  ValidationError
 
 
 class LabelPrintWizard(models.TransientModel):
@@ -84,5 +85,12 @@ class LabelPrintWizard(models.TransientModel):
             .with_context(context)
             .report_action(self, data=data)
         )
-    
-    
+
+    @api.constrains('image_width', 'image_height','barcode_width','barcode_height')
+    def _check_positive_label(self):
+        for label in self:
+            if label.image_width > 150.00 or label.barcode_width > 150.00:
+                raise ValidationError(_("Width value must be less then 150."))
+            if label.image_height > 150.00 or label.barcode_height > 150.00:
+                raise ValidationError(_("Height value must be less then 150."))
+

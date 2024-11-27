@@ -10,6 +10,7 @@ Label
 
 * Allow yout take image, name and barcode for many products.
 
+=====
 Usage
 =====
 How to use it:
@@ -22,10 +23,11 @@ How to use it:
 
 * Select as per label configuration you can select brand and label size to print number of prints for single product.
 
-
+===========
 Bug Tracker
 ===========
 
+=======
 Credits
 =======
 
