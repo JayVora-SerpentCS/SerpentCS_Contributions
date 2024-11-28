@@ -5,6 +5,11 @@ from odoo.exceptions import ValidationError
 
 
 class LabelMain(models.Model):
+    """
+    This model represents different brands of labels that can be configured 
+    in the system.Each brand can have multiple label configurations associated
+    with it. 
+    """
     _name = "label.brand"
     _rec_name = "brand_name"
 
@@ -16,6 +21,11 @@ class LabelMain(models.Model):
     
 
 class LabelConfig(models.Model):
+    """
+    This model contains the configuration settings for labels,including
+    dimensions and margins.Each configuration is associated with a specific
+    label brand.
+    """
     _name = "label.config"
 
     _description = "Configuration for label"

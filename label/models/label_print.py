@@ -40,6 +40,11 @@ class LabelPrint(models.Model):
         self.model_list = model_list
 
     def create_action(self):
+        """
+        This method generates an action that allows the label print template
+        to be available on records of document model.It updates
+        the ref_ir_act_report field with the newely created action's ID.
+        """
         vals = {}
         action_obj = self.env["ir.actions.act_window"]
         for data in self.browse(self.ids):
@@ -63,12 +68,20 @@ class LabelPrint(models.Model):
         return True
 
     def unlink(self):
+        """
+        This method removes the label print record from the database and 
+        deletes any associated sidebar actions.
+        """
         actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
         for action in actions_to_unlink:
             action.unlink()
         return super().unlink()
 
     def unlink_action(self):
+        """
+        This method deletes the actions associated with the label print records 
+        without removing the label print records themselves.
+        """
         actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
         for action in actions_to_unlink:
             action.unlink()
@@ -104,6 +117,14 @@ class LabelPrintField(models.Model):
 
     @api.onchange("python_field")
     def _onchange_python_field(self):
+        """
+        This method checks if the provided python_field is a valid field
+        of the model.It raises a ValidationError if the field is invalid
+        or does not start with 'obj'.
+
+        Raises:
+            ValidationError: If the python_field is not valid.
+        """
         field_str = self.python_field
         if field_str:
             python_field = field_str.split(".")
@@ -127,6 +148,15 @@ class IrModelFields(models.Model):
 
     @api.model
     def name_search(self, name="", args=None, operator="ilike", limit=None):
+        """
+        Searches for the method fields based on the provided name and context.
+        
+        This method overrides the default name_search method to filter
+        fields based on the model_list context variable.
+
+        Returns:
+            list:A list of matching field records.
+        """
         data = self._context.get("model_list")
         if data:
             args.append(("model", "in", eval(data)))
