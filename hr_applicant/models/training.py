@@ -57,16 +57,6 @@ class TrainingClass(models.Model):
     _description = "Training Class"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    # @api.constrains("training_start_date", "training_end_date")
-    # def _check_training_dup(self):
-    #     self.ensure_one()
-    #     if self.training_start_date < fields.Date.context_today(self):
-    #         raise ValidationError(_("You can't create past training!"))
-    #     print("self.training_end_date:::::::::::::::::::::::::::::::::::::::::::::::::::::::::",self.training_end_date)
-    #     if self.training_start_date > self.training_end_date:
-    #         raise ValidationError(
-    #             _("End Date should be greater than Start date of Training!")
-    #         )
 
     course_id = fields.Many2one("training.courses", string="Course Name", required=True)
     department = fields.Char(
@@ -90,13 +80,10 @@ class TrainingClass(models.Model):
     training_attendees = fields.Integer("Training Attendees", required=True)
     training_start_date = fields.Date(
         "Training Start Date",
-        # readonly=True,
-        # states={"draft": [("readonly", False)]},
         required=True,
     )
     training_end_date = fields.Date(
-        "Training End Date", readonly=True, 
-        # states={"draft": [("readonly", False)]}
+        "Training End Date", 
     )
     attendees_ids = fields.One2many(
         "list.of.attendees", "class_id", string="List of Local Attendees"

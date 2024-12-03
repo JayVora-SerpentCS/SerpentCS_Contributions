@@ -8,7 +8,7 @@
     "license": "LGPL-3",
     "summary": "Applicant and Employee Subsections, Training",
     "author": "Serpent Consulting Services Pvt. Ltd.",
-    "website": "http://www.serpentcs.com",
+    "website": "https://www.serpentcs.com",
     "maintainer": "Serpent Consulting Services Pvt. Ltd.",
     "depends": ["hr_recruitment"],
     "data": [
