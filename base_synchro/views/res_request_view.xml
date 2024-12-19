@@ -62,3 +62,4 @@
     <menuitem id="menu_res_request" action="action_res_request" parent="base_synchro.next_id_63"/>
 
 </odoo>
+

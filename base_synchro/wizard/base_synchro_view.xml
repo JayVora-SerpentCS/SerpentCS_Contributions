@@ -5,16 +5,16 @@
         <field name="model">base.synchro</field>
         <field name="priority">1</field>
         <field name="arch" type="xml">
-            <form string="Transfer Data To Server" class="o_base_synchro">
+            <form string="Transfer Data To Server">
                 <group col="4">
                     <field name="server_url"/>
                     <field name="user_id"/>
                 </group>
                 <footer>
                     <button name="upload_download_multi_thread" string="Synchronize"
-                            type="object" class="oe_highlight o_button_base_synchronize"/>
+                            type="object" class="oe_highlight"/>
                     or
-                    <button string="Cancel" class="oe_link o_line_synchro_cancel" special="cancel"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
                 </footer>
             </form>
         </field>
@@ -34,7 +34,7 @@
         <field name="name">Base Synchronization</field>
         <field name="model">base.synchro</field>
         <field name="arch" type="xml">
-            <form string="Synchronization Completed!" class="o_base_synchro_success">
+            <form string="Synchronization Completed!">
                 <separator string="The synchronisation has been started. You will receive a request when it's done."/>
                 <footer>
                     <button string="Cancel" class="oe_link" special="cancel"/>
@@ -49,3 +49,4 @@
               action="action_view_base_synchro" id="menu_action_view_base_synchro"/>
 
 </odoo>
+

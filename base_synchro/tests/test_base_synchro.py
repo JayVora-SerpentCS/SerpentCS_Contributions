@@ -1,9 +1,9 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo.tests.common import TransactionCase
+from odoo.tests import common
 
 
-class BaseSynchroObjTestCase(TransactionCase):
+class BaseSynchroObjTestCase(common.TransactionCase):
     def setUp(self):
         super(BaseSynchroObjTestCase, self).setUp()
 
@@ -13,9 +13,9 @@ class BaseSynchroObjTestCase(TransactionCase):
                 "name": "Test Server",
                 "server_url": "127.0.0.1",
                 "server_port": "8069",
-                "server_db": "base_synchro_v13",
-                "login": "admin",
-                "password": "admin",
+                "server_db": "base_test",
+                "login": "a",
+                "password": "a",
             }
         )
 

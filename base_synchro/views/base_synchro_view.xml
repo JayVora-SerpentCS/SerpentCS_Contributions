@@ -1,5 +1,8 @@
 <odoo>
 
+    <menuitem id="synch_config" name="Synchronization"
+              parent="base.menu_administration" sequence="30"/>
+
     <record id="view_transfer_line_form" model="ir.ui.view">
         <field name="name">base.synchro.obj.line.form</field>
         <field name="model">base.synchro.obj.line</field>
@@ -71,16 +74,18 @@
         <field name="name">base.synchro.obj.form</field>
         <field name="model">base.synchro.obj</field>
         <field name="arch" type="xml">
-            <form string="Transfer Details" class="o_base_synchro_obj">
+            <form string="Transfer Details">
                 <sheet>
-                    <group col="4">
+                    <group>
                         <field name="name"/>
                         <field name="active"/>
                         <field name="server_id"/>
-                        <field name="model_id" required="1"/>
+                        <field name="model_id"/>
+                    </group>
+                    <group>
                         <field name="action"/>
                         <field name="sequence"/>
-                        <field name="domain" colspan="4"/>
+                        <field name="domain"/>
                         <field name="synchronize_date"/>
                     </group>
                     <separator string="Fields Not Sync."/>
@@ -98,7 +103,7 @@
         <field name="name">base.synchro.obj.tree</field>
         <field name="model">base.synchro.obj</field>
         <field name="arch" type="xml">
-            <tree string="Synchronized Objects" class="o_base_synchro_obj">
+            <tree string="Synchronized Objects">
                 <field name="sequence"/>
                 <field name="name"/>
                 <field name="model_id"/>
@@ -148,7 +153,7 @@
         <field name="name">base.synchro.server.tree</field>
         <field name="model">base.synchro.server</field>
         <field name="arch" type="xml">
-            <tree string="Synchronized Server" class="o_base_synchro_server">
+            <tree string="Synchronized Server">
                 <field name="name"/>
                 <field name="server_url"/>
                 <field name="server_port"/>
@@ -161,15 +166,15 @@
         <field name="name">base.synchro.server.form</field>
         <field name="model">base.synchro.server</field>
         <field name="arch" type="xml">
-            <form string="Synchronized server" class="o_base_synchro_server">
+            <form string="Synchronized server">
                 <sheet>
                     <group colspan="4" col="4">
                         <field name="name"/>
-                        <field name="server_db"/>
-                        <field name="server_url"/>
                         <field name="login"/>
-                        <field name="server_port"/>
                         <field name="password" password="True"/>
+                        <field name="server_url"/>
+                        <field name="server_port"/>
+                        <field name="server_db"/>
                     </group>
                 </sheet>
             </form>
@@ -183,10 +188,8 @@
         <field name="binding_view_types">form</field>
     </record>
 
-    <menuitem id="synchro_server_tree_menu_id"
-              action="action_base_synchro_server_tree"
-              parent="base_synchro.next_id_62"
-              sequence="2"
-    />
+    <menuitem action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id"
+              parent="base_synchro.synch_config"/>
 
 </odoo>
+
