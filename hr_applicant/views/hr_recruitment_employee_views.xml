@@ -497,6 +497,7 @@
                             name="language"
                             tabindex="1"
                             placeholder="Enter Language"
+                            options="{'no_create':True, 'no_edit': True}"
                         />
                     </group>
                     <group col="6" colspan="6">

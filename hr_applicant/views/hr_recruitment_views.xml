@@ -211,7 +211,7 @@
         <field name="arch" type="xml">
             <tree string="Relative">
                 <field name="applicant_id" column_invisible="1" />
-                <field name="relative_type" />
+                <field name="relative_type" required="1"/>
                 <field name="name" placeholder="Enter Name" />
                 <field name="birthday" placeholder="Enter Date of Birth" />
                 <field name="place_of_birth" placeholder="Enter Place of Birth" />
@@ -506,6 +506,7 @@
                             name="language"
                             tabindex="1"
                             placeholder="Enter Language"
+                            options="{'no_create':True, 'no_edit': True}"
                         />
                     </group>
                     <group col="6" colspan="6">
@@ -659,7 +660,7 @@
                     name="%(action_select_training_wizard)d"
                     type="action"
                     class="oe_highlight"
-                    invisible="emp_id != False"
+                    invisible="emp_id or not active or not date_closed"
                 />
                     <!-- attrs="{'invisible': ['|',('emp_id', '!=', False),('active', '=', False)]}" -->
             </button>

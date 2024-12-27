@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools.translate import _
 from .hr_app_trav_lang import SELECTION_LANGUAGE
 
@@ -33,6 +33,14 @@ class EmployeePreviousTravel(models.Model):
         if message:
             warning.update({"message": message})
             return {"warning": warning}
+
+    @api.constrains('from_date', 'to_date')
+    def check_date(self):
+        for rec in self:
+            if (rec.from_date and rec.to_date) >= (fields.Date.today()):
+                raise UserError(_("To date should be prior to the current date!"))
+            elif (rec.from_date and rec.to_date) and (rec.from_date > rec.to_date):
+                raise UserError(_("From Date should be prior to the To Date!"))
 
 
 class EmployeeLanguage(models.Model):

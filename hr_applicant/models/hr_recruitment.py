@@ -282,7 +282,7 @@ class Applicant(models.Model):
             ):
                 language_id = emp_lan_obj.create(
                     {
-                        "language": language.language,
+                        "language": language.language.id,
                         "read_lang": language.read_lang,
                         "write_lang": language.write_lang,
                         "speak_lang": language.speak_lang,
