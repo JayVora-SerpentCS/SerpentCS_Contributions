@@ -1,7 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models
 
 
 class SelectTraining(models.TransientModel):
@@ -9,7 +8,7 @@ class SelectTraining(models.TransientModel):
     _description = "Select Training"
 
     is_training_needed = fields.Boolean(string="Is Training needed?", required=True)
-    applicant_id = fields.Many2one('hr.applicant', "Applicant", store=True)
+    applicant_id = fields.Many2one("hr.applicant", "Applicant", store=True)
     job_id = fields.Many2one(related="applicant_id.job_id", store=True)
     training_courses_ids = fields.Many2many("training.class", string="Training")
 

@@ -190,9 +190,7 @@ class Applicant(models.Model):
                         }
                     )
 
-            for relative in app_rel_obj.search(
-                [("applicant_id", "=", applicant.id)]
-            ):
+            for relative in app_rel_obj.search([("applicant_id", "=", applicant.id)]):
                 relative_id = emp_rel_obj.create(
                     {
                         "relative_type": relative.relative_type,
@@ -216,9 +214,7 @@ class Applicant(models.Model):
                         {"res_model": "employee.relative", "res_id": relative_id.id}
                     )
 
-            for education in app_edu_obj.search(
-                [("applicant_id", "=", applicant.id)]
-            ):
+            for education in app_edu_obj.search([("applicant_id", "=", applicant.id)]):
                 education_id = emp_edu_obj.create(
                     {
                         "from_date": education.from_date,
@@ -229,8 +225,7 @@ class Applicant(models.Model):
                         "field": education.field,
                         "illiterate": education.illiterate,
                         "edu_type": education.edu_type,
-                        "country_id": education.country_id
-                                      and education.country_id.id,
+                        "country_id": education.country_id and education.country_id.id,
                         "state_id": education.state_id and education.state_id.id,
                         "province": education.province,
                         "employee_id": res.get("res_id", False),
@@ -251,9 +246,7 @@ class Applicant(models.Model):
                         }
                     )
 
-            for prev_travel in app_tr_obj.search(
-                [("applicant_id", "=", applicant.id)]
-            ):
+            for prev_travel in app_tr_obj.search([("applicant_id", "=", applicant.id)]):
                 prev_travel_id = emp_tr_obj.create(
                     {
                         "from_date": prev_travel.from_date,
@@ -277,9 +270,7 @@ class Applicant(models.Model):
                         }
                     )
 
-            for language in app_lan_obj.search(
-                [("applicant_id", "=", applicant.id)]
-            ):
+            for language in app_lan_obj.search([("applicant_id", "=", applicant.id)]):
                 language_id = emp_lan_obj.create(
                     {
                         "language": language.language.id,

@@ -24,18 +24,22 @@ class EmployeeRelative(models.Model):
             ("Wife", "Wife"),
             ("Other", "Other"),
         ],
-        string="Relative Type",
         required=True,
     )
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
     birthday = fields.Date(string="Date of Birth")
-    place_of_birth = fields.Char(string="Place of Birth")
-    occupation = fields.Char(string="Occupation")
-    gender = fields.Selection(
-        [("Male", "Male"), ("Female", "Female")], string="Gender", required=False
-    )
-    active = fields.Boolean(string="Active", default=True)
+    place_of_birth = fields.Char()
+    occupation = fields.Char()
+    gender = fields.Selection([("Male", "Male"), ("Female", "Female")], required=False)
+    active = fields.Boolean(default=True)
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
+
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        if defaults.get("employee_id") == False:
+            defaults.update({"employee_id": self._context.get("active_id")})
+        return defaults
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
@@ -72,21 +76,28 @@ class EmployeeEducation(models.Model):
     _rec_name = "from_date"
     _order = "from_date"
 
-    from_date = fields.Date(string="From Date")
-    to_date = fields.Date(string="To Date")
-    education_rank = fields.Char("Education Rank")
-    school_name = fields.Char(string="School Name")
+    from_date = fields.Date()
+    to_date = fields.Date()
+    education_rank = fields.Char()
+    school_name = fields.Char()
     grade = fields.Char("Education Field")
     field = fields.Char(string="Field of Education")
-    illiterate = fields.Boolean("Illiterate")
-    active = fields.Boolean(string="Active", default=True)
+    illiterate = fields.Boolean()
+    active = fields.Boolean(default=True)
     employee_id = fields.Many2one("hr.employee", "Employee Ref", ondelete="cascade")
     edu_type = fields.Selection(
         [("Local", "Local"), ("Abroad", "Abroad")], "School Location", default="Local"
     )
     country_id = fields.Many2one("res.country", "Country")
     state_id = fields.Many2one("res.country.state", "State")
-    province = fields.Char("Province")
+    province = fields.Char()
+
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        if defaults.get("employee_id") == False:
+            defaults.update({"employee_id": self._context.get("active_id")})
+        return defaults
 
     @api.onchange("edu_type")
     def _onchange_edu_type(self):
@@ -99,7 +110,9 @@ class EmployeeEducation(models.Model):
     def _onchange_illiterate(self):
         for rec in self:
             rec.from_date = rec.to_date = rec.country_id = rec.state_id = False
-            rec.education_rank = rec.school_name = rec.grade = rec.field = rec.edu_type = rec.province = ""
+            rec.education_rank = (
+                rec.school_name
+            ) = rec.grade = rec.field = rec.edu_type = rec.province = ""
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):

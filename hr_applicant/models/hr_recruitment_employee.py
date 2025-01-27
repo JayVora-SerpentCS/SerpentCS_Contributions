@@ -1,7 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo import api, fields, models
 
 
 class Employee(models.Model):
@@ -69,9 +68,3 @@ class Employee(models.Model):
     no_of_lang = fields.Integer(
         "No of Language", compute="_compute_no_of_lang", readonly=True
     )
-
-    @api.constrains("birthday")
-    def check_date(self):
-        for rec in self:
-            if rec.birthday >= fields.Date.today():
-                raise UserError(_("Birthday date should be prior to the current date!"))

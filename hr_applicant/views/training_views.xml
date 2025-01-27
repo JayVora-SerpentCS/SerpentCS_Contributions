@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record model="ir.ui.view" id="view_course_type_tree">
-        <field name="name">view.course.type.tree</field>
+        <field name="name">view.course.type.list</field>
         <field name="model">course.type</field>
         <field name="arch" type="xml">
-            <tree string="Course Type" editable="top">
+            <list string="Course Type" editable="top">
                 <field name="name" />
                 <field name="code" />
-            </tree>
+            </list>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Medical Details Button -->
+    <!-- Action Of Form & list Views Of Medical Details Button -->
     <record id="action_course_type_list" model="ir.actions.act_window">
         <field name="name">Course Type</field>
         <field name="res_model">course.type</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_course_type_tree" />
     </record>
     <menuitem
@@ -24,15 +24,15 @@
         action="action_course_type_list"
     />
     <record model="ir.ui.view" id="view_training_courses_tree">
-        <field name="name">view.training.courses.tree</field>
+        <field name="name">view.training.courses.list</field>
         <field name="model">training.courses</field>
         <field name="arch" type="xml">
-            <tree string="Training Courses">
+            <list string="Training Courses">
                 <field name="name" />
                 <field name="course_type_id" />
                 <field name="job_id" />
                 <field name="department" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_training_courses_form">
@@ -51,22 +51,29 @@
                             <field name="department" />
                             <label for="duration" />
                             <div>
-                                <field name="duration" required="1" class="oe_inline"/>
-                                <field name="duration_type" required="1" class="oe_inline"/>
+                                <field name="duration" required="1" class="oe_inline" />
+                                <field
+                                    name="duration_type"
+                                    required="1"
+                                    class="oe_inline"
+                                />
                             </div>
                             <field name="training_location" />
                         </group>
-                        <field name="local_short_description" placeholder="Add the Course Description"/>
+                        <field
+                            name="local_short_description"
+                            placeholder="Add the Course Description"
+                        />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Prev. Occupation Button -->
+    <!-- Action Of Form & list Views Of Prev. Occupation Button -->
     <record id="action_training_courses_list" model="ir.actions.act_window">
         <field name="name">Training Courses</field>
         <field name="res_model">training.courses</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_training_courses_tree" />
     </record>
     <menuitem
@@ -93,7 +100,6 @@
                         class="oe_highlight"
                         invisible="state != 'draft'"
                     />
-                        <!-- states="draft" -->
                     <button
                         name="action_approve"
                         type="object"
@@ -101,7 +107,6 @@
                         class="oe_highlight"
                         invisible="state != 'to_be_approved'"
                     />
-                        <!-- states="to_be_approved" -->
                     <button
                         name="action_completed"
                         type="object"
@@ -109,14 +114,12 @@
                         class="oe_highlight"
                         invisible="state != 'approved'"
                     />
-                        <!-- states="approved" -->
                     <button
                         name="action_cancel"
                         type="object"
                         string="Cancel"
                         invisible="state == 'cancel'"
                     />
-                        <!-- states="draft,to_be_approved,approved" -->
                     <field
                         name="state"
                         widget="statusbar"
@@ -133,24 +136,34 @@
                                 readonly="state in ('approved', 'completed', 'cancel')"
                                 tabindex='1'
                             />
-                                <!-- attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}" -->
-                            <field name="department" tabindex="3"/>
-                            <label string="Training Date" for="training_start_date"/>
+                            <field name="department" tabindex="3" />
+                            <label string="Training Date" for="training_start_date" />
                             <div>
-                                <field name="training_start_date" readonly="state not in ('draft','to_be_approved')" tabindex="5" widget="daterange" required="training_start_date or training_end_date" options="{'end_date_field': 'training_end_date'}"/>
-                                <field name="training_end_date" force_save='1' tabindex="6"  invisible="1"/>
+                                <field
+                                    name="training_start_date"
+                                    readonly="state not in ('draft','to_be_approved')"
+                                    tabindex="5"
+                                    widget="daterange"
+                                    required="training_start_date or training_end_date"
+                                    options="{'end_date_field': 'training_end_date'}"
+                                />
+                                <field
+                                    name="training_end_date"
+                                    force_save='1'
+                                    tabindex="6"
+                                    invisible="1"
+                                />
                             </div>
-                            <field name="training_location" tabindex="7"/>
+                            <field name="training_location" tabindex="7" />
                         </group>
                         <group>
-                            <field name="course_categ_id" tabindex="2"/>
-                            <field name="job_id" tabindex="4"/>
+                            <field name="course_categ_id" tabindex="2" />
+                            <field name="job_id" tabindex="4" />
                             <field
                                 name="training_attendees"
                                 readonly="state in ('approved', 'completed', 'cancel')"
                                 tabindex="8"
                             />
-                                <!-- attrs="{'readonly': [('state', 'in', ['approved', 'completed', 'cancel'])]}" -->
                         </group>
                     </group>
                     <notebook>
@@ -161,45 +174,35 @@
                                 nolabel="1"
                                 readonly="state in ('draft', 'to_be_approved', 'completed', 'cancel')"
                             />
-                                <!-- attrs="{'readonly': [('state', 'in', ['draft', 'to_be_approved', 'completed', 'cancel'])]}" -->
                         </page>
                         <page string="Description" name="description">
                             <field name="description" nolabel="1" colspan="4" />
                         </page>
                     </notebook>
                 </sheet>
-                <div class="o_attachment_preview" />
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter />
             </form>
         </field>
     </record>
     <record model="ir.ui.view" id="view_training_class_tree">
-        <field name="name">view.training.class.tree</field>
+        <field name="name">view.training.class.list</field>
         <field name="model">training.class</field>
         <field name="arch" type="xml">
-            <tree string="Training">
+            <list string="Training">
                 <field name="course_id" />
                 <field name="department" />
                 <field name="job_id" />
                 <field name="training_start_date" />
                 <field name="training_end_date" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
     <!-- Action Of Form & Tree Views Of Medical Details Button -->
     <record id="action_training_class_list" model="ir.actions.act_window">
         <field name="name">Training</field>
         <field name="res_model">training.class</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_training_class_tree" />
     </record>
     <menuitem
@@ -221,7 +224,6 @@
                         class="oe_highlight"
                         invisible="state != 'draft'"
                     />
-                        <!-- states="draft" -->
                     <button
                         name="action_in_training"
                         type="object"
@@ -229,7 +231,6 @@
                         class="oe_highlight"
                         invisible="state not in ('awaiting_training_start', 'in_complete')"
                     />
-                        <!-- states="awaiting_training_start" -->
                     <button
                         name="action_training_completed"
                         type="object"
@@ -237,7 +238,6 @@
                         class="oe_highlight"
                         invisible="state != 'in_training'"
                     />
-                        <!-- states="in_training" -->
                     <button
                         name="action_in_complete"
                         type="object"
@@ -245,14 +245,12 @@
                         class="oe_highlight"
                         invisible="state != 'in_training'"
                     />
-                        <!-- states="in_training" -->
                     <button
                         name="action_cancel"
                         type="object"
                         string="Cancel"
                         invisible="state != ('draft','awaiting_training_start', 'to_be_approved', 'approved')"
                     />
-                        <!-- states="draft,awaiting_training_start,to_be_approved,approved" -->
                     <field
                         name="state"
                         widget="statusbar"
@@ -263,7 +261,11 @@
                 <sheet>
                     <group col="4" colspan="4">
                         <group col="2" colspan="2">
-                            <field name="employee_id" required="1" readonly="state != 'draft'"/>
+                            <field
+                                name="employee_id"
+                                required="1"
+                                readonly="state != 'draft'"
+                            />
                         </group>
                         <group col="2" colspan="2">
                             <field
@@ -277,40 +279,36 @@
                         </group>
                     </group>
                     <group col="4" colspan="4">
-                        <field name="training_start_date" readonly="state not in ('draft','in_complete')"/>
+                        <field
+                            name="training_start_date"
+                            readonly="state not in ('draft','in_complete')"
+                        />
                         <field
                             name="date_of_arrival"
                             required="state == 'awaiting_training_start'"
                             readonly="state not in 'awaiting_training_start'"
                         />
-                            <!-- attrs="{'required': [('state', '=', 'awaiting_training_start')]}" -->
-                        <field name="training_end_date" readonly="state not in ('draft','in_complete')"/>
+                        <field
+                            name="training_end_date"
+                            readonly="state not in ('draft','in_complete')"
+                        />
                         <field name="class_id" invisible="1" />
                     </group>
                 </sheet>
-                <div class="o_attachment_preview" />
-                <div class="oe_chatter" style="display:block;">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter open_attachments="True" />
             </form>
         </field>
     </record>
     <record model="ir.ui.view" id="view_list_of_attendees_tree">
-        <field name="name">view.list.of.attendees.tree</field>
+        <field name="name">view.list.of.attendees.list</field>
         <field name="model">list.of.attendees</field>
         <field name="arch" type="xml">
-            <tree string="Training">
+            <list string="Training">
                 <field name="employee_id" />
                 <field name="training_start_date" />
                 <field name="training_end_date" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

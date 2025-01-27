@@ -11,7 +11,7 @@
                             class="table-condensed"
                         >
                             <tr>
-                                <br/>
+                                <br />
                                 <td class="text-center" colspan="15">
                                     <h3>
                                         <strong>
@@ -32,7 +32,9 @@
                                                 <strong>Subject</strong>
                                             </td>
                                             <td width="70%">
-                                                <span t-field="o.name"/>
+                                                <span
+                                                    t-field="o.candidate_id.employee_name"
+                                                />
                                             </td>
                                         </tr>
                                         <t t-if="o.partner_name">
@@ -41,23 +43,18 @@
                                                     <strong>Applicant's Name</strong>
                                                 </td>
                                                 <td>
-                                                    <span t-field="o.partner_name"/>
+                                                    <span t-field="o.partner_name" />
                                                 </td>
                                             </tr>
                                         </t>
-                                        <t t-if="o.partner_id or o.email_from">
+                                        <t t-if="o.email_from">
                                             <tr>
                                                 <td>
                                                     <strong>Contact Details</strong>
                                                 </td>
                                                 <td>
-                                                    <t t-if="o.partner_id">
-                                                        <span
-                                                            t-field="o.partner_id.name"
-                                                        />
-                                                    </t>
                                                     <t t-if="o.email_from">
-                                                        <br/>
+                                                        <br />
                                                         <font color="blue">
                                                             <span
                                                                 t-field="o.email_from"
@@ -73,17 +70,7 @@
                                                     <strong>Phone</strong>
                                                 </td>
                                                 <td>
-                                                    <span t-field="o.partner_phone"/>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="o.partner_mobile">
-                                            <tr>
-                                                <td>
-                                                    <strong>Mobile</strong>
-                                                </td>
-                                                <td>
-                                                    <span t-field="o.partner_mobile"/>
+                                                    <span t-field="o.partner_phone" />
                                                 </td>
                                             </tr>
                                         </t>
@@ -93,7 +80,7 @@
                                                     <strong>Degree</strong>
                                                 </td>
                                                 <td>
-                                                    <span t-field="o.type_id.name"/>
+                                                    <span t-field="o.type_id.name" />
                                                 </td>
                                             </tr>
                                         </t>
@@ -103,7 +90,7 @@
                                                     <strong>Applied Job</strong>
                                                 </td>
                                                 <td>
-                                                    <span t-field="o.job_id.name"/>
+                                                    <span t-field="o.job_id.name" />
                                                 </td>
                                             </tr>
                                         </t>
@@ -124,7 +111,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <br/>
+                                    <br />
                                 </td>
                             </tr>
                             <t t-if="o.medical_ids">
@@ -190,34 +177,36 @@
                                             />
                                         </td>
                                         <td style="border:1px solid black;">
-                                            <span t-field="medical.vital_sign"/>
+                                            <span t-field="medical.vital_sign" />
                                         </td>
                                         <td style="border:1px solid black;">
-                                            <span t-field="medical.date"/>
+                                            <span t-field="medical.date" />
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.blood_name"/>
-                                                <span t-field="medical.blood_type"/>
+                                                <span t-field="medical.blood_name" />
+                                                <span t-field="medical.blood_type" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.head_face_scalp"/>
+                                                <span
+                                                    t-field="medical.head_face_scalp"
+                                                />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.nose_sinuses"/>
+                                                <span t-field="medical.nose_sinuses" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.mouth_throat"/>
+                                                <span t-field="medical.mouth_throat" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
-                                            <span t-field="medical.ears_tms"/>
+                                            <span t-field="medical.ears_tms" />
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
@@ -234,31 +223,35 @@
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
-                                            <span t-field="medical.lungs"/>
+                                            <span t-field="medical.lungs" />
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.abdomen_hernia"/>
+                                                <span
+                                                    t-field="medical.abdomen_hernia"
+                                                />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.msk_strengh"/>
+                                                <span t-field="medical.msk_strengh" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;">
-                                            <span t-field="medical.neurological"/>
+                                            <span t-field="medical.neurological" />
                                         </td>
                                         <td style="border:1px solid black;">
                                             <center>
-                                                <span t-field="medical.urine_drug_serene"/>
+                                                <span
+                                                    t-field="medical.urine_drug_serene"
+                                                />
                                             </center>
                                         </td>
                                     </tr>
                                 </t>
                                 <tr>
                                     <td colspan="15">
-                                        <br/>
+                                        <br />
                                     </td>
                                 </tr>
                             </t>
@@ -297,34 +290,34 @@
                                     <tr>
                                         <td style="border:1px solid black;" colspan="2">
                                             <center>
-                                                <span t-field="prev_occu.from_date"/>
+                                                <span t-field="prev_occu.from_date" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
                                             <center>
-                                                <span t-field="prev_occu.to_date"/>
+                                                <span t-field="prev_occu.to_date" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="prev_occu.position"/>
+                                            <span t-field="prev_occu.position" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="prev_occu.organization"/>
+                                            <span t-field="prev_occu.organization" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="prev_occu.ref_name"/>
+                                            <span t-field="prev_occu.ref_name" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="prev_occu.ref_position"/>
+                                            <span t-field="prev_occu.ref_position" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
-                                            <span t-field="prev_occu.ref_phone"/>
+                                            <span t-field="prev_occu.ref_phone" />
                                         </td>
                                     </tr>
                                 </t>
                                 <tr>
                                     <td colspan="15">
-                                        <br/>
+                                        <br />
                                     </td>
                                 </tr>
                             </t>
@@ -367,26 +360,26 @@
                                         </td>
                                         <td style="border:1px solid black;" colspan="4">
                                             <center>
-                                                <span t-field="relative.name"/>
+                                                <span t-field="relative.name" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
-                                            <span t-field="relative.birthday"/>
+                                            <span t-field="relative.birthday" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="relative.place_of_birth"/>
+                                            <span t-field="relative.place_of_birth" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="relative.occupation"/>
+                                            <span t-field="relative.occupation" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
-                                            <span t-field="relative.gender"/>
+                                            <span t-field="relative.gender" />
                                         </td>
                                     </tr>
                                 </t>
                                 <tr>
                                     <td colspan="15">
-                                        <br/>
+                                        <br />
                                     </td>
                                 </tr>
                             </t>
@@ -426,14 +419,16 @@
                                         <td style="border:1px solid black;" colspan="2">
                                             <center>
                                                 <t t-if="not education.illiterate">
-                                                    <span t-field="education.from_date"/>
+                                                    <span
+                                                        t-field="education.from_date"
+                                                    />
                                                 </t>
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;" colspan="2">
                                             <center>
                                                 <t t-if="not education.illiterate">
-                                                    <span t-field="education.to_date"/>
+                                                    <span t-field="education.to_date" />
                                                 </t>
                                             </center>
                                         </td>
@@ -449,14 +444,16 @@
                                         <td style="border:1px solid black;" colspan="3">
                                             <t t-if="not education.illiterate">
                                                 <center>
-                                                    <span t-field="education.school_name"/>
+                                                    <span
+                                                        t-field="education.school_name"
+                                                    />
                                                 </center>
                                             </t>
                                         </td>
                                         <td style="border:1px solid black;">
                                             <t t-if="not education.illiterate">
                                                 <center>
-                                                    <span t-field="education.grade"/>
+                                                    <span t-field="education.grade" />
                                                 </center>
                                             </t>
                                         </td>
@@ -465,22 +462,22 @@
                                             colspan="2"
                                         >
                                             <t t-if="education.illiterate">
-                                                <input type="checkbox" checked="True"/>
+                                                <input type="checkbox" checked="True" />
                                             </t>
                                             <t t-if="not education.illiterate">
-                                                <input type="checkbox"/>
+                                                <input type="checkbox" />
                                             </t>
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
                                             <t t-if="not education.illiterate">
-                                                <span t-field="education.edu_type"/>
+                                                <span t-field="education.edu_type" />
                                             </t>
                                         </td>
                                     </tr>
                                 </t>
                                 <tr>
                                     <td colspan="15">
-                                        <br/>
+                                        <br />
                                     </td>
                                 </tr>
                             </t>
@@ -513,19 +510,19 @@
                                     <tr>
                                         <td style="border:1px solid black;" colspan="3">
                                             <center>
-                                                <span t-field="language.language"/>
+                                                <span t-field="language.language" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
                                             <center>
-                                                <span t-field="language.read_lang"/>
+                                                <span t-field="language.read_lang" />
                                             </center>
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
-                                            <span t-field="language.write_lang"/>
+                                            <span t-field="language.write_lang" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
-                                            <span t-field="language.speak_lang"/>
+                                            <span t-field="language.speak_lang" />
                                         </td>
                                         <td style="border:1px solid black;" colspan="3">
                                             <center>
@@ -536,7 +533,7 @@
                                                     />
                                                 </t>
                                                 <t t-if="not language.mother_tongue">
-                                                    <input type="checkbox"/>
+                                                    <input type="checkbox" />
                                                 </t>
                                             </center>
                                         </td>

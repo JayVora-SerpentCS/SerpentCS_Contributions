@@ -1,6 +1,6 @@
 from odoo import api, fields, models
-from odoo.tools.translate import _
 from odoo.exceptions import UserError
+from odoo.tools.translate import _
 
 
 class ApplicantRelative(models.Model):
@@ -22,16 +22,22 @@ class ApplicantRelative(models.Model):
             ("Wife", "Wife"),
             ("Other", "Other"),
         ],
-        string="Relative Type",
         required=True,
     )
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
     birthday = fields.Date(string="Date of Birth")
-    place_of_birth = fields.Char(string="Place of Birth")
-    occupation = fields.Char(string="Occupation")
-    gender = fields.Selection([("Male", "Male"), ("Female", "Female")], string="Gender")
-    active = fields.Boolean(string="Active", default=True)
+    place_of_birth = fields.Char()
+    occupation = fields.Char()
+    gender = fields.Selection([("Male", "Male"), ("Female", "Female")])
+    active = fields.Boolean(default=True)
     applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
+
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != self._context.get("active_id")):
+            defaults.update({"applicant_id": self._context.get("active_id")})
+        return defaults
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
@@ -53,23 +59,30 @@ class ApplicantRelative(models.Model):
                 self.gender = "Male"
             elif self.relative_type in female_relative:
                 self.gender = "Female"
-            
+        # Already relative_type field is required no need to add tehe warning.
+        # if self.applicant_id and not self.relative_type:
+        #     warning = {
+        #         "title": _("Warning!"),
+        #         "message": _("Please select Relative Type!"),
+        #     }
+        #     return {"gender": False, "warning": warning}
+
 
 class ApplicantEducation(models.Model):
     _name = "applicant.education"
     _description = "Applicant Education"
     _inherit = ["mail.thread", "mail.activity.mixin"]
-    _rec_name = "from_date"
+    _rec_name = "grade"
     _order = "from_date"
 
-    from_date = fields.Date(string="From Date")
-    to_date = fields.Date(string="To Date")
-    education_rank = fields.Char("Education Rank")
-    school_name = fields.Char(string="School Name")
+    from_date = fields.Date()
+    to_date = fields.Date()
+    education_rank = fields.Char()
+    school_name = fields.Char()
     grade = fields.Char("Education Field")
     field = fields.Char(string="Field of Education")
-    illiterate = fields.Boolean("Illiterate")
-    active = fields.Boolean(string="Active", default=True)
+    illiterate = fields.Boolean()
+    active = fields.Boolean(default=True)
     applicant_id = fields.Many2one("hr.applicant", "Applicant Ref", ondelete="cascade")
     edu_type = fields.Selection(
         [("Local", "Local"), ("Abroad", "Abroad")],
@@ -78,13 +91,22 @@ class ApplicantEducation(models.Model):
     )
     country_id = fields.Many2one("res.country", "Country")
     state_id = fields.Many2one("res.country.state", "State")
-    province = fields.Char("Province")
+    province = fields.Char()
+
+    @api.model
+    def default_get(self, fields_list):
+        defaults = super().default_get(fields_list)
+        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != self._context.get("active_id")):
+            defaults.update({"applicant_id": self._context.get("active_id")})
+        return defaults
 
     @api.onchange("edu_type")
     def _onchange_edu_type(self):
         for rec in self:
             rec.country_id = False if rec.edu_type == "Local" else rec.country_id
-            rec.province = rec.state_id = False if rec.edu_type != "Local" else rec.province
+            rec.province = rec.state_id = (
+                False if rec.edu_type != "Local" else rec.province
+            )
 
     @api.onchange("illiterate")
     def _onchange_illiterate(self):
@@ -94,7 +116,7 @@ class ApplicantEducation(models.Model):
                 rec.school_name
             ) = rec.grade = rec.field = rec.edu_type = rec.province = ""
 
-    @api.constrains('from_date', 'to_date')
+    @api.constrains("from_date", "to_date")
     def check_date(self):
         for rec in self:
             if (rec.from_date and rec.to_date) >= (fields.Date.today()):

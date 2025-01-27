@@ -1,7 +1,8 @@
 # See LICENSE file for full copyright and licensing details.
 from dateutil.relativedelta import relativedelta
+
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class IrAttachement(models.Model):
@@ -15,14 +16,14 @@ class CoursesType(models.Model):
     _name = "course.type"
     _description = "Course Type"
 
-    name = fields.Char("Name", required=True)
-    code = fields.Char("Code", required=True)
+    name = fields.Char(required=True)
+    code = fields.Char(required=True)
 
     _sql_constraints = [
-        ('code_unique', 'unique (code,name)', 'The code of must be unique per course !')
+        ("code_unique", "unique (code,name)", "The code of must be unique per course !")
     ]
 
-    
+
 class Trainingcourses(models.Model):
 
     _name = "training.courses"
@@ -42,7 +43,7 @@ class Trainingcourses(models.Model):
     course_type_id = fields.Many2one("course.type", string="Course Category")
     job_id = fields.Many2one("hr.job", "Applied Job")
     department = fields.Char(related="job_id.name", string="Department", readonly=True)
-    training_location = fields.Char("Training Location")
+    training_location = fields.Char()
     duration = fields.Integer("Course Duration", required=True, default="1")
     duration_type = fields.Selection(
         [("day", "Days"), ("week", "Weeks"), ("month", "Months")], required=True
@@ -57,11 +58,8 @@ class TrainingClass(models.Model):
     _description = "Training Class"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-
     course_id = fields.Many2one("training.courses", string="Course Name", required=True)
-    department = fields.Char(
-        related="course_id.department", string="Department", readonly=True
-    )
+    department = fields.Char(related="course_id.department", readonly=True)
     job_id = fields.Many2one(
         related="course_id.job_id",
         comodel_name="hr.job",
@@ -75,16 +73,13 @@ class TrainingClass(models.Model):
         readonly=True,
     )
     training_location = fields.Char(
-        related="course_id.training_location", string="Training Location", readonly=True
+        related="course_id.training_location", readonly=True
     )
-    training_attendees = fields.Integer("Training Attendees", required=True)
+    training_attendees = fields.Integer(required=True)
     training_start_date = fields.Date(
-        "Training Start Date",
         required=True,
     )
-    training_end_date = fields.Date(
-        "Training End Date", 
-    )
+    training_end_date = fields.Date()
     attendees_ids = fields.One2many(
         "list.of.attendees", "class_id", string="List of Local Attendees"
     )
@@ -96,11 +91,10 @@ class TrainingClass(models.Model):
             ("completed", "Completed"),
             ("cancel", "Cancelled"),
         ],
-        "State",
         default="draft",
-        tracking=True
+        tracking=True,
     )
-    description = fields.Text("Description")
+    description = fields.Text()
 
     @api.onchange("training_start_date", "course_id")
     def _onchange_start_date(self):
@@ -130,9 +124,7 @@ class TrainingClass(models.Model):
             for rec in self:
                 if len(rec.attendees_ids.ids) > rec.training_attendees:
                     raise ValidationError(
-                        _(
-                            "List of attendees are greater than Training Attendees!"
-                        )
+                        _("List of attendees are greater than Training Attendees!")
                     )
         return res
 
@@ -171,8 +163,16 @@ class TrainingClass(models.Model):
 
     def action_cancel(self):
         for rec in self:
-            if any(attendee.state not in ["draft", "awaiting_training_start", "in_complete"] for attendee in rec.attendees_ids):
-                raise ValidationError(_("You cannot cancel the Training Class if all attendees are not in Draft, Awaiting Training Start, or Incomplete state!"))
+            if any(
+                attendee.state
+                not in ["draft", "awaiting_training_start", "in_complete"]
+                for attendee in rec.attendees_ids
+            ):
+                raise ValidationError(
+                    _(
+                        "You cannot cancel the Training Class if all attendees are not in Draft, Awaiting Training Start, or Incomplete state!"
+                    )
+                )
         self.state = "cancel"
 
 
@@ -213,31 +213,19 @@ class ListOfAttendees(models.Model):
     employee_id = fields.Many2one(
         "hr.employee",
         "Employee",
-        # readonly=True,
-        # states={"draft": [("readonly", False)]},
     )
     attendees_image = fields.Binary(related="employee_id.image_1920", string="Image")
     training_start_date = fields.Date(
-        "Training Start Date",
         required=True,
-        # readonly=True,
-        # states={"draft": [("readonly", False)]},
     )
     training_end_date = fields.Date(
-        "Training End Date",
         required=True,
-        # readonly=True,
-        # states={"draft": [("readonly", False)]},
     )
     date_of_arrival = fields.Date(
         "Date of Arrival in Training Location",
         readonly=False,
-        # states={
-        #     "draft": [("readonly", False)],
-        #     "awaiting_training_start": [("readonly", False)],
-        # },
     )
-    comments = fields.Text("Comments")
+    comments = fields.Text()
     attachment_ids = fields.One2many(
         "ir.attachment", "attendees_id", string="Attachments"
     )
@@ -249,9 +237,8 @@ class ListOfAttendees(models.Model):
             ("train_completed", "Training Completed"),
             ("in_complete", "Training Incomplete"),
         ],
-        string="State",
         default="draft",
-        tracking=True
+        tracking=True,
     )
 
     @api.onchange("class_id")

@@ -9,109 +9,97 @@
                     <group>
                         <field
                             name="medical_examination"
-                            tabindex="1"
                             placeholder="Enter Medical Examination"
                             required="1"
                         />
                         <field
                             name="vital_sign"
-                            tabindex="2"
                             placeholder="Enter Vital Sign"
                             required="1"
                         />
-                        <field
-                            name="date"
-                            placeholder="Enter Date"
-                            tabindex="3"
-                            required="1"
-                        />
+                        <field name="date" placeholder="Enter Date" required="1" />
                         <field
                             name="doc_comment"
-                            tabindex="4"
                             placeholder="Enter Doctor's Comment"
                         />
                         <field name="employee_id" invisible="1" />
                     </group>
                     <group string="Details">
                         <group>
-                            <label for="blood_name"/>
+                            <label for="blood_name" />
                             <div class="o_row">
-                                <field name="blood_name" class="o_hr_narrow_field" required="1"/>
-                                <field name="blood_type" class="o_hr_narrow_field" required="1"/>
+                                <field
+                                    name="blood_name"
+                                    class="o_hr_narrow_field"
+                                    required="1"
+                                />
+                                <field
+                                    name="blood_type"
+                                    class="o_hr_narrow_field"
+                                    required="1"
+                                />
                             </div>
-                            <field name="nose_sinuses" tabindex="7" required="1" />
-                            <field name="ears_tms" tabindex="9" required="1" />
-                            <field
-                            name="heart_vascular_system"
-                            tabindex="11"
-                            required="1"
-                            />
-                            <field name="abdomen_hernia" tabindex="13" required="1" />
-                            <field name="neurological" required="1" tabindex="15" />
-                            <field name="urine_drug_serene" required="1" tabindex="19" />
+                            <field name="nose_sinuses" required="1" />
+                            <field name="ears_tms" required="1" />
+                            <field name="heart_vascular_system" required="1" />
+                            <field name="abdomen_hernia" required="1" />
+                            <field name="neurological" required="1" />
+                            <field name="urine_drug_serene" required="1" />
                         </group>
                         <group>
-                            <field name="head_face_scalp" tabindex="6" required="1" />
-                            <field name="mouth_throat" tabindex="8" required="1" />
-                            <field name="eyes_pupils_ocular" tabindex="10" required="1" />
-                            <field name="lungs" tabindex="12" required="1" />
-                            <field name="msk_strengh" required="1" tabindex="14" />
-                            <field name="glasses_needed" tabindex="18" />
-                            <field name="fit_for_full_duty" tabindex="20" />
+                            <field name="head_face_scalp" required="1" />
+                            <field name="mouth_throat" required="1" />
+                            <field name="eyes_pupils_ocular" required="1" />
+                            <field name="lungs" required="1" />
+                            <field name="msk_strengh" required="1" />
+                            <field name="glasses_needed" />
+                            <field name="fit_for_full_duty" />
                         </group>
                     </group>
                     <group string="Medical History">
                         <group>
-                            <field name="good_health" tabindex="21" />
-                            <field name="broken_bones" tabindex="23" />
-                            <field name="serious_wound" tabindex="25" />
-                            <field name="history_drug_use" tabindex="27" />
+                            <field name="good_health" />
+                            <field name="broken_bones" />
+                            <field name="serious_wound" />
+                            <field name="history_drug_use" />
                         </group>
                         <group>
-                            <field name="serious_illness" tabindex="22" />
-                            <field name="medications" tabindex="24" />
-                            <field name="allergic" tabindex="26" />
+                            <field name="serious_illness" />
+                            <field name="medications" />
+                            <field name="allergic" />
                         </group>
                     </group>
                 </sheet>
                 <div class="o_attachment_preview" />
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter open_attachments="True" />
             </form>
         </field>
     </record>
     <record model="ir.ui.view" id="view_hr_employee_medical_details_tree">
-        <field name="name">view.hr.employee.medical.details.tree</field>
+        <field name="name">view.hr.employee.medical.details.list</field>
         <field name="model">hr.employee.medical.details</field>
         <field name="arch" type="xml">
-            <tree string="Medical Screening">
+            <list string="Medical Screening">
                 <field name="employee_id" column_invisible="1" />
                 <field name="medical_examination" />
                 <field name="vital_sign" />
                 <field name="date" />
-            </tree>
+            </list>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Medical Details Button -->
+    <!-- Action Of Form & list Views Of Medical Details Button -->
     <record id="action_emp_medical_details_list" model="ir.actions.act_window">
         <field name="name">Medical Details</field>
         <field name="res_model">hr.employee.medical.details</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_hr_employee_medical_details_tree" />
-        <field name="domain">[('employee_id', '=', active_id)]</field>
+        <field name="domain">[('employee_id', '=', context.get('active_id'))]</field>
     </record>
     <record model="ir.ui.view" id="view_employee_previous_occupation_tree">
-        <field name="name">view.employee.previous.occupation.tree</field>
+        <field name="name">view.employee.previous.occupation.list</field>
         <field name="model">employee.previous.occupation</field>
         <field name="arch" type="xml">
-            <tree string="Prev. Occupation">
+            <list string="Prev. Occupation">
                 <field name="employee_id" column_invisible="1" />
                 <field name="from_date" />
                 <field name="to_date" />
@@ -120,7 +108,7 @@
                 <field name="ref_name" />
                 <field name="ref_position" />
                 <field name="ref_phone" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_employee_previous_occupation_form">
@@ -134,50 +122,36 @@
                         <group>
                             <field
                                 name="organization"
-                                tabindex="3"
                                 placeholder="Enter Organization"
                             />
-                            <field
-                                name="ref_name"
-                                tabindex="5"
-                                placeholder="Enter Reference Name"
-                            />
+                            <field name="ref_name" placeholder="Enter Reference Name" />
                             <field
                                 name="ref_phone"
-                                tabindex="7"
                                 placeholder="Enter Reference Phone"
                                 widget="phone"
                             />
-                            <label string="Duration" for="from_date"/>
+                            <label string="Duration" for="from_date" />
                             <div>
                                 <field
                                     name="from_date"
-                                    tabindex="1"
                                     widget="daterange"
                                     options="{'end_date_field': 'to_date'}"
                                 />
                                 <field
                                     name="to_date"
-                                    tabindex="2"
                                     placeholder="Enter To Date"
                                     invisible="1"
                                 />
                             </div>
                         </group>
                         <group>
-                            <field
-                                name="position"
-                                tabindex="4"
-                                placeholder="Enter Position"
-                            />
+                            <field name="position" placeholder="Enter Position" />
                             <field
                                 name="ref_position"
-                                tabindex="6"
                                 placeholder="Enter Reference Position"
                             />
                             <field
                                 name="email"
-                                tabindex="8"
                                 placeholder="Enter Email"
                                 widget="email"
                             />
@@ -185,31 +159,23 @@
                     </group>
                 </sheet>
                 <div class="o_attachment_preview" />
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter open_attachments="True" />
             </form>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Prev. Occupation Button -->
+    <!-- Action Of Form & list Views Of Prev. Occupation Button -->
     <record id="action_emp_prev_occupation_list" model="ir.actions.act_window">
         <field name="name">Previous Occupation</field>
         <field name="res_model">employee.previous.occupation</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_employee_previous_occupation_tree" />
-        <field name="domain">[('employee_id', '=', active_id)]</field>
+        <field name="domain">[('employee_id', '=', context.get('active_id'))]</field>
     </record>
     <record model="ir.ui.view" id="view_employee_relative_tree">
-        <field name="name">view.employee.relative.tree</field>
+        <field name="name">view.employee.relative.list</field>
         <field name="model">employee.relative</field>
         <field name="arch" type="xml">
-            <tree string="Relative">
+            <list string="Relative">
                 <field name="employee_id" column_invisible="1" />
                 <field name="relative_type" />
                 <field name="name" placeholder="Enter Name" />
@@ -217,7 +183,7 @@
                 <field name="place_of_birth" placeholder="Enter Place of Birth" />
                 <field name="occupation" placeholder="Enter Occupation" />
                 <field name="gender" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_employee_relative_form">
@@ -229,72 +195,53 @@
                     <field name="employee_id" invisible="1" />
                     <group>
                         <group>
-                            <field name="name" placeholder="Enter Name" tabindex="2" />
-                            <field
-                                name="birthday"
-                                tabindex="4"
-                                placeholder="Enter Date of Birth"
-                            />
+                            <field name="name" placeholder="Enter Name" />
+                            <field name="birthday" placeholder="Enter Date of Birth" />
                             <field
                                 name="place_of_birth"
                                 placeholder="Enter Place of Birth"
-                                tabindex="5"
                             />
                         </group>
                         <group>
                             <field
                                 name="relative_type"
-                                tabindex="1"
                                 placeholder="Enter Relative Type"
                             />
                             <field
                                 name="gender"
                                 placeholder="Enter Gender"
-                                tabindex="7"
                                 readonly="relative_type not in ('Other', 'Children')"
                                 force_save="1"
                             />
-                            <field
-                                name="occupation"
-                                placeholder="Enter Occupation"
-                                tabindex="6"
-                            />
+                            <field name="occupation" placeholder="Enter Occupation" />
                         </group>
                     </group>
                 </sheet>
                 <div class="o_attachment_preview" />
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter open_attachments="True" />
             </form>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Relatives Button -->
+    <!-- Action Of Form & list Views Of Relatives Button -->
     <record id="action_emp_relatives_list" model="ir.actions.act_window">
         <field name="name">Relatives</field>
         <field name="res_model">employee.relative</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_employee_relative_tree" />
-        <field name="domain">[('employee_id', '=', active_id)]</field>
+        <field name="domain">[('employee_id', '=', context.get('active_id'))]</field>
     </record>
     <record model="ir.ui.view" id="view_employee_education_tree">
-        <field name="name">view.employee.education.tree</field>
+        <field name="name">view.employee.education.list</field>
         <field name="model">employee.education</field>
         <field name="arch" type="xml">
-            <tree string="Education">
+            <list string="Education">
                 <field name="employee_id" column_invisible="1" />
                 <field name="from_date" />
                 <field name="to_date" />
                 <field name="grade" />
                 <field name="school_name" />
                 <field name="illiterate" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_employee_education_form">
@@ -305,28 +252,26 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <div class="oe_title mb24">
-                        <label for="illiterate" string="Is Illiterate?"/>
-                        <field string="Is Illiterate?" name="illiterate" tabindex="27" class="oe_inline"/>
+                        <label for="illiterate" string="Is Illiterate?" />
+                        <field
+                            string="Is Illiterate?"
+                            name="illiterate"
+                            class="oe_inline"
+                        />
                     </div>
                     <group>
-                        <group>    
+                        <group>
                             <field
                                 name="school_name"
-                                tabindex="13"
                                 placeholder="Enter School Name"
                                 readonly="illiterate != False"
                                 required="illiterate == False"
                             />
-                            <label for="edu_type" string="School Location"/>
+                            <label for="edu_type" string="School Location" />
                             <div class="o_address_format">
-                                <field
-                                    name="edu_type"
-                                    tabindex="19"
-                                    readonly="illiterate != False"
-                                />
+                                <field name="edu_type" readonly="illiterate != False" />
                                 <field
                                     name="country_id"
-                                    tabindex="21"
                                     placeholder="Enter Country"
                                     invisible="edu_type != 'Abroad'"
                                     readonly="illiterate != False"
@@ -334,7 +279,6 @@
                                 />
                                 <field
                                     name="state_id"
-                                    tabindex="23"
                                     placeholder="Enter State"
                                     invisible="edu_type != 'Local'"
                                     readonly="illiterate != False"
@@ -342,17 +286,15 @@
                                 />
                                 <field
                                     name="province"
-                                    tabindex="25"
                                     placeholder="Enter Province"
                                     invisible="edu_type != 'Local'"
                                     readonly="illiterate != False"
                                 />
                             </div>
-                            <label for="from_date" string="Duration"/>
+                            <label for="from_date" string="Duration" />
                             <div>
                                 <field
                                     name="from_date"
-                                    tabindex="1"
                                     readonly="illiterate != False"
                                     required="illiterate == False"
                                     widget="daterange"
@@ -360,7 +302,6 @@
                                 />
                                 <field
                                     name="to_date"
-                                    tabindex="3"
                                     placeholder="Enter To Date"
                                     readonly="illiterate != False"
                                     required="illiterate == False"
@@ -371,14 +312,12 @@
                         <group>
                             <field
                                 name="education_rank"
-                                tabindex="11"
                                 placeholder="Enter Education Rank"
                                 readonly="illiterate != False"
                                 required="illiterate == False"
                             />
                             <field
                                 name="grade"
-                                tabindex="11"
                                 placeholder="Enter Education Field"
                                 readonly="illiterate != False"
                                 required="illiterate == False"
@@ -386,37 +325,30 @@
                         </group>
                     </group>
                 </sheet>
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <div class="o_attachment_preview" />
+                <chatter open_attachments="True" />
             </form>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Medical Button -->
+    <!-- Action Of Form & list Views Of Medical Button -->
     <record id="action_emp_education_list" model="ir.actions.act_window">
         <field name="name">Education Details</field>
         <field name="res_model">employee.education</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_employee_education_tree" />
-        <field name="domain">[('employee_id', '=', active_id)]</field>
+        <field name="domain">[('employee_id', '=', context.get('active_id'))]</field>
     </record>
     <record model="ir.ui.view" id="view_employee_previous_travel_tree">
-        <field name="name">view.employee.previous.travel.tree</field>
+        <field name="name">view.employee.previous.travel.list</field>
         <field name="model">employee.previous.travel</field>
         <field name="arch" type="xml">
-            <tree string="Previous Travel">
+            <list string="Previous Travel">
                 <field name="employee_id" column_invisible="1" />
                 <field name="from_date" />
                 <field name="to_date" />
                 <field name="location" />
                 <field name="reason" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_employee_previous_travel_form">
@@ -427,62 +359,48 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="4" colspan="4">
-                        <label string="Duration" for="from_date"/>
+                        <label string="Duration" for="from_date" />
                         <div>
                             <field
                                 name="from_date"
-                                tabindex="1"
                                 widget="daterange"
                                 options="{'end_date_field': 'to_date'}"
                             />
                             <field
                                 name="to_date"
-                                tabindex="2"
                                 placeholder="Enter To Date"
                                 invisible="1"
                             />
                         </div>
-                        <field
-                            name="location"
-                            tabindex="3"
-                            placeholder="Enter Location"
-                        />
-                        <field name="reason" tabindex="4" placeholder="Enter Reason" />
+                        <field name="location" placeholder="Enter Location" />
+                        <field name="reason" placeholder="Enter Reason" />
                     </group>
                 </sheet>
                 <div class="o_attachment_preview" />
-                <div class="oe_chatter">
-                    <field
-                        name="message_follower_ids"
-                        widget="mail_followers"
-                        groups="base.group_user"
-                    />
-                    <field name="activity_ids" widget="mail_activity" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <chatter open_attachments="True" />
             </form>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of Travels Button -->
+    <!-- Action Of Form & list Views Of Travels Button -->
     <record id="action_emp_travels_list" model="ir.actions.act_window">
         <field name="name">Previous Travels</field>
         <field name="res_model">employee.previous.travel</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_employee_previous_travel_tree" />
-        <field name="domain">[('employee_id', '=', active_id)]</field>
+        <field name="domain">[('employee_id', '=', context.get('active_id'))]</field>
     </record>
     <record model="ir.ui.view" id="view_employee_language_tree">
-        <field name="name">view.employee.language.tree</field>
+        <field name="name">view.employee.language.list</field>
         <field name="model">employee.language</field>
         <field name="arch" type="xml">
-            <tree string="Employee Language">
+            <list string="Employee Language">
                 <field name="employee_id" column_invisible="1" />
                 <field name="language" />
                 <field name="read_lang" />
                 <field name="write_lang" />
                 <field name="speak_lang" />
                 <field name="mother_tongue" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="view_employee_language_form">
@@ -493,47 +411,39 @@
                 <sheet>
                     <field name="employee_id" invisible="1" />
                     <group col="2" colspan="4">
-                        <field
-                            name="language"
-                            tabindex="1"
-                            placeholder="Enter Language"
-                            options="{'no_create':True, 'no_edit': True}"
-                        />
+                        <field name="language" placeholder="Enter Language" options="{'no_create':True, 'no_edit': True}"/>
                     </group>
                     <group col="6" colspan="6">
                         <field
                             name="read_lang"
-                            tabindex="2"
                             widget="radio"
                             placeholder="Enter Reading Ability"
                         />
                         <field
                             name="write_lang"
-                            tabindex="3"
                             widget="radio"
                             placeholder="Enter Writing Ability"
                         />
                         <field
                             name="speak_lang"
-                            tabindex="4"
                             widget="radio"
                             placeholder="Enter Speaking Ability"
                         />
                     </group>
                     <group string="Mother Tongue" colspan="4">
-                        <field name="mother_tongue" tabindex="5" />
+                        <field name="mother_tongue" />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
-    <!-- Action Of Form & Tree Views Of languages Button -->
+    <!-- Action Of Form & list Views Of languages Button -->
     <record id="action_emp_languages_list" model="ir.actions.act_window">
         <field name="name">Languages</field>
         <field name="res_model">employee.language</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_employee_language_tree" />
-        <field name="domain">[('employee_id', '=', active_id)]</field>
+        <field name="domain">[('employee_id', '=', context.get('active_id'))]</field>
     </record>
     <!-- Inherited view of hr.employee to add buttons -->
     <record id="view_hr_employee_inherited" model="ir.ui.view">
@@ -547,7 +457,7 @@
                     type="action"
                     class="oe_inline oe_stat_button"
                     icon="fa-medkit"
-                    context="{'default_employee_id':active_id}"
+                    context="{'default_employee_id':context.get('active_id')}"
                     help="Add/Edit/Review Medical details of employee"
                 >
                     <field
@@ -561,7 +471,7 @@
                     type="action"
                     class="oe_inline oe_stat_button"
                     icon="fa-users"
-                    context="{'default_employee_id':active_id}"
+                    context="{'default_employee_id':context.get('active_id')}"
                     help="Add/Edit/Review Relative details of employee"
                 >
                     <field name="no_of_relative" widget="statinfo" string="Relatives" />
@@ -572,7 +482,7 @@
                     style="width:198px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-history"
-                    context="{'default_employee_id':active_id}"
+                    context="{'default_employee_id':context.get('active_id')}"
                     help="Add/Edit/Review Previous Occupation details of employee"
                 >
                     <field
@@ -587,7 +497,7 @@
                     style="width:197px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-book"
-                    context="{'default_employee_id':active_id}"
+                    context="{'default_employee_id':context.get('active_id')}"
                     help="Add/Edit/Review Education details of employee"
                 >
                     <field
@@ -601,7 +511,7 @@
                     type="action"
                     class="oe_inline oe_stat_button"
                     icon="fa-font"
-                    context="{'default_employee_id':active_id}"
+                    context="{'default_employee_id':context.get('active_id')}"
                     help="Add/Edit/Review Languages of employee"
                 >
                     <field name="no_of_lang" widget="statinfo" string="Languages" />
@@ -612,7 +522,7 @@
                     style="width:145px !important"
                     class="oe_inline oe_stat_button"
                     icon="fa-car"
-                    context="{'default_employee_id':active_id}"
+                    context="{'default_employee_id':context.get('active_id')}"
                     help="Add/Edit/Review Priveous Travel details of employee"
                 >
                     <field
