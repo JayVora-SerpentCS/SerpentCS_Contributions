@@ -2,12 +2,12 @@
 <odoo>
     <!-- Label brand tree view -->
     <record id="view_label_brand_tree" model="ir.ui.view">
-        <field name="name">label.brand.tree</field>
+        <field name="name">label.brand.list</field>
         <field name="model">label.brand</field>
         <field name="arch" type="xml">
-            <tree string="Label Configuration">
+            <list string="Label Configuration">
                 <field name="brand_name"/>
-            </tree>
+            </list>
         </field>
     </record>
     <!-- Label brand form view -->
@@ -50,10 +50,10 @@
     </record>
     <!-- Label Configuration Tree View -->
     <record id="view_label_config_tree" model="ir.ui.view">
-        <field name="name">label.config.tree</field>
+        <field name="name">label.config.list</field>
         <field name="model">label.config</field>
         <field name="arch" type="xml">
-            <tree string="Report">
+            <list string="Report">
                 <field name="name"/>
                 <field name="height"/>
                 <field name="width"/>
@@ -62,7 +62,7 @@
                 <field name="left_margin"/>
                 <field name="right_margin"/>
                 <field name="cell_spacing"/>
-            </tree>
+            </list>
         </field>
     </record>
     <!-- Label brand Action -->
@@ -70,7 +70,7 @@
         <field name="name">Label Configuration</field>
         <field name="res_model">label.brand</field>
         <field name="binding_view_types">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
     <!-- Menu Details -->
     <menuitem id="menu_config" name="Configuration" parent="base.menu_administration" sequence="2"/>

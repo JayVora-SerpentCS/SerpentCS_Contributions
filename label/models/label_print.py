@@ -2,7 +2,7 @@
 
 from odoo import _, api, fields, models
 from odoo.tools.safe_eval import safe_eval as eval
-from odoo.exceptions import  ValidationError
+from odoo.exceptions import ValidationError
 
 
 class LabelPrint(models.Model):
@@ -33,18 +33,13 @@ class LabelPrint(models.Model):
             model_list.append(current_model)
             active_model_obj = self.env[self.model_id.model]
             if active_model_obj._inherits:
-                for key, val in active_model_obj._inherits.items():
+                for key in active_model_obj._inherits.items():
                     model_ids = model_obj.search([("model", "=", key)])
                     if model_ids:
                         model_list.append(key)
         self.model_list = model_list
 
     def create_action(self):
-        """
-        This method generates an action that allows the label print template
-        to be available on records of document model.It updates
-        the ref_ir_act_report field with the newely created action's ID.
-        """
         vals = {}
         action_obj = self.env["ir.actions.act_window"]
         for data in self.browse(self.ids):
@@ -68,20 +63,12 @@ class LabelPrint(models.Model):
         return True
 
     def unlink(self):
-        """
-        This method removes the label print record from the database and 
-        deletes any associated sidebar actions.
-        """
         actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
         for action in actions_to_unlink:
             action.unlink()
         return super().unlink()
 
     def unlink_action(self):
-        """
-        This method deletes the actions associated with the label print records 
-        without removing the label print records themselves.
-        """
         actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
         for action in actions_to_unlink:
             action.unlink()
@@ -113,18 +100,10 @@ class LabelPrintField(models.Model):
         ("bottom", "Bottom")
     ], "Position")
     nolabel = fields.Boolean("No Label")
-    newline = fields.Boolean("New Line", deafult=True)
+    newline = fields.Boolean("New Line", default=True)
 
     @api.onchange("python_field")
     def _onchange_python_field(self):
-        """
-        This method checks if the provided python_field is a valid field
-        of the model.It raises a ValidationError if the field is invalid
-        or does not start with 'obj'.
-
-        Raises:
-            ValidationError: If the python_field is not valid.
-        """
         field_str = self.python_field
         if field_str:
             python_field = field_str.split(".")
@@ -135,7 +114,7 @@ class LabelPrintField(models.Model):
             model_id = self.model_id
             fields = self.env[model_id.model].fields_get()
             key_list = []
-            for key, v in fields.items():
+            for key in fields.items():
                 key_list.append(key)
             if not python_field_str in key_list:
                 raise ValidationError(_("Please enter valid field."))
@@ -148,15 +127,6 @@ class IrModelFields(models.Model):
 
     @api.model
     def name_search(self, name="", args=None, operator="ilike", limit=None):
-        """
-        Searches for the method fields based on the provided name and context.
-        
-        This method overrides the default name_search method to filter
-        fields based on the model_list context variable.
-
-        Returns:
-            list:A list of matching field records.
-        """
         data = self._context.get("model_list")
         if data:
             args.append(("model", "in", eval(data)))

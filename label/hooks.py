@@ -1,6 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
 
-
 def uninstall_hook(cr, registry):
     cr.execute("select ref_ir_act_report from label_print")
     label_data = cr.fetchall()

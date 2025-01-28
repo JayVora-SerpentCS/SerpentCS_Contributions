@@ -88,7 +88,6 @@ class ReportDynamicLabel(models.AbstractModel):
             result.extend([temp] * diff)
         return new_list
 
-
     @api.model
     def _get_report_values(self, docids, data=None):
         if not data.get("form") or not self.env.context.get("active_model"):

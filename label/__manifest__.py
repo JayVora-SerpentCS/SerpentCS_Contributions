@@ -1,7 +1,7 @@
 # See LICENSE file for full copyright and licensing details.
 {
     "name": "Mass Label Reporting",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Tools",
     "license": "LGPL-3",
     "summary": "Generate customised labels of any document",
@@ -24,4 +24,5 @@
     "uninstall_hook": "uninstall_hook",
     "images": ["static/description/Banner_Label.png"],
     "installable": True,
+    "auto_install": False,
 }

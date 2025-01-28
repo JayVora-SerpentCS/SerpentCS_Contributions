@@ -4,9 +4,7 @@
 import math
 
 # 2:  imports of odoo
-from odoo import api, fields, models,_
-from odoo.tools import misc
-from odoo.exceptions import  ValidationError
+from odoo import api, fields, models
 
 
 class LabelPrintWizard(models.TransientModel):
@@ -42,6 +40,10 @@ class LabelPrintWizard(models.TransientModel):
     def print_report(self):
         if self._context is None:
             self._context = {}
+        label_print = self._context.get("label_print")
+        active_ids = self._context.get("active_ids")
+        if not label_print or not active_ids:
+            return False
         if not self._context.get("label_print") or not \
                 self._context.get("active_ids"):
             return False
@@ -72,25 +74,19 @@ class LabelPrintWizard(models.TransientModel):
                 "cell_spacing": str(data.name.cell_spacing) + "px",
                 "ids": self._context.get("active_ids", []),
             }
-        cr, uid, context, su = self.env.args
-        context = dict(context)
-        context.update(
-            {"label_print_id": self._context.get(
-                "label_print"), "datas": datas}
-        )
-        self.env.args = cr, uid, misc.frozendict(context)
-        data = {"ids": self.ids, "model": "label.config", "form": datas}
+        context = dict(self.env.context)  # Get the current context
+        context.update({
+            "label_print_id": label_print,
+            "datas": datas,
+        })
+        # Trigger the report action
+        data_payload = {
+            "ids": self.ids,
+            "model": "label.config",
+            "form": datas,
+        }
         return (
             self.env.ref("label.dynamic_label")
             .with_context(context)
-            .report_action(self, data=data)
+            .report_action(self, data=data_payload)
         )
-
-    @api.constrains('image_width', 'image_height','barcode_width','barcode_height')
-    def _check_positive_label(self):
-        for label in self:
-            if label.image_width > 150.00 or label.barcode_width > 150.00:
-                raise ValidationError(_("Width value must be less then 150."))
-            if label.image_height > 150.00 or label.barcode_height > 150.00:
-                raise ValidationError(_("Height value must be less then 150."))
-

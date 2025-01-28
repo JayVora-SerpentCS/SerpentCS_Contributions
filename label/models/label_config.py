@@ -5,11 +5,6 @@ from odoo.exceptions import ValidationError
 
 
 class LabelMain(models.Model):
-    """
-    This model represents different brands of labels that can be configured 
-    in the system.Each brand can have multiple label configurations associated
-    with it. 
-    """
     _name = "label.brand"
     _rec_name = "brand_name"
 
@@ -18,14 +13,9 @@ class LabelMain(models.Model):
     brand_name = fields.Char("Name", size=64, index=True)
     label_config_ids = fields.One2many(
         "label.config", "label_main_id", "Label Config")
-    
+
 
 class LabelConfig(models.Model):
-    """
-    This model contains the configuration settings for labels,including
-    dimensions and margins.Each configuration is associated with a specific
-    label brand.
-    """
     _name = "label.config"
 
     _description = "Configuration for label"
@@ -39,7 +29,7 @@ class LabelConfig(models.Model):
     right_margin = fields.Float("Right Margin (in mm)")
     cell_spacing = fields.Float("Cell Spacing", default=1.0)
     label_main_id = fields.Many2one("label.brand", "Label")
- 
+
 
     @api.constrains('height', 'width')
     def _check_positive_label(self):
