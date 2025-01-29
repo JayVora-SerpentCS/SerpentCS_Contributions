@@ -7,8 +7,10 @@ class HidePriceDiscount(models.TransientModel):
     _name = 'hide.price.discount'
     _description = "Hide Price Discount Wizard"
 
-    show_price = fields.Boolean('Show Price', help="If checked, you can see the price in report of Sales Order / Quotation.")
-    show_discount = fields.Boolean('Show Discount', help="If checked, you can see the discount in report of Sales Order/Quotation.")
+    show_price = fields.Boolean('Show Price',
+                                help="If checked, you can see the price in report of Sales Order / Quotation.")
+    show_discount = fields.Boolean('Show Discount',
+                                   help="If checked, you can see the discount in report of Sales Order/Quotation.")
 
     def hide_price_discount_report(self):
         data = {

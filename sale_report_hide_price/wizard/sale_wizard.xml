@@ -7,7 +7,7 @@
             <form>
                 <group>
                     <field name="show_price"/>
-                    <field name="show_discount" groups="product.group_discount_per_so_line"/>
+                    <field name="show_discount" groups="sale.group_discount_per_so_line"/>
                 </group>
                 <footer>
                     <button name="hide_price_discount_report" string="Report" type="object" class="btn-primary"/>

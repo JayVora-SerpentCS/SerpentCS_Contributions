@@ -2,30 +2,31 @@
 <odoo>
     <template id="report_sale_document_inherits" inherit_id="sale.report_saleorder_document">
         <!-- Discount fields hides from sale quotation report if show and hide price from Quotation -->
-        <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[4]" position="replace" groups="product.group_discount_per_so_line">
+        <xpath expr="//table[hasclass('o_has_total_table')]/tbody/t[2]/tr/t/td[4]" position="replace"
+               groups="sale.group_discount_per_so_line">
             <t t-if="discount == None or discount == True">
                 <td t-if="display_discount" class="text-end">
-                    <span t-field="line.discount" />
+                    <span t-field="line.discount"/>
                 </td>
             </t>
             <t t-if="discount == False">
-                <td t-if="display_discount" class="text-end" groups="product.group_discount_per_so_line">-N.A.-</td>
+                <td t-if="display_discount" class="text-end" groups="sale.group_discount_per_so_line">-N.A.-</td>
             </t>
         </xpath>
-        <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[3]" position="replace">
+        <xpath expr="//table[hasclass('o_has_total_table')]/tbody/t[2]/tr/t/td[3]" position="replace">
             <t t-if="price == None or price == True">
                 <td class="text-end">
-                    <span t-field="line.price_unit" />
+                    <span t-field="line.price_unit"/>
                 </td>
             </t>
             <t t-if="price == False">
                 <td class="text-end">-N.A.-</td>
             </t>
         </xpath>
-        <xpath expr="//table[hasclass('table-sm')]/tbody/t[2]/tr/t/td[last()]" position="replace">
+        <xpath expr="//table[hasclass('o_has_total_table')]/tbody/t[2]/tr/t/td[last()]" position="replace">
             <t t-if="price == None or price == True">
                 <td class="text-end">
-                     <span t-field="line.price_subtotal"/>
+                    <span t-field="line.price_subtotal"/>
                 </td>
             </t>
             <t t-if="price == False">
@@ -38,7 +39,10 @@
                     <table class="table table-sm">
                         <t t-set="tax_totals" t-value="doc.tax_totals"/>
                         <t t-if="price == None or price == True">
-                            <t t-call="account.document_tax_totals"/>
+                            <t t-call="sale.document_tax_totals">
+                                <t t-set="tax_totals" t-value="doc.tax_totals"/>
+                                <t t-set="currency" t-value="doc.currency_id"/>
+                            </t>
                         </t>
                         <t t-if="price == False">
                             <td class="text-end">-N.A.-</td>
@@ -56,20 +60,22 @@
                 <span t-field="line.product_uom">units</span>
             </td>
         </xpath>
-        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_discount']" position="replace">
+        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_discount']"
+               position="replace">
             <t t-if="discount == None or discount == True">
                 <td t-if="display_discount" class="text-end">
-                    <span t-field="option.discount" />
+                    <span t-field="option.discount"/>
                 </td>
             </t>
             <t t-if="discount == False">
-                <td t-if="display_discount" class="text-end" groups="product.group_discount_per_so_line">-N.A.-</td>
+                <td t-if="display_discount" class="text-end" groups="sale.group_discount_per_so_line">-N.A.-</td>
             </t>
         </xpath>
-        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_price_unit']" position="replace">
+        <xpath expr="//table[@name='table_optional_products']/tbody/tr/td[@name='td_option_price_unit']"
+               position="replace">
             <t t-if="price == None or price == True">
                 <td class="text-end">
-                    <span t-field="option.price_unit" />
+                    <span t-field="option.price_unit"/>
                 </td>
             </t>
             <t t-if="price == False">
