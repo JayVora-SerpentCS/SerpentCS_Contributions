@@ -25,26 +25,20 @@ class LabelPrint(models.Model):
         """
         Updates the model_list field when the model_id field changes.
         This method retrieves the current model and its inherited models, and updates the model_list field with the corresponding model names.
-        """          
-        model_list = []
+        """
+        self.model_list = []
         if self.model_id:
-            model_obj = self.env["ir.model"]
-            current_model = self.model_id.model
-            model_list.append(current_model)
-            active_model_obj = self.env[self.model_id.model]
-            if active_model_obj._inherits:
-                for key in active_model_obj._inherits.items():
-                    model_ids = model_obj.search([("model", "=", key)])
-                    if model_ids:
-                        model_list.append(key)
-        self.model_list = model_list
+            active_model = self.model_id.model
+            active_model_obj = self.env[active_model]
+            self.model_list = [active_model] + [
+                key for key in active_model_obj._inherits.keys()
+            ]
 
     def create_action(self):
-        vals = {}
         action_obj = self.env["ir.actions.act_window"]
-        for data in self.browse(self.ids):
+        for data in self:
             button_name = _("Label (%s)") % data.name
-            vals["ref_ir_act_report"] = action_obj.create(
+            action = action_obj.create(
                 {
                     "name": button_name,
                     "type": "ir.actions.act_window",
@@ -57,21 +51,15 @@ class LabelPrint(models.Model):
                     "binding_type": "action",
                 }
             )
-        self.write({
-            "ref_ir_act_report": vals.get("ref_ir_act_report", False).id
-        })
+        data.ref_ir_act_report = action.id
         return True
 
     def unlink(self):
-        actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
-        for action in actions_to_unlink:
-            action.unlink()
-        return super().unlink()
+        self.mapped('ref_ir_act_report').filtered(lambda action: action.id).unlink()
+        return True
 
     def unlink_action(self):
-        actions_to_unlink = [template.ref_ir_act_report for template in self if template.ref_ir_act_report.id]
-        for action in actions_to_unlink:
-            action.unlink()
+        self.mapped('ref_ir_act_report').filtered(lambda action: action.id).unlink()
         return True
 
 

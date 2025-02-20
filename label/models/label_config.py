@@ -30,7 +30,6 @@ class LabelConfig(models.Model):
     cell_spacing = fields.Float("Cell Spacing", default=1.0)
     label_main_id = fields.Many2one("label.brand", "Label")
 
-
     @api.constrains('height', 'width')
     def _check_positive_label(self):
         """

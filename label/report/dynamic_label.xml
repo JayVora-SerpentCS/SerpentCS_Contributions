@@ -28,7 +28,11 @@
                                                     </t>
                                                     <t t-if="val.get('type') == 'barcode'">
                                                         <t t-esc="val.get('string')"/>
-                                                        <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',val.get('value') , data['form']['barcode_width'], data['form']['barcode_height'])"/>
+                                                        <div style="display:flex; align-items:center; flex-direction: column; text-align: center;">
+                                                            <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128',val.get('value') , data['form']['barcode_width'], data['form']['barcode_height'])"/>
+                                                            <br/>
+                                                            <t t-esc="val['value']" style="text-align: center;"/>
+                                                        </div>
                                                     </t>
                                                 </span>
                                             </t>
