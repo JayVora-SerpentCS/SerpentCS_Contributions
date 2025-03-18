@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.module.category" id="module_ipushp">
+        <field name="name">ipushp rights</field>
+        <field name="description">ipushp group</field>
+        <field name="sequence">5</field>
+    </record>
+   
+
+    <record id="Admin_rights" model ="res.groups">
+        <field name="name">Admin</field>
+        <field name="category_id" ref="module_ipushp"/>
+        <field name="comment">Admin can edit and delete the all employee data</field>
+    </record>
+
+    
+</odoo>

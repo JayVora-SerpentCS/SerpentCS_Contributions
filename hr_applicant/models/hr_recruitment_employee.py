@@ -9,32 +9,32 @@ class Employee(models.Model):
     @api.depends("medical_ids")
     def _compute_no_of_medical(self):
         for rec in self:
-            rec.no_of_medical = len(rec.medical_ids.ids)
+            rec.no_of_medical = len(rec.medical_ids)
 
     @api.depends("prev_occu_ids")
     def _compute_no_of_prev_occu(self):
         for rec in self:
-            rec.no_of_prev_occu = len(rec.prev_occu_ids.ids)
+            rec.no_of_prev_occu = len(rec.prev_occu_ids)
 
     @api.depends("relative_ids")
     def _compute_no_of_relative(self):
         for rec in self:
-            rec.no_of_relative = len(rec.relative_ids.ids)
+            rec.no_of_relative = len(rec.relative_ids)
 
     @api.depends("education_ids")
     def _compute_no_of_education(self):
         for rec in self:
-            rec.no_of_education = len(rec.education_ids.ids)
+            rec.no_of_education = len(rec.education_ids)
 
     @api.depends("prev_travel_ids")
     def _compute_no_of_prev_travel(self):
         for rec in self:
-            rec.no_of_prev_travel = len(rec.prev_travel_ids.ids)
+            rec.no_of_prev_travel = len(rec.prev_travel_ids)
 
     @api.depends("lang_ids")
     def _compute_no_of_lang(self):
         for rec in self:
-            rec.no_of_lang = len(rec.lang_ids.ids)
+            rec.no_of_lang = len(rec.lang_ids)
 
     medical_ids = fields.One2many(
         "hr.employee.medical.details", "employee_id", "Medical Ref."
