@@ -10,32 +10,32 @@ class Applicant(models.Model):
     @api.depends("medical_ids")
     def _compute_no_of_medical(self):
         for rec in self:
-            rec.no_of_medical = rec.no_of_medical1 = len(rec.medical_ids)
+            rec.no_of_medical = rec.no_of_medical1 = len(rec.medical_ids.ids)
 
     @api.depends("prev_occu_ids")
     def _compute_no_of_prev_occu(self):
         for rec in self:
-            rec.no_of_prev_occu = len(rec.prev_occu_ids)
+            rec.no_of_prev_occu = len(rec.prev_occu_ids.ids)
 
     @api.depends("relative_ids")
     def _compute_no_of_relative(self):
         for rec in self:
-            rec.no_of_relative = len(rec.relative_ids)
+            rec.no_of_relative = len(rec.relative_ids.ids)
 
     @api.depends("education_ids")
     def _compute_no_of_education(self):
         for rec in self:
-            rec.no_of_education = len(rec.education_ids)
+            rec.no_of_education = len(rec.education_ids.ids)
 
     @api.depends("prev_travel_ids")
     def _compute_no_of_prev_travel(self):
         for rec in self:
-            rec.no_of_prev_travel = len(rec.prev_travel_ids)
+            rec.no_of_prev_travel = len(rec.prev_travel_ids.ids)
 
     @api.depends("lang_ids")
     def _compute_no_of_lang(self):
         for rec in self:
-            rec.no_of_lang = len(rec.lang_ids)
+            rec.no_of_lang = len(rec.lang_ids.ids)
 
     medical_ids = fields.One2many(
         "hr.applicant.medical.details", "applicant_id", "Medical Ref."
@@ -74,6 +74,23 @@ class Applicant(models.Model):
     no_of_lang = fields.Integer(
         "No of Language", compute="_compute_no_of_lang", readonly=True
     )
+
+    # @api.model
+    # def get_views(self, views, options=None):
+    #     ir_actions_report = self.env["ir.actions.report"]
+    #     res = super().get_views(views, options)
+    #     reports = ir_actions_report.search(
+    #         [("report_name", "=", "hr_applicant.applicant_profile")]
+    #     )
+
+    #     if 'list' in res['views']:
+    #         new_reports = []
+    #         for rec in res['views']['list'].get('toolbar', {}).get("print", []):
+    #             if rec.get("id", False) not in reports.ids:
+    #                 new_reports.append(rec)
+    #         res['views']['list'].get('toolbar')["print"] = new_reports
+
+    #     return res
 
     def create_employee_from_applicant(self):
         app_med_details_obj = self.env["hr.applicant.medical.details"]

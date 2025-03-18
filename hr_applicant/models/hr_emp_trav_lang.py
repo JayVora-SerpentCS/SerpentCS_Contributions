@@ -24,32 +24,23 @@ class EmployeePreviousTravel(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        if defaults.get("employee_id") == False or defaults.get("employee_id"):
+        if defaults.get("employee_id") == False:
             defaults.update({"employee_id": self._context.get("active_id")})
         return defaults
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
+        warning = {
+            "title": _("User Alert !"),
+        }
+        message = False
         if self.to_date and self.to_date >= datetime.today().date():
-            return {"warning": {
-                    "title": _("User Alert !"),
-                    "message" : _("To date should be prior to the current date!"),
-                }
-            }
+            message = _("To date should be prior to the current date!")
         elif self.from_date and self.to_date and self.from_date > self.to_date:
-            return {"warning": {
-                    "title": _("User Alert !"),
-                    "message" : _("From Date should be prior to the To Date!")
-                }
-            }
-
-    @api.constrains('from_date', 'to_date')
-    def check_date(self):
-        for rec in self:
-            if (rec.from_date and rec.to_date) >= (fields.Date.today()):
-                raise ValidationError(_("To date should be prior to the current date!"))
-            elif (rec.from_date and rec.to_date) and (rec.from_date > rec.to_date):
-                raise ValidationError(_("From Date should be prior to the To Date!"))
+            message = _("From Date should be prior to the To Date!")
+        if message:
+            warning.update({"message": message})
+            return {"warning": warning}
 
 
 class EmployeeLanguage(models.Model):
@@ -71,7 +62,7 @@ class EmployeeLanguage(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        if defaults.get("employee_id") == False or defaults.get("employee_id"):
+        if defaults.get("employee_id") == False:
             defaults.update({"employee_id": self._context.get("active_id")})
         return defaults
 

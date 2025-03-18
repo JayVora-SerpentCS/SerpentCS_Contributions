@@ -1,5 +1,4 @@
 from odoo import api, fields, models
-from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 STATUS_SELECTION = [("Abnormal", "Abnormal"), ("Normal", "Normal")]
@@ -56,9 +55,8 @@ class ApplicantMedicalDetails(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        active_id = self._context.get("active_id")
-        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != active_id):
-            defaults.update({"applicant_id": active_id})
+        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != self._context.get("active_id")):
+            defaults.update({"applicant_id": self._context.get("active_id")})
         return defaults
 
 
@@ -83,9 +81,8 @@ class ApplicantPreviousOccupation(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        active_id = self._context.get("active_id")
-        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != active_id):
-            defaults.update({"applicant_id": active_id})
+        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != self._context.get("active_id")):
+            defaults.update({"applicant_id": self._context.get("active_id")})
         return defaults
 
     @api.onchange("from_date", "to_date")
@@ -94,25 +91,11 @@ class ApplicantPreviousOccupation(models.Model):
         warning = {
             "title": _("User Alert !"),
         }
-        # message = False
+        message = False
         if self.to_date and self.to_date >= fields.Date.today():
-            return { "warning": 
-                        { "title": _("User Alert!"), 
-                        "message": _("To Date should be prior to the current date!"), 
-                        } 
-                    }
+            message = _("To date should be prior to the current date!")
         elif self.from_date and self.to_date and self.from_date > self.to_date:
-            return { "warning": 
-                        { "title": _("User Alert!"), 
-                        "message": _("From Date should be prior to the To Date!"), 
-                        } 
-                    }
-
-    @api.constrains('from_date', 'to_date')
-    def check_date(self):
-        for rec in self:
-            if (rec.from_date and rec.to_date) >= (fields.Date.today()):
-                raise ValidationError(_("To date should be prior to the current date!"))
-            elif (rec.from_date and rec.to_date) and (rec.from_date > rec.to_date):
-                raise ValidationError(_("From Date should be prior to the To Date!"))
-
+            message = _("From Date should be prior to the To Date!")
+        if message:
+            warning.update({"message": message})
+            return {"warning": warning}

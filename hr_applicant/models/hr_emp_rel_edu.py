@@ -37,18 +37,19 @@ class EmployeeRelative(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        if defaults.get("employee_id") == False or defaults.get("employee_id"):
+        if defaults.get("employee_id") == False:
             defaults.update({"employee_id": self._context.get("active_id")})
         return defaults
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
         if self.birthday and self.birthday >= datetime.today().date():
-            self.birthday = False
-            return {"warning": {
+            warning = {
                 "title": _("User Alert !"),
                 "message": _("Date of birth should be prior to the current date!"),
-            }}
+            }
+            self.birthday = False
+            return {"warning": warning}
 
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
@@ -60,6 +61,12 @@ class EmployeeRelative(models.Model):
                 self.gender = "Male"
             elif self.relative_type in female_relative:
                 self.gender = "Female"
+        if self.employee_id and not self.relative_type:
+            warning = {
+                "title": _("Warning!"),
+                "message": _("Please select Relative Type!"),
+            }
+            return {"gender": False, "warning": warning}
 
 
 class EmployeeEducation(models.Model):
@@ -88,7 +95,7 @@ class EmployeeEducation(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        if defaults.get("employee_id") == False or defaults.get("employee_id"):
+        if defaults.get("employee_id") == False:
             defaults.update({"employee_id": self._context.get("active_id")})
         return defaults
 
@@ -109,13 +116,14 @@ class EmployeeEducation(models.Model):
 
     @api.onchange("from_date", "to_date")
     def _onchange_date(self):
+        warning = {
+            "title": _("User Alert !"),
+        }
+        message = False
         if self.to_date and self.to_date >= datetime.today().date():
-            return {"warning": {
-                        "title": _("User Alert !"),
-                        "message" : _("To date should be prior to the current date!")
-                    }}
+            message = _("To date should be prior to the current date!")
         elif self.from_date and self.to_date and self.from_date > self.to_date:
-            return {"warning": {
-                        "title": _("User Alert !"),
-                        "message" : _("From Date should be prior to the To Date! ")
-                    }}
+            message = _("From Date should be prior to the To Date! ")
+        if message:
+            warning.update({"message": message})
+            return {"warning": warning}

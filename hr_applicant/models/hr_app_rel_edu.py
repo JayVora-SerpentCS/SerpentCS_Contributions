@@ -35,23 +35,19 @@ class ApplicantRelative(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        active_id = self._context.get("active_id")
-        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != active_id):
-            defaults.update({"applicant_id": active_id})
+        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != self._context.get("active_id")):
+            defaults.update({"applicant_id": self._context.get("active_id")})
         return defaults
 
     @api.onchange("birthday")
     def _onchange_birthday(self):
         if self.birthday and self.birthday >= fields.Date.today():
-            return {"warning": {
+            warning = {
                 "title": _("User Alert !"),
                 "message": _("Date of Birth should be prior of current Date!"),
-            }}
-            # warning = {
-            #     "title": _("User Alert !"),
-            #     "message": _("Date of Birth should be prior of current Date!"),
-            # }
-            # self.birthday = False
+            }
+            self.birthday = False
+            return {"warning": warning}
 
     @api.onchange("relative_type")
     def _onchange_relative_type(self):
@@ -63,6 +59,13 @@ class ApplicantRelative(models.Model):
                 self.gender = "Male"
             elif self.relative_type in female_relative:
                 self.gender = "Female"
+        # Already relative_type field is required no need to add tehe warning.
+        # if self.applicant_id and not self.relative_type:
+        #     warning = {
+        #         "title": _("Warning!"),
+        #         "message": _("Please select Relative Type!"),
+        #     }
+        #     return {"gender": False, "warning": warning}
 
 
 class ApplicantEducation(models.Model):
@@ -93,9 +96,8 @@ class ApplicantEducation(models.Model):
     @api.model
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
-        active_id = self._context.get("active_id")
-        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != active_id):
-            defaults.update({"applicant_id": active_id})
+        if (defaults.get("applicant_id") == False) or (defaults.get("applicant_id") != self._context.get("active_id")):
+            defaults.update({"applicant_id": self._context.get("active_id")})
         return defaults
 
     @api.onchange("edu_type")
