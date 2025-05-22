@@ -10,14 +10,28 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     def action_confirm(self):
-        """overridden the method to check sale order line having zero unit price."""
-        zero_price = [
-            x.product_id.name for x in self.order_line if not x.price_unit > 0.0
+        zero_price_products = [
+            line.product_id.name for line in self.order_line if line.price_unit <= 0.0
         ]
-        if zero_price and self.env.user.has_group('sale_restrict.group_sales_restrict_user_validation'):
-            message = (
-                    _("Please specify unit price for the following products:") + "\n"
-            )
-            message += "\n".join(map(str, zero_price))
-            raise UserError(message.rstrip())
+        is_zero_subtotal =  [
+            line.product_id.name for line in self.order_line if line.price_subtotal <= 0.0
+        ]
+        is_zero_total = self.amount_total <= 0.0
+
+        if self.env.user.has_group('sale_restrict.group_sales_restrict_user_validation'):
+            if zero_price_products:
+                message = "Please specify unit price for the following products:\n"
+                for product in zero_price_products:
+                    message += product + "\n"
+                raise UserError(message)
+            
+            if is_zero_subtotal:
+                message = "The following products have a zero subtotal:\n"
+                for product in is_zero_subtotal:
+                    message += product + "\n"
+                raise UserError(message)
+                
+            if is_zero_total:
+                raise UserError("The total amount of the sale order cannot be zero.")
+
         return super(SaleOrder, self).action_confirm()
