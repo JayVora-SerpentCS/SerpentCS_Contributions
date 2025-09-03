@@ -14,6 +14,8 @@
         "security/security.xml",
         "views/res_users_views.xml",
     ],
+    # Odoo App Store Specific
+    "images": ["static/description/banner_hide_menu_user_wise.jpg"],
     "license": "LGPL-3",
     "installable": True,
     "auto_install": False,
