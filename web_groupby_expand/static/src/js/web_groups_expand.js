@@ -2,16 +2,24 @@
 import { ListController } from "@web/views/list/list_controller";
 
 ListController.prototype.expandlist = async function () {
-    var group = this.model.root.groups;
-    for (let i = 0; i < group.length; i++) {
-        if (group[i].isFolded) {
-            await group[i].toggle();
+    try {
+        this.env.services.ui.block();
+
+        var group = this.model.root.groups;
+        for (let i = 0; i < group.length; i++) {
+            if (group[i].isFolded) {
+                await group[i].toggle();
+            }
+            var groupOfList = await group[i].list.model.root.groups[i].list.model.root.groups[i].list.groups;
+            await this._onClickChild(groupOfList);
         }
-        var groupOfList = await group[i].list.model.root.groups[i].list.model.root.groups[i].list.groups;
-        await this._onClickChild(groupOfList);
+        document.getElementsByClassName("exp-btn")[0].classList.add('o_hidden');
+        document.getElementsByClassName("cmp-btn")[0].classList.remove('o_hidden');
+    } catch (err) {
+        console.error("Failed to expand groups:", err);
+    } finally {
+        this.env.services.ui.unblock();
     }
-    document.getElementsByClassName("exp-btn")[0].classList.add('o_hidden');
-    document.getElementsByClassName("cmp-btn")[0].classList.remove('o_hidden');
 },
 
 ListController.prototype.compresslist = async function () {
@@ -32,7 +40,7 @@ ListController.prototype.recursivelist = async function (groups) {
 
         if (el.list.groups) {
             if (el.list.groups.length > 0) {
-            this.recursivelist(el.list.groups);
+                this.recursivelist(el.list.groups);
             }
         }
     });
