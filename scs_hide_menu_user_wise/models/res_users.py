@@ -8,6 +8,7 @@ class ResUsers(models.Model):
     """
 
     _inherit = "res.users"
+    
 
     def write(self, vals):
         """
@@ -28,7 +29,8 @@ class ResUsers(models.Model):
                 menu.write({"restrict_user_ids": [fields.Command.unlink(user.id)]})
         return res
 
-    def _get_is_admin(self):
+    
+    def _compute_get_is_admin(self):
         """
         Compute method to determine if the user is an admin.
         The admin user will have the Hide specific menu tab hidden on their form.
@@ -45,7 +47,7 @@ class ResUsers(models.Model):
         help="Select menu items to be hidden for this user.",
     )
     is_admin = fields.Boolean(
-        compute=_get_is_admin,
+        compute="_compute_get_is_admin",
         help="Indicates whether the user is an admin.",
     )
 
