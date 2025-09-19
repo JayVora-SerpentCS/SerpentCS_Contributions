@@ -1,4 +1,4 @@
-# See LICENSE file for full copyright and licensing details.
+ # See LICENSE file for full copyright and licensing details.
 
 from odoo.tests import common
 
@@ -6,6 +6,7 @@ from odoo.tests import common
 class ProjectProjectTestCase(common.TransactionCase):
     def setup(self):
         super(ProjectProjectTestCase, self).setup()
+        print("\n\n\n\n\n\n\n\n",self)
 
     def test_project_action(self):
         user_1 = self.env.ref('base.user_root')
