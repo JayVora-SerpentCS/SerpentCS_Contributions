@@ -26,7 +26,7 @@ class RankRank(models.Model):
             )
             args += [("id", "in", grade_rank_recs.ids or [])]
         return super(RankRank, self).name_search(
-            name=name, args=args, operator=operator, limit=limit
+            name=name, operator=operator
         )
 
 

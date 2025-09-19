@@ -28,8 +28,8 @@
     </record>
 
     <!-- GRADE TREE VIEW -->
-    <record id="view_employee_grade_tree" model="ir.ui.view">
-        <field name="name">grade.grade.tree</field>
+    <record id="view_employee_grade_list" model="ir.ui.view">
+        <field name="name">grade.grade.list</field>
         <field name="model">grade.grade</field>
         <field name="arch" type="xml">
             <list>
@@ -55,7 +55,7 @@
     <!-- GRADE MENU -->
     <menuitem id="menu_grade"
               sequence="2"
-              parent="hr_grade_rank.menu_employee_grade_rank"
+              parent="hr.menu_human_resources_configuration"
               action="action_employee_grade"/>
 
     <!-- RANK FORM VIEW -->
@@ -78,8 +78,8 @@
     </record>
 
     <!-- RANK TREE VIEW -->
-    <record id="view_employee_rank_tree" model="ir.ui.view">
-        <field name="name">rank.rank.tree</field>
+    <record id="view_employee_rank_list" model="ir.ui.view">
+        <field name="name">rank.rank.list</field>
         <field name="model">rank.rank</field>
         <field name="arch" type="xml">
             <list>
@@ -99,7 +99,7 @@
 
     <!-- RANK MENU -->
     <menuitem id="menu_rank"
-              parent="hr_grade_rank.menu_employee_grade_rank"
+              parent="hr.menu_human_resources_configuration"
               action="action_employee_rank"
               sequence="4"/>
 
