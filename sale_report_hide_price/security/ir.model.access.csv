@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+sale_report_hide_price.access_hide_price_discount,access_hide_price_discount,sale_report_hide_price.model_hide_price_discount,base.group_user,1,1,1,1
+
