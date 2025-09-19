@@ -9,12 +9,15 @@ Sale Report Hide Price
 * When Show Price is checked then it will show Unit Price and Price in sales order report.
 * When Show Discount is checked then it will show discount in sales order report.
 
+=====
 Usage
 =====
 
+===========
 Bug Tracker
 ===========
 
+=======
 Credits
 =======
 
