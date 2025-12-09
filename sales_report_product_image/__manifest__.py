@@ -3,7 +3,7 @@
 {
     # Module information
     "name": "Product Image for Sale",
-    "version": "17.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Sales Management",
     "sequence": "1",
     "summary": """Product Image for Quotation/Sale Reports.""",
