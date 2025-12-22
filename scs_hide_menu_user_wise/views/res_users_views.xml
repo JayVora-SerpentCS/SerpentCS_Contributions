@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inheriting fields for res.users to manage hidden menus for specific users -->
+    <record id="view_users_form_inherit_hide_menu_user_wise" model="ir.ui.view">
+        <field name="name">res.users.view.form.inherit.hide.menu.user</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page
+                    string="Hide Specific Menu"
+                    name='hide_menu_user_wise'
+                    invisible="is_admin"
+                    groups="base.group_system"
+                >
+                    <list>
+                        <field name="hide_menu_ids" />
+                    </list>
+                </page>
+            </xpath>
+            <!-- Make the is_admin field invisible in the form view -->
+            <field name="name" position="after">
+                <field name="is_admin" invisible="1" />
+            </field>
+        </field>
+    </record>
+
+    <!-- Inherited view for managing menu access (restricting specific users) -->
+    <record id="edit_menu_access_inherit_hide_menu_user_wise" model="ir.ui.view">
+        <field name="name">ir.ui.menu.view.form.inherit.hide.menu.user</field>
+        <field name="model">ir.ui.menu</field>
+        <field name="inherit_id" ref="base.edit_menu_access" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Restrict Users" name="restrict_users">
+                    <list>
+                        <field name="restrict_user_ids" />
+                    </list>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
