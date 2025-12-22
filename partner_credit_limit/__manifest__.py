@@ -2,7 +2,7 @@
 
 {
     'name': 'Partner Credit Limit',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'category': 'Partner',
     'license': 'LGPL-3',
     'author': 'Tiny, Serpent Consulting Services Pvt. Ltd.',
@@ -14,6 +14,10 @@
     ],
     'data': [
         'views/partner_view.xml',
+        'report/customer_limit_report_template.xml',
+        'report/customer_limit_report.xml',
+
+
     ],
     'images': ['static/description/Banner_Partner_Credit_Limit18.png'],
     'installable': True,

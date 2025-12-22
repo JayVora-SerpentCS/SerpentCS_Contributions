@@ -13,10 +13,11 @@ class SaleOrder(models.Model):
         partner = self.partner_id
         user_id = self.env['res.users'].search([
             ('partner_id', '=', partner.id)], limit=1)
+        
         if user_id and not user_id.has_group('base.group_portal') or not user_id:
             movelines = moveline_obj.search([
                 ('partner_id', '=', partner.id),
-                ('account_id.account_type', 'in', ['asset_receivable', 'liability_payable']),
+                ('account_id.account_type', 'in', ['Receivable', 'Payable']),
                 ('move_id.state', '!=', 'cancel')
             ])
             confirm_sale_order = self.search(
@@ -26,10 +27,14 @@ class SaleOrder(models.Model):
             amount_total = sum(confirm_sale_order.mapped('amount_total'))
             credit = sum(movelines.mapped('credit'))
             debit = sum(movelines.mapped('debit'))
-
-            partner_credit_limit = (debit + amount_total) - credit
+            
+            partner_credit_limit = (debit+amount_total) - credit
             available_credit_limit = round(
                 partner.credit_limit - partner_credit_limit, 2)
+            
+            
+            partner.write({'Available_credit': available_credit_limit})
+
             if partner_credit_limit > partner.credit_limit and \
                     partner.credit_limit > 0.0:
                 if not partner.over_credit:
@@ -40,6 +45,7 @@ class SaleOrder(models.Model):
                     raise UserError(_('You can not confirm Sale '
                                       'Order. \n' + msg))
             return True
+
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
