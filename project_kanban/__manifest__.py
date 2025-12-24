@@ -13,6 +13,6 @@
                 for the Project.""",
     "depends": ["project"],
     "data": ["views/project_kanban_view.xml"],
-    "images": ["static/description/Banner_project_kanban.png"],
+    "images": ["static/description/Project_-_Status_by_Recent_Activities.jpg"],
     "installable": True,
 }
