@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <!-- Project Kanban Form View -->
     <record id="view_project_kanaban_form" model="ir.ui.view">
         <field name="name">project.kanban.form</field>
         <field name="model">project.project</field>
@@ -21,11 +20,7 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.view_project_kanban"/>
         <field name="arch" type="xml">
-            <field name="display_name" position="after">
-                <field name="write_date"/>
-                <field name="recent_date"/>
-            </field>
-            <div class="o_kanban_primary_left"
+            <field name="tag_ids"
                  position="after">
                 <a style="font-size: 10px;">
                     Last updated on:
@@ -37,7 +32,7 @@
                         <field name="recent_date" string="Recent Date"/>
                     </a>
                 </div>
-            </div>
+            </field>
         </field>
     </record>
 </odoo>
