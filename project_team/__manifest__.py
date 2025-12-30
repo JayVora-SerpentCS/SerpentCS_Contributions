@@ -17,7 +17,7 @@
         'views/project_team_view.xml',
     ],
     'images': [
-        'static/description/Banner_project_team_19.jpg',
+        'static/description/project_set_team_and_members_product_banner.jpg',
     ],  
     'application': True,
     'installable': True,

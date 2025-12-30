@@ -14,7 +14,7 @@
         "security/ir.model.access.csv",
         "views/hr_grade_rank_view.xml"
     ],
-    "images": ["static/description/EMPLOYEE_GRADE_AND_RANK_MANAGEMENT.jpg"],
+    "images": ["static/description/hr_grade_rank_product_banner.jpg"],
     "sequence": 1,
     "installable": True,
 }

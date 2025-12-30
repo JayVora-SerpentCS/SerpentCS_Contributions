@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hide Price and Discount in Quotation Report From Wizard</title>
+
+    <title>Hide Price and Discount in Quotation Report</title>
+
+
+    <meta name="title" content="Hide Price and Discount in Quotation Report">
+    <meta property="og:title" content="Hide Price and Discount in Quotation Report">
+
+
+    <meta name="description"
+        content="This module is designed to effectively conceal the Price and Discount information within the Sales Order Report by utilizing a user-friendly Wizard interface,>
+    <meta property="og:description"
+        content="This module is designed to effectively conceal the Price and Discount information within the Sales Order Report by utilizing a user-friendly Wizard interface,>
+
+
+    <meta name="keywords"
+        content="Sales Order Report, user-friendly Wizard interface, Price and Discount, Quotation Report, Order Report, Wizard interface, Hide Price, Sales Order, user-friendly Wizard, Discount information">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +28,23 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://www.serpentcs.com/",
+      "@type": "SoftwareApplication",
+      "name": "Hide Price and Discount in Quotation Report"",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Odoo",
+      "description": "This module is designed to effectively conceal the Price and Discount information within the Sales Order Report by utilizing a user-friendly Wizard interface,",
+      "brand": {
+        "@type": "Brand",
+        "name": "Serpent Consulting Services Pvt. Ltd."
+      },
+      "keywords": "Sales Order Report, user-friendly Wizard interface, Price and Discount, Quotation Report, Order Report, Wizard interface, Hide Price, Sales Order, user-friendly Wizard, Discount information"
+    }
+    </script>
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -21,421 +54,1068 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 900;
         }
+        .nav-pills .nav-item.show .nav-link,
+        .nav-pills .nav-link.active {
+            color: var(--text-color);
+            font-family: Montserrat;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            border-radius: 30px;
+            line-height: normal;
+            text-transform: capitalize;
+            background-color: #F5F5F5;
+            border: none;
+            margin-bottom: 0;
+            padding: 12px 24px;
+        }
+        .nav-pills .nav-link:focus,
+        .nav-pills .nav-link:hover {
+            border-color: transparent;
+            isolation: isolate;
+        }
+        .nav-pills .nav-link:focus-visible {
+            border-color: transparent;
+            box-shadow: none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container" style="background-color: #ffffff;">
         <div class="row">
-            <div class="col-md-12 col-lg-6 d-flex flex-wrap my-4 justify-content-end">
+            <div class="col-md-12 col-lg-6 d-flex flex-wrap my-2">
+                
+            </div>
+            <div class="col-md-12 col-lg-6 d-flex flex-wrap my-2 justify-content-end">
                 <a href="https://www.serpentcs.com" target="_blank">
-                    <img src="header-logo.png" alt="SerpentCS Logo" class="serpentcs-logo" />
+                    <img src="images/header-logo.png" alt="SerpentCS Logo" class="serpentcs-logo"
+                        style="height: 40px;" />
                 </a>
             </div>
         </div>
-        <section class="oe_container">
-            <div class="o_equal_col_sm position-relative overflow-hidden shadow"
-                style="margin:0 auto;padding-bottom:0; border-radius:20px;">
-                <img src="background.png" style="width: 100%;height: 100%;" alt="SerpentCS Logo"
-                    class="position-absolute" />
-                <div class="container p-5 position-relative"
-                    style="display:block; margin:0 auto; text-align:center; color:#000;">
-                    <div class="row">
-                        <div class="col-12 d-flex flex-column align-items-center px-5 mt64 mb32">
-                            <div class="text-center">
-                                <h2
-                                    style="letter-spacing:2px; font-weight:500; color:#fcf9f9; text-transform:uppercase;font-family: Poppins,Helvetica,sans-serif;">
-                                    Hide Price and Discount in Quotation Report From Wizard
-                                </h2>
-                                <span class="o_gradient"
-                                    style="width:100%; max-width:1000px; height:1px; background-color:#ffffff!important; display:inline-block; border-radius:2px;"></span>
-                                <p
-                                    style="font-weight:normal; color:#fcf9f9; font-size:1.1rem; margin-top:24px;font-family: Poppins,Helvetica,sans-serif;">
-                                    This module is to hide Price / Discount in Sales Order Report using Wizard.
+
+        <div class="row justify-content-center " style="margin-bottom:0px;">
+            <div class="d-flex justify-content-center align-items-center flex-wrap my-2">
+                <a href="https://www.serpentcs.com/" target="_blank" class="text-center">
+                    <img src="https://solufyerp.com/wp-content/odoo-app-store/sales-odoo-app-store.jpg" alt=""
+                        class="img-desktop d-none d-md-block img-fluid">
+                    <img src="https://solufyerp.com/wp-content/odoo-app-store/sales-mobile-odoo-app-store.jpg" alt=""
+                        class="img-mobile d-block d-md-none img-fluid">
+                </a>
+            </div>
+        </div>
+
+        <div class="card" style="background-color: #ffffff; margin: 2%; margin-top: 2%;  border-radius: 15px;">
+
+            <div class="row justify-content-center " style="margin-top:10px;">
+                <div class="d-flex justify-content-center align-items-center flex-wrap my-3">
+                    <a href="https://www.serpentcs.com/" target="_blank" class="text-center">
+                        <img src="https://solufyerp.com/wp-content/odoo-app-store/Serpent_Odoo_ERP_Solutions_Partner_in_India.jpg" alt=""
+                            class="img-desktop d-none d-md-block img-fluid"
+                            style="border-radius:0px; width:100%; max-height:220px; object-fit:cover;">
+                    </a>
+                </div>
+            </div>
+
+            <section class="oe_container hero-section">
+                <div class="o_equal_col_sm  position-relative overflow-hidden shadow"
+                    style="margin:0 auto; padding-bottom:0; border-radius: 20px;">
+                    <div class="container position-relative hero-content"
+                        style="margin:0; text-align:center; color:#000;">
+                        <div class="row">
+                            <div class="col-12 d-flex flex-column align-items-center p-4 mt25 mb20">
+                                <div class="text-center">
+                                    <h2 class="hero-title"
+                                        style="color:#C3282D; font-weight: bold; text-transform: uppercase;">Hide Price and Discount in Quotation Report</h2>
+                                    <div class="hero-divider"></div>
+
+                                    <span class="o_gradient"
+                                        style="width: 72px; height: 3px; max-width:1000px; margin: 10px auto 18px; background-color:#000000!important; display:flex; border-radius:2px; margin-top:px;"></span>
+
+                                    <div
+                                        style="font-weight: normal; color: #000000; font-size: 0.9rem; margin-top: 0px; font-family: 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                                        <h6>
+                                        <p><p>This module is designed to effectively conceal the Price and Discount information within the Sales Order Report by utilizing a user-friendly Wizard interface, allowing for a more streamlined and professional presentation of sales data.</p>
+                                        </p>
+                                        </h6>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <div style="margin-bottom: 10px;">
+            <ul role="tablist" class="nav nav-pills justify-content-center" data-tabs="tabs"
+                style="border:none;background-color: inherit !important;">
+                <li style="background-color:#f5f3f3; margin-right:30px; padding-bottom:2px; padding:0px !important; border-radius: 10px;"
+                    class="nav-item ">
+                    <a href="#features" data-bs-toggle="pill" aria-expanded="true" class="nav-link active"
+                        style="font-family:Roboto; text-transform:uppercase; font-weight:600; font-size:15px; letter-spacing:1px; padding:13px 20px; color:#282828">
+                        <img src="images/feature.png" style="width:30px; margin-top:-4px; margin-right:6px">Features
+                    </a>
+                </li>
+
+                <li style="background-color:#f5f3f3; margin-right:30px; padding-bottom:2px; padding:0px !important; border-radius: 10px;"
+                    class="nav-item">
+                    <a href="#ss" data-bs-toggle="pill" aria-expanded="true" class="nav-link"
+                        style="font-family:Roboto; text-transform:uppercase; font-weight:600; font-size:15px; letter-spacing:1px; padding:14px 20px; color:#282828">
+                        <img src="images/capture.png" style="width:30px; margin-top:-4px; margin-right:6px">Screenshots
+                    </a>
+                </li>
+                
+                
+                <li style="background-color:#f5f3f3; margin-right:30px; padding-bottom:2px; padding:0px !important; border-radius: 10px;"
+                    class="nav-item">
+                    <a href="#faq" data-bs-toggle="pill" aria-expanded="true" class="nav-link"
+                        style="font-family: Roboto;text-transform: uppercase;font-weight: 600;font-size: 15px;letter-spacing: 1px;padding: 14px 20px;color:#282828;">
+                        <img src="images/faq.png" style="width:30px; margin-top:-4px; margin-right:6px">FAQs
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+
+
+        <div class="tab-content" id="pills-tabContent" style="margin-top: 10px;">
+            <div class="tab-pane fade show active" id="features" role="tabpanel" aria-labelledby="pills-features-tab">
+
+            <section class="mt16 mb32">
+                <div style="margin-top: 20px;">
+                    <h3 style="
+                        text-align: center;
+                        padding:1rem;
+                        letter-spacing: 2px;
+                        font-weight: 800;
+                        color: black;
+                        text-transform: uppercase;
+                        font-family: Poppins, Helvetica, sans-serif;">
+                        Highlighted Features
+                    </h3>
+                </div>
+
+                
+                
+
+                <div class="row justify-content-between d-inline-flex ms-3 ms-md-0" style="width: 100%;">
+
+                    
+                    
+
+                    <div class="col-lg-6 col-sm-12 p-0 bg-white shadow-lg row"
+                        style="margin-top: 5%; border-radius: 15vw;">
+
+                        <!-- LEFT COLOR BOX -->
+                        <div class="shadow-lg col-2 d-flex align-items-center justify-content-center gx-0"
+                            style="
+                                background-color:#E91E63;
+                                border-top-left-radius: 25px;
+                                border-bottom-left-radius: 25px;
+                            ">
+                            <img src="hide_price_and_discount_in_quotation_report_1.png" style="width: 60%;">
+                        </div>
+
+                        <!-- SMALL COLOR STRIP -->
+                        <div class="col-1 p-0 shadow-lg"
+                            style="
+                                background-color:#B0174B ;
+                                width: 3%;
+                            ">
+                        </div>
+
+                        <!-- TEXT AREA -->
+                        <div class="col-6 d-grid align-items-center"
+                            style="padding: 10px; width: 63%;">
+                            <h2 style="color: #2A2C32; margin: 0; font-size: 1.4em;">
+                                <h5><span class="base-fs"><strong>Customizable report</strong></span></h5>
+                            </h2>
+                            <p style="margin: 10px 0 0 0; color: #666; font-size: 1em;">
+                                <p>Users can choose which fields (price, discount) to display in the sales order report via the wizard.</p>
+                            </p>
+                        </div>
+
+                    </div>
+                    
+                    
+                    
+
+                    <div class="col-lg-6 col-sm-12 p-0 bg-white shadow-lg row"
+                        style="margin-top: 5%; border-radius: 15vw;">
+
+                        <!-- LEFT COLOR BOX -->
+                        <div class="shadow-lg col-2 d-flex align-items-center justify-content-center gx-0"
+                            style="
+                                background-color:#2196F3;
+                                border-top-left-radius: 25px;
+                                border-bottom-left-radius: 25px;
+                            ">
+                            <img src="hide_price_and_discount_in_quotation_report_2.png" style="width: 60%;">
+                        </div>
+
+                        <!-- SMALL COLOR STRIP -->
+                        <div class="col-1 p-0 shadow-lg"
+                            style="
+                                background-color:#3A7EB6 ;
+                                width: 3%;
+                            ">
+                        </div>
+
+                        <!-- TEXT AREA -->
+                        <div class="col-6 d-grid align-items-center"
+                            style="padding: 10px; width: 63%;">
+                            <h2 style="color: #2A2C32; margin: 0; font-size: 1.4em;">
+                                <h5><span class="base-fs"><strong>Dynamic Report Adjustments</strong></span></h5>
+                            </h2>
+                            <p style="margin: 10px 0 0 0; color: #666; font-size: 1em;">
+                                <p>Fields like price and discount are only shown if selected in the wizard.</p>
+                            </p>
+                        </div>
+
+                    </div>
+                    
+                    
+                </div>
+
+                
+
+                <div class="row justify-content-between d-inline-flex ms-3 ms-md-0" style="width: 100%;">
+
+                    
+                    
+
+                    <div class="col-lg-6 col-sm-12 p-0 bg-white shadow-lg row"
+                        style="margin-top: 5%; border-radius: 15vw;">
+
+                        <!-- LEFT COLOR BOX -->
+                        <div class="shadow-lg col-2 d-flex align-items-center justify-content-center gx-0"
+                            style="
+                                background-color:#673AB7;
+                                border-top-left-radius: 25px;
+                                border-bottom-left-radius: 25px;
+                            ">
+                            <img src="hide_price_and_discount_in_quotation_report_3.png" style="width: 60%;">
+                        </div>
+
+                        <!-- SMALL COLOR STRIP -->
+                        <div class="col-1 p-0 shadow-lg"
+                            style="
+                                background-color:#512DA8 ;
+                                width: 3%;
+                            ">
+                        </div>
+
+                        <!-- TEXT AREA -->
+                        <div class="col-6 d-grid align-items-center"
+                            style="padding: 10px; width: 63%;">
+                            <h2 style="color: #2A2C32; margin: 0; font-size: 1.4em;">
+                                <h5><span class="base-fs"><strong>Detailed Control</strong></span></h5>
+                            </h2>
+                            <p style="margin: 10px 0 0 0; color: #666; font-size: 1em;">
+                                <p>Allows precise control over which information (price, discount) appears in the sales order report.</p>
+                            </p>
+                        </div>
+
+                    </div>
+                    
+                    
+                    
+                    
+                </div>
+
+                
+            </section>
+
+
+        <section class="mt80 mb-4">
+            <div class="tab-content-inner" style="background-color:#ffffff;border-radius: 24px;">
+
+            <section class="mt32">
+                <div style="margin-top: 80px;">
+                    <h3
+                        style="text-align: center;padding:1rem; letter-spacing: 2px; font-weight: 800; color: black; text-transform: uppercase; font-family: Poppins, Helvetica, sans-serif;">
+                        Detailed Features
+                    </h3>
+                </div>
+
+                
+                
+
+                <div class="d-flex flex-wrap justify-content-center align-items-stretch">
+
+                    
+                    
+                
+                    <div class="col-12 col-md-4 d-flex">
+                        <div class="card" style="
+                            border-radius: 20px;
+                            margin: 20px;
+                            background: ;
+                            padding: 20px;
+                            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px,
+                                        rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;
+                            transition: all 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-8px)';
+                                        this.style.boxShadow='rgba(50, 50, 93, 0.35) 0px 40px 60px -10px,
+                                                            rgba(0, 0, 0, 0.4) 0px 22px 30px -15px';
+                                        this.style.border='1px solid #c3c3c3';"
+                            onmouseout="this.style.transform='none';
+                                        this.style.boxShadow='rgba(50, 50, 93, 0.25) 0px 30px 50px -12px,
+                                                            rgba(0, 0, 0, 0.3) 0px 18px 26px -18px';
+                                        this.style.border='none';">
+
+                            <div class="card-title"
+                                style="font-family:'Montserrat',  sans-serif; font-weight: bold; text-align:center;">
+                                <p><h5><span class="base-fs"><strong>Customizable Sales Order Report</strong></span></h5></p>
+                            </div>
+
+                            <div class="card-text"
+                                style="font-size: 17px; font-family: 'Montserrat', sans-serif; text-align:left;">
+                                <p><p><span class="base-fs">The module features an intuitive wizard that empowers users to customize their sales order report by choosing whether to show or conceal the price and discount fields, thereby enhancing the clarity and relevance of the information presented in the report.</span></p></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                    
+                
+                    <div class="col-12 col-md-4 d-flex">
+                        <div class="card" style="
+                            border-radius: 20px;
+                            margin: 20px;
+                            background: ;
+                            padding: 20px;
+                            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px,
+                                        rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;
+                            transition: all 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-8px)';
+                                        this.style.boxShadow='rgba(50, 50, 93, 0.35) 0px 40px 60px -10px,
+                                                            rgba(0, 0, 0, 0.4) 0px 22px 30px -15px';
+                                        this.style.border='1px solid #c3c3c3';"
+                            onmouseout="this.style.transform='none';
+                                        this.style.boxShadow='rgba(50, 50, 93, 0.25) 0px 30px 50px -12px,
+                                                            rgba(0, 0, 0, 0.3) 0px 18px 26px -18px';
+                                        this.style.border='none';">
+
+                            <div class="card-title"
+                                style="font-family:'Montserrat',  sans-serif; font-weight: bold; text-align:center;">
+                                <p><h5><span class="base-fs"><strong>Conditional Report Display</strong></span></h5></p>
+                            </div>
+
+                            <div class="card-text"
+                                style="font-size: 17px; font-family: 'Montserrat', sans-serif; text-align:left;">
+                                <p><p><span class="base-fs">The report adjusts dynamically based on the user’s selection in the wizard.If "Show Price" or "Show Discount" is unchecked, those fields are omitted from the printed sales order report, ensuring only relevant information is displayed.</span></p></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                    
+                
+                    <div class="col-12 col-md-4 d-flex">
+                        <div class="card" style="
+                            border-radius: 20px;
+                            margin: 20px;
+                            background: ;
+                            padding: 20px;
+                            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px,
+                                        rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;
+                            transition: all 0.3s ease;"
+                            onmouseover="this.style.transform='translateY(-8px)';
+                                        this.style.boxShadow='rgba(50, 50, 93, 0.35) 0px 40px 60px -10px,
+                                                            rgba(0, 0, 0, 0.4) 0px 22px 30px -15px';
+                                        this.style.border='1px solid #c3c3c3';"
+                            onmouseout="this.style.transform='none';
+                                        this.style.boxShadow='rgba(50, 50, 93, 0.25) 0px 30px 50px -12px,
+                                                            rgba(0, 0, 0, 0.3) 0px 18px 26px -18px';
+                                        this.style.border='none';">
+
+                            <div class="card-title"
+                                style="font-family:'Montserrat',  sans-serif; font-weight: bold; text-align:center;">
+                                <p><h5><span class="base-fs"><strong>User-Friendly Wizard Interface</strong></span></h5></p>
+                            </div>
+
+                            <div class="card-text"
+                                style="font-size: 17px; font-family: 'Montserrat', sans-serif; text-align:left;">
+                                <p><p><span class="base-fs">Instead of manually selecting fields on the sales order form view, users can simply interact with a pop-up wizard to select the fields they want to show or hide in the report. This makes the process quicker and more intuitive.</span></p></p>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                
+            </section>
+        </div>
+    </section>
+
+        <section>
+            
+        </section>
+            </div>
+
+            <div aria-labelledby="feature-tab" class="tab-pane fade show py-1" id="ss" role="tabpanel"
+                style="background-color:azure;">
+
+                <div class="container shadow-sm px-3">
+                    <h3
+                        style="text-align: center;padding:1rem; letter-spacing: 2px; font-weight: 800; color: black; text-transform: uppercase; font-family: Poppins, Helvetica, sans-serif;">
+                        Screenshots
+                    </h3>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>APPS</strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_51.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    <p><span class="base-fs"> Navigate to the Apps menu and search for the module named "sale_report_hide_price".</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>Sales&nbsp;<strong>-&gt; Configuration&nbsp;<strong>-&gt;&nbsp;Settings</strong></strong></strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_52.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    <p><span class="base-fs">The Discount field will be visible in the sale order lines and related wizards only when the "Discount" option is enabled in the Sales module settings.</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>Sales Order</strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_53.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    <p><span class="base-fs">Click on Action -&gt; Hide price and discount as shown below</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>Active Boolean</strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_54.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    <ul style="margin-bottom: 0px;"><li><span class="base-fs">A wizard will open upon selecting the "Hide Price and Discount" action&nbsp; and the Sale Order report will be printed accordingly.</span></li><li><span class="base-fs">If no options are selected, both prices and discounts will be hidden in the report.</span></li></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>Sale Order Report</strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_55.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    <p style="margin-bottom: 0px;"><span class="base-fs">Here, you can see that when the "Show Price" and "Show Discount"&nbsp;check boxes are enabled, the values will be displayed in the report.</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>Inactive Boolean</strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_56.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="oe_container my-4">
+                        <div class="panel panel-primary">
+                            <!-- Screenshot Title -->
+                            <div class="panel-heading" style="font-size:16px; line-height:20px;">
+                                <div style="
+                                    text-align:center; 
+                                    margin:2rem; 
+                                    letter-spacing:2px; 
+                                    font-weight:800; 
+                                    color:black; 
+                                    text-transform:uppercase; 
+                                    font-family: Poppins,Helvetica,sans-serif;">
+                                    <p><span class="base-fs"><strong>Sale Order report</strong></span></p>
+                                </div>
+                            </div>
+                            <!-- Screenshot Body -->
+                            <div class="panel-body" style="text-align:left;">
+                                <!-- Screenshot Image -->
+                                <img src="hide_price_and_discount_in_quotation_report_57.png" style="width:100%;" class="img-responsive border">
+                                <!-- Screenshot Description -->
+                                <div style="
+                                    font-family:'Montserrat',sans-serif; 
+                                    font-weight:normal; 
+                                    font-size:18px; 
+                                    color:#091E42; 
+                                    margin-top:16px;
+                                    text-align:left;">
+                                    <p><span class="base-fs">Here, you can see that when the "Show Price" and "Show Discount"&nbsp;check boxes are unchecked, the values will not be displayed in the report.</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+            </div>
+    
+        <div class="tab-pane fade" id="user_guide" role="tabpanel" aria-labelledby="pills-userguide-tab">
+            <div class="container py-4">
+                <h3 style="text-align: center;padding:1rem; letter-spacing: 2px; font-weight: 800; 
+                        color: black; text-transform: uppercase; font-family: Poppins, Helvetica, sans-serif;">
+                    User Guide
+                </h3>
+                
+                
+            </div>
+        </div>
+
+
+        
+        <div aria-labelledby="faq-tab" class="tab-pane fade show" id="faq" role="tabpanel"
+            style="background-color:#fff !important; padding: 2rem 0;">
+            <div class="row">
+                <div class="col-lg-12 d-flex flex-column align-items-center">
+                    <h3 style="text-align: center;padding:1rem; letter-spacing: 2px; font-weight: 800;
+                        color: black; text-transform: uppercase; font-family: Poppins, Helvetica, sans-serif;">
+                        FAQ
+                    </h3>
+                </div>
+        
+                <div class="col-md-12" aria-labelledby="faq-tab" id="faqAccordion" role="tabpanel">
+                    <div class="accordion mb-4" id="accordion_faq" style="background-color:#fff;">
+                        
+                        <div style="margin:1rem 0;">
+                            <!-- Header -->
+                            <div class="card-header collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faq_1"
+                                aria-controls="faq_1"
+                                style="cursor: pointer; background-color:#f8f8f8; border:none;
+                                border-top-right-radius:10px; border-top-left-radius:10px; padding:12px 24px;">
+                                <a class="card-title text-decoration-none"
+                                    style="font-size:18px; line-height:30px; font-weight:500;
+                                    color:#040f3a; display:flex; justify-content:space-between;
+                                    align-items:center; width:100%;">
+                                    <span><p>May I install the app on my Odoo Online (SaaS) database?</p></span>
+                                    <img src="images/down (1).svg" style="width:24px; height:24px; object-fit:contain;">
+                                </a>
+                            </div>
+        
+                            <!-- Answer -->
+                            <div class="accordion-collapse collapse show"
+                                id="faq_1"
+                                data-bs-parent="#accordion_faq"
+                                style="box-shadow:rgba(0, 0, 0, 0.05) 0px 6px 24px 0px;
+                                border:1px solid #f8f8f8; border-bottom-right-radius:10px;
+                                border-bottom-left-radius:10px;">
+                                <p style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;
+                                    color:#888; font-weight:normal; border-bottom-right-radius:10px;
+                                    border-bottom-left-radius:10px;">
+                                    <p>No, third-party apps can not be used on Odoo Online. Unfortunately, Odoo SaaS blocks such a possibility.</p>
                                 </p>
                             </div>
                         </div>
+                        
+                        <div style="margin:1rem 0;">
+                            <!-- Header -->
+                            <div class="card-header collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faq_2"
+                                aria-controls="faq_2"
+                                style="cursor: pointer; background-color:#f8f8f8; border:none;
+                                border-top-right-radius:10px; border-top-left-radius:10px; padding:12px 24px;">
+                                <a class="card-title text-decoration-none"
+                                    style="font-size:18px; line-height:30px; font-weight:500;
+                                    color:#040f3a; display:flex; justify-content:space-between;
+                                    align-items:center; width:100%;">
+                                    <span><p>Can I try the app before purchasing?</p></span>
+                                    <img src="images/down (1).svg" style="width:24px; height:24px; object-fit:contain;">
+                                </a>
+                            </div>
+        
+                            <!-- Answer -->
+                            <div class="accordion-collapse collapse "
+                                id="faq_2"
+                                data-bs-parent="#accordion_faq"
+                                style="box-shadow:rgba(0, 0, 0, 0.05) 0px 6px 24px 0px;
+                                border:1px solid #f8f8f8; border-bottom-right-radius:10px;
+                                border-bottom-left-radius:10px;">
+                                <p style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;
+                                    color:#888; font-weight:normal; border-bottom-right-radius:10px;
+                                    border-bottom-left-radius:10px;">
+                                    <p>In many cases, yes. We offer Demo videos, Screenshots, Live demo links (for selected apps) If you need a personalized demo, you can contact our support team.</p>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin:1rem 0;">
+                            <!-- Header -->
+                            <div class="card-header collapsed"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#faq_3"
+                                aria-controls="faq_3"
+                                style="cursor: pointer; background-color:#f8f8f8; border:none;
+                                border-top-right-radius:10px; border-top-left-radius:10px; padding:12px 24px;">
+                                <a class="card-title text-decoration-none"
+                                    style="font-size:18px; line-height:30px; font-weight:500;
+                                    color:#040f3a; display:flex; justify-content:space-between;
+                                    align-items:center; width:100%;">
+                                    <span><p>What if I need any additional customization or extra feature with this addon?</p></span>
+                                    <img src="images/down (1).svg" style="width:24px; height:24px; object-fit:contain;">
+                                </a>
+                            </div>
+        
+                            <!-- Answer -->
+                            <div class="accordion-collapse collapse "
+                                id="faq_3"
+                                data-bs-parent="#accordion_faq"
+                                style="box-shadow:rgba(0, 0, 0, 0.05) 0px 6px 24px 0px;
+                                border:1px solid #f8f8f8; border-bottom-right-radius:10px;
+                                border-bottom-left-radius:10px;">
+                                <p style="padding:0.75rem 1.25rem; font-size:16px; line-height:27px;
+                                    color:#888; font-weight:normal; border-bottom-right-radius:10px;
+                                    border-bottom-left-radius:10px;">
+                                    <p>We request you contact our team via contact@serpentcs.com to discuss the features and customization required so that we can provide you assistance with your request.</p>
+                                </p>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        </div>
 
-        <section class="mt16 mb32">
+    <section class="oe_container ">
+        <div class="content">
             <div style="margin-top: 10px;">
-                <h2
-                    style=" text-align:center; padding-top: 3rem; padding-bottom: 3rem; letter-spacing:2px;font-weight:800; color: black; text-transform:uppercase;font-family: Poppins,Helvetica,sans-serif;">
-                    Highlighted-features
-                </h2>
+                <h3 style="text-align:center;padding:1rem;letter-spacing:2px;font-weight:800;color:#000;font-family:Poppins,Helvetica;">
+                    Suggested Products
+                </h3>
             </div>
-            <div style="padding:2em; background-color:#F8F0E3; border-radius:24px;">
-                <div class="row d-flex" style="display: flex; justify-content: space-between; gap: 20px;">
-                    <div class="col col-lg-4 col-md-4 d-flex" style="flex: 1;">
-                        <div class="card"
-                            style="flex: 1; margin-top: 20px; border-radius: 20px;background: white;padding: 20px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;">
-                            <div class="text-center">
-                                <img src="1.png" style="width: 50%;" alt="Icon" />
-                            </div>
-                            <h5 class="card-title" style="font-family: Poppins; text-align: center;">Customizable Report</h5>
-                            <div>
-                                <p class="card-text" style="font-size: 17px; font-family: Poppins; text-align: center;">
-                                    Users can choose which fields (price, discount) to display in the sales order report via the wizard.</p>
-                            </div>
+            <div class="row gx-3 gy-4 justify-content-center">
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="hide_price_and_discount_in_quotation_report_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
                         </div>
-                    </div>
-
-                    <div class="col col-lg-4 col-md-4 d-flex" style="flex: 1;">
-                        <div class="card"
-                            style="flex: 1; margin-top: 20px; border-radius: 20px;background: white;padding: 20px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;">
-                            <div class="text-center">
-                                <img src="2.png" style="width: 50%;" alt="Icon" />
-                            </div>
-                            <h5 class="card-title" style="font-family: Poppins; text-align: center;">Dynamic Report Adjustments
-                            </h5>
-                            <div>
-                                <p class="card-text" style="font-size: 17px; font-family: Poppins; text-align: center;"> Fields like price and discount are only shown if selected in the wizard.</p>
-                            </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Hide Price and Discount in Quotation Report</p>
                         </div>
-                    </div>
-
-                    <div class="col col-lg-4 col-md-4 d-flex" style="flex: 1;">
-                        <div class="card"
-                            style="flex: 1; margin-top: 20px; border-radius: 20px;background: white;padding: 20px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;">
-                            <div class="text-center">
-                                <img src="3.png" style="width: 50%;" alt="Icon" />
-                            </div>
-                            <h5 class="card-title" style="font-family: Poppins; text-align: center;">Detailed Control</h5>
-                            <div>
-                                <p class="card-text" style="font-size: 17px; font-family: Poppins; text-align: center;">Allows precise control over which information (price, discount) appears in the sales order report.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section style="margin-top: 10vh;">
-            <div class="text-center"
-                style="border-radius: 20px;background: white;padding: 20px;  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px , rgba(0, 0, 0, 0.3) 0px 18px 26px -18px ;">
-                <div class="d-inline-block">
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
-                                data-bs-target="#features" type="button" role="tab" aria-controls="pills-home"
-                                aria-selected="true">
-                                <img src="images/feature.png" alt="Odoo Customization" width="25" height="25">
-                                Features</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#ss"
-                                type="button" role="tab" aria-controls="pills-profile" aria-selected="false">
-                                <img src="images/capture.png" alt="Odoo Customization" width="25" height="25">
-                                Screenshots
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/sale_report_hide_price" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
                             </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="tab-content p-md-5 p-2 py-3" id="myTabContent" style="background-color:#F8F0E3;;">
-                    <div aria-labelledby="overview-tab" class="tab-pane fade show active" id="features" role="tabpanel">
-                        <section class="mt32">
-                            <div class="row">
-                                <div class="col col-lg-4 col-md-4 d-flex" style="flex: 1;">
-                                    <div class="card"
-                                        style="flex: 1; margin-top: 20px; border-radius: 20px;background: white;padding: 20px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;">
-                                        <div class="p-2">
-                                            <h5 class="card-title" style="font-family: Poppins; text-align: center;">
-                                                Customizable Sales Order Report</h5>
-                                        </div>
-                                        <div class="p-2">
-                                            <p class="card-text mb-4"> The module provides a wizard that allows users to selectively hide or display the price and discount fields in the sales order report.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-lg-4 col-md-4 d-flex" style="flex: 1;">
-                                    <div class="card"
-                                        style="flex: 1; margin-top: 20px; border-radius: 20px;background: white;padding: 20px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;">
-                                        <div class="p-2">
-                                            <h5 class="card-title" style="font-family: Poppins; text-align: center;">
-                                                Conditional Report Display</h5>
-                                        </div>
-                                        <div class="p-2">
-                                            <p class="card-text mb-4">The report adjusts dynamically based on the user’s selection in the wizard. 
-                                            </p>
-                                            <p class="card-text mb-4"> If "Show Price" or "Show Discount" is unchecked, those fields are omitted from the printed sales order report, ensuring only relevant information is displayed.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col col-lg-4 col-md-4 d-flex" style="flex: 1;">
-                                    <div class="card"
-                                        style="flex: 1; margin-top: 20px; border-radius: 20px;background: white;padding: 20px; box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px, rgba(0, 0, 0, 0.3) 0px 18px 26px -18px;">
-                                        <div class="p-2">
-                                            <h5 class="card-title" style="font-family: Poppins; text-align: center;">
-												User-Friendly Wizard Interface</h5>
-                                        </div>
-                                        <div class="p-2">
-                                            <p class="card-text mb-4">Instead of manually selecting fields on the sales order form view, users can simply interact with a pop-up wizard to select the fields they want to show or hide in the report. This makes the process quicker and more intuitive.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div aria-labelledby="feature-tab" class="tab-pane fade show py-1" id="ss" role="tabpanel"
-                        style="background-color: azure;">
-                        <div class="container shadow-sm px-4">
-                            <!-- Carousel Item 1 -->
-                            <section class="oe_container my-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-body p-3">
-                                        <img src="wizard.png" style="width:100%"
-                                            class="img-responsive border">
-                                    </div>
-                                    <ul class="mb32"
-                                        style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;width:90%;text-align:justify">
-                                        <li class="mb8">Click on Action -> Hide price and discount as shown below.
-                                        </li>
-                                        <li class="mb8">In earlier versions, module has the feature to hide price based on two checkbox fields available on sales order form.
-                                        </li>
-                                        <li class="mb8">In version 17, instead of selecting fields on sale order form view, we added a wizard and based on that selection, sale order report will be printed.
-                                        </li>
-                                    </ul>
-                                </div>
-                            </section>
-                            <!-- Carousel Item 2 -->
-                            <section class="oe_container my-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-body p-3">
-                                        <img src="wizard1.png" style="width:100%"
-                                            class="img-responsive border">
-                                    </div>
-                                    <ul class="mb32"
-                                        style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;width:90%;text-align:justify">
-                                        <li class="mb8">Wizard will be popup, based on selection of fields, the sale order report will be printed.
-                                        </li>
-                                        <li class="mb8">It fields not selected, then price and discount will be not shown.
-                                        </li>
-                                    </ul>
-                                </div>
-                            </section>
-                             <!-- Carousel Item 3 -->
-                             <section class="oe_container my-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-body p-3">
-                                        <img src="report1.png" style="width:100%"
-                                            class="img-responsive border">
-                                    </div>
-                                    <ul class="mb32"
-                                        style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;width:90%;text-align:justify">
-                                        When both of the checkboxes (Show Price and Show Discount) are selected in wizard then it will Unit-price and Discount in sale order report.
-                                    </ul>
-                                </div>
-                            </section>
-                            <!-- Carousel Item 4 -->
-                            <section class="oe_container my-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-body p-3">
-                                        <img src="report2.png" style="width:100%"
-                                            class="img-responsive border">
-                                    </div>
-                                    <ul class="mb32"
-                                        style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;width:90%;text-align:justify">
-                                        When Show Price is checked then it will show Unit Price in sales order report.
-                                    </ul>
-                                </div>
-                            </section>
-                            <!-- Carousel Item 5 -->
-                            <section class="oe_container my-4">
-                                <div class="panel panel-primary">
-                                    <div class="panel-body p-3">
-                                        <img src="report3.png" style="width:100%"
-                                            class="img-responsive border">
-                                    </div>
-                                    <ul class="mb32"
-                                        style="font-family:'Montserrat', sans-serif;color:#000;font-size:16px;width:90%;text-align:justify">
-                                        When Show Discount is checked then it will show discount in sales order report.
-                                    </ul>
-                                </div>
-                            </section>
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="membership_management_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Membership Management</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/scs_membership" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="odoo_office365_contacts_integration_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">ODOO - Office365 Contacts Integration</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/odoo_office365_contacts" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="scs_qr_code_generator_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">SCS QR Code Generator</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/scs_qrcode_generator" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="temu_x_odoo_integration_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Temu X Odoo Integration</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/scs_temu_integration" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="odoo_ringcentral_integration_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Odoo RingCentral Integration</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/ringcentral" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="web_auto_refresh_and_reload_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Web Auto Refresh and Reload</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/web_auto_reload" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="country_of_origin_by_lot_serial_number_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Country of Origin By Lot/Serial Number</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/scs_coo_quants" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="restrict_message_edit_delete_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Restrict Message Edit/Delete</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/restrict_edit_delete_messages" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="freight_management_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Freight Management</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/scs_freight" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="project_scrum_management_agile_methodology_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Project Scrum Management Agile Methodology</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/project_scrum_agile" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex"
+                    style="border:2px solid #fcedee; border-radius:8px;">
+                    <div class="w-100 d-flex flex-column p-3 suggested-card">  
+                        <div class="card-img"
+                            style="background-color:#ffcaa6;border-radius:0.5rem;height:160px;">
+                            <img src="account_analytic_filter_in_distribution_10.png" class="img-fluid shadow-sm" style="height:100%;width:100%;">
+                        </div>
+                        <div class="card-info text-center py-3">
+                            <p class="text-title fw-normal fs-5 mb-0">Account Analytic Filter in distribution</p>
+                        </div>
+                        <div class="text-center mt-auto pb-3">
+                            <a href="https://apps.odoo.com/apps/modules/19.0/scs_analytic_distribution_filter" target="_blank"
+                                class="s_figure_link"
+                                style="font-size:15px;font-weight:bold;padding:8px 12px;background-color:#C3282D;color:#fff;border-radius:7px;text-decoration:none;display:inline-block;font-family:'Montserrat';">
+                                
+                                <img src="images/add_cart.png" width="22" height="22" style="margin-right:6px;">
+                                Go to store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-        </section>
-        <section class="oe_container">
-            <div class="content">
-                <div style="margin-top: 10px;">
-                    <h2
-                        style=" text-align:center; margin:3rem;letter-spacing:2px;font-weight:800; color:#000000; text-transform:uppercase;font-family: Poppins,Helvetica,sans-serif;">
-                        Suggested Products
-                    </h2>
-                </div>
-                <div class="row">
-                    <div class="col col-lg-4 col-md-4" style="
-                        padding: .8em;
-                        background: #f5f5f5;
-                        position: relative;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
-                        overflow: visible;
-                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <div class="card-img"
-                            style=" background-color: #ffcaa6;height: 40%;width: 100%;border-radius: .5rem;">
-                            <img alt="" class="img img-fluid shadow-sm" src="images/Banner_project_scrum_agile.png">
-                        </div>
-                        <div class="card-info" style="padding-top: 10%;">
-                            <p class="text-title" style=" font-weight: 300;
-                            font-size: 1.2em;
-                            line-height: 1.5;">Project Scrum Management Agile Methodology</p>
-                        </div>
-                        <div class="go-to-store-button" style=" width: 100%;
-                        text-align: center;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding-top: 10px;
-                        border-top: 1px solid #ddd;">
-                            <a href="https://apps.odoocdn.com/apps/modules/17.0/project_scrum_agile" target="_blank">
-                                <button class="button" style="  padding: 1em 2em;
-                            border: none;
-                            border-radius: 5px;
-                            font-weight: bold;
-                            letter-spacing: 5px;
-                            text-transform: uppercase;
-                            cursor: pointer;
-                            color: #2c9caf;
-                            transition: all 1000ms;
-                            font-size: 15px;
-                            position: relative;
-                            overflow: hidden;
-                            outline: 2px solid #2c9caf;">
-                                    <svg style="width: 20px;
-                                        height: 20px;" class="svg-icon" viewBox="0 0 20 20">
-                                        <path
-                                            d="M17.72,5.011H8.026c-0.271,0-0.49,0.219-0.49,0.489c0,0.271,0.219,0.489,0.49,0.489h8.962l-1.979,4.773H6.763L4.935,5.343C4.926,5.316,4.897,5.309,4.884,5.286c-0.011-0.024,0-0.051-0.017-0.074C4.833,5.166,4.025,4.081,2.33,3.908C2.068,3.883,1.822,4.075,1.795,4.344C1.767,4.612,1.962,4.853,2.231,4.88c1.143,0.118,1.703,0.738,1.808,0.866l1.91,5.661c0.066,0.199,0.252,0.333,0.463,0.333h8.924c0.116,0,0.22-0.053,0.308-0.128c0.027-0.023,0.042-0.048,0.063-0.076c0.026-0.034,0.063-0.058,0.08-0.099l2.384-5.75c0.062-0.151,0.046-0.323-0.045-0.458C18.036,5.092,17.883,5.011,17.72,5.011z">
-                                        </path>
-                                        <path
-                                            d="M8.251,12.386c-1.023,0-1.856,0.834-1.856,1.856s0.833,1.853,1.856,1.853c1.021,0,1.853-0.83,1.853-1.853S9.273,12.386,8.251,12.386z M8.251,15.116c-0.484,0-0.877-0.393-0.877-0.874c0-0.484,0.394-0.878,0.877-0.878c0.482,0,0.875,0.394,0.875,0.878C9.126,14.724,8.733,15.116,8.251,15.116z">
-                                        </path>
-                                        <path
-                                            d="M13.972,12.386c-1.022,0-1.855,0.834-1.855,1.856s0.833,1.853,1.855,1.853s1.854-0.83,1.854-1.853S14.994,12.386,13.972,12.386z M13.972,15.116c-0.484,0-0.878-0.393-0.878-0.874c0-0.484,0.394-0.878,0.878-0.878c0.482,0,0.875,0.394,0.875,0.878C14.847,14.724,14.454,15.116,13.972,15.116z">
-                                        </path>
-                                    </svg>
-                                    Go to store</button></a>
-                        </div>
-                    </div>
-                    <div class="col col-lg-4 col-md-4" style="
-                        padding: .8em;
-                        background: #f5f5f5;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
-                        position: relative;
-                        overflow: visible;
-                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <div class="card-img"
-                            style=" background-color: #ffcaa6;height: 40%;width: 100%;border-radius: .5rem;">
-                            <img alt="" class="img img-fluid shadow-sm" src="images/Banner-ODOO - Office365 Employees Integration.png">
-                        </div>
-                        <div class="card-info" style="padding-top: 10%;">
-                            <p class="text-title" style=" font-weight: 300;
-                        font-size: 1.2em;
-                        line-height: 1.5;">ODOO - Office365 Employees Integration</p>
-                        </div>
-                        <div class="go-to-store-button" style=" width: 100%;
-                            text-align: center;
-                            justify-content: space-between;
-                            align-items: center;
-                            padding-top: 10px;
-                            border-top: 1px solid #ddd;">
-                            <a href="https://apps.odoocdn.com/apps/modules/17.0/odoo_office365_employees" target="_blank">
-                                <button class="button" style="  padding: 1em 2em;
-                                border: none;
-                                border-radius: 5px;
-                                font-weight: bold;
-                                letter-spacing: 5px;
-                                text-transform: uppercase;
-                                cursor: pointer;
-                                color: #2c9caf;
-                                transition: all 1000ms;
-                                font-size: 15px;
-                                position: relative;
-                                overflow: hidden;
-                                outline: 2px solid #2c9caf;">
-                                    <svg style="width: 20px;
-                                        height: 20px;" class="svg-icon" viewBox="0 0 20 20">
-                                        <path
-                                            d="M17.72,5.011H8.026c-0.271,0-0.49,0.219-0.49,0.489c0,0.271,0.219,0.489,0.49,0.489h8.962l-1.979,4.773H6.763L4.935,5.343C4.926,5.316,4.897,5.309,4.884,5.286c-0.011-0.024,0-0.051-0.017-0.074C4.833,5.166,4.025,4.081,2.33,3.908C2.068,3.883,1.822,4.075,1.795,4.344C1.767,4.612,1.962,4.853,2.231,4.88c1.143,0.118,1.703,0.738,1.808,0.866l1.91,5.661c0.066,0.199,0.252,0.333,0.463,0.333h8.924c0.116,0,0.22-0.053,0.308-0.128c0.027-0.023,0.042-0.048,0.063-0.076c0.026-0.034,0.063-0.058,0.08-0.099l2.384-5.75c0.062-0.151,0.046-0.323-0.045-0.458C18.036,5.092,17.883,5.011,17.72,5.011z">
-                                        </path>
-                                        <path
-                                            d="M8.251,12.386c-1.023,0-1.856,0.834-1.856,1.856s0.833,1.853,1.856,1.853c1.021,0,1.853-0.83,1.853-1.853S9.273,12.386,8.251,12.386z M8.251,15.116c-0.484,0-0.877-0.393-0.877-0.874c0-0.484,0.394-0.878,0.877-0.878c0.482,0,0.875,0.394,0.875,0.878C9.126,14.724,8.733,15.116,8.251,15.116z">
-                                        </path>
-                                        <path
-                                            d="M13.972,12.386c-1.022,0-1.855,0.834-1.855,1.856s0.833,1.853,1.855,1.853s1.854-0.83,1.854-1.853S14.994,12.386,13.972,12.386z M13.972,15.116c-0.484,0-0.878-0.393-0.878-0.874c0-0.484,0.394-0.878,0.878-0.878c0.482,0,0.875,0.394,0.875,0.878C14.847,14.724,14.454,15.116,13.972,15.116z">
-                                        </path>
-                                    </svg>
-                                    Go to store</button></a>
-                        </div>
-                    </div>
-                    <div class="col col-lg-4 col-md-4" style="
-                        padding: .8em;
-                        margin-top: 10px;
-                        margin-bottom: 10px;
-                        background: #f5f5f5;
-                        position: relative;
-                        overflow: visible;
-                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);">
-                        <div class="card-img"
-                            style=" background-color: #ffcaa6;height: 40%;width: 100%;border-radius: .5rem;">
-                            <img alt="" class="img img-fluid shadow-sm"
-                                src="images/Banner-Pop-up Reminder-V17.png">
-                        </div>
-                        <div class="card-info" style="padding-top: 10%;">
-                            <p class="text-title" style=" font-weight: 300;
-                        font-size: 1.2em;
-                        line-height: 1.5;">Pop-up Reminder</p>
-                        </div>
-                        <div class="go-to-store-button" style=" width: 100%;
-                        text-align: center;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding-top: 10px;
-                        border-top: 1px solid #ddd;">
-                            <a href="https://apps.odoocdn.com/apps/modules/17.0/popup_reminder" target="_blank">
-                                <button class="button" style="  padding: 1em 2em;
-                            border: none;
-                            border-radius: 5px;
-                            font-weight: bold;
-                            letter-spacing: 5px;
-                            text-transform: uppercase;
-                            cursor: pointer;
-                            color: #2c9caf;
-                            transition: all 1000ms;
-                            font-size: 15px;
-                            position: relative;
-                            overflow: hidden;
-                            outline: 2px solid #2c9caf;">
-                                    <svg style="width: 20px;
-                                        height: 20px;" class="svg-icon" viewBox="0 0 20 20">
-                                        <path
-                                            d="M17.72,5.011H8.026c-0.271,0-0.49,0.219-0.49,0.489c0,0.271,0.219,0.489,0.49,0.489h8.962l-1.979,4.773H6.763L4.935,5.343C4.926,5.316,4.897,5.309,4.884,5.286c-0.011-0.024,0-0.051-0.017-0.074C4.833,5.166,4.025,4.081,2.33,3.908C2.068,3.883,1.822,4.075,1.795,4.344C1.767,4.612,1.962,4.853,2.231,4.88c1.143,0.118,1.703,0.738,1.808,0.866l1.91,5.661c0.066,0.199,0.252,0.333,0.463,0.333h8.924c0.116,0,0.22-0.053,0.308-0.128c0.027-0.023,0.042-0.048,0.063-0.076c0.026-0.034,0.063-0.058,0.08-0.099l2.384-5.75c0.062-0.151,0.046-0.323-0.045-0.458C18.036,5.092,17.883,5.011,17.72,5.011z">
-                                        </path>
-                                        <path
-                                            d="M8.251,12.386c-1.023,0-1.856,0.834-1.856,1.856s0.833,1.853,1.856,1.853c1.021,0,1.853-0.83,1.853-1.853S9.273,12.386,8.251,12.386z M8.251,15.116c-0.484,0-0.877-0.393-0.877-0.874c0-0.484,0.394-0.878,0.877-0.878c0.482,0,0.875,0.394,0.875,0.878C9.126,14.724,8.733,15.116,8.251,15.116z">
-                                        </path>
-                                        <path
-                                            d="M13.972,12.386c-1.022,0-1.855,0.834-1.855,1.856s0.833,1.853,1.855,1.853s1.854-0.83,1.854-1.853S14.994,12.386,13.972,12.386z M13.972,15.116c-0.484,0-0.878-0.393-0.878-0.874c0-0.484,0.394-0.878,0.878-0.878c0.482,0,0.875,0.394,0.875,0.878C14.847,14.724,14.454,15.116,13.972,15.116z">
-                                        </path>
-                                    </svg>
-                                    Go to store</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="oe_container mt32 mb-4">
+        </div>
+    </section>
+
+
+        <section class="oe_container mt32 mb-4 ">
             <div class="row o_equal_col_sm position-relative overflow-hidden" style="margin:0 auto;padding-bottom:0;">
                 <div class="container position-relative" style="display:block;margin:0 auto;text-align:center;">
                     <div style="margin-top: 10px;">
                         <h2
-                            style=" text-align:center; margin:3rem;letter-spacing:2px;font-weight:800; color:#000000; text-transform:uppercase;font-family: Poppins,Helvetica,sans-serif;">
+                            style="text-align:center; margin:3rem;letter-spacing:2px;font-weight:800; color:#000000; text-transform:uppercase;font-family: Poppins,Helvetica,sans-serif;">
                             Business Solutions
                         </h2>
                     </div>
@@ -443,150 +1123,177 @@
                         <div class="position-relative">
                             <div class="row">
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/16.0/eduerp_base/" target="_blank"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/17.0/eduerp_base" target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/1.-Education-managment.png" alt="Education" width="120"
-                                                height="120" />
+                                            <img src="images/icons/eduerp_base.png" alt="Education Management"
+                                                width="120" height="120" />
                                             <h3 class="mt16"
-                                                style="color:black;font-weight: bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Education Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/17.0/property/" target="_blank"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/18.0/property" target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/2.-3D-property-managment.png" alt="Property" width="120"
+                                            <img src="images/icons/property.png" alt="Property Management" width="120"
                                                 height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Property Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/browse?search=Singapore"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/browse?search=Singapore&author=Serpent+Consulting+Services+Pvt.+Ltd."
                                             target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/3.-3D-singapore-lacalization.png" alt="Singapore"
-                                                width="120" height="120" />
+                                            <img src="images/icons/singapore_localization.png"
+                                                alt="Singapore Localization" width="120" height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Singapore Localization
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/17.0/gym_management_system/"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/18.0/gym_management_system"
                                             target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/4.-3D-gym-managment.png" alt="Gym" width="120"
-                                                height="120" />
+                                            <img src="images/icons/gym_management_system.png" alt="Gym Management"
+                                                width="120" height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Gym Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/16.0/servisa/" target="_blank"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/18.0/servisa" target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/5.-3D-visa-managment.png" alt="Visa" width="120"
+                                            <img src="images/icons/servisa.png" alt="Visa Management" width="120"
                                                 height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Visa Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
+                                    <div class="text-center pt16 pb16 business-tile">
                                         <a href="https://www.youtube.com/watch?v=eTETD5lma3w&t=97s" target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/6.-3D-Biometrics.png" alt="Biometrics" width="120"
+                                            <img src="images/icons/biometrics.png" alt="Biometrics" width="120"
                                                 height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Biometrics
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/12.0/scs_hr_interview/"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/browse?search=employee&author=Serpent+Consulting+Services+Pvt.+Ltd"
                                             target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/7.-3D-hr-managment.png" alt="HR" width="120" height="120" />
+                                            <img src="images/icons/scs_hr_interview.png" alt="HR Management" width="120"
+                                                height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 HR Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/13.0/spa_salon_portal/"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/13.0/spa_salon_portal"
                                             target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/8.-3D-salon-and-spa.png" alt="Spa Salon" width="120"
-                                                height="120" />
+                                            <img src="images/icons/spa_salon_portal.png" alt="Salon and Spa Management"
+                                                width="120" height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Salon and Spa Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/16.0/fleet_operations/"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/browse?search=Fleet&author=Serpent+Consulting+Services+Pvt.+Ltd"
                                             target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/9.-Fleert-managment.png" alt="Fleet" width="120"
-                                                height="120" />
+                                            <img src="images/icons/fleet_operations.png" alt="Fleet Management"
+                                                width="120" height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Fleet Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/15.0/hotel/" target="_blank"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/browse?search=hotel&author=Serpent+Consulting+Services+Pvt.+Ltd."
+                                            target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/10.-hotel-managment.png" alt="Hotel" width="120"
+                                            <img src="images/icons/hotel.png" alt="Hotel Management" width="120"
                                                 height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Hotel Management
                                             </h3>
                                         </a>
                                     </div>
                                 </div>
+
                                 <div class="col mb16">
-                                    <div class="text-center pt16 pb16">
-                                        <a href="https://apps.odoo.com/apps/modules/17.0/ringcentral/" target="_blank"
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/19.0/ringcentral" target="_blank"
                                             style="font-family:'Montserrat', sans-serif;text-decoration: none;">
-                                            <img src="icons/11.-Ring-center.png" alt="Ring Central" width="120"
+                                            <img src="images/icons/ringcentral.png" alt="Ring Central" width="120"
                                                 height="120" />
                                             <h3 class="mt16"
-                                                style="color:black; font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
                                                 Ring Central
+                                            </h3>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col mb16">
+                                    <div class="text-center pt16 pb16 business-tile">
+                                        <a href="https://apps.odoo.com/apps/modules/browse?series=&order=Relevance&author=Serpent+Consulting+Services+Pvt.+Ltd.&search=Payment+Gateway"
+                                            target="_blank"
+                                            style="font-family:'Montserrat', sans-serif;text-decoration: none;">
+                                            <img src="images/icons/payment_provider.png" alt="Payment Provider"
+                                                width="120" height="120" />
+                                            <h3 class="mt16"
+                                                style="color:black;font-weight:bold;font-size:16px;font-family:'Montserrat', sans-serif">
+                                                Payment Provider
                                             </h3>
                                         </a>
                                     </div>
@@ -597,9 +1304,10 @@
                 </div>
             </div>
         </section>
-        <section class="oe_container mt32 mb-4">
+
+
+        <section class="oe_container mt32 mb-4 ">
             <div class="row o_equal_col_sm position-relative overflow-hidden" style="margin:0 auto;padding-bottom:0;">
-                <!-- <img src="div-bg.png" class="img position-absolute w-100 h-100 bg-none" /> -->
                 <div class="container position-relative" style="display:block; margin:0 auto;">
                     <div class="mt32 mb32">
                         <div style="margin-top: 10px;">
@@ -612,7 +1320,7 @@
                             <div class="position-relative">
                                 <div class="row">
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_consulting.png" alt="Odoo Customization"
                                                 width="120" height="120">
                                             <h3 class="mt16"
@@ -622,7 +1330,7 @@
                                         </div>
                                     </div>
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_implementation.png" alt="Odoo Customization"
                                                 width="120" height="120">
                                             <h3 class="mt16"
@@ -632,7 +1340,7 @@
                                         </div>
                                     </div>
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_development.png" alt="Odoo Customization"
                                                 width="120" height="120">
                                             <h3 class="mt16"
@@ -642,7 +1350,7 @@
                                         </div>
                                     </div>
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_testing.png" alt="Odoo Implementation"
                                                 width="120" height="120">
                                             <h3 class="mt16"
@@ -654,7 +1362,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_migration.png" alt="Odoo Integration"
                                                 width="120" height="120">
                                             <h3 class="mt16"
@@ -664,7 +1372,7 @@
                                         </div>
                                     </div>
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_training.png" alt="Odoo Support" width="120"
                                                 height="120">
                                             <h3 class="mt16"
@@ -674,7 +1382,7 @@
                                         </div>
                                     </div>
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_support.png" alt="Odoo Support" width="120"
                                                 height="120">
                                             <h3 class="mt16"
@@ -684,7 +1392,7 @@
                                         </div>
                                     </div>
                                     <div class="col mb16">
-                                        <div class="text-center pt16 pb16">
+                                        <div class="text-center pt16 pb16 service-tile">
                                             <img src="images/services/odoo_implementation.png" alt="Hire Odoo Developer"
                                                 width="120" height="120">
                                             <h3 class="mt16"
@@ -700,9 +1408,10 @@
                 </div>
             </div>
         </section>
-        <section class="oe_container mt32 mb-4">
-            <div class="row o_equal_col_sm position-relative overflow-hidden shadow"
-                style="margin:0 auto;background-color:#F5F5F5;padding-bottom:0;border-radius:10px;">
+
+        <section class="oe_container mt32 mb-4 ">
+            <div class="row o_equal_col_sm position-relative overflow-hidden shadow help-support"
+                style="margin:0 auto;padding-bottom:0;">
                 <div class="container position-relative" style="display:block;margin:0 auto;text-align:center;">
                     <div style="margin-top: 10px;">
                         <h2
@@ -745,42 +1454,52 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-12" style="padding-left:0;">
                                     <hr style="border-color:gray;" />
                                 </div>
                                 <div class="row">
-                                    <!-- Email Text -->
-                                    <div class="col-md-4 mt8 mb8">
-                                        <p
-                                            style="color:#555;font-weight:bold;font-size:15px;font-family:'Montserrat', sans-serif;">
-                                            Write a mail to us:</p>
-                                        <a href="mailto:contact@serpentcs.com" class="font-weight-bold text-primary"
-                                            style="font-size:16px;font-family:'Montserrat', sans-serif;"> <img
-                                                style="margin-right:10px;" src="images/mail.png" alt="Apps" width="23"
-                                                height="23">contact@serpentcs.com</a>
+                                    <div
+                                        style="width:280px; margin:24px auto; padding:20px; border:1px solid #e5e7eb; border-radius:16px; text-align:center; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif">
+                                        <div
+                                            style="font-size:26px; font-weight:800; color:#25D366; letter-spacing:.4px; margin-bottom:12px">
+                                            <img class="mb-1" style="width:25px; height:25px" src="images/whatsapp.png"
+                                                alt="rec">
+                                            &nbsp;WhatsApp
+                                        </div>
+                                        <img style="width:200px; height:250px" src="images/serpent_contact_whatsapp_image.png" alt="rec">
+                                        <a href="tel:919879354457"
+                                            style="font-size:18px; font-weight:600; color:#5e99e7">
+                                            (+91) 74860-40227
+                                        </a>
                                     </div>
-                                    <!-- WhatsApp Number -->
-                                    <div class="col-md-4 mt8 mb8">
-                                        <p
-                                            style="color: #555;font-weight:bold;font-size:15px;font-family:'Montserrat', sans-serif;">
-                                            Write a text to us on WhatsApp:</p>
-                                        <img src="images/whatsapp.png" alt="Apps" width="25" height="25">
-                                        <a href="tel:919879354457" class="font-weight-bold text-primary"
-                                            style="font-size:16px;font-family:'Montserrat', sans-serif;">(+91)
-                                            98793-54457</a>
-                                        <a href="tel:919033472982" class="font-weight-bold text-primary"
-                                            style="font-size:16px;font-family:'Montserrat', sans-serif;">(+91)
-                                            90334-72982</a>
+                                    <div
+                                        style="width:280px; margin:24px auto; padding:20px; border:1px solid #e5e7eb; border-radius:16px; text-align:center; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif">
+                                        <div
+                                            style="font-size:26px; font-weight:800; color:#5e99e7; letter-spacing:.4px; margin-bottom:12px">
+                                            <img class="mb-1" style="width:25px; height:25px" src="images/mail.png"
+                                                alt="rec">
+                                            &nbsp;Email
+                                        </div>
+                                        <img style="width:200px; height:250px" src="images/serpent_contact_email_image.png" alt="rec">
+                                        <a href="mailto:contact@serpentcs.com"
+                                            style="font-size:18px; font-weight:600; color:#5e99e7">
+                                            contact@serpentcs.com
+                                        </a>
                                     </div>
-                                    <!-- Visit Website -->
-                                    <div class="col-md-4 mt8 mb8">
-                                        <p
-                                            style="color: #555;font-weight:bold;font-size:15px;font-family:'Montserrat', sans-serif;">
-                                            Visit Our Website:</p>
-                                        <a href="https://www.serpentcs.com/" class="font-weight-bold text-primary"
-                                            style="font-size:16px;font-family:'Montserrat', sans-serif;"><img
-                                                src="images/serpent_website.png" alt="Apps" width="25" height="25">
-                                            www.serpentcs.com</a>
+                                    <div
+                                        style="width:280px; margin:24px auto; padding:20px; border:1px solid #e5e7eb; border-radius:16px; text-align:center; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif">
+                                        <div
+                                            style="font-size:26px; font-weight:800; color:#5e99e7; letter-spacing:.4px; margin-bottom:12px">
+                                            <img class="mb-1" style="width:25px; height:25px" src="images/serpent_website.png"
+                                                alt="rec">
+                                            &nbsp;Website
+                                        </div>
+                                        <img style="width:200px; height:250px" src="images/serpent_contact_website_image.png" alt="rec">
+                                        <a href="https://www.serpentcs.com/"
+                                            style="font-size:18px; font-weight:600; color:#5e99e7">
+                                            www.serpentcs.com   
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -789,11 +1508,48 @@
                 </div>
             </div>
         </section>
+
+
     </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var animatedElements = document.querySelectorAll(
+                '.,' +
+                '.oe_container,' +
+                '.card,' +
+                '.nav-pills .nav-link,' +
+                '.suggested-card,' +
+                '.accordion-item,' +
+                '.help-support'
+            );
+
+            animatedElements.forEach(function (el) {
+                el.classList.add('');
+            });
+
+            var observer = new IntersectionObserver(function (entries, obs) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            animatedElements.forEach(function (el) {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
+
 </html>
