@@ -15,6 +15,6 @@
         "views/project_report.xml",
         "report/project_qweb_report.xml"
     ],
-    "images": ["static/description/PROJECT_DETAIL_REPORT.jpg"],
+    "images": ["static/description/project_detail_report_product_banner.jpg"],
     "installable": True,
 }

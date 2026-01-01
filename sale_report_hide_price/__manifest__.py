@@ -10,7 +10,7 @@
     'license': 'LGPL-3',
     'summary': 'Hide price/discount in Sale Order Report',
     'depends': ['sale_management'],
-    'images': ['static/description/sale_report_hide_price.png'],
+    'images': ['static/description/hide_price_and_discount_in_quotation_report_10.png'],
     'data': [
         'wizard/sale_wizard.xml',
         'security/ir.model.access.csv',
