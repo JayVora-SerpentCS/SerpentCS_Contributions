@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="customer_limit_report_template">
+        <t t-call="web.html_container">         
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <h1 style="
+                            display: inline-block;
+                            border-bottom: 3px solid black;
+                            padding-bottom: 5px;
+                            margin: 0;
+                        ">
+                            Customer Credit Limit Details
+                        </h1>
+                    </div>
+                    <table style="border: 1px solid black; width: 100%;" >
+                        <tr>
+                            <td style="border: 1px solid black;" >Customer Name</td>
+                            <td style="border: 1px solid black;" >Credit limit</td>
+                            <td style="border: 1px solid black;" >Available credit</td>                               
+                        </tr>
+                            <t t-foreach="docs" t-as="o">
+                            <tr>
+                                <td style="border: 1px solid black;"  ><span t-esc="o.name"/></td>
+                                <td style="border: 1px solid black;" ><span t-esc="o.credit_limit"/></td>
+                                <td style="border: 1px solid black;" ><span t-esc="o.available_credit"/></td>
+                            </tr>
+                        </t>
+                    </table>  
+                </div>
+            </t>
+    	</t>           
+    </template>
+ 
+</odoo>

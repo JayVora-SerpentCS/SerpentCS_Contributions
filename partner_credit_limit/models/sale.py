@@ -1,6 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import UserError
 
 
@@ -33,7 +33,7 @@ class SaleOrder(models.Model):
                 partner.credit_limit - partner_credit_limit, 2)
             
             
-            partner.write({'Available_credit': available_credit_limit})
+            partner.write({'available_credit': available_credit_limit})
 
             if partner_credit_limit > partner.credit_limit and \
                     partner.credit_limit > 0.0:
@@ -42,7 +42,7 @@ class SaleOrder(models.Model):
                           ' Amount = %s \nCheck "%s" Accounts or Credit ' \
                           'Limits.' % (available_credit_limit,
                                        self.partner_id.name)
-                    raise UserError(_('You can not confirm Sale '
+                    raise UserError(self.env._('You can not confirm Sale '
                                       'Order. \n' + msg))
             return True
 
@@ -61,7 +61,8 @@ class SaleOrder(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         res = super(SaleOrder, self).create(vals_list)
-        if res.partner_id.credit_limit > 0.0 and \
-                not res.partner_id.over_credit:
-            res.check_limit()
+        for order in res:
+            if order.partner_id.credit_limit > 0.0 and \
+                not order.partner_id.over_credit:
+                order.check_limit()
         return res

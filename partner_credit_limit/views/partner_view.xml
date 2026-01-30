@@ -9,7 +9,7 @@
         
             <field name="property_account_position_id" position="after">
                 <field name="credit_limit"/>
-                <field name="Available_credit"/>
+                <field name="available_credit"/>
                 <field name="over_credit"/>
             </field>
         </field>

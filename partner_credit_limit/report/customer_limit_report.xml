@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="report_Credit_limit_details" model="ir.actions.report">
+        <field name="name">Customer credit Limit</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">partner_credit_limit.customer_limit_report_template</field>
+        <field name="report_file">partner_credit_limit.customer_limit_report</field>
+        <field name="print_report_name">'%s' % object.name</field>
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>
