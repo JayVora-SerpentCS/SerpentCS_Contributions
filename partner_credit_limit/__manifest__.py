@@ -4,7 +4,7 @@
     "name": "Partner Credit Limit",
     "version": "17.0.1.0.0",
     "category": "Partner",
-    "sequence": "1",
+    "sequence": 1,
     "license": "AGPL-3",
     "author": "Tiny, Serpent Consulting Services Pvt. Ltd.",
     "website": "https://www.serpentcs.com",
