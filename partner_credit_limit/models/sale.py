@@ -1,5 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
-from odoo import _, api, models
+from odoo import _, models
 from odoo.exceptions import UserError
 
 
@@ -13,18 +13,16 @@ class SaleOrder(models.Model):
         if not partner.use_partner_credit_limit or partner.over_credit:
             return True
 
-        # Skip check for portal users
-        user = self.env['res.users'].search(
-            [('partner_id', '=', partner.id)], limit=1
-        )
-        if user and user.has_group('base.group_portal'):
+        # Skip check only when the current user is a portal user.
+        if self.env.user.has_group('base.group_portal'):
             return True
-
-        movelines = self.env['account.move.line'].search([
+        # Sales users may not have access to accounting entries, but the
+        # credit decision should still resolve to a functional UserError.
+        movelines = self.env['account.move.line'].sudo().search([
             ('partner_id', '=', partner.id),
             ('account_id.account_type', 'in',
              ['asset_receivable', 'liability_payable']),
-            ('parent_state', '!=', 'cancel'),
+            ('parent_state', '!=', 'posted'),
         ])
 
         confirmed_orders = self.search([

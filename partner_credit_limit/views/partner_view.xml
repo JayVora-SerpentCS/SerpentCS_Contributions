@@ -12,7 +12,7 @@
             >
                 <field
                     name="over_credit"
-                    invisible= "show_credit_limit == False"
+                    invisible= "not show_credit_limit"
                 />
             </xpath>
         </field>
