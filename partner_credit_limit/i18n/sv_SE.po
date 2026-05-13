@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* partner_credit_limit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-28 09:31+0000\n"
+"PO-Revision-Date: 2023-06-28 09:31+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_credit_limit
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_partner__over_credit
+#: model:ir.model.fields,field_description:partner_credit_limit.field_res_users__over_credit
+msgid "Allow Over Credit?"
+msgstr ""
+
+#. module: partner_credit_limit
+#: model:ir.model,name:partner_credit_limit.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: partner_credit_limit
+#: model:ir.model,name:partner_credit_limit.model_sale_order
+msgid "Sales Order"
+msgstr "Order"
+
+#. module: partner_credit_limit
+#. odoo-python
+#: code:addons/partner_credit_limit/models/sale.py:0
+#, python-format
+msgid "You can not confirm Sale Order. \n"
+msgstr ""
