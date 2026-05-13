@@ -16,6 +16,7 @@
     "data": [
         "views/partner_view.xml",
     ],
+    "images": ["static/description/partner_credit_limit_product_banner.png"],
     "installable": True,
 
 }
