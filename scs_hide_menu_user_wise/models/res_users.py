@@ -1,5 +1,6 @@
 # See LICENSE file for full copyright and licensing details.
 from odoo import fields, models
+from odoo.orm.identifiers import NewId
 
 
 class ResUsers(models.Model):
@@ -16,16 +17,20 @@ class ResUsers(models.Model):
         """
         res = super(ResUsers, self).write(vals)
         for user in self:
+            if not user.id or isinstance(user.id, NewId):
+                continue
             # Link hidden menus to the user
-            for menu in user.hide_menu_ids:
-                menu.write({"restrict_user_ids": [fields.Command.link(user.id)]})
+            user.hide_menu_ids.write({
+                "restrict_user_ids": [fields.Command.link(user.id)]
+            })
             # Handle menus that have been unlinked (removed from the hidden list)
             previous_menus = self.env["ir.ui.menu"].search(
                 [("restrict_user_ids", "in", [user.id])]
             )
             removed_menus = previous_menus - user.hide_menu_ids
-            for menu in removed_menus:
-                menu.write({"restrict_user_ids": [fields.Command.unlink(user.id)]})
+            removed_menus.write({
+                "restrict_user_ids": [fields.Command.unlink(user.id)]
+            })
         return res
 
     def _compute_get_is_admin(self):
