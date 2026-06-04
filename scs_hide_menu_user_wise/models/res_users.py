@@ -1,6 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
 from odoo import fields, models
-from odoo.orm.identifiers import NewId
 
 
 class ResUsers(models.Model):
@@ -17,7 +16,7 @@ class ResUsers(models.Model):
         """
         res = super(ResUsers, self).write(vals)
         for user in self:
-            if not user.id or isinstance(user.id, NewId):
+            if not user.id or not isinstance(user.id, int):
                 continue
             # Link hidden menus to the user
             user.hide_menu_ids.write({
