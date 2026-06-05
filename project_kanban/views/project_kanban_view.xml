@@ -7,26 +7,21 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
+            <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="write_date" readonly="1"/>
                 <field name="recent_date"/>
-            </field>
+            </xpath>
         </field>
     </record>
 
 
-    <!-- Project Kanban Kanban View -->
+    <!-- Project Kanban View -->
     <record id="view_project_kanaban_kanban" model="ir.ui.view">
         <field name="name">project.kanban.kanban</field>
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.view_project_kanban"/>
         <field name="arch" type="xml">
-            <field name="display_name" position="after">
-                <field name="write_date"/>
-                <field name="recent_date"/>
-            </field>
-            <div class="o_kanban_primary_left"
-                 position="after">
+            <field name="tag_ids" position="after">
                 <a style="font-size: 10px;">
                     Last updated on:
                     <field name="write_date"/>
@@ -37,7 +32,7 @@
                         <field name="recent_date" string="Recent Date"/>
                     </a>
                 </div>
-            </div>
+            </field>
         </field>
     </record>
 </odoo>
