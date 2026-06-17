@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_saleorder_document_inherit"
+        inherit_id="sale.report_saleorder_document"
+    >
+
+        <xpath
+            expr="//table[hasclass('o_main_table')]/thead/tr/th[@name='th_description']"
+            position="before"
+        >
+            <t t-if="doc.print_image and doc.image_sizes in ('image', 'image_medium', 'image_small')">
+                <th style="width:15%;">Product Image</th>
+            </t>
+        </xpath>
+
+        <xpath
+            expr="//tr[@name='tr_product']/td[@name='td_product_name']"
+            position="before"
+        >
+            <t t-if="doc.print_image">
+                <td class="text-center">
+                    <img
+                        t-if="line.product_id.image_1920"
+                        t-att-src="image_data_uri(line.product_id.image_1920)"
+                        t-att-style="'width:%s;height:auto;' % ('95%' if doc.image_sizes == 'image' else '70%' if doc.image_sizes == 'image_medium' else '50%')"
+                    />
+                </td>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>
