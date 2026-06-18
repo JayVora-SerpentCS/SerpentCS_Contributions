@@ -115,7 +115,6 @@
     <record id="action_label_print_form" model="ir.actions.act_window">
         <field name="name">Label Print</field>
         <field name="res_model">label.print</field>
-        <field name="context">{'default_field_id':1}</field>
         <field name="binding_view_types">form</field>
         <field name="view_mode">list,form</field>
     </record>

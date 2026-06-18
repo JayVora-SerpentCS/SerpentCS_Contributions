@@ -13,16 +13,16 @@ class LabelPrintWizard(models.TransientModel):
         if self._context is None:
             self._context = {}
         result = super().default_get(fields)
-        if self.env.context.get("label_print"):
-            label_print_obj = self.env["label.print"]
-            label_print_data = label_print_obj.browse(
-                self.env.context.get("label_print")
-            )
-            for field in label_print_data.field_ids:
-                if field.type == "image":
-                    result["is_image"] = True
-                if field.type == "barcode":
-                    result["is_barcode"] = True
+        label_print_id = self.env.context.get("label_print")
+        if label_print_id:
+            label_print_data = self.env["label.print"].browse(label_print_id)
+            field_types = label_print_data.field_ids.mapped("type")
+
+            if "image" in field_types:
+                result["is_image"] = True
+
+            if "barcode" in field_types:
+                result["is_barcode"] = True
         return result
 
     name = fields.Many2one("label.config", "Label Size", required=True)
@@ -40,11 +40,8 @@ class LabelPrintWizard(models.TransientModel):
             self.env.context = {}
         label_print = self.env.context.get("label_print")
         active_ids = self.env.context.get("active_ids")
+
         if not label_print or not active_ids:
-            return False
-        if not self.env.context.get("label_print") or not self.env.context.get(
-            "active_ids"
-        ):
             return False
         total_record = len(self.env.context.get("active_ids", []))
         datas = {}
@@ -92,10 +89,25 @@ class LabelPrintWizard(models.TransientModel):
             .report_action(self, data=data_payload)
         )
 
-    @api.constrains("image_width", "image_height", "barcode_width", "barcode_height")
+    @api.constrains("image_width","image_height","barcode_width","barcode_height",)
     def _check_positive_label(self):
         for label in self:
-            if label.image_width > 150.00 or label.barcode_width > 150.00:
-                raise ValidationError(_("Width value must be less then 150."))
-            if label.image_height > 150.00 or label.barcode_height > 150.00:
-                raise ValidationError(_("Height value must be less then 150."))
+            if (
+                label.image_width <= 0.0
+                or label.image_height <= 0.0
+                or label.barcode_width <= 0.0
+                or label.barcode_height <= 0.0
+            ):
+                raise ValidationError(
+                    _("Width and Height values must be greater than 0.")
+                )
+
+            if label.image_width > 150.0 or label.barcode_width > 150.0:
+                raise ValidationError(
+                    _("Width value must be less than or equal to 150.")
+                )
+
+            if label.image_height > 150.0 or label.barcode_height > 150.0:
+                raise ValidationError(
+                    _("Height value must be less than or equal to 150.")
+                )

@@ -8,7 +8,7 @@ class LabelTestCase(common.TransactionCase):
     def setUp(self):
         super().setUp()
 
-    def test_cityarea_action(self):
+    def test_label_print_action(self):
         self.model_field = self.env["ir.model.fields"]
         self.model = self.env["ir.model"].sudo().search([("model", "=", "res.users")])
         self.fields = self.model_field.sudo().search([("model_id", "=", self.model.id)])

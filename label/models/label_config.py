@@ -32,10 +32,13 @@ class LabelConfig(models.Model):
     @api.constrains("height", "width")
     def _check_positive_label(self):
         """
-        Constraint to ensure that the height and width of a label are positive values.
+        Ensure that label height and width are greater than zero.
 
-        Raises: ValidationError: If the height or width is less than 0.0.
+        Raises:
+            ValidationError: If height or width is less than or equal to 0.0.
         """
         for label in self:
-            if label.height < 0.0 or label.width < 0.0:
-                raise ValidationError(_("Height/Width value must be Positive."))
+            if label.height <= 0.0 or label.width <= 0.0:
+                raise ValidationError(
+                    _("Height/Width value must be greater than 0.")
+                )
