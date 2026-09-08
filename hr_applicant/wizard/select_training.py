@@ -1,0 +1,29 @@
+# See LICENSE file for full copyright and licensing details.
+
+from odoo import fields, models
+
+
+class SelectTraining(models.TransientModel):
+    _name = "select.training"
+    _description = "Select Training"
+
+    is_training_needed = fields.Boolean(string="Is Training needed?", required=True)
+    applicant_id = fields.Many2one("hr.applicant", "Applicant", store=True)
+    job_id = fields.Many2one(related="applicant_id.job_id", store=True)
+    training_courses_ids = fields.Many2many("training.class", string="Training")
+
+    def action_done(self):
+        applicant = self.env["hr.applicant"].browse(self._context.get("active_id"))
+        employee_dict = applicant.create_employee_from_applicant()
+        attendee_obj = self.env["list.of.attendees"]
+        for training_class in self.training_courses_ids:
+            attendee_obj.create(
+                {
+                    "class_id": training_class.id,
+                    "employee_id": employee_dict.get("res_id", False),
+                    "training_start_date": training_class.training_start_date,
+                    "training_end_date": training_class.training_end_date,
+                    "date_of_arrival": training_class.training_start_date,
+                    "state": "in_training",
+                }
+            )
