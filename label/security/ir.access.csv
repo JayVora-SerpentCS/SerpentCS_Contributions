@@ -1,0 +1,6 @@
+id,name,model_id,group_id/id,operation,domain
+access_label_brand,access_label_brand,label.brand,base.group_user,crud,
+access_label_config,access_label_config,label.config,base.group_user,crud,
+access_label_print_field,access_label_print_field,label.print.field,base.group_user,crud,
+access_label_print,access_label_print,label.print,base.group_user,crud,
+access_label_print_wizard,label.print.wizard,label.print.wizard,base.group_user,crud,
