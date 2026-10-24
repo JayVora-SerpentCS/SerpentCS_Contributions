@@ -1,0 +1,76 @@
+
+
+[MASTER]
+load-plugins=pylint_odoo
+score=n
+py-version=3.12
+
+[ODOOLINT]
+readme-template-url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
+manifest-required-authors=Serpent Consulting Services Pvt. Ltd.
+manifest-required-keys=license
+manifest-deprecated-keys=description,active
+license-allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3,OPL-1
+valid-odoo-versions=20.0
+
+[MESSAGES CONTROL]
+disable=all
+
+# This .pylintrc contains optional AND mandatory checks and is meant to be
+# loaded in an IDE to have it check everything, in the hope this will make
+# optional checks more visible to contributors who otherwise never look at a
+# green travis to see optional checks that failed.
+# .pylintrc-mandatory containing only mandatory checks is used the pre-commit
+# config as a blocking check.
+
+enable=anomalous-backslash-in-string,
+    assignment-from-none,
+    attribute-deprecated,
+    dangerous-default-value,
+    development-status-allowed,
+    duplicate-key,
+    eval-used,
+    license-allowed,
+    manifest-author-string,
+    manifest-required-author,
+    manifest-required-key,
+    manifest-version-format,
+    method-compute,
+    method-inverse,
+    method-required-super,
+    method-search,
+    pointless-statement,
+    pointless-string-statement,
+    print-used,
+    redundant-keyword-arg,
+    reimported,
+    return-in-init,
+    sql-injection,
+    too-few-format-args,
+    translation-field,
+    translation-required,
+    unreachable,
+    use-vim-comment,
+    attribute-string-redundant,
+    consider-merging-classes-inherited,
+    context-overridden,
+    except-pass,
+    invalid-commit,
+    manifest-maintainers-list,
+    missing-readme,
+    missing-return,
+    odoo-addons-relative-import,
+    renamed-field-parameter,
+    resource-not-exist,
+    test-folder-imported,
+    translation-contains-variable,
+    translation-positional-used,
+    website-manifest-key-not-valid-uri,
+    external-request-timeout,
+    deprecated-module,
+    redefined-builtin
+
+[REPORTS]
+msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
+output-format=colorized
+reports=no
