@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- This wizard view use for label formating like height,width,number of copy etc... -->
+    <record id="view_label_print_wizard" model="ir.ui.view">
+        <field name="name">label_print_wizard_name</field>
+        <field name="model">label.print.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Label">
+                <group col="4" colspan="4">
+                    <field name="brand_id" />
+                    <field domain="[('label_main_id', '=', brand_id)]" name="name" />
+                    <field name="number_of_copy" string="Number of Copy" />
+                </group>
+                <footer>
+                    <button
+                        class="oe_highlight"
+                        default_focus="1"
+                        name="print_report"
+                        string="Print"
+                        type="object"
+                    />or
+                    <button class="btn-default" special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
