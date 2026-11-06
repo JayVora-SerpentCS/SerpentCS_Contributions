@@ -1,0 +1,8 @@
+/* Styles of the digital signature canvas
+   (replaces the styles of the legacy jSignature plugin). */
+.o_digital_sign_canvas {
+    touch-action: none; /* keep touch devices drawing instead of scrolling */
+    border: 1px solid #D1D0CE; /* jSignature 'decor-color' */
+    background-color: #fff;
+    cursor: crosshair;
+}
