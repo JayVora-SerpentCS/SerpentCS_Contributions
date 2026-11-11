@@ -1,25 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates>
-    <t t-name="web_digital_sign.FieldSignature" owl="1">
-        <div class="note-editor panel panel-default mt16 mb0 oe_edit_only" id="drawsign"
-            t-ref="drawsign">
-            <t t-if="props.mode != 'readonly'">
-                <div
-                    class="note-toolbar panel-heading p-2 d-flex justify-content-between align-items-center">
-                    <strong>Draw your signature</strong>
-                    <div class="btn-group">
-                        <button t-on-click="sign_clean" class="btn btn-xs btn-danger oe_edit_only">
-                            Clear</button>
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+   <t t-name="FieldSignature">
+       <t t-if="!props.readonly">
+           <div class="note-editor panel panel-default mt16 mb0 oe_edit_only" id="drawsign">
+                <div class="note-toolbar panel-heading p-2">
+                    <div class="pull-right">
+                        <a id="sign_clean" class="btn btn-xs oe_edit_only" t-on-click="_on_clear_sign">Clear</a>
+                        <a class="oe_edit_only save_sign" t-on-click="_on_save_sign"></a>
                     </div>
+                    <strong>Draw your signature</strong>
                 </div>
-                <div class="signature border p-2 bg-light" aria-label="Signature drawing area"></div>
-            </t>
-            <t t-if="props.mode == 'readonly'">
-                <div class="signature border p-2 bg-light" aria-label="Read-only signature area"></div>
-            </t>
-        </div>
-        <div class="d-none other-type-input">
-            <input type="props.type" class="o_input" t-att-value="props.value" />
-        </div>
+                <div class="signature">
+                    <canvas t-ref="canvas" class="o_digital_sign_canvas" width="550" height="150"
+                        t-on-pointerdown="_on_pointer_down"
+                        t-on-pointermove="_on_pointer_move"
+                        t-on-pointerup="_on_pointer_up"
+                        t-on-pointercancel="_on_pointer_up"
+                        t-on-pointerleave="_on_pointer_up"/>
+                </div>
+            </div>
+       </t>
+       <t t-if="props.readonly">
+           <div class="panel panel-default mt16 mb0 " id="drawsign">
+                <div class="signature">
+                    <img class="img img-fluid" t-att-src="getUrl(props.name)" alt="Signature"/>
+                </div>
+            </div>
+       </t>
     </t>
 </templates>

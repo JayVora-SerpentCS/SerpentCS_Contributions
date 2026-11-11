@@ -1,30 +1,33 @@
 # See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Web Digital Signature',
-    'version': '17.0.1.0.0',
+    "name": "Web Digital Signature",
+    "version": "18.0.1.0.0",
+    "author": "Serpent Consulting Services Pvt. Ltd.",
+    "maintainer": "Serpent Consulting Services Pvt. Ltd.",
+    "complexity": "easy",
+    "depends": ["web"],
+    "license": "AGPL-3",
     "category": "Tools",
-    "summary": """
-        Touch screen enable so user can add signature with touch devices.
-        Digital signature can be very usefull for documents.
-    """,
-     "description": """
+    "description": """
      This module provides the functionality to store digital signature
      Example can be seen into the User's form view where we have
         added a test field under signature.
     """,
-    "author": "Serpent Consulting Services Pvt. Ltd.",
-    "website": "http://www.serpentcs.com/",
-    'license': 'LGPL-3',
-    'depends': ['web'],
+    "summary": """
+        Touch screen enable so user can add signature with touch devices.
+        Digital signature can be very usefull for documents.
+    """,
     "images": ["static/description/Digital_Signature.jpg"],
     "data": ["views/users_view.xml"],
     "assets": {
         "web.assets_backend": [
-            "/web_digital_sign/static/src/js/digital_sign.js",
-            "/web_digital_sign/static/src/xml/digital_sign.xml",
+            "web_digital_sign/static/src/scss/digital_sign.scss",
+            "web_digital_sign/static/src/xml/digital_sign.xml",
+            "web_digital_sign/static/src/js/digital_sign.js",
         ],
     },
-    'installable': True,
-    'application': True,
+    "website": "http://www.serpentcs.com",
+    "installable": True,
+    "auto_install": False,
 }
